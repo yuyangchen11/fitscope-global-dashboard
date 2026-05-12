@@ -1,0 +1,1446 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Outbound Apparel Intelligence Dashboard</title>
+    <style>
+      :root {
+        --bg: #0c111d;
+        --surface: #121a2a;
+        --surface-2: #172033;
+        --surface-3: #1d293d;
+        --border: rgba(148, 163, 184, 0.18);
+        --border-strong: rgba(148, 163, 184, 0.32);
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --faint: #64748b;
+        --teal: #2dd4bf;
+        --sky: #38bdf8;
+        --amber: #f59e0b;
+        --red: #f97373;
+        --green: #34d399;
+        --violet: #a78bfa;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(17, 24, 39, 0.98) 48%, rgba(10, 16, 28, 1)),
+          var(--bg);
+        color: var(--text);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: 0;
+      }
+
+      button,
+      select,
+      input {
+        font: inherit;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 270px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 22px 16px;
+        border-right: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(18, 26, 42, 0.96), rgba(10, 17, 30, 0.98));
+      }
+
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 4px 6px 22px;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(45, 212, 191, 0.52);
+        border-radius: 8px;
+        background: linear-gradient(135deg, rgba(45, 212, 191, 0.18), rgba(56, 189, 248, 0.08));
+        color: var(--teal);
+        font-weight: 800;
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.18;
+        font-weight: 760;
+      }
+
+      .brand p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .nav {
+        display: grid;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .nav button {
+        display: grid;
+        grid-template-columns: 28px minmax(0, 1fr);
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+        min-height: 42px;
+        padding: 9px 10px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--muted);
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .nav button:hover {
+        border-color: var(--border);
+        background: rgba(148, 163, 184, 0.06);
+        color: var(--text);
+      }
+
+      .nav button.active {
+        border-color: rgba(45, 212, 191, 0.38);
+        background: linear-gradient(135deg, rgba(45, 212, 191, 0.14), rgba(56, 189, 248, 0.07));
+        color: var(--text);
+      }
+
+      .nav-icon {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        border-radius: 7px;
+        background: rgba(148, 163, 184, 0.08);
+        color: var(--teal);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .side-note {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 18px;
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.78);
+      }
+
+      .side-note strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 12px;
+      }
+
+      .side-note span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .main {
+        min-width: 0;
+        padding: 22px 24px 32px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .command-center {
+        display: grid;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      .command-title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .command-title strong {
+        font-size: 20px;
+        line-height: 1.1;
+      }
+
+      .live-dot {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--teal);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .live-dot::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--teal);
+        box-shadow: 0 0 14px rgba(45, 212, 191, 0.85);
+      }
+
+      .signal-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .signal-chip {
+        display: inline-grid;
+        grid-template-columns: auto auto;
+        gap: 7px;
+        align-items: baseline;
+        min-height: 30px;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(18, 26, 42, 0.72);
+      }
+
+      .signal-chip span {
+        color: var(--muted);
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+
+      .signal-chip b {
+        color: var(--text);
+        font-size: 12px;
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .select {
+        min-width: 152px;
+        height: 38px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(18, 26, 42, 0.92);
+        color: var(--text);
+        padding: 0 12px;
+      }
+
+      .hero {
+        margin-bottom: 18px;
+        padding: 18px;
+        border: 1px solid rgba(45, 212, 191, 0.22);
+        border-radius: 8px;
+        background:
+          linear-gradient(135deg, rgba(18, 32, 51, 0.95), rgba(18, 52, 59, 0.68), rgba(30, 41, 59, 0.92));
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+        gap: 18px;
+        align-items: stretch;
+      }
+
+      .hero h3 {
+        margin: 0 0 8px;
+        font-size: 20px;
+      }
+
+      .hero p {
+        max-width: 920px;
+        margin: 0;
+        color: #cbd5e1;
+        line-height: 1.55;
+        font-size: 14px;
+      }
+
+      .hero-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .hero-mini {
+        padding: 12px;
+        border: 1px solid rgba(226, 232, 240, 0.16);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.35);
+      }
+
+      .hero-mini b {
+        display: block;
+        font-size: 18px;
+      }
+
+      .hero-mini span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .status-panel {
+        display: grid;
+        align-content: center;
+        gap: 8px;
+        padding: 14px;
+        border: 1px solid rgba(226, 232, 240, 0.16);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.34);
+      }
+
+      .status-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .status-row strong {
+        color: var(--text);
+      }
+
+      .action-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .action-item {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: center;
+        padding: 11px;
+        border: 1px solid rgba(226, 232, 240, 0.15);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.34);
+      }
+
+      .action-rank {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        background: rgba(45, 212, 191, 0.12);
+        color: var(--teal);
+        font-weight: 800;
+        font-size: 12px;
+      }
+
+      .action-copy strong {
+        display: block;
+        overflow: hidden;
+        color: var(--text);
+        font-size: 13px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .action-copy span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .action-tag {
+        padding: 5px 8px;
+        border-radius: 999px;
+        background: rgba(249, 115, 115, 0.13);
+        color: #fecaca;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      .grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .grid.cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .grid.cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .grid.cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid.cols-2-1 {
+        grid-template-columns: minmax(0, 1.2fr) minmax(310px, 0.8fr);
+      }
+
+      .card {
+        min-width: 0;
+        padding: 15px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: linear-gradient(180deg, rgba(23, 32, 51, 0.9), rgba(18, 26, 42, 0.92));
+      }
+
+      .card.accent {
+        border-color: rgba(45, 212, 191, 0.24);
+        background: linear-gradient(145deg, rgba(23, 32, 51, 0.95), rgba(18, 42, 48, 0.78));
+      }
+
+      .card h3,
+      .card h4 {
+        margin: 0;
+      }
+
+      .card h3 {
+        font-size: 15px;
+      }
+
+      .card h4 {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 650;
+        text-transform: uppercase;
+      }
+
+      .kpi-value {
+        margin-top: 10px;
+        font-size: 29px;
+        line-height: 1;
+        font-weight: 800;
+      }
+
+      .kpi-caption {
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 14px;
+        margin: 22px 0 11px;
+      }
+
+      .section-head h3 {
+        margin: 0;
+        font-size: 17px;
+      }
+
+      .section-head p {
+        margin: 5px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        padding: 4px 9px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .bars {
+        display: grid;
+        gap: 11px;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: minmax(110px, 0.7fr) minmax(0, 1.4fr) 72px;
+        gap: 10px;
+        align-items: center;
+        font-size: 13px;
+      }
+
+      .bar-label {
+        min-width: 0;
+        overflow: hidden;
+        color: #dbeafe;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .bar-track {
+        height: 9px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(100, 116, 139, 0.22);
+      }
+
+      .bar-fill {
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--teal), var(--sky));
+      }
+
+      .bar-fill.risk {
+        background: linear-gradient(90deg, var(--amber), var(--red));
+      }
+
+      .bar-fill.violet {
+        background: linear-gradient(90deg, var(--sky), var(--violet));
+      }
+
+      .bar-value {
+        color: var(--muted);
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .donut-wrap {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr);
+        gap: 16px;
+        align-items: center;
+        min-height: 172px;
+      }
+
+      .donut {
+        position: relative;
+        width: 148px;
+        height: 148px;
+        border-radius: 50%;
+        background: conic-gradient(var(--teal) 0deg 120deg, var(--sky) 120deg 240deg, var(--amber) 240deg 360deg);
+        box-shadow: inset 0 0 22px rgba(15, 23, 42, 0.42);
+      }
+
+      .donut::after {
+        position: absolute;
+        inset: 30px;
+        display: grid;
+        place-items: center;
+        content: attr(data-center);
+        border-radius: 50%;
+        background: #121a2a;
+        color: var(--text);
+        font-size: 19px;
+        font-weight: 800;
+      }
+
+      .legend {
+        display: grid;
+        gap: 9px;
+      }
+
+      .legend-row {
+        display: grid;
+        grid-template-columns: 10px minmax(0, 1fr) auto;
+        gap: 9px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+      }
+
+      .legend-row strong {
+        color: #e2e8f0;
+        font-weight: 650;
+      }
+
+      .stacked-bars {
+        display: grid;
+        gap: 12px;
+      }
+
+      .stacked-row {
+        display: grid;
+        gap: 7px;
+      }
+
+      .stacked-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .stacked-track {
+        display: flex;
+        height: 12px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(100, 116, 139, 0.18);
+      }
+
+      .seg-fit {
+        background: linear-gradient(90deg, var(--teal), var(--green));
+      }
+
+      .seg-small {
+        background: linear-gradient(90deg, var(--amber), #fb7185);
+      }
+
+      .seg-large {
+        background: linear-gradient(90deg, var(--sky), var(--violet));
+      }
+
+      .treemap {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        grid-auto-rows: 58px;
+        gap: 8px;
+      }
+
+      .tile {
+        display: grid;
+        align-content: end;
+        min-width: 0;
+        padding: 9px;
+        border: 1px solid rgba(226, 232, 240, 0.13);
+        border-radius: 8px;
+        background: linear-gradient(145deg, rgba(45, 212, 191, 0.18), rgba(56, 189, 248, 0.08));
+      }
+
+      .tile strong,
+      .tile span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .tile strong {
+        font-size: 12px;
+      }
+
+      .tile span {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .matrix {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .matrix-cell {
+        min-height: 72px;
+        padding: 9px;
+        border: 1px solid rgba(148, 163, 184, 0.14);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.42);
+      }
+
+      .matrix-cell strong {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 12px;
+      }
+
+      .matrix-cell span {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.25;
+      }
+
+      .line-chart {
+        width: 100%;
+        height: 250px;
+      }
+
+      .line-chart text {
+        fill: var(--muted);
+        font-size: 11px;
+      }
+
+      .table-wrap {
+        overflow: auto;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 860px;
+      }
+
+      th,
+      td {
+        padding: 11px 12px;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.13);
+        text-align: left;
+        vertical-align: top;
+        font-size: 13px;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: #182235;
+        color: #cbd5e1;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      td {
+        color: #dbeafe;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .risk-chip {
+        display: inline-flex;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: rgba(249, 115, 115, 0.12);
+        color: #fecaca;
+        font-size: 12px;
+      }
+
+      .positive-chip {
+        display: inline-flex;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: rgba(45, 212, 191, 0.12);
+        color: #99f6e4;
+        font-size: 12px;
+      }
+
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      .loading {
+        display: grid;
+        min-height: 70vh;
+        place-items: center;
+        color: var(--muted);
+      }
+
+      @media (max-width: 1100px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: relative;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .side-note {
+          position: static;
+          margin-top: 16px;
+        }
+
+        .nav {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .nav button {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-icon {
+          display: none;
+        }
+
+        .hero-grid,
+        .grid.cols-4,
+        .grid.cols-3,
+        .grid.cols-2,
+        .grid.cols-2-1 {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .main {
+          padding: 18px 14px 28px;
+        }
+
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .filters {
+          width: 100%;
+          justify-content: stretch;
+        }
+
+        .select {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .hero-metrics,
+        .nav,
+        .matrix,
+        .donut-wrap {
+          grid-template-columns: 1fr;
+        }
+
+        .bar-row {
+          grid-template-columns: 96px minmax(0, 1fr) 56px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">FS</div>
+          <div>
+            <h1>FitScope Global</h1>
+            <p>Outbound apparel decision intelligence</p>
+          </div>
+        </div>
+        <nav class="nav" aria-label="Dashboard navigation">
+          <button class="active" data-page="overview"><span class="nav-icon">01</span><span>Overview</span></button>
+          <button data-page="market"><span class="nav-icon">02</span><span>Product & Market</span></button>
+          <button data-page="fit"><span class="nav-icon">03</span><span>Fit & Size Risk</span></button>
+          <button data-page="evidence"><span class="nav-icon">04</span><span>Review Evidence</span></button>
+        </nav>
+        <div class="side-note">
+          <strong>Dataset status</strong>
+          <span>UCSD fit data, Kaggle women’s reviews and Hugging Face H&M tables are connected. Kaggle H&M competition download remains a follow-up item.</span>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div id="loading" class="loading">Loading local dashboard data...</div>
+        <div id="dashboard" style="display: none">
+          <header class="topbar">
+            <div class="command-center">
+              <div class="command-title">
+                <strong>Decision Command Center</strong>
+                <span class="live-dot">Data-linked workspace</span>
+              </div>
+              <div class="signal-strip">
+                <div class="signal-chip"><span>Lens</span><b id="context-lens">Executive risk</b></div>
+                <div class="signal-chip"><span>Action</span><b id="context-action">Prioritize categories</b></div>
+                <div class="signal-chip"><span>Mode</span><b id="context-mode">Evidence-first</b></div>
+              </div>
+            </div>
+            <div class="filters">
+              <select id="category-filter" class="select" aria-label="Category filter">
+                <option value="all">All categories</option>
+              </select>
+              <select id="risk-filter" class="select" aria-label="Risk filter">
+                <option value="all">All risk levels</option>
+                <option value="high">High risk only</option>
+                <option value="fit">Fit issues</option>
+                <option value="review">Review pain points</option>
+              </select>
+            </div>
+          </header>
+
+          <section id="overview" class="page active">
+            <div class="hero">
+              <div class="hero-grid">
+                <div>
+                  <h3>Priority Decision Queue</h3>
+                  <p>Ranked interventions for the merchandising and product-page team. Each recommendation must be backed by fit signals, review pain points, or category risk.</p>
+                  <div id="priority-actions" class="action-list" style="margin-top: 14px"></div>
+                </div>
+                <div class="status-panel">
+                  <div class="status-row"><span>Risk hotspots</span><strong id="queue-hotspots">-</strong></div>
+                  <div class="status-row"><span>Primary issue driver</span><strong id="queue-driver">-</strong></div>
+                  <div class="status-row"><span>Next decision</span><strong id="queue-next">-</strong></div>
+                  <div class="status-row"><span>Evidence status</span><strong id="queue-evidence">Ready</strong></div>
+                </div>
+              </div>
+            </div>
+            <div class="grid cols-4" id="overview-kpis"></div>
+            <div class="section-head">
+              <div>
+                <h3>Risk Triage Mix</h3>
+                <p>Portfolio view of what needs action now, what should be watched, and what is currently stable.</p>
+              </div>
+            </div>
+            <div class="grid cols-2">
+              <div class="card"><h3>Fit Outcome Split</h3><div id="overview-fit-donut" style="margin-top: 12px"></div></div>
+              <div class="card"><h3>Category Triage</h3><div id="overview-triage-donut" style="margin-top: 12px"></div></div>
+            </div>
+            <div class="section-head">
+              <div>
+                <h3>Category Risk Leaders</h3>
+                <p>Default view filters out categories with insufficient sample size.</p>
+              </div>
+              <span class="pill">Risk score = non-fit + low rating + pain points</span>
+            </div>
+            <div class="grid cols-2">
+              <div class="card"><h3>Highest Risk Apparel Categories</h3><div id="overview-risk-bars" class="bars" style="margin-top: 14px"></div></div>
+              <div class="card"><h3>Review Pain Point Mix</h3><div id="overview-pain-bars" class="bars" style="margin-top: 14px"></div></div>
+            </div>
+          </section>
+
+          <section id="market" class="page">
+            <div class="grid cols-4" id="market-kpis"></div>
+            <div class="section-head">
+              <div>
+                <h3>H&M Product Structure</h3>
+                <p>Behavioral context for assortment planning and category opportunity framing.</p>
+              </div>
+              <span class="pill">Hugging Face H&M Search</span>
+            </div>
+            <div class="grid cols-2">
+              <div class="card"><h3>Product Groups</h3><div id="market-product-bars" class="bars" style="margin-top: 14px"></div></div>
+              <div class="card"><h3>Index Groups</h3><div id="market-index-bars" class="bars" style="margin-top: 14px"></div></div>
+            </div>
+            <div class="section-head">
+              <div>
+                <h3>Assortment Map</h3>
+                <p>A compact product structure view for spotting category concentration.</p>
+              </div>
+            </div>
+            <div class="grid cols-2-1">
+              <div class="card"><h3>Product Group Treemap</h3><div id="market-treemap" class="treemap" style="margin-top: 14px"></div></div>
+              <div class="card"><h3>Product Group Share</h3><div id="market-product-donut" style="margin-top: 12px"></div></div>
+            </div>
+            <div class="section-head">
+              <div>
+                <h3>Transaction Momentum</h3>
+                <p>Daily activity from the H&M transaction table, compressed into dashboard-ready metrics.</p>
+              </div>
+            </div>
+            <div class="card"><svg id="transaction-line" class="line-chart" role="img" aria-label="H&M transaction trend"></svg></div>
+          </section>
+
+          <section id="fit" class="page">
+            <div class="grid cols-4" id="fit-kpis"></div>
+            <div class="section-head">
+              <div>
+                <h3>Size and Body Fit Risk</h3>
+                <p>Fit risk is strongest when sizing instability and review pain points appear together.</p>
+              </div>
+            </div>
+            <div class="grid cols-2">
+              <div class="card"><h3>Highest Risk Sizes</h3><div id="size-bars" class="bars" style="margin-top: 14px"></div></div>
+              <div class="card"><h3>Body Type Risk</h3><div id="body-bars" class="bars" style="margin-top: 14px"></div></div>
+            </div>
+            <div class="section-head">
+              <div>
+                <h3>Fit Composition by Category</h3>
+                <p>Stacked bars expose whether a category skews too small, too large, or generally unstable.</p>
+              </div>
+            </div>
+            <div class="card"><div id="fit-stacked" class="stacked-bars"></div></div>
+            <div class="section-head">
+              <div>
+                <h3>Fit Risk Matrix</h3>
+                <p>Cells combine category risk score, fit rate and pain-point rate.</p>
+              </div>
+            </div>
+            <div id="risk-matrix" class="matrix"></div>
+          </section>
+
+          <section id="evidence" class="page">
+            <div class="grid cols-3" id="evidence-kpis"></div>
+            <div class="section-head">
+              <div>
+                <h3>Evidence Composition</h3>
+                <p>Review issues and rating benchmarks before opening individual comments.</p>
+              </div>
+            </div>
+            <div class="grid cols-2">
+              <div class="card"><h3>Pain Point Share</h3><div id="evidence-pain-donut" style="margin-top: 12px"></div></div>
+              <div class="card"><h3>Kaggle Class Risk</h3><div id="evidence-class-bars" class="bars" style="margin-top: 14px"></div></div>
+            </div>
+            <div class="section-head">
+              <div>
+                <h3>Review Evidence Table</h3>
+                <p>Every dashboard insight should be traceable to original user feedback.</p>
+              </div>
+              <span class="pill" id="evidence-count">- records</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>Fit</th>
+                    <th>Rating</th>
+                    <th>Body Type</th>
+                    <th>Occasion</th>
+                    <th>Matched Issues</th>
+                    <th>Review Evidence</th>
+                  </tr>
+                </thead>
+                <tbody id="evidence-table"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const paths = {
+        category: "../data/ucsd_clothing_fit/processed/ucsd_category_metrics.csv",
+        size: "../data/ucsd_clothing_fit/processed/ucsd_size_metrics.csv",
+        body: "../data/ucsd_clothing_fit/processed/ucsd_body_type_metrics.csv",
+        pain: "../data/ucsd_clothing_fit/processed/ucsd_pain_point_metrics.csv",
+        evidence: "../data/ucsd_clothing_fit/processed/ucsd_evidence_sample.csv",
+        hmProduct: "../data/huggingface_hm_search/processed/huggingface_hm_search_product_group_metrics.csv",
+        hmIndex: "../data/huggingface_hm_search/processed/huggingface_hm_search_index_group_metrics.csv",
+        hmDaily: "../data/huggingface_hm_search/processed/huggingface_hm_search_transaction_daily_metrics.csv",
+        kaggleClass: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_class_metrics.csv",
+        kaggleSentiment: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_sentiment_metrics.csv",
+      };
+
+      const state = { data: {}, page: "overview", category: "all", risk: "all" };
+
+      function parseCSV(text) {
+        const rows = [];
+        let row = [];
+        let cell = "";
+        let quote = false;
+        for (let i = 0; i < text.length; i++) {
+          const char = text[i];
+          const next = text[i + 1];
+          if (char === '"' && quote && next === '"') {
+            cell += '"';
+            i++;
+          } else if (char === '"') {
+            quote = !quote;
+          } else if (char === "," && !quote) {
+            row.push(cell);
+            cell = "";
+          } else if ((char === "\n" || char === "\r") && !quote) {
+            if (char === "\r" && next === "\n") i++;
+            row.push(cell);
+            if (row.some((value) => value !== "")) rows.push(row);
+            row = [];
+            cell = "";
+          } else {
+            cell += char;
+          }
+        }
+        if (cell || row.length) {
+          row.push(cell);
+          rows.push(row);
+        }
+        const headers = rows.shift();
+        return rows.map((values) => Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ""])));
+      }
+
+      async function loadCSV(path) {
+        const response = await fetch(path);
+        if (!response.ok) throw new Error(`Failed to load ${path}`);
+        return parseCSV(await response.text());
+      }
+
+      const num = (value) => Number.parseFloat(value || "0") || 0;
+      const int = (value) => Number.parseInt(value || "0", 10) || 0;
+      const fmt = (value) => Intl.NumberFormat("en", { notation: value > 999999 ? "compact" : "standard" }).format(value);
+      const pct = (value) => `${(num(value) * 100).toFixed(1)}%`;
+
+      function filteredCategories() {
+        let rows = state.data.category.filter((row) => int(row.display_eligible) === 1);
+        if (state.category !== "all") rows = rows.filter((row) => row.category_group === state.category);
+        if (state.risk === "high") rows = rows.filter((row) => num(row.risk_score) >= 32);
+        if (state.risk === "fit") rows = rows.filter((row) => num(row.nonfit_rate) >= 0.3);
+        if (state.risk === "review") rows = rows.filter((row) => num(row.pain_point_rate) >= 0.7);
+        return rows;
+      }
+
+      function renderKpis(target, cards) {
+        document.getElementById(target).innerHTML = cards.map((card) => `
+          <div class="card ${card.accent ? "accent" : ""}">
+            <h4>${card.label}</h4>
+            <div class="kpi-value" style="color: ${card.color || "var(--text)"}">${card.value}</div>
+            <div class="kpi-caption">${card.caption}</div>
+          </div>
+        `).join("");
+      }
+
+      function renderBars(target, rows, options) {
+        const max = Math.max(...rows.map((row) => num(row[options.value])), 1);
+        document.getElementById(target).innerHTML = rows.map((row) => {
+          const value = num(row[options.value]);
+          const width = Math.max(2, (value / max) * 100);
+          const shown = options.format ? options.format(row) : fmt(value);
+          return `
+            <div class="bar-row">
+              <div class="bar-label" title="${row[options.label]}">${row[options.label]}</div>
+              <div class="bar-track"><div class="bar-fill ${options.variant || ""}" style="width:${width}%"></div></div>
+              <div class="bar-value">${shown}</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderLineChart() {
+        const svg = document.getElementById("transaction-line");
+        const rows = state.data.hmDaily.filter((_, index) => index % 10 === 0).slice(0, 75);
+        const width = 980;
+        const height = 250;
+        const pad = 28;
+        const values = rows.map((row) => int(row.transactions));
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        const points = values.map((value, index) => {
+          const x = pad + (index / Math.max(values.length - 1, 1)) * (width - pad * 2);
+          const y = height - pad - ((value - min) / Math.max(max - min, 1)) * (height - pad * 2);
+          return [x, y];
+        });
+        const path = points.map((point, index) => `${index ? "L" : "M"}${point[0]},${point[1]}`).join(" ");
+        const area = `${path} L${width - pad},${height - pad} L${pad},${height - pad} Z`;
+        svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        svg.innerHTML = `
+          <defs>
+            <linearGradient id="lineGrad" x1="0" x2="1">
+              <stop offset="0%" stop-color="#2dd4bf"/>
+              <stop offset="100%" stop-color="#38bdf8"/>
+            </linearGradient>
+            <linearGradient id="areaGrad" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.24"/>
+              <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="${area}" fill="url(#areaGrad)"></path>
+          <path d="${path}" fill="none" stroke="url(#lineGrad)" stroke-width="3"></path>
+          <line x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" stroke="rgba(148,163,184,.22)"></line>
+          <text x="${pad}" y="20">${rows[0]?.date || ""}</text>
+          <text x="${width - pad - 70}" y="20">${rows[rows.length - 1]?.date || ""}</text>
+          <text x="${pad}" y="${height - 7}">${fmt(min)}</text>
+          <text x="${width - pad - 72}" y="${height - 7}">${fmt(max)}</text>
+        `;
+      }
+
+      function renderMatrix() {
+        const rows = filteredCategories().slice(0, 18);
+        document.getElementById("risk-matrix").innerHTML = rows.map((row) => {
+          const risk = num(row.risk_score);
+          const alpha = Math.min(0.48, 0.12 + risk / 100);
+          const color = risk >= 33 ? `rgba(249,115,115,${alpha})` : `rgba(45,212,191,${alpha})`;
+          return `
+            <div class="matrix-cell" style="background:${color}">
+              <strong>${row.category_group}</strong>
+              <span>Risk ${risk.toFixed(1)} · Fit ${pct(row.fit_rate)} · Pain ${pct(row.pain_point_rate)}</span>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderEvidence() {
+        let rows = state.data.evidence;
+        if (state.category !== "all") rows = rows.filter((row) => row.category_group === state.category);
+        if (state.risk === "fit") rows = rows.filter((row) => row.fit !== "fit");
+        if (state.risk === "review") rows = rows.filter((row) => int(row.has_pain_point) === 1);
+        if (state.risk === "high") rows = rows.filter((row) => int(row.low_signal) === 1 || row.fit !== "fit");
+        document.getElementById("evidence-count").textContent = `${fmt(rows.length)} evidence rows`;
+        document.getElementById("evidence-table").innerHTML = rows.slice(0, 80).map((row) => `
+          <tr>
+            <td>${row.category_group}</td>
+            <td><span class="${row.fit === "fit" ? "positive-chip" : "risk-chip"}">${row.fit}</span></td>
+            <td>${row.rating || "-"}</td>
+            <td>${row.body_type}</td>
+            <td>${row.occasion}</td>
+            <td class="muted">${row.pain_points || "none"}</td>
+            <td>${(row.review_text || row.review_summary || "").slice(0, 210)}${(row.review_text || "").length > 210 ? "..." : ""}</td>
+          </tr>
+        `).join("");
+      }
+
+      function renderDonut(target, rows, options) {
+        const colors = options.colors || ["var(--teal)", "var(--sky)", "var(--amber)", "var(--red)", "var(--violet)", "var(--green)"];
+        const total = rows.reduce((sum, row) => sum + num(row[options.value]), 0) || 1;
+        let cursor = 0;
+        const stops = rows.map((row, index) => {
+          const start = cursor;
+          const degrees = (num(row[options.value]) / total) * 360;
+          cursor += degrees;
+          return `${colors[index % colors.length]} ${start.toFixed(2)}deg ${cursor.toFixed(2)}deg`;
+        });
+        const center = options.center || fmt(total);
+        const legend = rows.map((row, index) => {
+          const value = num(row[options.value]);
+          return `
+            <div class="legend-row">
+              <span class="legend-dot" style="background:${colors[index % colors.length]}"></span>
+              <strong>${row[options.label]}</strong>
+              <span>${options.format ? options.format(row, total) : `${((value / total) * 100).toFixed(1)}%`}</span>
+            </div>
+          `;
+        }).join("");
+        document.getElementById(target).innerHTML = `
+          <div class="donut-wrap">
+            <div class="donut" data-center="${center}" style="background: conic-gradient(${stops.join(", ")})"></div>
+            <div class="legend">${legend}</div>
+          </div>
+        `;
+      }
+
+      function renderStacked(target, rows) {
+        document.getElementById(target).innerHTML = rows.map((row) => {
+          const fit = Math.max(0, num(row.fit_rate) * 100);
+          const small = Math.max(0, num(row.too_small_rate) * 100);
+          const large = Math.max(0, num(row.too_large_rate) * 100);
+          return `
+            <div class="stacked-row">
+              <div class="stacked-head">
+                <strong>${row.category_group}</strong>
+                <span>Fit ${fit.toFixed(0)}% · Small ${small.toFixed(0)}% · Large ${large.toFixed(0)}%</span>
+              </div>
+              <div class="stacked-track">
+                <div class="seg-fit" style="width:${fit}%"></div>
+                <div class="seg-small" style="width:${small}%"></div>
+                <div class="seg-large" style="width:${large}%"></div>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderTreemap(target, rows) {
+        const max = Math.max(...rows.map((row) => int(row.articles)), 1);
+        document.getElementById(target).innerHTML = rows.map((row, index) => {
+          const span = Math.max(3, Math.min(8, Math.round((int(row.articles) / max) * 8)));
+          const palette = [
+            "linear-gradient(145deg, rgba(45,212,191,.28), rgba(56,189,248,.10))",
+            "linear-gradient(145deg, rgba(56,189,248,.26), rgba(167,139,250,.11))",
+            "linear-gradient(145deg, rgba(245,158,11,.20), rgba(249,115,115,.10))",
+          ];
+          return `
+            <div class="tile" style="grid-column: span ${span}; background:${palette[index % palette.length]}">
+              <strong>${row.product_group_name}</strong>
+              <span>${fmt(int(row.articles))} articles</span>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderPriorityActions(categories, weightedNonfit) {
+        const topCategory = categories[0] || {};
+        const topSize = state.data.size.find((row) => int(row.display_eligible) === 1) || {};
+        const topPain = state.data.pain[0] || {};
+        const highRiskCount = categories.filter((row) => num(row.risk_score) >= 32).length;
+        const actions = [
+          {
+            title: `Audit ${topCategory.category_group || "top"} listings before scaling traffic`,
+            detail: `Risk score ${num(topCategory.risk_score).toFixed(1)} with ${pct(topCategory.nonfit_rate)} non-fit signal.`,
+            tag: "Merchandising",
+          },
+          {
+            title: `Add size guidance for size ${topSize.size || "-"}`,
+            detail: `Highest size-risk score ${num(topSize.risk_score).toFixed(1)}; verify size chart and model notes.`,
+            tag: "Size chart",
+          },
+          {
+            title: `Rewrite PDP copy around ${topPain.pain_point || "review issues"}`,
+            detail: `${fmt(int(topPain.records))} matched review signals should be converted into shopper-facing expectations.`,
+            tag: "Content",
+          },
+        ];
+        document.getElementById("priority-actions").innerHTML = actions.map((action, index) => `
+          <div class="action-item">
+            <div class="action-rank">P${index + 1}</div>
+            <div class="action-copy">
+              <strong>${action.title}</strong>
+              <span>${action.detail}</span>
+            </div>
+            <span class="action-tag">${action.tag}</span>
+          </div>
+        `).join("");
+        document.getElementById("queue-hotspots").textContent = highRiskCount;
+        document.getElementById("queue-driver").textContent = topPain.pain_point || "-";
+        document.getElementById("queue-next").textContent = weightedNonfit >= 0.28 ? "Sizing intervention" : "Review audit";
+        document.getElementById("queue-evidence").textContent = `${fmt(state.data.evidence.length)} rows`;
+      }
+
+      function renderAll() {
+        const categories = filteredCategories();
+        const totalFitRecords = state.data.category.reduce((sum, row) => sum + int(row.records), 0);
+        const weightedFit = state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0) / totalFitRecords;
+        const weightedNonfit = state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.nonfit_rate), 0) / totalFitRecords;
+        const hmTransactions = state.data.hmDaily.reduce((sum, row) => sum + int(row.transactions), 0);
+        const kaggleReviews = state.data.kaggleClass.reduce((sum, row) => sum + int(row.records), 0);
+        const topCategory = categories[0] || {};
+
+        renderPriorityActions(categories, weightedNonfit);
+
+        renderKpis("overview-kpis", [
+          { label: "Risk Hotspots", value: categories.filter((row) => num(row.risk_score) >= 32).length, caption: "Categories that need immediate review", accent: true, color: "var(--red)" },
+          { label: "Portfolio Fit Health", value: `${(weightedFit * 100).toFixed(1)}%`, caption: "Weighted fit rate across eligible categories", color: "var(--teal)" },
+          { label: "Sizing Exposure", value: `${(weightedNonfit * 100).toFixed(1)}%`, caption: "Feedback reporting too small or too large", color: "var(--amber)" },
+          { label: "Priority Category", value: topCategory.category_group || "-", caption: topCategory.risk_score ? `Open action: risk score ${num(topCategory.risk_score).toFixed(1)}` : "No category selected", color: "var(--sky)" },
+        ]);
+        const fitSplit = [
+          { label: "Fit", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0) },
+          { label: "Too small", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.too_small_rate), 0) },
+          { label: "Too large", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.too_large_rate), 0) },
+        ];
+        renderDonut("overview-fit-donut", fitSplit, {
+          label: "label",
+          value: "value",
+          center: `${(weightedFit * 100).toFixed(0)}%`,
+          colors: ["var(--teal)", "var(--amber)", "var(--sky)"],
+        });
+        const triageRows = [
+          { label: "Act now", value: categories.filter((row) => num(row.risk_score) >= 32).length },
+          { label: "Watch", value: categories.filter((row) => num(row.risk_score) < 32 && num(row.risk_score) >= 28).length },
+          { label: "Stable", value: categories.filter((row) => num(row.risk_score) < 28).length },
+        ];
+        renderDonut("overview-triage-donut", triageRows, {
+          label: "label",
+          value: "value",
+          center: `${categories.length} cats`,
+          colors: ["var(--red)", "var(--amber)", "var(--teal)"],
+          format: (row) => `${num(row.value).toFixed(0)} categories`,
+        });
+        renderBars("overview-risk-bars", categories.slice(0, 10), { label: "category_group", value: "risk_score", variant: "risk", format: (row) => num(row.risk_score).toFixed(1) });
+        renderBars("overview-pain-bars", state.data.pain.slice(0, 8), { label: "pain_point", value: "records", variant: "violet" });
+
+        const productTotal = state.data.hmProduct.reduce((sum, row) => sum + int(row.articles), 0);
+        renderKpis("market-kpis", [
+          { label: "H&M Articles", value: fmt(productTotal), caption: "Product metadata rows", accent: true, color: "var(--sky)" },
+          { label: "Transactions", value: fmt(hmTransactions), caption: "Behavioral context table" },
+          { label: "Largest Group", value: state.data.hmProduct[0]?.product_group_name || "-", caption: `${fmt(int(state.data.hmProduct[0]?.articles))} articles`, color: "var(--teal)" },
+          { label: "Sales Channels", value: "2", caption: "Channel-level aggregation available" },
+        ]);
+        renderBars("market-product-bars", state.data.hmProduct.slice(0, 10), { label: "product_group_name", value: "articles" });
+        renderBars("market-index-bars", state.data.hmIndex.slice(0, 10), { label: "index_group_name", value: "articles", variant: "violet" });
+        renderTreemap("market-treemap", state.data.hmProduct.slice(0, 12));
+        renderDonut("market-product-donut", state.data.hmProduct.slice(0, 6), {
+          label: "product_group_name",
+          value: "articles",
+          center: fmt(productTotal),
+          colors: ["var(--teal)", "var(--sky)", "var(--violet)", "var(--amber)", "var(--green)", "var(--red)"],
+        });
+        renderLineChart();
+
+        renderKpis("fit-kpis", [
+          { label: "High Risk Categories", value: categories.filter((row) => num(row.risk_score) >= 32).length, caption: "Eligible categories above risk threshold", color: "var(--red)" },
+          { label: "Worst Size", value: state.data.size[0]?.size || "-", caption: `Risk score ${num(state.data.size[0]?.risk_score).toFixed(1)}`, accent: true, color: "var(--amber)" },
+          { label: "Body Segments", value: state.data.body.length, caption: "Body type groups in UCSD data" },
+          { label: "Evidence Sample", value: fmt(state.data.evidence.length), caption: "Review rows linked to diagnosis" },
+        ]);
+        renderBars("size-bars", state.data.size.filter((row) => int(row.display_eligible) === 1).slice(0, 10), { label: "size", value: "risk_score", variant: "risk", format: (row) => num(row.risk_score).toFixed(1) });
+        renderBars("body-bars", state.data.body.filter((row) => int(row.display_eligible) === 1).slice(0, 10), { label: "body_type", value: "risk_score", variant: "risk", format: (row) => num(row.risk_score).toFixed(1) });
+        renderStacked("fit-stacked", categories.slice(0, 10));
+        renderMatrix();
+
+        const negativeClasses = state.data.kaggleClass.filter((row) => num(row.low_rating_rate) > 0.1).length;
+        renderKpis("evidence-kpis", [
+          { label: "Evidence Rows", value: fmt(state.data.evidence.length), caption: "UCSD drill-down sample", accent: true, color: "var(--teal)" },
+          { label: "Pain Tags", value: state.data.pain.length, caption: "Rule-based review issue types" },
+          { label: "Kaggle Risk Classes", value: negativeClasses, caption: "Women’s review classes with >10% low ratings", color: "var(--amber)" },
+        ]);
+        renderDonut("evidence-pain-donut", state.data.pain.slice(0, 6), {
+          label: "pain_point",
+          value: "records",
+          center: `${state.data.pain.length} tags`,
+          colors: ["var(--red)", "var(--amber)", "var(--sky)", "var(--violet)", "var(--teal)", "var(--green)"],
+        });
+        renderBars("evidence-class-bars", state.data.kaggleClass.slice(0, 10), {
+          label: "class_name",
+          value: "low_rating_rate",
+          variant: "risk",
+          format: (row) => pct(row.low_rating_rate),
+        });
+        renderEvidence();
+      }
+
+      function setPage(page) {
+        state.page = page;
+        document.querySelectorAll(".nav button").forEach((button) => button.classList.toggle("active", button.dataset.page === page));
+        document.querySelectorAll(".page").forEach((section) => section.classList.toggle("active", section.id === page));
+        const copy = {
+          overview: ["Executive risk", "Prioritize categories", "Evidence-first"],
+          market: ["Assortment structure", "Read market shape", "Behavioral context"],
+          fit: ["Fit diagnosis", "Find size instability", "Segment-aware"],
+          evidence: ["Review proof", "Inspect user language", "Traceable"],
+        };
+        document.getElementById("context-lens").textContent = copy[page][0];
+        document.getElementById("context-action").textContent = copy[page][1];
+        document.getElementById("context-mode").textContent = copy[page][2];
+      }
+
+      async function init() {
+        const entries = await Promise.all(Object.entries(paths).map(async ([key, path]) => [key, await loadCSV(path)]));
+        state.data = Object.fromEntries(entries);
+        const categorySelect = document.getElementById("category-filter");
+        state.data.category
+          .filter((row) => int(row.display_eligible) === 1)
+          .slice(0, 30)
+          .sort((a, b) => a.category_group.localeCompare(b.category_group))
+          .forEach((row) => {
+            const option = document.createElement("option");
+            option.value = row.category_group;
+            option.textContent = row.category_group;
+            categorySelect.appendChild(option);
+          });
+        document.querySelectorAll(".nav button").forEach((button) => button.addEventListener("click", () => setPage(button.dataset.page)));
+        categorySelect.addEventListener("change", (event) => {
+          state.category = event.target.value;
+          renderAll();
+        });
+        document.getElementById("risk-filter").addEventListener("change", (event) => {
+          state.risk = event.target.value;
+          renderAll();
+        });
+        renderAll();
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+      }
+
+      init().catch((error) => {
+        document.getElementById("loading").textContent = `Unable to load dashboard data: ${error.message}`;
+        console.error(error);
+      });
+    </script>
+  </body>
+</html>
