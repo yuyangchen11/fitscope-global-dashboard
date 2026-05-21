@@ -356,6 +356,126 @@
         font-size: 12px;
       }
 
+      .workspace-empty {
+        display: grid;
+        gap: 16px;
+        min-height: 280px;
+        align-content: center;
+        padding: 22px;
+        border: 1px solid rgba(45, 212, 191, 0.2);
+        border-radius: 8px;
+        background:
+          radial-gradient(circle at 18% 18%, rgba(45, 212, 191, 0.16), transparent 30%),
+          linear-gradient(145deg, rgba(18, 26, 42, 0.96), rgba(13, 20, 34, 0.94));
+      }
+
+      .workspace-empty h3 {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .workspace-empty p {
+        max-width: 780px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .quick-picks {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .quick-pick {
+        min-height: 34px;
+        padding: 0 11px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.5);
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      .quick-pick:hover {
+        border-color: rgba(45, 212, 191, 0.42);
+        color: var(--teal);
+      }
+
+      .decision-panel {
+        display: grid;
+        gap: 10px;
+        padding: 15px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: linear-gradient(145deg, rgba(23, 32, 51, 0.92), rgba(15, 23, 42, 0.82));
+      }
+
+      .decision-panel h4 {
+        margin: 0;
+        color: var(--text);
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      .decision-panel p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.48;
+      }
+
+      .decision-steps {
+        display: grid;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .decision-steps li {
+        display: grid;
+        grid-template-columns: 26px minmax(0, 1fr);
+        gap: 9px;
+        align-items: start;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.38;
+      }
+
+      .decision-steps b {
+        display: grid;
+        place-items: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 7px;
+        background: rgba(45, 212, 191, 0.12);
+        color: var(--teal);
+        font-size: 11px;
+      }
+
+      .evidence-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .evidence-card {
+        padding: 11px;
+        border: 1px solid rgba(226, 232, 240, 0.12);
+        border-radius: 8px;
+        background: rgba(2, 6, 23, 0.2);
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .evidence-card strong {
+        display: block;
+        margin-bottom: 5px;
+        color: var(--text);
+        font-size: 13px;
+      }
+
       .status-panel {
         display: grid;
         align-content: center;
@@ -741,6 +861,28 @@
         font-weight: 800;
         text-anchor: middle;
         dominant-baseline: middle;
+      }
+
+      .empty-state {
+        display: grid;
+        min-height: 172px;
+        align-content: center;
+        gap: 8px;
+        padding: 18px;
+        border: 1px dashed rgba(148, 163, 184, 0.26);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.28);
+      }
+
+      .empty-state strong {
+        color: var(--text);
+        font-size: 14px;
+      }
+
+      .empty-state span {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
       }
 
       .legend {
@@ -1255,6 +1397,27 @@
         color: #dbeafe;
       }
 
+      .empty-row td {
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .evidence-copy {
+        display: grid;
+        gap: 5px;
+      }
+
+      .evidence-copy strong {
+        color: var(--text);
+        font-size: 12px;
+      }
+
+      .evidence-copy span {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
       .muted {
         color: var(--muted);
       }
@@ -1309,6 +1472,11 @@
           margin-top: 16px;
         }
 
+        .language-switcher {
+          position: static;
+          margin-top: 16px;
+        }
+
         .nav {
           grid-template-columns: repeat(4, minmax(0, 1fr));
         }
@@ -1343,10 +1511,13 @@
 
         .filters {
           width: 100%;
+          display: grid;
+          grid-template-columns: 1fr;
           justify-content: stretch;
         }
 
         .select {
+          width: 100%;
           flex: 1;
           min-width: 0;
         }
@@ -1385,8 +1556,9 @@
         <nav class="nav" aria-label="Dashboard navigation">
           <button class="active" data-page="overview"><span class="nav-icon">01</span><span data-i18n="navOverview">Overview</span></button>
           <button data-page="market"><span class="nav-icon">02</span><span data-i18n="navMarket">Product & Market</span></button>
-          <button data-page="fit"><span class="nav-icon">03</span><span data-i18n="navFit">Fit & Size Risk</span></button>
-          <button data-page="evidence"><span class="nav-icon">04</span><span data-i18n="navEvidence">Review Evidence</span></button>
+          <button data-page="workspace"><span class="nav-icon">03</span><span data-i18n="navWorkspace">Selected Workspace</span></button>
+          <button data-page="fit"><span class="nav-icon">04</span><span data-i18n="navFit">Fit & Size Risk</span></button>
+          <button data-page="evidence"><span class="nav-icon">05</span><span data-i18n="navEvidence">Review Evidence</span></button>
         </nav>
         <div class="language-switcher">
           <strong data-i18n="languageTitle">Language</strong>
@@ -1503,6 +1675,45 @@
               </div>
             </div>
             <div class="card"><svg id="transaction-line" class="line-chart" role="img" aria-label="H&M transaction trend"></svg></div>
+          </section>
+
+          <section id="workspace" class="page">
+            <div id="workspace-empty" class="workspace-empty"></div>
+            <div id="workspace-content" style="display: none">
+              <div class="hero">
+                <div class="hero-grid">
+                  <div>
+                    <h3 id="workspace-title">Selected Category Workspace</h3>
+                    <p id="workspace-brief">A focused workspace for the current category selection.</p>
+                  </div>
+                  <div class="status-panel">
+                    <div class="status-row"><span data-i18n="workspaceSignal">Decision signal</span><strong id="workspace-signal">-</strong></div>
+                    <div class="status-row"><span data-i18n="workspaceWhy">Main reason</span><strong id="workspace-driver">-</strong></div>
+                    <div class="status-row"><span data-i18n="workspaceEvidence">Evidence coverage</span><strong id="workspace-coverage">-</strong></div>
+                    <div class="status-row"><span data-i18n="workspaceNext">Next action</span><strong id="workspace-next">-</strong></div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid cols-4" id="workspace-kpis"></div>
+              <div class="section-head">
+                <div>
+                  <h3 data-i18n="workspaceDiagnosisTitle">Category Diagnosis</h3>
+                  <p data-i18n="workspaceDiagnosisDesc">The selected category is judged by fit stability, rating risk, pain-point density and sample coverage.</p>
+                </div>
+                <span class="pill" id="workspace-method">-</span>
+              </div>
+              <div class="grid cols-2">
+                <div class="decision-panel">
+                  <h4 data-i18n="workspaceDecisionLogic">Decision Logic</h4>
+                  <div id="workspace-logic"></div>
+                </div>
+                <div class="card"><h3 data-i18n="workspaceFitMix">Fit Mix</h3><div id="workspace-fit-donut" style="margin-top: 12px"></div></div>
+              </div>
+              <div class="grid cols-2" style="margin-top: 14px">
+                <div class="card"><h3 data-i18n="workspacePainTitle">Pain Point Evidence</h3><div id="workspace-pain-bars" class="bars" style="margin-top: 14px"></div></div>
+                <div class="card"><h3 data-i18n="workspaceEvidenceTitle">Traceable Review Sample</h3><div id="workspace-evidence-list" class="evidence-list" style="margin-top: 14px"></div></div>
+              </div>
+            </div>
           </section>
 
           <section id="fit" class="page">
@@ -1662,7 +1873,7 @@
       const i18n = {
         en: {
           brandTagline: "Outbound apparel decision intelligence",
-          navOverview: "Overview", navMarket: "Product & Market", navFit: "Fit & Size Risk", navEvidence: "Review Evidence",
+          navOverview: "Overview", navMarket: "Product & Market", navWorkspace: "Selected Workspace", navFit: "Fit & Size Risk", navEvidence: "Review Evidence",
           languageTitle: "Language", loading: "Loading local dashboard data...",
           commandTitle: "Decision Command Center", liveWorkspace: "Data-linked workspace",
           chipLens: "Lens", chipAction: "Action", chipMode: "Mode", chipScope: "Scope",
@@ -1687,11 +1898,14 @@
           painShareTitle: "Pain Point Share", kaggleRiskTitle: "Kaggle Class Risk", interventionsTitle: "Recommended Interventions", interventionsDesc: "Operational actions generated from current filters and evidence signals.",
           reviewTableTitle: "Review Evidence Table", reviewTableDesc: "Every dashboard insight should be traceable to original user feedback.",
           thCategory: "Category", thFit: "Fit", thRating: "Rating", thBodyType: "Body Type", thOccasion: "Occasion", thIssues: "Matched Issues", thEvidence: "Review Evidence",
+          workspaceSignal: "Decision signal", workspaceWhy: "Main reason", workspaceEvidence: "Evidence coverage", workspaceNext: "Next action",
+          workspaceDiagnosisTitle: "Category Diagnosis", workspaceDiagnosisDesc: "The selected category is judged by fit stability, rating risk, pain-point density and sample coverage.",
+          workspaceDecisionLogic: "Decision Logic", workspaceFitMix: "Fit Mix", workspacePainTitle: "Pain Point Evidence", workspaceEvidenceTitle: "Traceable Review Sample",
           scopeFit: "Fit/review filters active", scopeMarket: "Market page uses H&M full dataset", filteredRows: "filtered evidence rows",
         },
         zh: {
           brandTagline: "服装出海商品决策智能",
-          navOverview: "总览", navMarket: "商品与市场", navFit: "尺码与合身风险", navEvidence: "评论证据",
+          navOverview: "总览", navMarket: "商品与市场", navWorkspace: "选择工作区", navFit: "尺码与合身风险", navEvidence: "评论证据",
           languageTitle: "语言", loading: "正在加载本地看板数据...",
           commandTitle: "决策指挥中心", liveWorkspace: "数据联动工作区",
           chipLens: "视角", chipAction: "行动", chipMode: "模式", chipScope: "范围",
@@ -1716,9 +1930,79 @@
           painShareTitle: "痛点占比", kaggleRiskTitle: "Kaggle 类目风险", interventionsTitle: "推荐干预动作", interventionsDesc: "基于当前筛选和证据信号生成运营动作。",
           reviewTableTitle: "评论证据表", reviewTableDesc: "每个看板洞察都应能追溯到原始用户反馈。",
           thCategory: "品类", thFit: "合身", thRating: "评分", thBodyType: "体型", thOccasion: "场景", thIssues: "匹配问题", thEvidence: "评论证据",
+          workspaceSignal: "决策信号", workspaceWhy: "主要原因", workspaceEvidence: "证据覆盖", workspaceNext: "下一步动作",
+          workspaceDiagnosisTitle: "品类诊断", workspaceDiagnosisDesc: "选中品类会同时按合身稳定性、评分风险、痛点密度和样本覆盖来判断。",
+          workspaceDecisionLogic: "决策逻辑", workspaceFitMix: "合身构成", workspacePainTitle: "痛点证据", workspaceEvidenceTitle: "可追溯评论样本",
           scopeFit: "合身/评论筛选已生效", scopeMarket: "市场页使用 H&M 完整数据集", filteredRows: "条筛选后证据",
         },
       };
+
+      const labelMaps = {
+        category: {
+          dress: "连衣裙", top: "上衣", bottom: "下装", outerwear: "外套", sale: "促销款", vest: "马甲",
+          tunic: "长上衣", culottes: "阔腿裤", gown: "礼服", sweater: "针织衫", skirt: "半身裙",
+          pants: "裤装", jumpsuit: "连体装", shirt: "衬衫", jacket: "夹克", coat: "大衣",
+          romper: "连身短裤", shirtdress: "衬衫裙", leggings: "打底裤", suit: "套装"
+        },
+        marketGroup: {
+          "Garment Upper body": "上身服装", "Garment Lower body": "下身服装", "Garment Full body": "全身服装",
+          Accessories: "配饰", Underwear: "内衣", Shoes: "鞋履", Swimwear: "泳装",
+          "Socks & Tights": "袜类/连裤袜", Nightwear: "睡衣", Unknown: "未知",
+          "Underwear/nightwear": "内衣/睡衣", Cosmetic: "美妆"
+        },
+        indexGroup: {
+          Ladieswear: "女装", Divided: "年轻线", Menswear: "男装", Sport: "运动", "Baby/Children": "婴童/儿童"
+        },
+        pain: {
+          fabric_or_quality: "材质/质量", color_expectation: "颜色预期", chest_or_bust: "胸围/胸部",
+          length_issue: "长度问题", too_small_or_tight: "偏小/偏紧", waist_or_hip: "腰臀问题",
+          too_large_or_loose: "偏大/偏松", none: "无明显痛点"
+        },
+        fit: { fit: "合身", small: "偏小", large: "偏大" },
+        body: {
+          athletic: "运动型", petite: "娇小", pear: "梨形", hourglass: "沙漏型", apple: "苹果型",
+          "full bust": "胸部丰满", "straight & narrow": "直筒偏瘦", unknown: "未知"
+        },
+        occasion: {
+          wedding: "婚礼", party: "聚会", "formal affair": "正式场合", work: "通勤", everyday: "日常",
+          vacation: "度假", date: "约会", other: "其他", unknown: "未知"
+        },
+        reviewClass: {
+          Trend: "趋势款", Blouses: "衬衫/罩衫", Outerwear: "外套", Sleep: "睡衣",
+          Dresses: "连衣裙", Swim: "泳装", Sweaters: "针织衫", Knits: "针织类",
+          Jackets: "夹克", Intimates: "贴身内衣"
+        },
+      };
+
+      function dataLabel(value, type, mode = "balanced") {
+        const raw = String(value ?? "");
+        if (!raw) return "-";
+        const painEn = {
+          fabric_or_quality: "Fabric / quality", color_expectation: "Color expectation", chest_or_bust: "Chest / bust",
+          length_issue: "Length issue", too_small_or_tight: "Too small / tight", waist_or_hip: "Waist / hip",
+          too_large_or_loose: "Too large / loose", none: "No clear issue"
+        };
+        const fitEn = { fit: "Fit", small: "Too small", large: "Too large" };
+        const humanEn = type === "pain" ? (painEn[raw] || raw.replaceAll("_", " ")) : type === "fit" ? (fitEn[raw] || raw) : raw;
+        if (state.lang !== "zh") return humanEn;
+        const translated = labelMaps[type]?.[raw];
+        if (!translated) return humanEn;
+        if (type === "fit" || type === "pain" || type === "body" || type === "occasion") return translated;
+        return mode === "zhOnly" ? translated : `${translated} · ${raw}`;
+      }
+
+      function painLabels(value, mode = state.lang === "zh" ? "zhOnly" : "balanced") {
+        const tags = String(value || "none").split(";").filter(Boolean);
+        return (tags.length ? tags : ["none"]).map((tag) => dataLabel(tag, "pain", mode)).join(state.lang === "zh" ? "；" : "; ");
+      }
+
+      function fitLabel(value) {
+        return state.lang === "zh" ? (labelMaps.fit[value] || value || "-") : (value || "-");
+      }
+
+      function fieldLabel(value, type) {
+        return state.lang === "zh" ? (labelMaps[type]?.[value] || value || "-") : (value || "-");
+      }
 
       function parseCSV(text) {
         const rows = [];
@@ -1803,6 +2087,16 @@
         return [...counts.entries()].map(([pain_point, records]) => ({ pain_point, records })).sort((a, b) => b.records - a.records);
       }
 
+      function categoryPainRows(category) {
+        const counts = new Map();
+        categoryEvidence(category).forEach((row) => {
+          (row.pain_points || "").split(";").filter(Boolean).forEach((label) => {
+            counts.set(label, (counts.get(label) || 0) + 1);
+          });
+        });
+        return [...counts.entries()].map(([pain_point, records]) => ({ pain_point, records })).sort((a, b) => b.records - a.records);
+      }
+
       function categoryMetrics(category) {
         return state.data.category.find((row) => row.category_group === category);
       }
@@ -1814,6 +2108,48 @@
       function scrollToTarget(targetId) {
         const target = document.getElementById(targetId);
         if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      function setCategoryFilter(category, page = "workspace") {
+        category = decodeURIComponent(category);
+        state.category = category;
+        state.selectedCategory = category === "all" ? null : category;
+        document.getElementById("category-filter").value = category;
+        setPage(page);
+        renderAll();
+      }
+
+      function categoryDecision(row, evidenceRows = []) {
+        const risk = num(row.risk_score);
+        const nonfit = num(row.nonfit_rate);
+        const pain = num(row.pain_point_rate);
+        const low = num(row.low_signal_rate);
+        const records = int(row.records);
+        const topPain = categoryPainRows(row.category_group)[0]?.pain_point || "none";
+        let signal = state.lang === "zh" ? "观察" : "Watch";
+        let tone = "watch";
+        let driver = state.lang === "zh" ? "样本稳定，暂不需要强干预" : "Stable sample; no aggressive intervention needed";
+        let next = state.lang === "zh" ? "继续监控" : "Monitor";
+        if (risk >= 34 || (nonfit >= 0.34 && pain >= 0.68)) {
+          signal = state.lang === "zh" ? "优先修正" : "Fix first";
+          tone = "fix";
+          driver = state.lang === "zh" ? `不合身率 ${(nonfit * 100).toFixed(1)}%，痛点率 ${(pain * 100).toFixed(1)}%` : `Non-fit ${(nonfit * 100).toFixed(1)}%, pain-point ${(pain * 100).toFixed(1)}%`;
+          next = state.lang === "zh" ? "先改尺码/详情页" : "Fix size/PDP first";
+        } else if (risk >= 32 || pain >= 0.72) {
+          signal = state.lang === "zh" ? "重点复核" : "Inspect";
+          tone = "potential";
+          driver = state.lang === "zh" ? `主要痛点：${dataLabel(topPain, "pain", "zhOnly")}` : `Primary pain point: ${dataLabel(topPain, "pain")}`;
+          next = state.lang === "zh" ? "抽查评论证据" : "Audit review evidence";
+        } else if (nonfit <= 0.24 && low <= 0.08 && records >= 150) {
+          signal = state.lang === "zh" ? "可放量" : "Scale candidate";
+          tone = "scale";
+          driver = state.lang === "zh" ? "合身稳定且低评分信号较低" : "Fit is stable and low-rating signal is limited";
+          next = state.lang === "zh" ? "对接市场需求验证" : "Validate market demand";
+        }
+        const coverage = evidenceRows.length
+          ? (state.lang === "zh" ? `${fmt(evidenceRows.length)} 条证据样本` : `${fmt(evidenceRows.length)} sampled evidence rows`)
+          : (state.lang === "zh" ? "当前筛选无证据样本" : "No sampled evidence under current filters");
+        return { signal, tone, driver, next, coverage };
       }
 
       function setRiskView(risk, page = state.page, targetId = null) {
@@ -1828,6 +2164,12 @@
         const small = num(row.too_small_rate);
         const large = num(row.too_large_rate);
         const pain = num(row.pain_point_rate);
+        if (state.lang === "zh") {
+          if (small > 0.24) return "优先在尺码选择器附近加入偏小/建议选大提示，并观察详情页更新后不合身语言是否下降。";
+          if (large > 0.24) return "优先加入偏大/建议选小提示和模特试穿说明，尤其适用于付费流量进入前的预期管理。";
+          if (pain > 0.72) return "围绕最高频评论痛点重写商品页文案，并把代表性评论附到 SKU 审核证据中。";
+          return "保持观察状态，但在增加商品曝光前先抽查低评分评论。";
+        }
         if (small > 0.24) return "Prioritize size-up guidance near the size selector, then monitor whether non-fit language decreases after the product-page update.";
         if (large > 0.24) return "Prioritize size-down guidance and model-fit notes, especially for paid traffic where expectation mismatch is expensive.";
         if (pain > 0.72) return "Rewrite PDP copy around the most frequent review pain points and attach evidence examples to the SKU audit.";
@@ -1839,14 +2181,14 @@
         const row = categoryMetrics(category);
         if (!row) return;
         state.selectedCategory = category;
-        document.getElementById("drawer-title").textContent = category;
+        document.getElementById("drawer-title").textContent = dataLabel(category, "category");
         document.getElementById("drawer-metrics").innerHTML = [
-          ["Risk Score", num(row.risk_score).toFixed(1)],
-          ["Fit Rate", pct(row.fit_rate)],
-          ["Too Small", pct(row.too_small_rate)],
-          ["Too Large", pct(row.too_large_rate)],
-          ["Pain Point Rate", pct(row.pain_point_rate)],
-          ["Records", fmt(int(row.records))],
+          [state.lang === "zh" ? "风险分" : "Risk Score", num(row.risk_score).toFixed(1)],
+          [state.lang === "zh" ? "合身率" : "Fit Rate", pct(row.fit_rate)],
+          [state.lang === "zh" ? "偏小率" : "Too Small", pct(row.too_small_rate)],
+          [state.lang === "zh" ? "偏大率" : "Too Large", pct(row.too_large_rate)],
+          [state.lang === "zh" ? "痛点率" : "Pain Point Rate", pct(row.pain_point_rate)],
+          [state.lang === "zh" ? "记录数" : "Records", fmt(int(row.records))],
         ].map(([label, value]) => `
           <div class="drawer-metric">
             <span>${label}</span>
@@ -1856,8 +2198,8 @@
         document.getElementById("drawer-recommendation").textContent = categoryRecommendation(row);
         const evidence = categoryEvidence(category).slice(0, 3);
         document.getElementById("drawer-evidence").innerHTML = evidence.length
-          ? evidence.map((item) => `<li>${escapeHtml((item.review_text || item.review_summary || "No review text").slice(0, 190))}</li>`).join("")
-          : "<li>No evidence row is available for the current sample.</li>";
+          ? evidence.map((item) => `<li>${renderEvidenceCopy(item, 150)}</li>`).join("")
+          : `<li>${state.lang === "zh" ? "当前样本没有可追溯评论。" : "No evidence row is available for the current sample."}</li>`;
         document.getElementById("category-drawer-backdrop").classList.add("open");
         document.body.classList.add("drawer-open");
       }
@@ -1880,15 +2222,22 @@
       function marketSignal(row) {
         const gap = num(row.demand_gap);
         const txShare = num(row.transaction_share);
-        if (txShare >= 0.3 && gap >= -0.015) return { label: "Scale ↑", tone: "scale", direction: "up", note: "High demand share with acceptable assortment balance" };
-        if (gap >= 0.025) return { label: "Potential ↑", tone: "potential", direction: "up", note: "Demand share is stronger than assortment share" };
-        if (gap <= -0.025) return { label: "Fix ↓", tone: "fix", direction: "down", note: "Assortment share is heavier than transaction share" };
-        return { label: "Watch →", tone: "watch", direction: "flat", note: "Demand and assortment are broadly aligned" };
+        const zh = state.lang === "zh";
+        if (txShare >= 0.3 && gap >= -0.015) return { label: zh ? "放量 ↑" : "Scale ↑", tone: "scale", direction: "up", note: zh ? "需求占比高，且商品配置没有明显过重" : "High demand share with acceptable assortment balance" };
+        if (gap >= 0.025) return { label: zh ? "潜力 ↑" : "Potential ↑", tone: "potential", direction: "up", note: zh ? "交易需求强于当前商品配置" : "Demand share is stronger than assortment share" };
+        if (gap <= -0.025) return { label: zh ? "修正 ↓" : "Fix ↓", tone: "fix", direction: "down", note: zh ? "商品配置重于交易需求" : "Assortment share is heavier than transaction share" };
+        return { label: zh ? "观察 →" : "Watch →", tone: "watch", direction: "flat", note: zh ? "需求和商品配置基本对齐" : "Demand and assortment are broadly aligned" };
       }
 
       function marketSignalRule(row) {
         const gap = num(row.demand_gap);
         const txShare = num(row.transaction_share);
+        if (state.lang === "zh") {
+          if (txShare >= 0.3 && gap >= -0.015) return "放量：交易占比至少 30%，且需求差没有低于 -1.5 个百分点。";
+          if (gap >= 0.025) return "潜力：需求差至少 +2.5 个百分点。";
+          if (gap <= -0.025) return "修正：需求差不高于 -2.5 个百分点。";
+          return "观察：需求差处于 -2.5 到 +2.5 个百分点之间。";
+        }
         if (txShare >= 0.3 && gap >= -0.015) return "Scale because transaction share is at least 30% and the demand gap is not below -1.5 pts.";
         if (gap >= 0.025) return "Potential because demand gap is at least +2.5 pts.";
         if (gap <= -0.025) return "Fix because demand gap is at most -2.5 pts.";
@@ -1900,13 +2249,13 @@
         const transactionShare = num(row.transaction_share) * 100;
         const demandGap = num(row.demand_gap) * 100;
         return `
-          <h4>Decision Logic</h4>
+          <h4>${state.lang === "zh" ? "决策逻辑" : "Decision Logic"}</h4>
           <ul class="detail-list">
-            <li class="detail-row"><strong>Formula</strong><span>Demand gap = transaction share - article share</span></li>
-            <li class="detail-row"><strong>Current calculation</strong><span>${transactionShare.toFixed(1)}% - ${articleShare.toFixed(1)}% = ${demandGap >= 0 ? "+" : ""}${demandGap.toFixed(1)} pts</span></li>
-            <li class="detail-row"><strong>Matched rule</strong><span>${escapeHtml(marketSignalRule(row))}</span></li>
-            <li class="detail-row"><strong>Decision</strong><span>${escapeHtml(row.signal_label)}</span></li>
-            <li class="detail-row"><strong>Confidence</strong><span>Medium: strong public transaction signal, but no margin, inventory, return-rate, or live trend feed yet.</span></li>
+            <li class="detail-row"><strong>${state.lang === "zh" ? "公式" : "Formula"}</strong><span>${state.lang === "zh" ? "需求差 = 交易占比 - 商品占比" : "Demand gap = transaction share - article share"}</span></li>
+            <li class="detail-row"><strong>${state.lang === "zh" ? "当前计算" : "Current calculation"}</strong><span>${transactionShare.toFixed(1)}% - ${articleShare.toFixed(1)}% = ${demandGap >= 0 ? "+" : ""}${demandGap.toFixed(1)} pts</span></li>
+            <li class="detail-row"><strong>${state.lang === "zh" ? "命中规则" : "Matched rule"}</strong><span>${escapeHtml(marketSignalRule(row))}</span></li>
+            <li class="detail-row"><strong>${state.lang === "zh" ? "决策" : "Decision"}</strong><span>${escapeHtml(row.signal_label)}</span></li>
+            <li class="detail-row"><strong>${state.lang === "zh" ? "置信度" : "Confidence"}</strong><span>${state.lang === "zh" ? "中等：有公开交易信号，但还没有利润、库存、退货率或实时趋势数据。" : "Medium: strong public transaction signal, but no margin, inventory, return-rate, or live trend feed yet."}</span></li>
           </ul>
         `;
       }
@@ -2054,7 +2403,7 @@
           kpi: "KPI shortcut drill-down",
         }[context] || "Product group drill-down";
         document.getElementById("market-drawer-context").textContent = contextLabel;
-        document.getElementById("market-drawer-title").textContent = group;
+        document.getElementById("market-drawer-title").textContent = dataLabel(group, "marketGroup");
         document.getElementById("market-drawer-metrics").innerHTML = [
           ["Articles", fmt(int(row.articles))],
           ["Transactions", fmt(int(row.transactions))],
@@ -2141,6 +2490,7 @@
         if (!state.selectedCategory) return;
         state.category = state.selectedCategory;
         document.getElementById("category-filter").value = state.selectedCategory;
+        setPage("workspace");
         renderAll();
         closeCategoryDrawer();
       }
@@ -2201,12 +2551,22 @@
       }
 
       function renderBars(target, rows, options) {
+        if (!rows.length) {
+          renderEmptyState(
+            target,
+            state.lang === "zh" ? "没有可显示的数据" : "No data to display",
+            state.lang === "zh" ? "当前筛选没有足够样本，图表不会显示占位或错误数字。" : "The current filters do not have enough sample coverage, so this chart is intentionally empty."
+          );
+          return;
+        }
         const max = Math.max(...rows.map((row) => num(row[options.value])), 1);
         document.getElementById(target).innerHTML = rows.map((row) => {
           const value = num(row[options.value]);
           const width = Math.max(2, (value / max) * 100);
           const shown = options.format ? options.format(row) : fmt(value);
           const encoded = encodeKey(row[options.label]);
+          const rawLabel = row[options.label];
+          const visibleLabel = dataLabel(rawLabel, options.labelType || "");
           const isCategory = options.interactive === "category";
           const isMarketGroup = options.interactive === "marketGroup";
           const isReviewRisk = options.interactive === "reviewRisk";
@@ -2225,8 +2585,8 @@
             action ? "Click to drill down" : "Hover for detail",
           ].filter(Boolean);
           return `
-            <div class="bar-row ${action ? "interactive" : ""}" onmousemove="showTooltip(event, '${escapeHtml(row[options.label])}', ${JSON.stringify(tooltipLines).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" ${behavior}>
-              <div class="bar-label" title="${escapeHtml(row[options.label])}">${escapeHtml(row[options.label])}</div>
+            <div class="bar-row ${action ? "interactive" : ""}" onmousemove="showTooltip(event, '${escapeHtml(visibleLabel)}', ${JSON.stringify(tooltipLines).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" ${behavior}>
+              <div class="bar-label" title="${escapeHtml(visibleLabel)}">${escapeHtml(visibleLabel)}</div>
               <div class="bar-track"><div class="bar-fill ${options.variant || ""}" style="width:${width}%"></div></div>
               <div class="bar-value">${row.signal_label ? `<span class="signal-badge ${row.signal_tone}">${row.signal_label}</span>` : shown}</div>
             </div>
@@ -2291,30 +2651,76 @@
           const encoded = encodeKey(row.category_group);
           return `
             <div class="matrix-cell interactive" style="background:${color}" role="button" tabindex="0" onclick="openCategoryDetail('${encoded}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryDetail('${encoded}');}">
-              <strong>${escapeHtml(row.category_group)}</strong>
-              <span>Risk ${risk.toFixed(1)} · Fit ${pct(row.fit_rate)} · Pain ${pct(row.pain_point_rate)}</span>
+              <strong>${escapeHtml(dataLabel(row.category_group, "category"))}</strong>
+              <span>${state.lang === "zh" ? "风险" : "Risk"} ${risk.toFixed(1)} · ${state.lang === "zh" ? "合身" : "Fit"} ${pct(row.fit_rate)} · ${state.lang === "zh" ? "痛点" : "Pain"} ${pct(row.pain_point_rate)}</span>
             </div>
           `;
         }).join("");
       }
 
+      function renderEmptyState(target, title, detail) {
+        document.getElementById(target).innerHTML = `
+          <div class="empty-state">
+            <strong>${escapeHtml(title)}</strong>
+            <span>${escapeHtml(detail)}</span>
+          </div>
+        `;
+      }
+
+      function evidenceSummary(row) {
+        if (state.lang !== "zh") {
+          const issues = painLabels(row.pain_points, "balanced");
+          return `${fitLabel(row.fit)} · ${fieldLabel(row.body_type, "body")} · ${fieldLabel(row.occasion, "occasion")} · ${issues}`;
+        }
+        const category = dataLabel(row.category_group, "category", "zhOnly");
+        const fit = fitLabel(row.fit);
+        const body = fieldLabel(row.body_type, "body");
+        const occasion = fieldLabel(row.occasion, "occasion");
+        const issues = painLabels(row.pain_points, "zhOnly");
+        return `${category}在${occasion}场景下反馈为${fit}；用户体型为${body}；识别到的主要问题是：${issues}。`;
+      }
+
+      function renderEvidenceCopy(row, limit = 210) {
+        const review = row.review_text || row.review_summary || "";
+        const clipped = `${escapeHtml(review.slice(0, limit))}${review.length > limit ? "..." : ""}`;
+        if (state.lang !== "zh") {
+          return `
+            <div class="evidence-copy">
+              <strong>${escapeHtml(evidenceSummary(row))}</strong>
+              <span>${clipped || "No original review text available."}</span>
+            </div>
+          `;
+        }
+        return `
+          <div class="evidence-copy">
+            <strong>${escapeHtml(evidenceSummary(row))}</strong>
+            <span>英文原文：${clipped || "当前没有原始评论文本。"}</span>
+          </div>
+        `;
+      }
+
       function renderEvidence() {
         let rows = filteredEvidenceRows();
-        document.getElementById("evidence-count").textContent = `${fmt(rows.length)} evidence rows`;
-        document.getElementById("evidence-table").innerHTML = rows.slice(0, 80).map((row) => {
-          const review = row.review_text || row.review_summary || "";
-          return `
+        document.getElementById("evidence-count").textContent = state.lang === "zh" ? `${fmt(rows.length)} 条证据` : `${fmt(rows.length)} evidence rows`;
+        if (!rows.length) {
+          document.getElementById("evidence-table").innerHTML = `
+            <tr class="empty-row">
+              <td colspan="7">${state.lang === "zh" ? "当前筛选没有可追溯评论。请切换品类，或点击“重置”回到全量证据视图。" : "No traceable review evidence under the current filters. Change the category or reset filters to return to the full evidence view."}</td>
+            </tr>
+          `;
+          return;
+        }
+        document.getElementById("evidence-table").innerHTML = rows.slice(0, 80).map((row) => `
           <tr class="evidence-row" onclick="openCategoryDetail('${encodeKey(row.category_group)}')">
-            <td>${escapeHtml(row.category_group)}</td>
-            <td><span class="${row.fit === "fit" ? "positive-chip" : "risk-chip"}">${row.fit}</span></td>
+            <td>${escapeHtml(dataLabel(row.category_group, "category"))}</td>
+            <td><span class="${row.fit === "fit" ? "positive-chip" : "risk-chip"}">${escapeHtml(fitLabel(row.fit))}</span></td>
             <td>${escapeHtml(row.rating || "-")}</td>
-            <td>${escapeHtml(row.body_type)}</td>
-            <td>${escapeHtml(row.occasion)}</td>
-            <td class="muted">${escapeHtml(row.pain_points || "none")}</td>
-            <td>${escapeHtml(review.slice(0, 210))}${review.length > 210 ? "..." : ""}</td>
+            <td>${escapeHtml(fieldLabel(row.body_type, "body"))}</td>
+            <td>${escapeHtml(fieldLabel(row.occasion, "occasion"))}</td>
+            <td class="muted">${escapeHtml(painLabels(row.pain_points))}</td>
+            <td>${renderEvidenceCopy(row)}</td>
           </tr>
-        `;
-        }).join("");
+        `).join("");
       }
 
       function polarPoint(cx, cy, radius, angle) {
@@ -2348,8 +2754,17 @@
       }
 
       function renderDonut(target, rows, options) {
+        const rawTotal = rows.reduce((sum, row) => sum + num(row[options.value]), 0);
+        if (!rows.length || rawTotal <= 0) {
+          renderEmptyState(
+            target,
+            options.emptyTitle || (state.lang === "zh" ? "没有可显示的构成" : "No composition available"),
+            options.emptyDetail || (state.lang === "zh" ? "当前筛选没有足够样本，因此不显示误导性的圆环图。" : "The current filters do not have enough sample coverage, so the donut chart is suppressed.")
+          );
+          return;
+        }
         const colors = options.colors || ["var(--teal)", "var(--sky)", "var(--amber)", "var(--red)", "var(--violet)", "var(--green)"];
-        const total = rows.reduce((sum, row) => sum + num(row[options.value]), 0) || 1;
+        const total = rawTotal || 1;
         let cursor = 0;
         const segments = rows.map((row, index) => {
           const start = cursor;
@@ -2357,7 +2772,7 @@
           cursor += degrees;
           const action = donutAction(row, options);
           const value = num(row[options.value]);
-          const label = row[options.label];
+          const label = dataLabel(row[options.label], options.labelType || "");
           const display = options.format ? options.format(row, total) : `${((value / total) * 100).toFixed(1)}%`;
           const tooltipLines = [
             `Share: ${display}`,
@@ -2374,10 +2789,11 @@
         const legend = rows.map((row, index) => {
           const value = num(row[options.value]);
           const action = donutAction(row, options);
+          const visibleLabel = dataLabel(row[options.label], options.labelType || "");
           return `
-            <div class="legend-row ${action ? "interactive" : ""}" onmousemove="showTooltip(event, '${escapeHtml(row[options.label])}', ${JSON.stringify([`Share: ${options.format ? options.format(row, total) : `${((value / total) * 100).toFixed(1)}%`}`, `Value: ${fmt(value)}`, action ? "Click to drill down" : "Hover for detail"]).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" ${action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : ""}>
+            <div class="legend-row ${action ? "interactive" : ""}" onmousemove="showTooltip(event, '${escapeHtml(visibleLabel)}', ${JSON.stringify([`Share: ${options.format ? options.format(row, total) : `${((value / total) * 100).toFixed(1)}%`}`, `Value: ${fmt(value)}`, action ? "Click to drill down" : "Hover for detail"]).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" ${action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : ""}>
               <span class="legend-dot" style="background:${colors[index % colors.length]}"></span>
-              <strong>${escapeHtml(row[options.label])}</strong>
+              <strong>${escapeHtml(visibleLabel)}</strong>
               <span>${options.format ? options.format(row, total) : `${((value / total) * 100).toFixed(1)}%`}</span>
             </div>
           `;
@@ -2402,8 +2818,8 @@
           return `
             <div class="stacked-row interactive" role="button" tabindex="0" onclick="openCategoryDetail('${encodeKey(row.category_group)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryDetail('${encodeKey(row.category_group)}');}">
               <div class="stacked-head">
-                <strong>${escapeHtml(row.category_group)}</strong>
-                <span>Fit ${fit.toFixed(0)}% · Small ${small.toFixed(0)}% · Large ${large.toFixed(0)}%</span>
+                <strong>${escapeHtml(dataLabel(row.category_group, "category"))}</strong>
+                <span>${state.lang === "zh" ? "合身" : "Fit"} ${fit.toFixed(0)}% · ${state.lang === "zh" ? "偏小" : "Small"} ${small.toFixed(0)}% · ${state.lang === "zh" ? "偏大" : "Large"} ${large.toFixed(0)}%</span>
               </div>
               <div class="stacked-track">
                 <div class="seg-fit" style="width:${fit}%"></div>
@@ -2437,9 +2853,10 @@
             `Rank: #${index + 1}`,
             "Click to drill down",
           ];
+          const visibleLabel = dataLabel(row.product_group_name, "marketGroup");
           return `
-            <div class="tile interactive" role="button" tabindex="0" onclick="${action}" onmousemove="showTooltip(event, '${escapeHtml(row.product_group_name)}', ${JSON.stringify(tooltipLines).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}" style="grid-column: span ${span}; background:${palette[index % palette.length]}">
-              <strong>${escapeHtml(row.product_group_name)}</strong>
+            <div class="tile interactive" role="button" tabindex="0" onclick="${action}" onmousemove="showTooltip(event, '${escapeHtml(visibleLabel)}', ${JSON.stringify(tooltipLines).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}" style="grid-column: span ${span}; background:${palette[index % palette.length]}">
+              <strong>${escapeHtml(visibleLabel)}</strong>
               <span>${fmt(int(row.articles))} articles · ${fmt(int(row.transactions))} tx</span>
               <b class="signal-badge ${row.signal_tone}">${row.signal_label}</b>
             </div>
@@ -2546,6 +2963,83 @@
         `).join("");
       }
 
+      function renderWorkspace() {
+        const selected = state.category !== "all" ? state.category : state.selectedCategory;
+        const empty = document.getElementById("workspace-empty");
+        const content = document.getElementById("workspace-content");
+        if (!selected) {
+          const picks = filteredCategories().slice(0, 6);
+          empty.style.display = "grid";
+          content.style.display = "none";
+          empty.innerHTML = `
+            <div>
+              <h3>${state.lang === "zh" ? "先选择一个品类，打开专属工作区" : "Select a category to open its workspace"}</h3>
+              <p>${state.lang === "zh" ? "这里不会展示泛泛的全局指标。选择后，系统会把该品类的风险、原因、证据和下一步动作集中到一个页面，避免筛选器“看起来有用但没有承接”的问题。" : "This page does not show generic global metrics. Once a category is selected, it concentrates risk, reason, evidence and next action into one focused workspace."}</p>
+            </div>
+            <div class="quick-picks">
+              ${picks.map((row) => `<button class="quick-pick" type="button" onclick="setCategoryFilter('${encodeKey(row.category_group)}', 'workspace')">${escapeHtml(dataLabel(row.category_group, "category"))}</button>`).join("")}
+            </div>
+          `;
+          return;
+        }
+        const row = categoryMetrics(selected);
+        if (!row) {
+          empty.style.display = "grid";
+          content.style.display = "none";
+          empty.innerHTML = `
+            <h3>${state.lang === "zh" ? "当前品类没有可用指标" : "No metrics for this category"}</h3>
+            <p>${state.lang === "zh" ? "请重置筛选或选择另一个样本覆盖更稳定的品类。" : "Reset filters or choose another category with stronger sample coverage."}</p>
+          `;
+          return;
+        }
+        const evidence = categoryEvidence(selected);
+        const painRows = categoryPainRows(selected);
+        const decision = categoryDecision(row, evidence);
+        empty.style.display = "none";
+        content.style.display = "block";
+        document.getElementById("workspace-title").textContent = dataLabel(selected, "category");
+        document.getElementById("workspace-brief").textContent = state.lang === "zh"
+          ? `这是当前选择品类的工作页。判断不只看风险分，还会解释风险来自偏小、偏大、低评分还是评论痛点。`
+          : "This is the focused workspace for the selected category. It explains whether risk comes from small/large fit, low ratings, or review pain points.";
+        document.getElementById("workspace-signal").textContent = decision.signal;
+        document.getElementById("workspace-driver").textContent = decision.driver;
+        document.getElementById("workspace-coverage").textContent = decision.coverage;
+        document.getElementById("workspace-next").textContent = decision.next;
+        document.getElementById("workspace-method").textContent = state.lang === "zh"
+          ? "方法：风险分 + 样本覆盖 + 痛点证据"
+          : "Method: risk score + sample coverage + pain evidence";
+        renderKpis("workspace-kpis", [
+          { label: state.lang === "zh" ? "风险分" : "Risk Score", value: num(row.risk_score).toFixed(1), caption: state.lang === "zh" ? "综合不合身、低评分和痛点密度" : "Blends non-fit, low-rating and pain-point density", accent: true, color: decision.tone === "fix" ? "var(--red)" : "var(--teal)", action: `openCategoryDetail('${encodeKey(selected)}')` },
+          { label: state.lang === "zh" ? "合身率" : "Fit Rate", value: pct(row.fit_rate), caption: state.lang === "zh" ? "越高代表尺码预期越稳定" : "Higher means more stable size expectation", color: "var(--teal)", action: "scrollToTarget('workspace-fit-donut')" },
+          { label: state.lang === "zh" ? "不合身暴露" : "Non-fit Exposure", value: pct(row.nonfit_rate), caption: state.lang === "zh" ? `偏小 ${pct(row.too_small_rate)}，偏大 ${pct(row.too_large_rate)}` : `Small ${pct(row.too_small_rate)}, large ${pct(row.too_large_rate)}`, color: "var(--amber)", action: "setRiskView('fit', 'fit', 'fit-stacked')" },
+          { label: state.lang === "zh" ? "证据样本" : "Evidence Rows", value: fmt(evidence.length), caption: state.lang === "zh" ? "点击查看该品类评论证据" : "Click to inspect category review evidence", color: "var(--sky)", action: "setPage('evidence');scrollToTarget('evidence-table')" },
+        ]);
+        document.getElementById("workspace-logic").innerHTML = `
+          <ul class="decision-steps">
+            <li><b>1</b><span>${state.lang === "zh" ? `样本量 ${fmt(int(row.records))}。低样本不会直接放量；当前样本用于方向判断。` : `Sample size is ${fmt(int(row.records))}. Low sample coverage is not treated as scale-ready by default.`}</span></li>
+            <li><b>2</b><span>${state.lang === "zh" ? `风险分 ${num(row.risk_score).toFixed(1)} = 不合身率 ${pct(row.nonfit_rate)} + 低评分 ${pct(row.low_signal_rate)} + 痛点率 ${pct(row.pain_point_rate)} 的综合信号。` : `Risk score ${num(row.risk_score).toFixed(1)} combines non-fit ${pct(row.nonfit_rate)}, low-rating ${pct(row.low_signal_rate)} and pain-point ${pct(row.pain_point_rate)} signals.`}</span></li>
+            <li><b>3</b><span>${state.lang === "zh" ? `系统结论：${decision.signal}。原因：${decision.driver}。` : `System read: ${decision.signal}. Reason: ${decision.driver}.`}</span></li>
+          </ul>
+        `;
+        const fitRows = [
+          { label: "fit", value: int(row.records) * num(row.fit_rate), action: "setRiskView('all', 'fit', 'fit-stacked')" },
+          { label: "small", value: int(row.records) * num(row.too_small_rate), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
+          { label: "large", value: int(row.records) * num(row.too_large_rate), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
+        ];
+        renderDonut("workspace-fit-donut", fitRows, {
+          label: "label",
+          value: "value",
+          labelType: "fit",
+          center: pct(row.fit_rate),
+          colors: ["var(--teal)", "var(--amber)", "var(--sky)"],
+          ariaLabel: "Selected category fit mix",
+        });
+        renderBars("workspace-pain-bars", painRows.slice(0, 8), { label: "pain_point", value: "records", variant: "violet", interactive: "reviewRisk", labelType: "pain" });
+        document.getElementById("workspace-evidence-list").innerHTML = evidence.length
+          ? evidence.slice(0, 4).map((item) => `<div class="evidence-card">${renderEvidenceCopy(item, 180)}</div>`).join("")
+          : `<div class="empty-state"><strong>${state.lang === "zh" ? "没有评论证据样本" : "No review sample"}</strong><span>${state.lang === "zh" ? "该品类当前不应展示评论洞察。请保留为数据缺口，而不是用全局评论替代。" : "This category should show a data gap rather than borrowing global review evidence."}</span></div>`;
+      }
+
       function renderAll() {
         const categories = filteredCategories();
         const evidenceRows = filteredEvidenceRows();
@@ -2566,13 +3060,14 @@
           { label: "Priority Category", value: topCategory.category_group || "-", caption: topCategory.risk_score ? `Click to open risk score ${num(topCategory.risk_score).toFixed(1)}` : "No category selected", color: "var(--sky)", action: topCategory.category_group ? `openCategoryDetail('${encodeKey(topCategory.category_group)}')` : "" },
         ]);
         const fitSplit = [
-          { label: "Fit", value: categories.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0), action: "setRiskView('all', 'fit', 'fit-stacked')" },
-          { label: "Too small", value: categories.reduce((sum, row) => sum + int(row.records) * num(row.too_small_rate), 0), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
-          { label: "Too large", value: categories.reduce((sum, row) => sum + int(row.records) * num(row.too_large_rate), 0), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
+          { label: "fit", value: categories.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0), action: "setRiskView('all', 'fit', 'fit-stacked')" },
+          { label: "small", value: categories.reduce((sum, row) => sum + int(row.records) * num(row.too_small_rate), 0), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
+          { label: "large", value: categories.reduce((sum, row) => sum + int(row.records) * num(row.too_large_rate), 0), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
         ];
         renderDonut("overview-fit-donut", fitSplit, {
           label: "label",
           value: "value",
+          labelType: "fit",
           center: `${(weightedFit * 100).toFixed(0)}%`,
           colors: ["var(--teal)", "var(--amber)", "var(--sky)"],
           ariaLabel: "Interactive fit outcome split",
@@ -2590,8 +3085,8 @@
           format: (row) => `${num(row.value).toFixed(0)} categories`,
           ariaLabel: "Interactive category triage donut",
         });
-        renderBars("overview-risk-bars", categories.slice(0, 10), { label: "category_group", value: "risk_score", variant: "risk", interactive: "category", format: (row) => num(row.risk_score).toFixed(1) });
-        renderBars("overview-pain-bars", painRows.slice(0, 8), { label: "pain_point", value: "records", variant: "violet", interactive: "reviewRisk" });
+        renderBars("overview-risk-bars", categories.slice(0, 10), { label: "category_group", value: "risk_score", variant: "risk", interactive: "category", labelType: "category", format: (row) => num(row.risk_score).toFixed(1) });
+        renderBars("overview-pain-bars", painRows.slice(0, 8), { label: "pain_point", value: "records", variant: "violet", interactive: "reviewRisk", labelType: "pain" });
 
         const market = marketRows();
         const productTotal = summaryValue("articles") || market.reduce((sum, row) => sum + int(row.articles), 0);
@@ -2604,8 +3099,8 @@
           { label: "Best Potential", value: bestPotential.product_group_name || "-", caption: bestPotential.demand_gap !== undefined ? `${bestPotential.signal_label} · gap ${(num(bestPotential.demand_gap) * 100).toFixed(1)} pts` : "No potential signal", color: "var(--teal)", action: bestPotential.product_group_name ? `openMarketGroup('${encodeKey(bestPotential.product_group_name)}', 'kpi')` : "" },
           { label: "Fix Queue", value: fixCount, caption: "Groups where assortment exceeds demand", color: fixCount ? "var(--amber)" : "var(--teal)", action: "scrollToTarget('market-product-bars')" },
         ]);
-        renderBars("market-product-bars", market.slice(0, 10), { label: "product_group_name", value: "transactions", interactive: "marketGroup", source: "bar", valueTitle: "Transactions" });
-        renderBars("market-index-bars", state.data.hmTxIndex.slice(0, 10), { label: "index_group_name", value: "transactions", variant: "violet", valueTitle: "Transactions" });
+        renderBars("market-product-bars", market.slice(0, 10), { label: "product_group_name", value: "transactions", interactive: "marketGroup", source: "bar", valueTitle: "Transactions", labelType: "marketGroup" });
+        renderBars("market-index-bars", state.data.hmTxIndex.slice(0, 10), { label: "index_group_name", value: "transactions", variant: "violet", valueTitle: "Transactions", labelType: "indexGroup" });
         renderTreemap("market-treemap", market.slice(0, 12));
         renderDonut("market-product-donut", market.slice(0, 6), {
           label: "product_group_name",
@@ -2613,10 +3108,13 @@
           center: fmt(transactionTotal),
           colors: ["var(--teal)", "var(--sky)", "var(--violet)", "var(--amber)", "var(--green)", "var(--red)"],
           interactive: "marketGroup",
+          labelType: "marketGroup",
           source: "donut",
           ariaLabel: "Interactive product group share",
         });
         renderLineChart();
+
+        renderWorkspace();
 
         renderKpis("fit-kpis", [
           { label: "High Risk Categories", value: categories.filter((row) => num(row.risk_score) >= 32).length, caption: "Click to isolate high-risk matrix cells", color: "var(--red)", action: "setRiskView('high', 'fit', 'risk-matrix')" },
@@ -2625,7 +3123,7 @@
           { label: "Evidence Sample", value: fmt(evidenceRows.length), caption: "Click to open filtered review evidence", action: "setPage('evidence');scrollToTarget('evidence-table')" },
         ]);
         renderBars("size-bars", state.data.size.filter((row) => int(row.display_eligible) === 1).slice(0, 10), { label: "size", value: "risk_score", variant: "risk", format: (row) => num(row.risk_score).toFixed(1) });
-        renderBars("body-bars", state.data.body.filter((row) => int(row.display_eligible) === 1).slice(0, 10), { label: "body_type", value: "risk_score", variant: "risk", format: (row) => num(row.risk_score).toFixed(1) });
+        renderBars("body-bars", state.data.body.filter((row) => int(row.display_eligible) === 1).slice(0, 10), { label: "body_type", value: "risk_score", variant: "risk", labelType: "body", format: (row) => num(row.risk_score).toFixed(1) });
         renderStacked("fit-stacked", categories.slice(0, 10));
         renderMatrix();
 
@@ -2638,9 +3136,12 @@
         renderDonut("evidence-pain-donut", painRows.slice(0, 6), {
           label: "pain_point",
           value: "records",
-          center: `${state.data.pain.length} tags`,
+          labelType: "pain",
+          center: state.lang === "zh" ? `${painRows.length} 类痛点` : `${painRows.length} tags`,
           colors: ["var(--red)", "var(--amber)", "var(--sky)", "var(--violet)", "var(--teal)", "var(--green)"],
           interactive: "reviewRisk",
+          emptyTitle: state.lang === "zh" ? "没有筛选后的痛点标签" : "No filtered pain tags",
+          emptyDetail: state.lang === "zh" ? "当前品类/风险筛选没有评论痛点样本，因此不会复用全局标签数误导用户。" : "The current category/risk filters have no pain-point sample, so global tag counts are not reused here.",
           ariaLabel: "Interactive pain point share",
         });
         renderBars("evidence-class-bars", state.data.kaggleClass.slice(0, 10), {
@@ -2648,6 +3149,7 @@
           value: "low_rating_rate",
           variant: "risk",
           interactive: "reviewRisk",
+          labelType: "reviewClass",
           format: (row) => pct(row.low_rating_rate),
         });
         renderRecommendations(categories);
@@ -2662,6 +3164,12 @@
         document.querySelectorAll("[data-i18n]").forEach((node) => {
           node.textContent = t(node.dataset.i18n);
         });
+        const categorySelect = document.getElementById("category-filter");
+        if (categorySelect && state.data.category) {
+          [...categorySelect.options].forEach((option) => {
+            if (option.value !== "all") option.textContent = dataLabel(option.value, "category");
+          });
+        }
         document.getElementById("lang-en").classList.toggle("active", state.lang === "en");
         document.getElementById("lang-zh").classList.toggle("active", state.lang === "zh");
         setPage(state.page);
@@ -2681,12 +3189,14 @@
           en: {
             overview: ["Executive risk", "Prioritize categories", "Evidence-first", i18n.en.scopeFit],
             market: ["Assortment structure", "Read market shape", "Behavioral context", i18n.en.scopeMarket],
+            workspace: ["Selected category", "Diagnose and decide", "Focused workspace", i18n.en.scopeFit],
             fit: ["Fit diagnosis", "Find size instability", "Segment-aware", i18n.en.scopeFit],
             evidence: ["Review proof", "Inspect user language", "Traceable", i18n.en.scopeFit],
           },
           zh: {
             overview: ["高层风险", "确定品类优先级", "证据优先", i18n.zh.scopeFit],
             market: ["商品结构", "读取市场形态", "行为背景", i18n.zh.scopeMarket],
+            workspace: ["选中品类", "诊断并决策", "聚焦工作区", i18n.zh.scopeFit],
             fit: ["合身诊断", "发现尺码不稳定", "分群视角", i18n.zh.scopeFit],
             evidence: ["评论证据", "检查用户语言", "可追溯", i18n.zh.scopeFit],
           },
@@ -2708,12 +3218,14 @@
           .forEach((row) => {
             const option = document.createElement("option");
             option.value = row.category_group;
-            option.textContent = row.category_group;
+            option.textContent = dataLabel(row.category_group, "category");
             categorySelect.appendChild(option);
           });
         document.querySelectorAll(".nav button").forEach((button) => button.addEventListener("click", () => setPage(button.dataset.page)));
         categorySelect.addEventListener("change", (event) => {
           state.category = event.target.value;
+          state.selectedCategory = event.target.value === "all" ? null : event.target.value;
+          if (event.target.value !== "all" && state.page !== "market") setPage("workspace");
           renderAll();
         });
         document.getElementById("risk-filter").addEventListener("change", (event) => {
