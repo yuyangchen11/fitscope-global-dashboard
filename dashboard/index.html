@@ -161,6 +161,45 @@
         line-height: 1.45;
       }
 
+      .language-switcher {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 18px;
+        display: grid;
+        gap: 10px;
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.78);
+      }
+
+      .language-switcher strong {
+        font-size: 12px;
+      }
+
+      .language-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      .language-toggle button {
+        min-height: 34px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(18, 26, 42, 0.72);
+        color: var(--muted);
+        cursor: pointer;
+        font-weight: 800;
+      }
+
+      .language-toggle button.active {
+        border-color: rgba(45, 212, 191, 0.42);
+        background: linear-gradient(135deg, rgba(45, 212, 191, 0.18), rgba(56, 189, 248, 0.09));
+        color: var(--teal);
+      }
+
       .main {
         min-width: 0;
         padding: 22px 24px 32px;
@@ -1340,47 +1379,51 @@
           <div class="brand-mark">FS</div>
           <div>
             <h1>FitScope Global</h1>
-            <p>Outbound apparel decision intelligence</p>
+            <p data-i18n="brandTagline">Outbound apparel decision intelligence</p>
           </div>
         </div>
         <nav class="nav" aria-label="Dashboard navigation">
-          <button class="active" data-page="overview"><span class="nav-icon">01</span><span>Overview</span></button>
-          <button data-page="market"><span class="nav-icon">02</span><span>Product & Market</span></button>
-          <button data-page="fit"><span class="nav-icon">03</span><span>Fit & Size Risk</span></button>
-          <button data-page="evidence"><span class="nav-icon">04</span><span>Review Evidence</span></button>
+          <button class="active" data-page="overview"><span class="nav-icon">01</span><span data-i18n="navOverview">Overview</span></button>
+          <button data-page="market"><span class="nav-icon">02</span><span data-i18n="navMarket">Product & Market</span></button>
+          <button data-page="fit"><span class="nav-icon">03</span><span data-i18n="navFit">Fit & Size Risk</span></button>
+          <button data-page="evidence"><span class="nav-icon">04</span><span data-i18n="navEvidence">Review Evidence</span></button>
         </nav>
-        <div class="side-note">
-          <strong>Operating model</strong>
-          <span>Click any risk category to inspect diagnosis, apply filters, and trace decisions back to evidence. Fresh processed CSV drops can refresh the workspace without redesigning the UI.</span>
+        <div class="language-switcher">
+          <strong data-i18n="languageTitle">Language</strong>
+          <div class="language-toggle" aria-label="Language switcher">
+            <button id="lang-en" class="active" type="button" onclick="setLanguage('en')">EN</button>
+            <button id="lang-zh" type="button" onclick="setLanguage('zh')">中</button>
+          </div>
         </div>
       </aside>
 
       <main class="main">
-        <div id="loading" class="loading">Loading local dashboard data...</div>
+        <div id="loading" class="loading" data-i18n="loading">Loading local dashboard data...</div>
         <div id="dashboard" style="display: none">
           <header class="topbar">
             <div class="command-center">
               <div class="command-title">
-                <strong>Decision Command Center</strong>
-                <span class="live-dot">Data-linked workspace</span>
+                <strong data-i18n="commandTitle">Decision Command Center</strong>
+                <span class="live-dot" data-i18n="liveWorkspace">Data-linked workspace</span>
               </div>
               <div class="signal-strip">
-                <div class="signal-chip"><span>Lens</span><b id="context-lens">Executive risk</b></div>
-                <div class="signal-chip"><span>Action</span><b id="context-action">Prioritize categories</b></div>
-                <div class="signal-chip"><span>Mode</span><b id="context-mode">Evidence-first</b></div>
+                <div class="signal-chip"><span data-i18n="chipLens">Lens</span><b id="context-lens">Executive risk</b></div>
+                <div class="signal-chip"><span data-i18n="chipAction">Action</span><b id="context-action">Prioritize categories</b></div>
+                <div class="signal-chip"><span data-i18n="chipMode">Mode</span><b id="context-mode">Evidence-first</b></div>
+                <div class="signal-chip"><span data-i18n="chipScope">Scope</span><b id="context-scope">Fit/review filters active</b></div>
               </div>
             </div>
             <div class="filters">
               <select id="category-filter" class="select" aria-label="Category filter">
-                <option value="all">All categories</option>
+                <option value="all" data-i18n="filterAllCategories">All categories</option>
               </select>
               <select id="risk-filter" class="select" aria-label="Risk filter">
-                <option value="all">All risk levels</option>
-                <option value="high">High risk only</option>
-                <option value="fit">Fit issues</option>
-                <option value="review">Review pain points</option>
+                <option value="all" data-i18n="filterAllRisk">All risk levels</option>
+                <option value="high" data-i18n="filterHigh">High risk only</option>
+                <option value="fit" data-i18n="filterFit">Fit issues</option>
+                <option value="review" data-i18n="filterReview">Review pain points</option>
               </select>
-              <button id="reset-filters" class="select reset-button" type="button">Reset</button>
+              <button id="reset-filters" class="select reset-button" type="button" data-i18n="reset">Reset</button>
             </div>
           </header>
 
@@ -1388,39 +1431,39 @@
             <div class="hero">
               <div class="hero-grid">
                 <div>
-                  <h3>Priority Decision Queue</h3>
-                  <p>Ranked interventions for the merchandising and product-page team. Each recommendation must be backed by fit signals, review pain points, or category risk.</p>
+                  <h3 data-i18n="priorityTitle">Priority Decision Queue</h3>
+                  <p data-i18n="priorityDesc">Ranked interventions for the merchandising and product-page team. Each recommendation must be backed by fit signals, review pain points, or category risk.</p>
                   <div id="priority-actions" class="action-list" style="margin-top: 14px"></div>
                 </div>
                 <div class="status-panel">
-                  <div class="status-row"><span>Risk hotspots</span><strong id="queue-hotspots">-</strong></div>
-                  <div class="status-row"><span>Primary issue driver</span><strong id="queue-driver">-</strong></div>
-                  <div class="status-row"><span>Next decision</span><strong id="queue-next">-</strong></div>
-                  <div class="status-row"><span>Evidence status</span><strong id="queue-evidence">Ready</strong></div>
+                  <div class="status-row"><span data-i18n="riskHotspots">Risk hotspots</span><strong id="queue-hotspots">-</strong></div>
+                  <div class="status-row"><span data-i18n="primaryDriver">Primary issue driver</span><strong id="queue-driver">-</strong></div>
+                  <div class="status-row"><span data-i18n="nextDecision">Next decision</span><strong id="queue-next">-</strong></div>
+                  <div class="status-row"><span data-i18n="evidenceStatus">Evidence status</span><strong id="queue-evidence">Ready</strong></div>
                 </div>
               </div>
             </div>
             <div class="grid cols-4" id="overview-kpis"></div>
             <div class="section-head">
               <div>
-                <h3>Risk Triage Mix</h3>
-                <p>Portfolio view of what needs action now, what should be watched, and what is currently stable.</p>
+                <h3 data-i18n="riskTriageTitle">Risk Triage Mix</h3>
+                <p data-i18n="riskTriageDesc">Portfolio view of what needs action now, what should be watched, and what is currently stable.</p>
               </div>
             </div>
             <div class="grid cols-2">
-              <div class="card"><h3>Fit Outcome Split</h3><div id="overview-fit-donut" style="margin-top: 12px"></div></div>
-              <div class="card"><h3>Category Triage</h3><div id="overview-triage-donut" style="margin-top: 12px"></div></div>
+              <div class="card"><h3 data-i18n="fitOutcomeTitle">Fit Outcome Split</h3><div id="overview-fit-donut" style="margin-top: 12px"></div></div>
+              <div class="card"><h3 data-i18n="categoryTriageTitle">Category Triage</h3><div id="overview-triage-donut" style="margin-top: 12px"></div></div>
             </div>
             <div class="section-head">
               <div>
-                <h3>Category Risk Leaders</h3>
-                <p>Default view filters out categories with insufficient sample size.</p>
+                <h3 data-i18n="categoryRiskTitle">Category Risk Leaders</h3>
+                <p data-i18n="categoryRiskDesc">Default view filters out categories with insufficient sample size.</p>
               </div>
-              <span class="pill">Risk score = non-fit + low rating + pain points</span>
+              <span class="pill" data-i18n="riskFormula">Risk score = non-fit + low rating + pain points</span>
             </div>
             <div class="grid cols-2">
-              <div class="card"><h3>Highest Risk Apparel Categories</h3><div id="overview-risk-bars" class="bars" style="margin-top: 14px"></div></div>
-              <div class="card"><h3>Review Pain Point Mix</h3><div id="overview-pain-bars" class="bars" style="margin-top: 14px"></div></div>
+              <div class="card"><h3 data-i18n="highestRiskTitle">Highest Risk Apparel Categories</h3><div id="overview-risk-bars" class="bars" style="margin-top: 14px"></div></div>
+              <div class="card"><h3 data-i18n="painMixTitle">Review Pain Point Mix</h3><div id="overview-pain-bars" class="bars" style="margin-top: 14px"></div></div>
             </div>
           </section>
 
@@ -1428,35 +1471,35 @@
             <div class="grid cols-4" id="market-kpis"></div>
             <div class="section-head">
               <div>
-                <h3>Product Structure</h3>
-                <p>Assortment concentration and transaction momentum for category planning.</p>
+                <h3 data-i18n="productStructureTitle">Product Structure</h3>
+                <p data-i18n="productStructureDesc">Assortment concentration and transaction momentum for category planning.</p>
               </div>
-              <span class="pill">Assortment intelligence</span>
+              <span class="pill" data-i18n="assortmentIntel">Assortment intelligence</span>
             </div>
             <div class="grid cols-2">
-              <div class="card"><h3>Product Groups</h3><div id="market-product-bars" class="bars" style="margin-top: 14px"></div></div>
-              <div class="card"><h3>Index Groups</h3><div id="market-index-bars" class="bars" style="margin-top: 14px"></div></div>
+              <div class="card"><h3 data-i18n="productGroupsTitle">Product Groups</h3><div id="market-product-bars" class="bars" style="margin-top: 14px"></div></div>
+              <div class="card"><h3 data-i18n="indexGroupsTitle">Index Groups</h3><div id="market-index-bars" class="bars" style="margin-top: 14px"></div></div>
             </div>
             <div class="section-head">
               <div>
-                <h3>Assortment Map</h3>
-                <p>Signals compare transaction demand against article supply. Demand gap = transaction share minus article share.</p>
+                <h3 data-i18n="assortmentMapTitle">Assortment Map</h3>
+                <p data-i18n="assortmentMapDesc">Signals compare transaction demand against article supply. Demand gap = transaction share minus article share.</p>
               </div>
             </div>
             <div class="signal-rules" aria-label="Market signal rules">
-              <div class="rule-card"><strong><span class="signal-badge scale">Scale ↑</span></strong><span>Transaction share is at least 30% and not meaningfully under-supplied. Treat as a core demand engine.</span></div>
-              <div class="rule-card"><strong><span class="signal-badge potential">Potential ↑</span></strong><span>Demand gap is at least +2.5 percentage points. Demand is stronger than catalog allocation.</span></div>
-              <div class="rule-card"><strong><span class="signal-badge watch">Watch →</span></strong><span>Demand gap is between -2.5 and +2.5 points. Keep monitoring before changing allocation.</span></div>
-              <div class="rule-card"><strong><span class="signal-badge fix">Fix ↓</span></strong><span>Demand gap is at most -2.5 percentage points. Catalog allocation is heavier than transaction response.</span></div>
+              <div class="rule-card"><strong><span class="signal-badge scale" data-i18n="scaleLabel">Scale ↑</span></strong><span data-i18n="scaleRule">Transaction share is at least 30% and not meaningfully under-supplied. Treat as a core demand engine.</span></div>
+              <div class="rule-card"><strong><span class="signal-badge potential" data-i18n="potentialLabel">Potential ↑</span></strong><span data-i18n="potentialRule">Demand gap is at least +2.5 percentage points. Demand is stronger than catalog allocation.</span></div>
+              <div class="rule-card"><strong><span class="signal-badge watch" data-i18n="watchLabel">Watch →</span></strong><span data-i18n="watchRule">Demand gap is between -2.5 and +2.5 points. Keep monitoring before changing allocation.</span></div>
+              <div class="rule-card"><strong><span class="signal-badge fix" data-i18n="fixLabel">Fix ↓</span></strong><span data-i18n="fixRule">Demand gap is at most -2.5 percentage points. Catalog allocation is heavier than transaction response.</span></div>
             </div>
             <div class="grid cols-2-1">
-              <div class="card"><h3>Product Group Treemap</h3><div id="market-treemap" class="treemap" style="margin-top: 14px"></div></div>
-              <div class="card"><h3>Product Group Share</h3><div id="market-product-donut" style="margin-top: 12px"></div></div>
+              <div class="card"><h3 data-i18n="productTreemapTitle">Product Group Treemap</h3><div id="market-treemap" class="treemap" style="margin-top: 14px"></div></div>
+              <div class="card"><h3 data-i18n="productShareTitle">Product Group Share</h3><div id="market-product-donut" style="margin-top: 12px"></div></div>
             </div>
             <div class="section-head">
               <div>
-                <h3>Transaction Momentum</h3>
-                <p>Daily activity from the H&M transaction table, compressed into dashboard-ready metrics.</p>
+                <h3 data-i18n="transactionMomentumTitle">Transaction Momentum</h3>
+                <p data-i18n="transactionMomentumDesc">Daily activity from the H&M transaction table, compressed into dashboard-ready metrics.</p>
               </div>
             </div>
             <div class="card"><svg id="transaction-line" class="line-chart" role="img" aria-label="H&M transaction trend"></svg></div>
@@ -1466,25 +1509,25 @@
             <div class="grid cols-4" id="fit-kpis"></div>
             <div class="section-head">
               <div>
-                <h3>Size and Body Fit Risk</h3>
-                <p>Fit risk is strongest when sizing instability and review pain points appear together.</p>
+                <h3 data-i18n="sizeBodyTitle">Size and Body Fit Risk</h3>
+                <p data-i18n="sizeBodyDesc">Fit risk is strongest when sizing instability and review pain points appear together.</p>
               </div>
             </div>
             <div class="grid cols-2">
-              <div class="card"><h3>Highest Risk Sizes</h3><div id="size-bars" class="bars" style="margin-top: 14px"></div></div>
-              <div class="card"><h3>Body Type Risk</h3><div id="body-bars" class="bars" style="margin-top: 14px"></div></div>
+              <div class="card"><h3 data-i18n="highestSizeTitle">Highest Risk Sizes</h3><div id="size-bars" class="bars" style="margin-top: 14px"></div></div>
+              <div class="card"><h3 data-i18n="bodyRiskTitle">Body Type Risk</h3><div id="body-bars" class="bars" style="margin-top: 14px"></div></div>
             </div>
             <div class="section-head">
               <div>
-                <h3>Fit Composition by Category</h3>
-                <p>Stacked bars expose whether a category skews too small, too large, or generally unstable.</p>
+                <h3 data-i18n="fitCompositionTitle">Fit Composition by Category</h3>
+                <p data-i18n="fitCompositionDesc">Stacked bars expose whether a category skews too small, too large, or generally unstable.</p>
               </div>
             </div>
             <div class="card"><div id="fit-stacked" class="stacked-bars"></div></div>
             <div class="section-head">
               <div>
-                <h3>Fit Risk Matrix</h3>
-                <p>Cells combine category risk score, fit rate and pain-point rate.</p>
+                <h3 data-i18n="fitMatrixTitle">Fit Risk Matrix</h3>
+                <p data-i18n="fitMatrixDesc">Cells combine category risk score, fit rate and pain-point rate.</p>
               </div>
             </div>
             <div id="risk-matrix" class="matrix"></div>
@@ -1494,25 +1537,25 @@
             <div class="grid cols-3" id="evidence-kpis"></div>
             <div class="section-head">
               <div>
-                <h3>Evidence Composition</h3>
-                <p>Review issues and rating benchmarks before opening individual comments.</p>
+                <h3 data-i18n="evidenceCompositionTitle">Evidence Composition</h3>
+                <p data-i18n="evidenceCompositionDesc">Review issues and rating benchmarks before opening individual comments.</p>
               </div>
             </div>
             <div class="grid cols-2">
-              <div class="card"><h3>Pain Point Share</h3><div id="evidence-pain-donut" style="margin-top: 12px"></div></div>
-              <div class="card"><h3>Kaggle Class Risk</h3><div id="evidence-class-bars" class="bars" style="margin-top: 14px"></div></div>
+              <div class="card"><h3 data-i18n="painShareTitle">Pain Point Share</h3><div id="evidence-pain-donut" style="margin-top: 12px"></div></div>
+              <div class="card"><h3 data-i18n="kaggleRiskTitle">Kaggle Class Risk</h3><div id="evidence-class-bars" class="bars" style="margin-top: 14px"></div></div>
             </div>
             <div class="section-head">
               <div>
-                <h3>Recommended Interventions</h3>
-                <p>Operational actions generated from current filters and evidence signals.</p>
+                <h3 data-i18n="interventionsTitle">Recommended Interventions</h3>
+                <p data-i18n="interventionsDesc">Operational actions generated from current filters and evidence signals.</p>
               </div>
             </div>
             <div id="recommendation-cards" class="recommendation-grid"></div>
             <div class="section-head">
               <div>
-                <h3>Review Evidence Table</h3>
-                <p>Every dashboard insight should be traceable to original user feedback.</p>
+                <h3 data-i18n="reviewTableTitle">Review Evidence Table</h3>
+                <p data-i18n="reviewTableDesc">Every dashboard insight should be traceable to original user feedback.</p>
               </div>
               <span class="pill" id="evidence-count">- records</span>
             </div>
@@ -1520,13 +1563,13 @@
               <table>
                 <thead>
                   <tr>
-                    <th>Category</th>
-                    <th>Fit</th>
-                    <th>Rating</th>
-                    <th>Body Type</th>
-                    <th>Occasion</th>
-                    <th>Matched Issues</th>
-                    <th>Review Evidence</th>
+                    <th data-i18n="thCategory">Category</th>
+                    <th data-i18n="thFit">Fit</th>
+                    <th data-i18n="thRating">Rating</th>
+                    <th data-i18n="thBodyType">Body Type</th>
+                    <th data-i18n="thOccasion">Occasion</th>
+                    <th data-i18n="thIssues">Matched Issues</th>
+                    <th data-i18n="thEvidence">Review Evidence</th>
                   </tr>
                 </thead>
                 <tbody id="evidence-table"></tbody>
@@ -1614,7 +1657,68 @@
         kaggleSentiment: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_sentiment_metrics.csv",
       };
 
-      const state = { data: {}, page: "overview", category: "all", risk: "all", selectedCategory: null, selectedMarketGroup: null, lineRows: [] };
+      const state = { data: {}, page: "overview", category: "all", risk: "all", lang: "en", selectedCategory: null, selectedMarketGroup: null, lineRows: [] };
+
+      const i18n = {
+        en: {
+          brandTagline: "Outbound apparel decision intelligence",
+          navOverview: "Overview", navMarket: "Product & Market", navFit: "Fit & Size Risk", navEvidence: "Review Evidence",
+          languageTitle: "Language", loading: "Loading local dashboard data...",
+          commandTitle: "Decision Command Center", liveWorkspace: "Data-linked workspace",
+          chipLens: "Lens", chipAction: "Action", chipMode: "Mode", chipScope: "Scope",
+          filterAllCategories: "All categories", filterAllRisk: "All risk levels", filterHigh: "High risk only", filterFit: "Fit issues", filterReview: "Review pain points", reset: "Reset",
+          priorityTitle: "Priority Decision Queue", priorityDesc: "Ranked interventions for the merchandising and product-page team. Each recommendation must be backed by fit signals, review pain points, or category risk.",
+          riskHotspots: "Risk hotspots", primaryDriver: "Primary issue driver", nextDecision: "Next decision", evidenceStatus: "Evidence status",
+          riskTriageTitle: "Risk Triage Mix", riskTriageDesc: "Portfolio view of what needs action now, what should be watched, and what is currently stable.",
+          fitOutcomeTitle: "Fit Outcome Split", categoryTriageTitle: "Category Triage", categoryRiskTitle: "Category Risk Leaders", categoryRiskDesc: "Current filters update this view in real time.", riskFormula: "Risk score = non-fit + low rating + pain points",
+          highestRiskTitle: "Highest Risk Apparel Categories", painMixTitle: "Review Pain Point Mix",
+          productStructureTitle: "Product Structure", productStructureDesc: "Assortment concentration and transaction momentum for category planning.", assortmentIntel: "Assortment intelligence",
+          productGroupsTitle: "Product Groups", indexGroupsTitle: "Index Groups", assortmentMapTitle: "Assortment Map", assortmentMapDesc: "Signals compare transaction demand against article supply. Demand gap = transaction share minus article share.",
+          scaleLabel: "Scale ↑", potentialLabel: "Potential ↑", watchLabel: "Watch →", fixLabel: "Fix ↓",
+          scaleRule: "Transaction share is at least 30% and not meaningfully under-supplied. Treat as a core demand engine.",
+          potentialRule: "Demand gap is at least +2.5 percentage points. Demand is stronger than catalog allocation.",
+          watchRule: "Demand gap is between -2.5 and +2.5 points. Keep monitoring before changing allocation.",
+          fixRule: "Demand gap is at most -2.5 percentage points. Catalog allocation is heavier than transaction response.",
+          productTreemapTitle: "Product Group Treemap", productShareTitle: "Product Group Share", transactionMomentumTitle: "Transaction Momentum", transactionMomentumDesc: "Daily activity from the H&M transaction table, compressed into dashboard-ready metrics.",
+          sizeBodyTitle: "Size and Body Fit Risk", sizeBodyDesc: "Fit risk is strongest when sizing instability and review pain points appear together.",
+          highestSizeTitle: "Highest Risk Sizes", bodyRiskTitle: "Body Type Risk", fitCompositionTitle: "Fit Composition by Category", fitCompositionDesc: "Stacked bars expose whether a category skews too small, too large, or generally unstable.",
+          fitMatrixTitle: "Fit Risk Matrix", fitMatrixDesc: "Cells combine category risk score, fit rate and pain-point rate.",
+          evidenceCompositionTitle: "Evidence Composition", evidenceCompositionDesc: "Review issues and rating benchmarks before opening individual comments.",
+          painShareTitle: "Pain Point Share", kaggleRiskTitle: "Kaggle Class Risk", interventionsTitle: "Recommended Interventions", interventionsDesc: "Operational actions generated from current filters and evidence signals.",
+          reviewTableTitle: "Review Evidence Table", reviewTableDesc: "Every dashboard insight should be traceable to original user feedback.",
+          thCategory: "Category", thFit: "Fit", thRating: "Rating", thBodyType: "Body Type", thOccasion: "Occasion", thIssues: "Matched Issues", thEvidence: "Review Evidence",
+          scopeFit: "Fit/review filters active", scopeMarket: "Market page uses H&M full dataset", filteredRows: "filtered evidence rows",
+        },
+        zh: {
+          brandTagline: "服装出海商品决策智能",
+          navOverview: "总览", navMarket: "商品与市场", navFit: "尺码与合身风险", navEvidence: "评论证据",
+          languageTitle: "语言", loading: "正在加载本地看板数据...",
+          commandTitle: "决策指挥中心", liveWorkspace: "数据联动工作区",
+          chipLens: "视角", chipAction: "行动", chipMode: "模式", chipScope: "范围",
+          filterAllCategories: "全部品类", filterAllRisk: "全部风险", filterHigh: "仅高风险", filterFit: "合身问题", filterReview: "评论痛点", reset: "重置",
+          priorityTitle: "优先决策队列", priorityDesc: "面向商品、运营与详情页团队的干预优先级。每条建议都需要由合身信号、评论痛点或品类风险支持。",
+          riskHotspots: "风险热点", primaryDriver: "主要问题驱动", nextDecision: "下一步决策", evidenceStatus: "证据状态",
+          riskTriageTitle: "风险分层组合", riskTriageDesc: "查看哪些需要立即处理、哪些需要观察、哪些目前稳定。",
+          fitOutcomeTitle: "合身结果分布", categoryTriageTitle: "品类风险分层", categoryRiskTitle: "品类风险领先项", categoryRiskDesc: "当前筛选会实时更新此视图。", riskFormula: "风险分 = 不合身 + 低评分 + 评论痛点",
+          highestRiskTitle: "最高风险服装品类", painMixTitle: "评论痛点组合",
+          productStructureTitle: "商品结构", productStructureDesc: "用于品类规划的商品集中度与交易动量。", assortmentIntel: "商品结构智能",
+          productGroupsTitle: "商品组", indexGroupsTitle: "索引组", assortmentMapTitle: "商品配置地图", assortmentMapDesc: "信号比较交易需求与商品供给。需求差 = 交易占比 - 商品占比。",
+          scaleLabel: "放量 ↑", potentialLabel: "潜力 ↑", watchLabel: "观察 →", fixLabel: "修正 ↓",
+          scaleRule: "交易占比至少 30%，且不存在明显供给过重。可视为核心需求引擎。",
+          potentialRule: "需求差至少 +2.5 个百分点。需求强于当前商品配置。",
+          watchRule: "需求差位于 -2.5 到 +2.5 个百分点之间。继续观察再调整。",
+          fixRule: "需求差不高于 -2.5 个百分点。商品配置重于交易反馈。",
+          productTreemapTitle: "商品组矩形图", productShareTitle: "商品组需求占比", transactionMomentumTitle: "交易动量", transactionMomentumDesc: "H&M 交易表的日度活动，已压缩为看板可用指标。",
+          sizeBodyTitle: "尺码与体型合身风险", sizeBodyDesc: "当尺码不稳定和评论痛点同时出现时，合身风险最强。",
+          highestSizeTitle: "最高风险尺码", bodyRiskTitle: "体型风险", fitCompositionTitle: "按品类的合身构成", fitCompositionDesc: "堆叠条显示品类偏小、偏大或整体不稳定。",
+          fitMatrixTitle: "合身风险矩阵", fitMatrixDesc: "单元格结合品类风险分、合身率与痛点率。",
+          evidenceCompositionTitle: "证据构成", evidenceCompositionDesc: "打开单条评论前，先查看评论问题与评分基准。",
+          painShareTitle: "痛点占比", kaggleRiskTitle: "Kaggle 类目风险", interventionsTitle: "推荐干预动作", interventionsDesc: "基于当前筛选和证据信号生成运营动作。",
+          reviewTableTitle: "评论证据表", reviewTableDesc: "每个看板洞察都应能追溯到原始用户反馈。",
+          thCategory: "品类", thFit: "合身", thRating: "评分", thBodyType: "体型", thOccasion: "场景", thIssues: "匹配问题", thEvidence: "评论证据",
+          scopeFit: "合身/评论筛选已生效", scopeMarket: "市场页使用 H&M 完整数据集", filteredRows: "条筛选后证据",
+        },
+      };
 
       function parseCSV(text) {
         const rows = [];
@@ -1676,6 +1780,27 @@
         if (state.risk === "fit") rows = rows.filter((row) => num(row.nonfit_rate) >= 0.3);
         if (state.risk === "review") rows = rows.filter((row) => num(row.pain_point_rate) >= 0.7);
         return rows;
+      }
+
+      function filteredEvidenceRows() {
+        let rows = state.data.evidence || [];
+        if (state.category !== "all") rows = rows.filter((row) => row.category_group === state.category);
+        if (state.risk === "fit") rows = rows.filter((row) => row.fit !== "fit");
+        if (state.risk === "review") rows = rows.filter((row) => int(row.has_pain_point) === 1);
+        if (state.risk === "high") rows = rows.filter((row) => int(row.low_signal) === 1 || row.fit !== "fit");
+        return rows;
+      }
+
+      function filteredPainRows() {
+        const evidenceRows = filteredEvidenceRows();
+        if (state.category === "all" && state.risk === "all") return state.data.pain || [];
+        const counts = new Map();
+        evidenceRows.forEach((row) => {
+          (row.pain_points || "").split(";").filter(Boolean).forEach((label) => {
+            counts.set(label, (counts.get(label) || 0) + 1);
+          });
+        });
+        return [...counts.entries()].map(([pain_point, records]) => ({ pain_point, records })).sort((a, b) => b.records - a.records);
       }
 
       function categoryMetrics(category) {
@@ -2174,11 +2299,7 @@
       }
 
       function renderEvidence() {
-        let rows = state.data.evidence;
-        if (state.category !== "all") rows = rows.filter((row) => row.category_group === state.category);
-        if (state.risk === "fit") rows = rows.filter((row) => row.fit !== "fit");
-        if (state.risk === "review") rows = rows.filter((row) => int(row.has_pain_point) === 1);
-        if (state.risk === "high") rows = rows.filter((row) => int(row.low_signal) === 1 || row.fit !== "fit");
+        let rows = filteredEvidenceRows();
         document.getElementById("evidence-count").textContent = `${fmt(rows.length)} evidence rows`;
         document.getElementById("evidence-table").innerHTML = rows.slice(0, 80).map((row) => {
           const review = row.review_text || row.review_summary || "";
@@ -2329,7 +2450,7 @@
       function renderPriorityActions(categories, weightedNonfit) {
         const topCategory = categories[0] || {};
         const topSize = state.data.size.find((row) => int(row.display_eligible) === 1) || {};
-        const topPain = state.data.pain[0] || {};
+        const topPain = filteredPainRows()[0] || {};
         const highRiskCount = categories.filter((row) => num(row.risk_score) >= 32).length;
         const actions = [
           {
@@ -2376,7 +2497,7 @@
         const topCategory = categories[0] || {};
         const topSize = state.data.size.find((row) => int(row.display_eligible) === 1) || {};
         const topBody = state.data.body.find((row) => int(row.display_eligible) === 1) || {};
-        const topPain = state.data.pain[0] || {};
+        const topPain = filteredPainRows()[0] || {};
         const topReviewClass = state.data.kaggleClass[0] || {};
         const cards = [
           {
@@ -2427,9 +2548,11 @@
 
       function renderAll() {
         const categories = filteredCategories();
-        const totalFitRecords = state.data.category.reduce((sum, row) => sum + int(row.records), 0);
-        const weightedFit = state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0) / totalFitRecords;
-        const weightedNonfit = state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.nonfit_rate), 0) / totalFitRecords;
+        const evidenceRows = filteredEvidenceRows();
+        const painRows = filteredPainRows();
+        const totalFitRecords = categories.reduce((sum, row) => sum + int(row.records), 0) || 1;
+        const weightedFit = categories.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0) / totalFitRecords;
+        const weightedNonfit = categories.reduce((sum, row) => sum + int(row.records) * num(row.nonfit_rate), 0) / totalFitRecords;
         const hmTransactions = state.data.hmDaily.reduce((sum, row) => sum + int(row.transactions), 0);
         const kaggleReviews = state.data.kaggleClass.reduce((sum, row) => sum + int(row.records), 0);
         const topCategory = categories[0] || {};
@@ -2443,9 +2566,9 @@
           { label: "Priority Category", value: topCategory.category_group || "-", caption: topCategory.risk_score ? `Click to open risk score ${num(topCategory.risk_score).toFixed(1)}` : "No category selected", color: "var(--sky)", action: topCategory.category_group ? `openCategoryDetail('${encodeKey(topCategory.category_group)}')` : "" },
         ]);
         const fitSplit = [
-          { label: "Fit", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0), action: "setRiskView('all', 'fit', 'fit-stacked')" },
-          { label: "Too small", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.too_small_rate), 0), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
-          { label: "Too large", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.too_large_rate), 0), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
+          { label: "Fit", value: categories.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0), action: "setRiskView('all', 'fit', 'fit-stacked')" },
+          { label: "Too small", value: categories.reduce((sum, row) => sum + int(row.records) * num(row.too_small_rate), 0), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
+          { label: "Too large", value: categories.reduce((sum, row) => sum + int(row.records) * num(row.too_large_rate), 0), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
         ];
         renderDonut("overview-fit-donut", fitSplit, {
           label: "label",
@@ -2468,7 +2591,7 @@
           ariaLabel: "Interactive category triage donut",
         });
         renderBars("overview-risk-bars", categories.slice(0, 10), { label: "category_group", value: "risk_score", variant: "risk", interactive: "category", format: (row) => num(row.risk_score).toFixed(1) });
-        renderBars("overview-pain-bars", state.data.pain.slice(0, 8), { label: "pain_point", value: "records", variant: "violet", interactive: "reviewRisk" });
+        renderBars("overview-pain-bars", painRows.slice(0, 8), { label: "pain_point", value: "records", variant: "violet", interactive: "reviewRisk" });
 
         const market = marketRows();
         const productTotal = summaryValue("articles") || market.reduce((sum, row) => sum + int(row.articles), 0);
@@ -2499,7 +2622,7 @@
           { label: "High Risk Categories", value: categories.filter((row) => num(row.risk_score) >= 32).length, caption: "Click to isolate high-risk matrix cells", color: "var(--red)", action: "setRiskView('high', 'fit', 'risk-matrix')" },
           { label: "Worst Size", value: state.data.size[0]?.size || "-", caption: `Click to inspect score ${num(state.data.size[0]?.risk_score).toFixed(1)}`, accent: true, color: "var(--amber)", action: "scrollToTarget('size-bars')" },
           { label: "Body Segments", value: state.data.body.length, caption: "Click to inspect body type risk", action: "scrollToTarget('body-bars')" },
-          { label: "Evidence Sample", value: fmt(state.data.evidence.length), caption: "Click to open review evidence", action: "setPage('evidence');scrollToTarget('evidence-table')" },
+          { label: "Evidence Sample", value: fmt(evidenceRows.length), caption: "Click to open filtered review evidence", action: "setPage('evidence');scrollToTarget('evidence-table')" },
         ]);
         renderBars("size-bars", state.data.size.filter((row) => int(row.display_eligible) === 1).slice(0, 10), { label: "size", value: "risk_score", variant: "risk", format: (row) => num(row.risk_score).toFixed(1) });
         renderBars("body-bars", state.data.body.filter((row) => int(row.display_eligible) === 1).slice(0, 10), { label: "body_type", value: "risk_score", variant: "risk", format: (row) => num(row.risk_score).toFixed(1) });
@@ -2508,11 +2631,11 @@
 
         const negativeClasses = state.data.kaggleClass.filter((row) => num(row.low_rating_rate) > 0.1).length;
         renderKpis("evidence-kpis", [
-          { label: "Evidence Rows", value: fmt(state.data.evidence.length), caption: "Click to inspect review table", accent: true, color: "var(--teal)", action: "scrollToTarget('evidence-table')" },
-          { label: "Pain Tags", value: state.data.pain.length, caption: "Click to focus review pain points", action: "setRiskView('review', 'evidence', 'evidence-pain-donut')" },
+          { label: "Evidence Rows", value: fmt(evidenceRows.length), caption: "Current filters applied", accent: true, color: "var(--teal)", action: "scrollToTarget('evidence-table')" },
+          { label: "Pain Tags", value: painRows.length, caption: "Filtered review issue types", action: "setRiskView('review', 'evidence', 'evidence-pain-donut')" },
           { label: "Kaggle Risk Classes", value: negativeClasses, caption: "Click to inspect low-rating classes", color: "var(--amber)", action: "scrollToTarget('evidence-class-bars')" },
         ]);
-        renderDonut("evidence-pain-donut", state.data.pain.slice(0, 6), {
+        renderDonut("evidence-pain-donut", painRows.slice(0, 6), {
           label: "pain_point",
           value: "records",
           center: `${state.data.pain.length} tags`,
@@ -2531,19 +2654,47 @@
         renderEvidence();
       }
 
+      function t(key) {
+        return i18n[state.lang][key] || i18n.en[key] || key;
+      }
+
+      function applyI18n() {
+        document.querySelectorAll("[data-i18n]").forEach((node) => {
+          node.textContent = t(node.dataset.i18n);
+        });
+        document.getElementById("lang-en").classList.toggle("active", state.lang === "en");
+        document.getElementById("lang-zh").classList.toggle("active", state.lang === "zh");
+        setPage(state.page);
+      }
+
+      function setLanguage(lang) {
+        state.lang = lang;
+        applyI18n();
+        if (state.data.category) renderAll();
+      }
+
       function setPage(page) {
         state.page = page;
         document.querySelectorAll(".nav button").forEach((button) => button.classList.toggle("active", button.dataset.page === page));
         document.querySelectorAll(".page").forEach((section) => section.classList.toggle("active", section.id === page));
         const copy = {
-          overview: ["Executive risk", "Prioritize categories", "Evidence-first"],
-          market: ["Assortment structure", "Read market shape", "Behavioral context"],
-          fit: ["Fit diagnosis", "Find size instability", "Segment-aware"],
-          evidence: ["Review proof", "Inspect user language", "Traceable"],
+          en: {
+            overview: ["Executive risk", "Prioritize categories", "Evidence-first", i18n.en.scopeFit],
+            market: ["Assortment structure", "Read market shape", "Behavioral context", i18n.en.scopeMarket],
+            fit: ["Fit diagnosis", "Find size instability", "Segment-aware", i18n.en.scopeFit],
+            evidence: ["Review proof", "Inspect user language", "Traceable", i18n.en.scopeFit],
+          },
+          zh: {
+            overview: ["高层风险", "确定品类优先级", "证据优先", i18n.zh.scopeFit],
+            market: ["商品结构", "读取市场形态", "行为背景", i18n.zh.scopeMarket],
+            fit: ["合身诊断", "发现尺码不稳定", "分群视角", i18n.zh.scopeFit],
+            evidence: ["评论证据", "检查用户语言", "可追溯", i18n.zh.scopeFit],
+          },
         };
-        document.getElementById("context-lens").textContent = copy[page][0];
-        document.getElementById("context-action").textContent = copy[page][1];
-        document.getElementById("context-mode").textContent = copy[page][2];
+        document.getElementById("context-lens").textContent = copy[state.lang][page][0];
+        document.getElementById("context-action").textContent = copy[state.lang][page][1];
+        document.getElementById("context-mode").textContent = copy[state.lang][page][2];
+        document.getElementById("context-scope").textContent = copy[state.lang][page][3];
       }
 
       async function init() {
@@ -2577,6 +2728,7 @@
             hideTooltip();
           }
         });
+        applyI18n();
         renderAll();
         document.getElementById("loading").style.display = "none";
         document.getElementById("dashboard").style.display = "block";
