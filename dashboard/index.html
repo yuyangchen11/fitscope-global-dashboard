@@ -597,7 +597,7 @@
 
       .bar-row {
         display: grid;
-        grid-template-columns: minmax(110px, 0.7fr) minmax(0, 1.4fr) 72px;
+        grid-template-columns: minmax(110px, 0.7fr) minmax(0, 1.4fr) 96px;
         gap: 10px;
         align-items: center;
         padding: 3px;
@@ -805,6 +805,38 @@
         margin-top: 3px;
         color: var(--muted);
         font-size: 11px;
+      }
+
+      .signal-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-self: start;
+        min-height: 21px;
+        margin-top: 7px;
+        padding: 3px 7px;
+        border: 1px solid rgba(226, 232, 240, 0.16);
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.46);
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .signal-badge.scale,
+      .signal-badge.potential {
+        border-color: rgba(45, 212, 191, 0.38);
+        color: var(--teal);
+      }
+
+      .signal-badge.fix {
+        border-color: rgba(249, 115, 115, 0.42);
+        color: #fecaca;
+      }
+
+      .signal-badge.watch {
+        color: var(--amber);
       }
 
       .matrix {
@@ -1494,15 +1526,21 @@
         body: "../data/ucsd_clothing_fit/processed/ucsd_body_type_metrics.csv",
         pain: "../data/ucsd_clothing_fit/processed/ucsd_pain_point_metrics.csv",
         evidence: "../data/ucsd_clothing_fit/processed/ucsd_evidence_sample.csv",
-        hmProduct: "../data/huggingface_hm_search/processed/huggingface_hm_search_product_group_metrics.csv",
-        hmIndex: "../data/huggingface_hm_search/processed/huggingface_hm_search_index_group_metrics.csv",
-        hmDaily: "../data/huggingface_hm_search/processed/huggingface_hm_search_transaction_daily_metrics.csv",
-        hmArticles: "../data/huggingface_hm_search/processed/huggingface_hm_search_articles_sample.csv",
-        hmProductType: "../data/huggingface_hm_search/processed/huggingface_hm_search_product_type_metrics.csv",
-        hmColor: "../data/huggingface_hm_search/processed/huggingface_hm_search_color_metrics.csv",
-        hmChannel: "../data/huggingface_hm_search/processed/huggingface_hm_search_sales_channel_metrics.csv",
-        hmTopArticles: "../data/huggingface_hm_search/processed/huggingface_hm_search_top_article_transactions.csv",
-        hmTransactionsSample: "../data/huggingface_hm_search/processed/huggingface_hm_search_transactions_sample.csv",
+        hmProduct: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_product_group_metrics.csv",
+        hmTxProduct: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transaction_product_group_metrics.csv",
+        hmIndex: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_index_group_metrics.csv",
+        hmTxIndex: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transaction_index_group_metrics.csv",
+        hmDaily: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transaction_daily_metrics.csv",
+        hmSummary: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_summary.csv",
+        hmArticles: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_articles_sample.csv",
+        hmProductType: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_product_type_metrics.csv",
+        hmTxProductType: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transaction_product_type_metrics.csv",
+        hmColor: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_color_metrics.csv",
+        hmTxColor: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transaction_color_metrics.csv",
+        hmChannel: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_sales_channel_metrics.csv",
+        hmAge: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_age_bucket_metrics.csv",
+        hmTopArticles: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_top_article_transactions.csv",
+        hmTransactionsSample: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transactions_sample.csv",
         kaggleClass: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_class_metrics.csv",
         kaggleSentiment: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_sentiment_metrics.csv",
       };
@@ -1637,7 +1675,40 @@
       }
 
       function marketGroupMetrics(group) {
-        return state.data.hmProduct.find((row) => row.product_group_name === group);
+        return marketRows().find((row) => row.product_group_name === group);
+      }
+
+      function summaryValue(metric) {
+        const row = (state.data.hmSummary || []).find((item) => item.metric === metric);
+        return num(row?.value);
+      }
+
+      function marketSignal(row) {
+        const gap = num(row.demand_gap);
+        const txShare = num(row.transaction_share);
+        if (txShare >= 0.3 && gap >= -0.015) return { label: "Scale ↑", tone: "scale", direction: "up", note: "High demand share with acceptable assortment balance" };
+        if (gap >= 0.025) return { label: "Potential ↑", tone: "potential", direction: "up", note: "Demand share is stronger than assortment share" };
+        if (gap <= -0.025) return { label: "Fix ↓", tone: "fix", direction: "down", note: "Assortment share is heavier than transaction share" };
+        return { label: "Watch →", tone: "watch", direction: "flat", note: "Demand and assortment are broadly aligned" };
+      }
+
+      function marketRows() {
+        const txMap = new Map((state.data.hmTxProduct || []).map((row) => [row.product_group_name, row]));
+        return (state.data.hmProduct || []).map((row) => {
+          const tx = txMap.get(row.product_group_name) || {};
+          const articleShare = num(row.share);
+          const transactionShare = num(tx.share);
+          const demandGap = transactionShare - articleShare;
+          const merged = {
+            ...row,
+            transactions: int(tx.transactions),
+            transaction_share: transactionShare,
+            article_share: articleShare,
+            demand_gap: demandGap,
+          };
+          const signal = marketSignal(merged);
+          return { ...merged, signal_label: signal.label, signal_tone: signal.tone, signal_note: signal.note };
+        }).sort((a, b) => num(b.transactions) - num(a.transactions));
       }
 
       function countBy(rows, key) {
@@ -1684,17 +1755,21 @@
       }
 
       function marketGroupRecommendation(row, share, context) {
-        if (context === "donut") return "This view is about portfolio share. Use it to judge whether the group is over-concentrated or under-represented before comparing it with demand signals.";
-        if (context === "treemap") return "This view is about assortment space. Large blocks deserve deeper SKU-level checks because they carry more inventory and merchandising exposure.";
-        if (context === "bar") return "This view is about volume rank. Use it to compare product groups before choosing which assortment area to audit first.";
-        if (share >= 0.35) return "This group dominates the assortment. Treat it as the baseline for search demand and use fit-risk evidence before adding more traffic.";
-        if (share >= 0.12) return "This group is large enough to deserve a dedicated merchandising read. Compare campaign movement against category risk before scaling.";
+        const signal = marketSignal(row);
+        if (signal.tone === "potential") return "Potential signal: demand share is outpacing assortment share. Prioritize this group for trend validation, campaign testing, and deeper SKU review.";
+        if (signal.tone === "scale") return "Scale signal: this group is already a major demand driver. Expansion is reasonable, but fit and review risk should be checked before adding more traffic.";
+        if (signal.tone === "fix") return "Fix signal: assortment exposure is heavier than transaction share. Reduce blind expansion and inspect product quality, pricing, or targeting before scaling.";
+        if (context === "donut") return "Watch signal: share is balanced. Use this view to compare transaction demand against portfolio concentration before changing allocation.";
+        if (context === "treemap") return "Watch signal: assortment space is not obviously misaligned. Keep monitoring transaction movement and product-level evidence.";
+        if (context === "bar") return "Watch signal: ranked volume is stable. Use it as a benchmark group unless Google Trends or fit risk changes the priority.";
+        if (share >= 0.35) return "This group dominates the assortment. Treat it as the baseline for demand and use fit-risk evidence before adding more traffic.";
+        if (share >= 0.12) return "This group is large enough to deserve a dedicated merchandising read. Compare transaction movement against category risk before scaling.";
         return "This is a smaller group. Use it for niche opportunity monitoring rather than broad traffic allocation unless trend signals improve.";
       }
 
       function renderMarketContext(group, row, share, rank, context) {
         const articles = articleRowsForGroup(group);
-        const allGroups = state.data.hmProduct;
+        const allGroups = marketRows();
         const previous = allGroups[rank - 2];
         const next = allGroups[rank];
         const productTypes = countBy(articles, "product_type_name").slice(0, 6);
@@ -1702,16 +1777,22 @@
         const sections = countBy(articles, "section_name").slice(0, 5);
         if (context === "donut") {
           const comparisonRows = [
-            { label: group, value: int(row.articles) },
-            previous ? { label: `Above: ${previous.product_group_name}`, value: int(previous.articles) } : null,
-            next ? { label: `Below: ${next.product_group_name}`, value: int(next.articles) } : null,
+            { label: `${group} demand`, value: int(row.transactions) },
+            previous ? { label: `Above: ${previous.product_group_name}`, value: int(previous.transactions) } : null,
+            next ? { label: `Below: ${next.product_group_name}`, value: int(next.transactions) } : null,
           ].filter(Boolean);
           document.getElementById("market-drawer-breakdown").innerHTML = `
-            <h4>Share Comparison</h4>
-            ${renderDetailBars(comparisonRows, allGroups.reduce((sum, item) => sum + int(item.articles), 0))}
+            <h4>Demand Share Comparison</h4>
+            ${renderDetailBars(comparisonRows, allGroups.reduce((sum, item) => sum + int(item.transactions), 0))}
           `;
           document.getElementById("market-drawer-samples").innerHTML = `
-            <h4>Composition Clues</h4>
+            <h4>Assortment Gap</h4>
+            ${renderDetailBars([
+              { label: "Transaction demand", value: Math.round(num(row.transaction_share) * 10000) },
+              { label: "Article supply", value: Math.round(num(row.article_share) * 10000) },
+            ], 10000)}
+            <p>${escapeHtml(row.signal_note)}</p>
+            <h4 style="margin-top: 14px">Composition Clues</h4>
             ${productTypes.length ? renderDetailBars(productTypes) : "<p>No product-type sample available for this group.</p>"}
           `;
           return;
@@ -1720,6 +1801,8 @@
           document.getElementById("market-drawer-breakdown").innerHTML = `
             <h4>Assortment Breakdown</h4>
             ${productTypes.length ? renderDetailBars(productTypes) : "<p>No product-type sample available for this group.</p>"}
+            <h4 style="margin-top: 14px">Decision Signal</h4>
+            <p>${escapeHtml(row.signal_label)} · ${escapeHtml(row.signal_note)}</p>
           `;
           document.getElementById("market-drawer-samples").innerHTML = renderArticleSamples(articles);
           return;
@@ -1738,8 +1821,10 @@
         const group = decodeURIComponent(encodedGroup);
         const row = marketGroupMetrics(group);
         if (!row) return;
-        const total = state.data.hmProduct.reduce((sum, item) => sum + int(item.articles), 0) || 1;
-        const rank = state.data.hmProduct.findIndex((item) => item.product_group_name === group) + 1;
+        const rows = marketRows();
+        const total = rows.reduce((sum, item) => sum + int(item.articles), 0) || 1;
+        const txTotal = rows.reduce((sum, item) => sum + int(item.transactions), 0) || 1;
+        const rank = rows.findIndex((item) => item.product_group_name === group) + 1;
         const share = int(row.articles) / total;
         state.selectedMarketGroup = group;
         state.selectedMarketContext = context;
@@ -1753,9 +1838,11 @@
         document.getElementById("market-drawer-title").textContent = group;
         document.getElementById("market-drawer-metrics").innerHTML = [
           ["Articles", fmt(int(row.articles))],
-          ["Portfolio Share", `${(share * 100).toFixed(1)}%`],
-          ["Assortment Rank", `#${rank}`],
-          ["Portfolio Total", fmt(total)],
+          ["Transactions", fmt(int(row.transactions))],
+          ["Demand Share", `${(num(row.transaction_share) * 100).toFixed(1)}%`],
+          ["Demand Gap", `${num(row.demand_gap) >= 0 ? "+" : ""}${(num(row.demand_gap) * 100).toFixed(1)} pts`],
+          ["Signal", row.signal_label],
+          ["Rank", `#${rank}`],
         ].map(([label, value]) => `
           <div class="drawer-metric">
             <span>${label}</span>
@@ -1904,13 +1991,15 @@
           const behavior = action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : "";
           const tooltipLines = [
             `${options.valueTitle || "Value"}: ${shown}`,
+            row.signal_label ? `Signal: ${row.signal_label}` : null,
+            row.demand_gap !== undefined ? `Demand gap: ${num(row.demand_gap) >= 0 ? "+" : ""}${(num(row.demand_gap) * 100).toFixed(1)} pts` : null,
             action ? "Click to drill down" : "Hover for detail",
-          ];
+          ].filter(Boolean);
           return `
             <div class="bar-row ${action ? "interactive" : ""}" onmousemove="showTooltip(event, '${escapeHtml(row[options.label])}', ${JSON.stringify(tooltipLines).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" ${behavior}>
               <div class="bar-label" title="${escapeHtml(row[options.label])}">${escapeHtml(row[options.label])}</div>
               <div class="bar-track"><div class="bar-fill ${options.variant || ""}" style="width:${width}%"></div></div>
-              <div class="bar-value">${shown}</div>
+              <div class="bar-value">${row.signal_label ? `<span class="signal-badge ${row.signal_tone}">${row.signal_label}</span>` : shown}</div>
             </div>
           `;
         }).join("");
@@ -2103,7 +2192,7 @@
 
       function renderTreemap(target, rows) {
         const max = Math.max(...rows.map((row) => int(row.articles)), 1);
-        const total = state.data.hmProduct.reduce((sum, item) => sum + int(item.articles), 0) || 1;
+        const total = rows.reduce((sum, item) => sum + int(item.articles), 0) || 1;
         document.getElementById(target).innerHTML = rows.map((row, index) => {
           const span = Math.max(3, Math.min(8, Math.round((int(row.articles) / max) * 8)));
           const palette = [
@@ -2115,14 +2204,19 @@
           const share = (int(row.articles) / total) * 100;
           const tooltipLines = [
             `Articles: ${fmt(int(row.articles))}`,
-            `Portfolio share: ${share.toFixed(1)}%`,
+            `Transactions: ${fmt(int(row.transactions))}`,
+            `Assortment share: ${share.toFixed(1)}%`,
+            `Demand share: ${(num(row.transaction_share) * 100).toFixed(1)}%`,
+            `Demand gap: ${num(row.demand_gap) >= 0 ? "+" : ""}${(num(row.demand_gap) * 100).toFixed(1)} pts`,
+            `Signal: ${row.signal_label}`,
             `Rank: #${index + 1}`,
             "Click to drill down",
           ];
           return `
             <div class="tile interactive" role="button" tabindex="0" onclick="${action}" onmousemove="showTooltip(event, '${escapeHtml(row.product_group_name)}', ${JSON.stringify(tooltipLines).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}" style="grid-column: span ${span}; background:${palette[index % palette.length]}">
               <strong>${escapeHtml(row.product_group_name)}</strong>
-              <span>${fmt(int(row.articles))} articles</span>
+              <span>${fmt(int(row.articles))} articles · ${fmt(int(row.transactions))} tx</span>
+              <b class="signal-badge ${row.signal_tone}">${row.signal_label}</b>
             </div>
           `;
         }).join("");
@@ -2272,20 +2366,24 @@
         renderBars("overview-risk-bars", categories.slice(0, 10), { label: "category_group", value: "risk_score", variant: "risk", interactive: "category", format: (row) => num(row.risk_score).toFixed(1) });
         renderBars("overview-pain-bars", state.data.pain.slice(0, 8), { label: "pain_point", value: "records", variant: "violet", interactive: "reviewRisk" });
 
-        const productTotal = state.data.hmProduct.reduce((sum, row) => sum + int(row.articles), 0);
+        const market = marketRows();
+        const productTotal = summaryValue("articles") || market.reduce((sum, row) => sum + int(row.articles), 0);
+        const transactionTotal = summaryValue("transactions") || hmTransactions;
+        const bestPotential = market.filter((row) => row.signal_tone === "potential").sort((a, b) => num(b.demand_gap) - num(a.demand_gap))[0] || market[0] || {};
+        const fixCount = market.filter((row) => row.signal_tone === "fix").length;
         renderKpis("market-kpis", [
-          { label: "Tracked Articles", value: fmt(productTotal), caption: "Click to inspect assortment structure", accent: true, color: "var(--sky)", action: "scrollToTarget('market-treemap')" },
-          { label: "Market Events", value: fmt(hmTransactions), caption: "Click to inspect daily momentum", action: "scrollToTarget('transaction-line')" },
-          { label: "Largest Group", value: state.data.hmProduct[0]?.product_group_name || "-", caption: `${fmt(int(state.data.hmProduct[0]?.articles))} articles`, color: "var(--teal)", action: state.data.hmProduct[0]?.product_group_name ? `openMarketGroup('${encodeKey(state.data.hmProduct[0].product_group_name)}', 'kpi')` : "" },
-          { label: "Sales Channels", value: "2", caption: "Click to review product group mix", action: "scrollToTarget('market-product-bars')" },
+          { label: "Tracked Articles", value: fmt(productTotal), caption: "Full Kaggle H&M catalog; click to inspect assortment", accent: true, color: "var(--sky)", action: "scrollToTarget('market-treemap')" },
+          { label: "Market Events", value: fmt(transactionTotal), caption: "Full transaction history; click to inspect momentum", action: "scrollToTarget('transaction-line')" },
+          { label: "Best Potential", value: bestPotential.product_group_name || "-", caption: bestPotential.demand_gap !== undefined ? `${bestPotential.signal_label} · gap ${(num(bestPotential.demand_gap) * 100).toFixed(1)} pts` : "No potential signal", color: "var(--teal)", action: bestPotential.product_group_name ? `openMarketGroup('${encodeKey(bestPotential.product_group_name)}', 'kpi')` : "" },
+          { label: "Fix Queue", value: fixCount, caption: "Groups where assortment exceeds demand", color: fixCount ? "var(--amber)" : "var(--teal)", action: "scrollToTarget('market-product-bars')" },
         ]);
-        renderBars("market-product-bars", state.data.hmProduct.slice(0, 10), { label: "product_group_name", value: "articles", interactive: "marketGroup", source: "bar", valueTitle: "Articles" });
-        renderBars("market-index-bars", state.data.hmIndex.slice(0, 10), { label: "index_group_name", value: "articles", variant: "violet" });
-        renderTreemap("market-treemap", state.data.hmProduct.slice(0, 12));
-        renderDonut("market-product-donut", state.data.hmProduct.slice(0, 6), {
+        renderBars("market-product-bars", market.slice(0, 10), { label: "product_group_name", value: "transactions", interactive: "marketGroup", source: "bar", valueTitle: "Transactions" });
+        renderBars("market-index-bars", state.data.hmTxIndex.slice(0, 10), { label: "index_group_name", value: "transactions", variant: "violet", valueTitle: "Transactions" });
+        renderTreemap("market-treemap", market.slice(0, 12));
+        renderDonut("market-product-donut", market.slice(0, 6), {
           label: "product_group_name",
-          value: "articles",
-          center: fmt(productTotal),
+          value: "transactions",
+          center: fmt(transactionTotal),
           colors: ["var(--teal)", "var(--sky)", "var(--violet)", "var(--amber)", "var(--green)", "var(--red)"],
           interactive: "marketGroup",
           source: "donut",
