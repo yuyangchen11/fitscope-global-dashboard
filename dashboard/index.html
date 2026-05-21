@@ -982,15 +982,27 @@
 
       .line-hit {
         cursor: crosshair;
+        fill: transparent;
+        pointer-events: all;
       }
 
       .line-point {
         fill: var(--sky);
-        opacity: 0;
+        opacity: 0.38;
         transition: opacity 0.14s ease;
+        pointer-events: none;
       }
 
-      .line-hit:hover + .line-point {
+      .line-guide {
+        stroke: rgba(226, 232, 240, 0.28);
+        stroke-dasharray: 4 5;
+        opacity: 0;
+        transition: opacity 0.14s ease;
+        pointer-events: none;
+      }
+
+      .line-hit:hover + .line-guide,
+      .line-hit:hover + .line-guide + .line-point {
         opacity: 1;
       }
 
@@ -1632,28 +1644,34 @@
         renderAll();
       }
 
-      function showLineTooltip(event, index) {
-        const row = state.lineRows[index];
-        if (!row) return;
+      function showTooltip(event, title, lines = []) {
         const tooltip = document.getElementById("chart-tooltip");
         tooltip.innerHTML = `
-          <strong>${escapeHtml(row.date)}</strong>
-          <span>Transactions: ${fmt(int(row.transactions))}</span>
-          <span>Price sum: ${num(row.price_sum).toFixed(2)}</span>
-          <span>Avg price: ${num(row.avg_price).toFixed(4)}</span>
+          <strong>${escapeHtml(title)}</strong>
+          ${lines.map((line) => `<span>${escapeHtml(line)}</span>`).join("")}
         `;
         tooltip.style.left = `${event.clientX + 14}px`;
         tooltip.style.top = `${event.clientY + 14}px`;
         tooltip.style.display = "block";
       }
 
-      function hideLineTooltip() {
+      function hideTooltip() {
         document.getElementById("chart-tooltip").style.display = "none";
+      }
+
+      function showLineTooltip(event, index) {
+        const row = state.lineRows[index];
+        if (!row) return;
+        showTooltip(event, row.date, [
+          `Transactions: ${fmt(int(row.transactions))}`,
+          `Price sum: ${num(row.price_sum).toFixed(2)}`,
+          `Avg price: ${num(row.avg_price).toFixed(4)}`,
+        ]);
       }
 
       function renderKpis(target, cards) {
         document.getElementById(target).innerHTML = cards.map((card) => `
-          <div class="card ${card.accent ? "accent" : ""} ${card.action ? "interactive" : ""}" ${card.action ? `role="button" tabindex="0" onclick="${card.action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${card.action}}"` : ""}>
+          <div class="card ${card.accent ? "accent" : ""} ${card.action ? "interactive" : ""}" onmousemove="showTooltip(event, '${escapeHtml(card.label)}', ${JSON.stringify([`Value: ${card.value}`, card.caption, card.action ? "Click to open related view" : "Hover for detail"]).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" ${card.action ? `role="button" tabindex="0" onclick="${card.action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${card.action}}"` : ""}>
             <h4>${card.label}</h4>
             <div class="kpi-value" style="color: ${card.color || "var(--text)"}">${card.value}</div>
             <div class="kpi-caption">${card.caption}</div>
@@ -1679,8 +1697,12 @@
                 ? "setRiskView('review', 'evidence', 'evidence-table')"
                 : "";
           const behavior = action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : "";
+          const tooltipLines = [
+            `${options.valueTitle || "Value"}: ${shown}`,
+            action ? "Click to drill down" : "Hover for detail",
+          ];
           return `
-            <div class="bar-row ${action ? "interactive" : ""}" ${behavior}>
+            <div class="bar-row ${action ? "interactive" : ""}" onmousemove="showTooltip(event, '${escapeHtml(row[options.label])}', ${JSON.stringify(tooltipLines).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" ${behavior}>
               <div class="bar-label" title="${escapeHtml(row[options.label])}">${escapeHtml(row[options.label])}</div>
               <div class="bar-track"><div class="bar-fill ${options.variant || ""}" style="width:${width}%"></div></div>
               <div class="bar-value">${shown}</div>
@@ -1706,10 +1728,12 @@
         });
         const path = points.map((point, index) => `${index ? "L" : "M"}${point[0]},${point[1]}`).join(" ");
         const area = `${path} L${width - pad},${height - pad} L${pad},${height - pad} Z`;
+        const step = (width - pad * 2) / Math.max(points.length - 1, 1);
         const hoverPoints = points.map((point, index) => `
-          <circle class="line-hit" cx="${point[0]}" cy="${point[1]}" r="11" fill="transparent" onmousemove="showLineTooltip(event, ${index})" onmouseleave="hideLineTooltip()">
+          <rect class="line-hit" x="${point[0] - step / 2}" y="${pad}" width="${step}" height="${height - pad * 2}" onmousemove="showLineTooltip(event, ${index})" onmouseleave="hideTooltip()">
             <title>${rows[index]?.date || ""} · ${fmt(int(rows[index]?.transactions))} transactions</title>
-          </circle>
+          </rect>
+          <line class="line-guide" x1="${point[0]}" y1="${pad}" x2="${point[0]}" y2="${height - pad}"></line>
           <circle class="line-point" cx="${point[0]}" cy="${point[1]}" r="4"></circle>
         `).join("");
         svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
@@ -1816,8 +1840,13 @@
           const value = num(row[options.value]);
           const label = row[options.label];
           const display = options.format ? options.format(row, total) : `${((value / total) * 100).toFixed(1)}%`;
+          const tooltipLines = [
+            `Share: ${display}`,
+            `Value: ${fmt(value)}`,
+            action ? "Click to drill down" : "Hover for detail",
+          ];
           return `
-            <path class="donut-segment" d="${donutPath(90, 90, 76, 43, start, cursor)}" fill="${colors[index % colors.length]}" ${action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : ""}>
+            <path class="donut-segment" d="${donutPath(90, 90, 76, 43, start, cursor)}" fill="${colors[index % colors.length]}" onmousemove="showTooltip(event, '${escapeHtml(label)}', ${JSON.stringify(tooltipLines).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" ${action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : ""}>
               <title>${escapeHtml(label)} · ${escapeHtml(display)}</title>
             </path>
           `;
@@ -1827,7 +1856,7 @@
           const value = num(row[options.value]);
           const action = donutAction(row, options);
           return `
-            <div class="legend-row ${action ? "interactive" : ""}" ${action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : ""}>
+            <div class="legend-row ${action ? "interactive" : ""}" onmousemove="showTooltip(event, '${escapeHtml(row[options.label])}', ${JSON.stringify([`Share: ${options.format ? options.format(row, total) : `${((value / total) * 100).toFixed(1)}%`}`, `Value: ${fmt(value)}`, action ? "Click to drill down" : "Hover for detail"]).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" ${action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : ""}>
               <span class="legend-dot" style="background:${colors[index % colors.length]}"></span>
               <strong>${escapeHtml(row[options.label])}</strong>
               <span>${options.format ? options.format(row, total) : `${((value / total) * 100).toFixed(1)}%`}</span>
@@ -1869,6 +1898,7 @@
 
       function renderTreemap(target, rows) {
         const max = Math.max(...rows.map((row) => int(row.articles)), 1);
+        const total = state.data.hmProduct.reduce((sum, item) => sum + int(item.articles), 0) || 1;
         document.getElementById(target).innerHTML = rows.map((row, index) => {
           const span = Math.max(3, Math.min(8, Math.round((int(row.articles) / max) * 8)));
           const palette = [
@@ -1877,8 +1907,15 @@
             "linear-gradient(145deg, rgba(245,158,11,.20), rgba(249,115,115,.10))",
           ];
           const action = `openMarketGroup('${encodeKey(row.product_group_name)}')`;
+          const share = (int(row.articles) / total) * 100;
+          const tooltipLines = [
+            `Articles: ${fmt(int(row.articles))}`,
+            `Portfolio share: ${share.toFixed(1)}%`,
+            `Rank: #${index + 1}`,
+            "Click to drill down",
+          ];
           return `
-            <div class="tile interactive" role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}" style="grid-column: span ${span}; background:${palette[index % palette.length]}">
+            <div class="tile interactive" role="button" tabindex="0" onclick="${action}" onmousemove="showTooltip(event, '${escapeHtml(row.product_group_name)}', ${JSON.stringify(tooltipLines).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}" style="grid-column: span ${span}; background:${palette[index % palette.length]}">
               <strong>${escapeHtml(row.product_group_name)}</strong>
               <span>${fmt(int(row.articles))} articles</span>
             </div>
@@ -2129,7 +2166,7 @@
           if (event.key === "Escape") {
             closeCategoryDrawer();
             closeMarketDrawer();
-            hideLineTooltip();
+            hideTooltip();
           }
         });
         renderAll();
