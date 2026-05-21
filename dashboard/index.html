@@ -447,6 +447,131 @@
         font-size: 13px;
       }
 
+      .semantic-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        gap: 14px;
+      }
+
+      .semantic-summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .semantic-card {
+        min-width: 0;
+        padding: 13px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.34);
+      }
+
+      .semantic-card span {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 750;
+        text-transform: uppercase;
+      }
+
+      .semantic-card strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 24px;
+        line-height: 1;
+      }
+
+      .semantic-card p {
+        margin: 7px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .theme-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .theme-row {
+        display: grid;
+        grid-template-columns: minmax(120px, 0.55fr) minmax(0, 1fr) 64px;
+        gap: 10px;
+        align-items: center;
+        padding: 5px;
+        border: 1px solid transparent;
+        border-radius: 7px;
+      }
+
+      .theme-row.interactive {
+        cursor: pointer;
+      }
+
+      .theme-row.interactive:hover {
+        border-color: rgba(45, 212, 191, 0.32);
+        background: rgba(20, 36, 54, 0.56);
+      }
+
+      .theme-row strong {
+        overflow: hidden;
+        color: #dbeafe;
+        font-size: 13px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .theme-row span {
+        color: var(--muted);
+        font-size: 12px;
+        text-align: right;
+      }
+
+      .keyword-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .keyword-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 4px 9px;
+        border: 1px solid rgba(226, 232, 240, 0.14);
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.4);
+        color: #dbeafe;
+        font-size: 12px;
+      }
+
+      .semantic-quotes {
+        display: grid;
+        gap: 10px;
+      }
+
+      .quote-card {
+        padding: 12px;
+        border: 1px solid rgba(226, 232, 240, 0.12);
+        border-radius: 8px;
+        background: rgba(2, 6, 23, 0.2);
+      }
+
+      .quote-card strong {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--text);
+        font-size: 12px;
+      }
+
+      .quote-card p {
+        margin: 7px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
       .status-panel {
         display: grid;
         align-content: center;
@@ -1464,6 +1589,7 @@
         .grid.cols-4,
         .grid.cols-3,
         .grid.cols-2,
+        .semantic-grid,
         .recommendation-grid,
         .grid.cols-2-1 {
           grid-template-columns: 1fr;
@@ -1496,7 +1622,8 @@
         .hero-metrics,
         .nav,
         .matrix,
-        .donut-wrap {
+        .donut-wrap,
+        .semantic-summary {
           grid-template-columns: 1fr;
         }
 
@@ -1713,6 +1840,25 @@
             <div class="grid cols-3" id="evidence-kpis"></div>
             <div class="section-head">
               <div>
+                <h3 data-i18n="semanticTitle">Consumer Semantic Analysis</h3>
+                <p data-i18n="semanticDesc">Rule-based text analytics summarize sentiment, themes and language signals before reading individual reviews.</p>
+              </div>
+              <span class="pill" id="semantic-method">-</span>
+            </div>
+            <div class="semantic-grid">
+              <div class="card">
+                <h3 data-i18n="sentimentTitle">Sentiment Read</h3>
+                <div id="semantic-summary" class="semantic-summary" style="margin-top: 14px"></div>
+                <div id="semantic-theme-bars" class="theme-list" style="margin-top: 14px"></div>
+              </div>
+              <div class="card">
+                <h3 data-i18n="languageSignalsTitle">Consumer Language Signals</h3>
+                <div id="semantic-keywords" class="keyword-cloud" style="margin-top: 14px"></div>
+                <div id="semantic-quotes" class="semantic-quotes" style="margin-top: 14px"></div>
+              </div>
+            </div>
+            <div class="section-head">
+              <div>
                 <h3 data-i18n="evidenceCompositionTitle">Evidence Composition</h3>
                 <p data-i18n="evidenceCompositionDesc">Review issues and rating benchmarks before opening individual comments.</p>
               </div>
@@ -1860,6 +2006,8 @@
           highestSizeTitle: "Highest Risk Sizes", bodyRiskTitle: "Body Type Risk", fitCompositionTitle: "Fit Composition by Category", fitCompositionDesc: "Stacked bars expose whether a category skews too small, too large, or generally unstable.",
           fitMatrixTitle: "Fit Risk Matrix", fitMatrixDesc: "Cells combine category risk score, fit rate and pain-point rate.",
           evidenceCompositionTitle: "Evidence Composition", evidenceCompositionDesc: "Review issues and rating benchmarks before opening individual comments.",
+          semanticTitle: "Consumer Semantic Analysis", semanticDesc: "Rule-based text analytics summarize sentiment, themes and language signals before reading individual reviews.",
+          sentimentTitle: "Sentiment Read", languageSignalsTitle: "Consumer Language Signals",
           painShareTitle: "Pain Point Share", kaggleRiskTitle: "Kaggle Class Risk", interventionsTitle: "Recommended Interventions", interventionsDesc: "Operational actions generated from current filters and evidence signals.",
           reviewTableTitle: "Review Evidence Table", reviewTableDesc: "Every dashboard insight should be traceable to original user feedback.",
           thCategory: "Category", thFit: "Fit", thRating: "Rating", thBodyType: "Body Type", thOccasion: "Occasion", thIssues: "Matched Issues", thEvidence: "Review Evidence",
@@ -1892,6 +2040,8 @@
           highestSizeTitle: "最高风险尺码", bodyRiskTitle: "体型风险", fitCompositionTitle: "按品类的合身构成", fitCompositionDesc: "堆叠条显示品类偏小、偏大或整体不稳定。",
           fitMatrixTitle: "合身风险矩阵", fitMatrixDesc: "单元格结合品类风险分、合身率与痛点率。",
           evidenceCompositionTitle: "证据构成", evidenceCompositionDesc: "打开单条评论前，先查看评论问题与评分基准。",
+          semanticTitle: "消费者语义分析", semanticDesc: "用可解释的文本分析先总结情绪、主题和消费者语言信号，再查看单条评论。",
+          sentimentTitle: "情绪判断", languageSignalsTitle: "消费者语言信号",
           painShareTitle: "痛点占比", kaggleRiskTitle: "Kaggle 类目风险", interventionsTitle: "推荐干预动作", interventionsDesc: "基于当前筛选和证据信号生成运营动作。",
           reviewTableTitle: "评论证据表", reviewTableDesc: "每个看板洞察都应能追溯到原始用户反馈。",
           thCategory: "品类", thFit: "合身", thRating: "评分", thBodyType: "体型", thOccasion: "场景", thIssues: "匹配问题", thEvidence: "评论证据",
@@ -2657,6 +2807,151 @@
         return `${category}在${occasion}场景下反馈为${fit}；用户体型为${body}；识别到的主要问题是：${issues}。`;
       }
 
+      const semanticThemes = [
+        {
+          key: "fit_confidence",
+          en: "Fit confidence",
+          zh: "合身信心",
+          words: ["fit", "fits", "fitted", "true to size", "perfect", "snug", "room", "comfortable", "flattering"],
+          pain: ["too_small_or_tight", "too_large_or_loose", "waist_or_hip", "chest_or_bust"],
+        },
+        {
+          key: "size_anxiety",
+          en: "Size anxiety",
+          zh: "尺码焦虑",
+          words: ["small", "large", "tight", "loose", "size up", "size down", "zip", "zipper", "gapped", "short", "long"],
+          pain: ["too_small_or_tight", "too_large_or_loose", "length_issue"],
+        },
+        {
+          key: "quality_texture",
+          en: "Quality and texture",
+          zh: "质量与材质",
+          words: ["fabric", "material", "quality", "thick", "thin", "cheap", "stretch", "lace", "sequins", "itchy"],
+          pain: ["fabric_or_quality"],
+        },
+        {
+          key: "appearance_expectation",
+          en: "Appearance expectation",
+          zh: "外观预期",
+          words: ["color", "picture", "photo", "looked", "beautiful", "gorgeous", "print", "shade", "pattern"],
+          pain: ["color_expectation"],
+        },
+        {
+          key: "occasion_readiness",
+          en: "Occasion readiness",
+          zh: "场景适配",
+          words: ["wedding", "party", "work", "formal", "dance", "compliments", "event", "office", "vacation"],
+          pain: [],
+        },
+      ];
+
+      function sentimentType(row) {
+        const rating = num(row.rating);
+        const text = `${row.review_summary || ""} ${row.review_text || ""}`.toLowerCase();
+        const negativeWords = ["tight", "small", "large", "loose", "short", "long", "cheap", "hole", "damaged", "uncomfortable", "couldn't", "would not"];
+        const positiveWords = ["perfect", "comfortable", "compliments", "loved", "gorgeous", "beautiful", "flattering", "great"];
+        const negativeHits = negativeWords.filter((word) => text.includes(word)).length;
+        const positiveHits = positiveWords.filter((word) => text.includes(word)).length;
+        if (rating <= 6 || int(row.low_signal) === 1 || (row.fit !== "fit" && negativeHits >= 1)) return "negative";
+        if (rating >= 9 && row.fit === "fit" && positiveHits >= negativeHits) return "positive";
+        return "mixed";
+      }
+
+      function semanticLabel(key) {
+        const labels = {
+          positive: ["Positive", "正向"],
+          mixed: ["Mixed", "混合"],
+          negative: ["Negative", "负向"],
+        };
+        const value = labels[key] || [key, key];
+        return state.lang === "zh" ? value[1] : value[0];
+      }
+
+      function analyzeSemantics(rows) {
+        const total = rows.length || 1;
+        const sentiment = { positive: 0, mixed: 0, negative: 0 };
+        const themeCounts = new Map(semanticThemes.map((theme) => [theme.key, 0]));
+        const keywordCounts = new Map();
+        const quotes = [];
+        rows.forEach((row) => {
+          const text = `${row.review_summary || ""} ${row.review_text || ""}`.toLowerCase();
+          const painSet = new Set((row.pain_points || "").split(";").filter(Boolean));
+          const tone = sentimentType(row);
+          sentiment[tone] += 1;
+          semanticThemes.forEach((theme) => {
+            const wordHits = theme.words.filter((word) => text.includes(word)).length;
+            const painHits = theme.pain.filter((pain) => painSet.has(pain)).length;
+            if (wordHits || painHits) {
+              themeCounts.set(theme.key, themeCounts.get(theme.key) + 1);
+              [...theme.words.filter((word) => text.includes(word)).slice(0, 3), ...theme.pain.filter((pain) => painSet.has(pain))].forEach((word) => {
+                keywordCounts.set(word, (keywordCounts.get(word) || 0) + 1);
+              });
+            }
+          });
+          if (quotes.length < 5 && (tone !== "positive" || int(row.has_pain_point) === 1)) quotes.push({ ...row, tone });
+        });
+        const themes = semanticThemes.map((theme) => ({
+          ...theme,
+          label: state.lang === "zh" ? theme.zh : theme.en,
+          records: themeCounts.get(theme.key) || 0,
+          share: (themeCounts.get(theme.key) || 0) / total,
+        })).sort((a, b) => b.records - a.records);
+        const keywords = [...keywordCounts.entries()]
+          .map(([label, records]) => ({ label, records }))
+          .sort((a, b) => b.records - a.records)
+          .slice(0, 14);
+        return { sentiment, themes, keywords, quotes, total: rows.length };
+      }
+
+      function renderSemanticAnalysis(rows) {
+        const analysis = analyzeSemantics(rows);
+        const total = analysis.total || 0;
+        document.getElementById("semantic-method").textContent = state.lang === "zh"
+          ? "方法：评分 + 合身结果 + 痛点标签 + 关键词"
+          : "Method: rating + fit result + pain tags + keywords";
+        if (!total) {
+          renderEmptyState("semantic-summary", state.lang === "zh" ? "没有可分析评论" : "No reviews to analyze", state.lang === "zh" ? "当前筛选没有评论文本，因此不生成语义结论。" : "Current filters have no review text, so semantic conclusions are suppressed.");
+          renderEmptyState("semantic-theme-bars", state.lang === "zh" ? "没有主题数据" : "No theme data", state.lang === "zh" ? "请选择其他品类或重置筛选。" : "Choose another category or reset filters.");
+          renderEmptyState("semantic-keywords", state.lang === "zh" ? "没有关键词" : "No keywords", state.lang === "zh" ? "无评论样本时不显示关键词云。" : "Keyword cloud is hidden without samples.");
+          renderEmptyState("semantic-quotes", state.lang === "zh" ? "没有代表性评论" : "No representative quotes", state.lang === "zh" ? "当前筛选没有可追溯原文。" : "No traceable original text under current filters.");
+          return;
+        }
+        const sentimentCards = [
+          { key: "positive", color: "var(--teal)", noteZh: "满意、合身或强正向描述", noteEn: "Satisfied, fit-stable, or strongly positive language" },
+          { key: "mixed", color: "var(--amber)", noteZh: "喜欢产品但仍含尺码/预期问题", noteEn: "Positive intent with sizing or expectation friction" },
+          { key: "negative", color: "var(--red)", noteZh: "低评分、不合身或明确负向描述", noteEn: "Low rating, non-fit, or clearly negative language" },
+        ];
+        document.getElementById("semantic-summary").innerHTML = sentimentCards.map((card) => {
+          const value = analysis.sentiment[card.key] || 0;
+          return `
+            <div class="semantic-card">
+              <span>${semanticLabel(card.key)}</span>
+              <strong style="color:${card.color}">${((value / total) * 100).toFixed(1)}%</strong>
+              <p>${escapeHtml(state.lang === "zh" ? card.noteZh : card.noteEn)} · ${fmt(value)} ${state.lang === "zh" ? "条" : "rows"}</p>
+            </div>
+          `;
+        }).join("");
+        const maxTheme = Math.max(...analysis.themes.map((theme) => theme.records), 1);
+        document.getElementById("semantic-theme-bars").innerHTML = analysis.themes.map((theme) => `
+          <div class="theme-row interactive" onmousemove="showTooltip(event, '${escapeHtml(theme.label)}', ${JSON.stringify([`${state.lang === "zh" ? "覆盖" : "Coverage"}: ${fmt(theme.records)} ${state.lang === "zh" ? "条" : "rows"}`, `${state.lang === "zh" ? "占比" : "Share"}: ${(theme.share * 100).toFixed(1)}%`]).replace(/"/g, "&quot;")})" onmouseleave="hideTooltip()">
+            <strong>${escapeHtml(theme.label)}</strong>
+            <div class="bar-track"><div class="bar-fill" style="width:${Math.max(3, (theme.records / maxTheme) * 100)}%"></div></div>
+            <span>${(theme.share * 100).toFixed(1)}%</span>
+          </div>
+        `).join("");
+        document.getElementById("semantic-keywords").innerHTML = analysis.keywords.length
+          ? analysis.keywords.map((keyword) => `<span class="keyword-chip">${escapeHtml(dataLabel(keyword.label, "pain", state.lang === "zh" ? "zhOnly" : "balanced"))} · ${fmt(keyword.records)}</span>`).join("")
+          : `<div class="empty-state"><strong>${state.lang === "zh" ? "没有高频关键词" : "No frequent keywords"}</strong><span>${state.lang === "zh" ? "当前样本没有足够重复语言。" : "No repeated language is strong enough in this sample."}</span></div>`;
+        document.getElementById("semantic-quotes").innerHTML = analysis.quotes.length
+          ? analysis.quotes.map((row) => `
+            <div class="quote-card">
+              <strong><span>${escapeHtml(dataLabel(row.category_group, "category"))}</span><span>${escapeHtml(semanticLabel(row.tone))} · ${escapeHtml(fitLabel(row.fit))}</span></strong>
+              ${renderEvidenceCopy(row, 170)}
+            </div>
+          `).join("")
+          : `<div class="empty-state"><strong>${state.lang === "zh" ? "没有代表性评论" : "No representative quotes"}</strong><span>${state.lang === "zh" ? "当前筛选没有可用于语义解释的原文。" : "No original review text is available for semantic explanation."}</span></div>`;
+      }
+
       function renderEvidenceCopy(row, limit = 210) {
         const review = row.review_text || row.review_summary || "";
         const clipped = `${escapeHtml(review.slice(0, limit))}${review.length > limit ? "..." : ""}`;
@@ -2905,14 +3200,15 @@
         const topBody = state.data.body.find((row) => int(row.display_eligible) === 1) || {};
         const topPain = filteredPainRows()[0] || {};
         const topReviewClass = state.data.kaggleClass[0] || {};
+        const painTopic = topPain.pain_point ? dataLabel(topPain.pain_point, "pain") : (state.lang === "zh" ? "当前筛选的主要评论问题" : "top review issue");
         const cards = [
           {
             stage: "PDP COPY",
             stageLabel: state.lang === "zh" ? "详情页文案" : "PDP COPY",
             impact: state.lang === "zh" ? "高影响" : "High impact",
-            title: state.lang === "zh" ? `为${dataLabel(topPain.pain_point || "top review issue", "pain")}设置预期提示` : `Set expectation warnings for ${dataLabel(topPain.pain_point || "top review issue", "pain")}`,
+            title: state.lang === "zh" ? `为${painTopic}设置预期提示` : `Set expectation warnings for ${painTopic}`,
             why: state.lang === "zh"
-              ? `${fmt(int(topPain.records))} 条问题信号说明消费者在购买前需要更清楚的商品页说明。`
+              ? (topPain.pain_point ? `${fmt(int(topPain.records))} 条问题信号说明消费者在购买前需要更清楚的商品页说明。` : "当前筛选没有评论痛点样本，应先补足证据或切换到全量视图。")
               : `${fmt(int(topPain.records))} matched issue signals indicate shoppers need clearer product-page guidance before purchase.`,
             actions: state.lang === "zh" ? [
               "在尺码选择器上方加入简短的合身/手感提示。",
@@ -3163,6 +3459,7 @@
           format: (row) => pct(row.low_rating_rate),
         });
         renderRecommendations(categories);
+        renderSemanticAnalysis(evidenceRows);
         renderEvidence();
       }
 
