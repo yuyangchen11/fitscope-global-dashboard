@@ -256,6 +256,12 @@
         padding: 0 12px;
       }
 
+      .reset-button {
+        min-width: 92px;
+        color: var(--text);
+        cursor: pointer;
+      }
+
       .hero {
         margin-bottom: 18px;
         padding: 18px;
@@ -348,6 +354,29 @@
         border: 1px solid rgba(226, 232, 240, 0.15);
         border-radius: 8px;
         background: rgba(15, 23, 42, 0.34);
+      }
+
+      .action-item.interactive,
+      .bar-row.interactive,
+      .matrix-cell.interactive,
+      .recommendation-card.interactive,
+      .stacked-row.interactive,
+      .evidence-row {
+        cursor: pointer;
+        transition:
+          border-color 0.18s ease,
+          background 0.18s ease,
+          transform 0.18s ease;
+      }
+
+      .action-item.interactive:hover,
+      .bar-row.interactive:hover,
+      .matrix-cell.interactive:hover,
+      .recommendation-card.interactive:hover,
+      .stacked-row.interactive:hover {
+        border-color: rgba(45, 212, 191, 0.36);
+        background: rgba(20, 36, 54, 0.72);
+        transform: translateY(-1px);
       }
 
       .action-rank {
@@ -565,6 +594,9 @@
         grid-template-columns: minmax(110px, 0.7fr) minmax(0, 1.4fr) 72px;
         gap: 10px;
         align-items: center;
+        padding: 3px;
+        border: 1px solid transparent;
+        border-radius: 7px;
         font-size: 13px;
       }
 
@@ -666,6 +698,9 @@
       .stacked-row {
         display: grid;
         gap: 7px;
+        padding: 6px;
+        border: 1px solid transparent;
+        border-radius: 8px;
       }
 
       .stacked-head {
@@ -755,6 +790,147 @@
         color: var(--muted);
         font-size: 11px;
         line-height: 1.25;
+      }
+
+      .drawer-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: none;
+        background: rgba(2, 6, 23, 0.58);
+        backdrop-filter: blur(10px);
+      }
+
+      .drawer-backdrop.open {
+        display: block;
+      }
+
+      body.drawer-open {
+        overflow: hidden;
+      }
+
+      .drawer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: grid;
+        align-content: start;
+        gap: 16px;
+        width: min(470px, 100vw);
+        height: 100%;
+        overflow: auto;
+        padding: 22px;
+        border-left: 1px solid rgba(226, 232, 240, 0.16);
+        background:
+          linear-gradient(180deg, rgba(20, 28, 45, 0.98), rgba(12, 18, 31, 0.98)),
+          var(--panel);
+        box-shadow: -24px 0 70px rgba(0, 0, 0, 0.32);
+      }
+
+      .drawer-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .drawer-head h3 {
+        margin: 4px 0 0;
+        font-size: 22px;
+      }
+
+      .drawer-close,
+      .drawer-action {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.48);
+        color: var(--text);
+        cursor: pointer;
+      }
+
+      .drawer-close {
+        width: 34px;
+        height: 34px;
+        font-size: 20px;
+      }
+
+      .drawer-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .drawer-metric {
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.34);
+      }
+
+      .drawer-metric span {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+
+      .drawer-metric strong {
+        display: block;
+        margin-top: 7px;
+        font-size: 19px;
+      }
+
+      .drawer-panel {
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.36);
+      }
+
+      .drawer-panel h4 {
+        margin: 0 0 8px;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      .drawer-panel p,
+      .drawer-evidence li {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      .drawer-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .drawer-action {
+        min-height: 40px;
+        padding: 0 12px;
+        font-weight: 750;
+      }
+
+      .drawer-action.primary {
+        border-color: rgba(45, 212, 191, 0.42);
+        background: linear-gradient(135deg, rgba(45, 212, 191, 0.22), rgba(56, 189, 248, 0.14));
+      }
+
+      .drawer-evidence {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .drawer-evidence li {
+        padding: 10px;
+        border: 1px solid rgba(226, 232, 240, 0.1);
+        border-radius: 8px;
+        background: rgba(2, 6, 23, 0.22);
       }
 
       .line-chart {
@@ -928,8 +1104,8 @@
           <button data-page="evidence"><span class="nav-icon">04</span><span>Review Evidence</span></button>
         </nav>
         <div class="side-note">
-          <strong>Operating policy</strong>
-          <span>Prioritize interventions only when a risk signal can be traced back to fit behavior, review language, or category concentration.</span>
+          <strong>Operating model</strong>
+          <span>Click any risk category to inspect diagnosis, apply filters, and trace decisions back to evidence. Fresh processed CSV drops can refresh the workspace without redesigning the UI.</span>
         </div>
       </aside>
 
@@ -958,6 +1134,7 @@
                 <option value="fit">Fit issues</option>
                 <option value="review">Review pain points</option>
               </select>
+              <button id="reset-filters" class="select reset-button" type="button">Reset</button>
             </div>
           </header>
 
@@ -1108,6 +1285,31 @@
       </main>
     </div>
 
+    <div id="category-drawer-backdrop" class="drawer-backdrop" onclick="closeCategoryDrawer(event)">
+      <aside class="drawer" aria-label="Category diagnosis drawer" onclick="event.stopPropagation()">
+        <div class="drawer-head">
+          <div>
+            <span class="pill">Category diagnosis</span>
+            <h3 id="drawer-title">-</h3>
+          </div>
+          <button class="drawer-close" type="button" aria-label="Close diagnosis drawer" onclick="closeCategoryDrawer()">×</button>
+        </div>
+        <div id="drawer-metrics" class="drawer-grid"></div>
+        <div class="drawer-panel">
+          <h4>Recommended Move</h4>
+          <p id="drawer-recommendation">-</p>
+        </div>
+        <div class="drawer-actions">
+          <button class="drawer-action primary" type="button" onclick="applyCategoryFromDrawer()">Apply Filter</button>
+          <button class="drawer-action" type="button" onclick="showEvidenceFromDrawer()">Show Evidence</button>
+        </div>
+        <div class="drawer-panel">
+          <h4>Evidence Sample</h4>
+          <ul id="drawer-evidence" class="drawer-evidence"></ul>
+        </div>
+      </aside>
+    </div>
+
     <script>
       const paths = {
         category: "../data/ucsd_clothing_fit/processed/ucsd_category_metrics.csv",
@@ -1122,7 +1324,7 @@
         kaggleSentiment: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_sentiment_metrics.csv",
       };
 
-      const state = { data: {}, page: "overview", category: "all", risk: "all" };
+      const state = { data: {}, page: "overview", category: "all", risk: "all", selectedCategory: null };
 
       function parseCSV(text) {
         const rows = [];
@@ -1168,6 +1370,14 @@
       const int = (value) => Number.parseInt(value || "0", 10) || 0;
       const fmt = (value) => Intl.NumberFormat("en", { notation: value > 999999 ? "compact" : "standard" }).format(value);
       const pct = (value) => `${(num(value) * 100).toFixed(1)}%`;
+      const encodeKey = (value) => encodeURIComponent(value || "");
+      const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      })[char]);
 
       function filteredCategories() {
         let rows = state.data.category.filter((row) => int(row.display_eligible) === 1);
@@ -1176,6 +1386,86 @@
         if (state.risk === "fit") rows = rows.filter((row) => num(row.nonfit_rate) >= 0.3);
         if (state.risk === "review") rows = rows.filter((row) => num(row.pain_point_rate) >= 0.7);
         return rows;
+      }
+
+      function categoryMetrics(category) {
+        return state.data.category.find((row) => row.category_group === category);
+      }
+
+      function categoryEvidence(category) {
+        return state.data.evidence.filter((row) => row.category_group === category);
+      }
+
+      function categoryRecommendation(row) {
+        const small = num(row.too_small_rate);
+        const large = num(row.too_large_rate);
+        const pain = num(row.pain_point_rate);
+        if (small > 0.24) return "Prioritize size-up guidance near the size selector, then monitor whether non-fit language decreases after the product-page update.";
+        if (large > 0.24) return "Prioritize size-down guidance and model-fit notes, especially for paid traffic where expectation mismatch is expensive.";
+        if (pain > 0.72) return "Rewrite PDP copy around the most frequent review pain points and attach evidence examples to the SKU audit.";
+        return "Keep this category in watch mode, but review low-rating comments before increasing merchandising exposure.";
+      }
+
+      function openCategoryDetail(encodedCategory) {
+        const category = decodeURIComponent(encodedCategory);
+        const row = categoryMetrics(category);
+        if (!row) return;
+        state.selectedCategory = category;
+        document.getElementById("drawer-title").textContent = category;
+        document.getElementById("drawer-metrics").innerHTML = [
+          ["Risk Score", num(row.risk_score).toFixed(1)],
+          ["Fit Rate", pct(row.fit_rate)],
+          ["Too Small", pct(row.too_small_rate)],
+          ["Too Large", pct(row.too_large_rate)],
+          ["Pain Point Rate", pct(row.pain_point_rate)],
+          ["Records", fmt(int(row.records))],
+        ].map(([label, value]) => `
+          <div class="drawer-metric">
+            <span>${label}</span>
+            <strong>${value}</strong>
+          </div>
+        `).join("");
+        document.getElementById("drawer-recommendation").textContent = categoryRecommendation(row);
+        const evidence = categoryEvidence(category).slice(0, 3);
+        document.getElementById("drawer-evidence").innerHTML = evidence.length
+          ? evidence.map((item) => `<li>${escapeHtml((item.review_text || item.review_summary || "No review text").slice(0, 190))}</li>`).join("")
+          : "<li>No evidence row is available for the current sample.</li>";
+        document.getElementById("category-drawer-backdrop").classList.add("open");
+        document.body.classList.add("drawer-open");
+      }
+
+      function closeCategoryDrawer(event) {
+        if (event && event.target.id !== "category-drawer-backdrop") return;
+        document.getElementById("category-drawer-backdrop").classList.remove("open");
+        document.body.classList.remove("drawer-open");
+      }
+
+      function applyCategoryFromDrawer() {
+        if (!state.selectedCategory) return;
+        state.category = state.selectedCategory;
+        document.getElementById("category-filter").value = state.selectedCategory;
+        renderAll();
+        closeCategoryDrawer();
+      }
+
+      function showEvidenceFromDrawer() {
+        applyCategoryFromDrawer();
+        setPage("evidence");
+        document.getElementById("evidence-table").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function focusRecommendation(stage) {
+        setPage(stage === "SIZE SYSTEM" ? "fit" : "evidence");
+        const target = stage === "SIZE SYSTEM" ? document.getElementById("size-bars") : document.getElementById("recommendation-cards");
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      function resetFilters() {
+        state.category = "all";
+        state.risk = "all";
+        document.getElementById("category-filter").value = "all";
+        document.getElementById("risk-filter").value = "all";
+        renderAll();
       }
 
       function renderKpis(target, cards) {
@@ -1194,9 +1484,12 @@
           const value = num(row[options.value]);
           const width = Math.max(2, (value / max) * 100);
           const shown = options.format ? options.format(row) : fmt(value);
+          const encoded = encodeKey(row[options.label]);
+          const isCategory = options.interactive === "category";
+          const behavior = isCategory ? `role="button" tabindex="0" onclick="openCategoryDetail('${encoded}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryDetail('${encoded}');}"` : "";
           return `
-            <div class="bar-row">
-              <div class="bar-label" title="${row[options.label]}">${row[options.label]}</div>
+            <div class="bar-row ${isCategory ? "interactive" : ""}" ${behavior}>
+              <div class="bar-label" title="${escapeHtml(row[options.label])}">${escapeHtml(row[options.label])}</div>
               <div class="bar-track"><div class="bar-fill ${options.variant || ""}" style="width:${width}%"></div></div>
               <div class="bar-value">${shown}</div>
             </div>
@@ -1248,9 +1541,10 @@
           const risk = num(row.risk_score);
           const alpha = Math.min(0.48, 0.12 + risk / 100);
           const color = risk >= 33 ? `rgba(249,115,115,${alpha})` : `rgba(45,212,191,${alpha})`;
+          const encoded = encodeKey(row.category_group);
           return `
-            <div class="matrix-cell" style="background:${color}">
-              <strong>${row.category_group}</strong>
+            <div class="matrix-cell interactive" style="background:${color}" role="button" tabindex="0" onclick="openCategoryDetail('${encoded}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryDetail('${encoded}');}">
+              <strong>${escapeHtml(row.category_group)}</strong>
               <span>Risk ${risk.toFixed(1)} · Fit ${pct(row.fit_rate)} · Pain ${pct(row.pain_point_rate)}</span>
             </div>
           `;
@@ -1264,17 +1558,20 @@
         if (state.risk === "review") rows = rows.filter((row) => int(row.has_pain_point) === 1);
         if (state.risk === "high") rows = rows.filter((row) => int(row.low_signal) === 1 || row.fit !== "fit");
         document.getElementById("evidence-count").textContent = `${fmt(rows.length)} evidence rows`;
-        document.getElementById("evidence-table").innerHTML = rows.slice(0, 80).map((row) => `
-          <tr>
-            <td>${row.category_group}</td>
+        document.getElementById("evidence-table").innerHTML = rows.slice(0, 80).map((row) => {
+          const review = row.review_text || row.review_summary || "";
+          return `
+          <tr class="evidence-row" onclick="openCategoryDetail('${encodeKey(row.category_group)}')">
+            <td>${escapeHtml(row.category_group)}</td>
             <td><span class="${row.fit === "fit" ? "positive-chip" : "risk-chip"}">${row.fit}</span></td>
-            <td>${row.rating || "-"}</td>
-            <td>${row.body_type}</td>
-            <td>${row.occasion}</td>
-            <td class="muted">${row.pain_points || "none"}</td>
-            <td>${(row.review_text || row.review_summary || "").slice(0, 210)}${(row.review_text || "").length > 210 ? "..." : ""}</td>
+            <td>${escapeHtml(row.rating || "-")}</td>
+            <td>${escapeHtml(row.body_type)}</td>
+            <td>${escapeHtml(row.occasion)}</td>
+            <td class="muted">${escapeHtml(row.pain_points || "none")}</td>
+            <td>${escapeHtml(review.slice(0, 210))}${review.length > 210 ? "..." : ""}</td>
           </tr>
-        `).join("");
+        `;
+        }).join("");
       }
 
       function renderDonut(target, rows, options) {
@@ -1312,9 +1609,9 @@
           const small = Math.max(0, num(row.too_small_rate) * 100);
           const large = Math.max(0, num(row.too_large_rate) * 100);
           return `
-            <div class="stacked-row">
+            <div class="stacked-row interactive" role="button" tabindex="0" onclick="openCategoryDetail('${encodeKey(row.category_group)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryDetail('${encodeKey(row.category_group)}');}">
               <div class="stacked-head">
-                <strong>${row.category_group}</strong>
+                <strong>${escapeHtml(row.category_group)}</strong>
                 <span>Fit ${fit.toFixed(0)}% · Small ${small.toFixed(0)}% · Large ${large.toFixed(0)}%</span>
               </div>
               <div class="stacked-track">
@@ -1355,28 +1652,36 @@
             title: `Audit ${topCategory.category_group || "top"} listings before scaling traffic`,
             detail: `Risk score ${num(topCategory.risk_score).toFixed(1)} with ${pct(topCategory.nonfit_rate)} non-fit signal.`,
             tag: "Merchandising",
+            category: topCategory.category_group,
           },
           {
             title: `Add size guidance for size ${topSize.size || "-"}`,
             detail: `Highest size-risk score ${num(topSize.risk_score).toFixed(1)}; verify size chart and model notes.`,
             tag: "Size chart",
+            page: "fit",
           },
           {
             title: `Rewrite PDP copy around ${topPain.pain_point || "review issues"}`,
             detail: `${fmt(int(topPain.records))} matched review signals should be converted into shopper-facing expectations.`,
             tag: "Content",
+            page: "evidence",
           },
         ];
-        document.getElementById("priority-actions").innerHTML = actions.map((action, index) => `
-          <div class="action-item">
+        document.getElementById("priority-actions").innerHTML = actions.map((action, index) => {
+          const behavior = action.category
+            ? `onclick="openCategoryDetail('${encodeKey(action.category)}')"`
+            : `onclick="setPage('${action.page}')"`;
+          return `
+          <div class="action-item interactive" ${behavior}>
             <div class="action-rank">P${index + 1}</div>
             <div class="action-copy">
-              <strong>${action.title}</strong>
-              <span>${action.detail}</span>
+              <strong>${escapeHtml(action.title)}</strong>
+              <span>${escapeHtml(action.detail)}</span>
             </div>
             <span class="action-tag">${action.tag}</span>
           </div>
-        `).join("");
+        `;
+        }).join("");
         document.getElementById("queue-hotspots").textContent = highRiskCount;
         document.getElementById("queue-driver").textContent = topPain.pain_point || "-";
         document.getElementById("queue-next").textContent = weightedNonfit >= 0.28 ? "Sizing intervention" : "Review audit";
@@ -1425,12 +1730,12 @@
           },
         ];
         document.getElementById("recommendation-cards").innerHTML = cards.map((card) => `
-          <article class="recommendation-card">
+          <article class="recommendation-card interactive" role="button" tabindex="0" onclick="focusRecommendation('${card.stage}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();focusRecommendation('${card.stage}');}">
             <div class="rec-kicker"><span>${card.stage}</span><span>${card.impact} impact</span></div>
-            <h4>${card.title}</h4>
-            <p>${card.why}</p>
+            <h4>${escapeHtml(card.title)}</h4>
+            <p>${escapeHtml(card.why)}</p>
             <ul class="rec-actions">
-              ${card.actions.map((action) => `<li>${action}</li>`).join("")}
+              ${card.actions.map((action) => `<li>${escapeHtml(action)}</li>`).join("")}
             </ul>
           </article>
         `).join("");
@@ -1476,7 +1781,7 @@
           colors: ["var(--red)", "var(--amber)", "var(--teal)"],
           format: (row) => `${num(row.value).toFixed(0)} categories`,
         });
-        renderBars("overview-risk-bars", categories.slice(0, 10), { label: "category_group", value: "risk_score", variant: "risk", format: (row) => num(row.risk_score).toFixed(1) });
+        renderBars("overview-risk-bars", categories.slice(0, 10), { label: "category_group", value: "risk_score", variant: "risk", interactive: "category", format: (row) => num(row.risk_score).toFixed(1) });
         renderBars("overview-pain-bars", state.data.pain.slice(0, 8), { label: "pain_point", value: "records", variant: "violet" });
 
         const productTotal = state.data.hmProduct.reduce((sum, row) => sum + int(row.articles), 0);
@@ -1567,6 +1872,10 @@
         document.getElementById("risk-filter").addEventListener("change", (event) => {
           state.risk = event.target.value;
           renderAll();
+        });
+        document.getElementById("reset-filters").addEventListener("click", resetFilters);
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") closeCategoryDrawer();
         });
         renderAll();
         document.getElementById("loading").style.display = "none";
