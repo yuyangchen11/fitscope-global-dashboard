@@ -357,10 +357,13 @@
       }
 
       .action-item.interactive,
+      .card.interactive,
       .bar-row.interactive,
       .matrix-cell.interactive,
       .recommendation-card.interactive,
       .stacked-row.interactive,
+      .legend-row.interactive,
+      .tile.interactive,
       .evidence-row {
         cursor: pointer;
         transition:
@@ -370,10 +373,13 @@
       }
 
       .action-item.interactive:hover,
+      .card.interactive:hover,
       .bar-row.interactive:hover,
       .matrix-cell.interactive:hover,
       .recommendation-card.interactive:hover,
-      .stacked-row.interactive:hover {
+      .stacked-row.interactive:hover,
+      .legend-row.interactive:hover,
+      .tile.interactive:hover {
         border-color: rgba(45, 212, 191, 0.36);
         background: rgba(20, 36, 54, 0.72);
         transform: translateY(-1px);
@@ -665,6 +671,39 @@
         font-weight: 800;
       }
 
+      .donut-svg {
+        width: 150px;
+        height: 150px;
+        overflow: visible;
+      }
+
+      .donut-segment {
+        cursor: pointer;
+        transition:
+          filter 0.18s ease,
+          opacity 0.18s ease,
+          transform 0.18s ease;
+        transform-origin: 90px 90px;
+      }
+
+      .donut-segment:hover {
+        filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.34));
+        opacity: 0.92;
+        transform: scale(1.015);
+      }
+
+      .donut-hole {
+        fill: #121a2a;
+      }
+
+      .donut-center-text {
+        fill: var(--text);
+        font-size: 20px;
+        font-weight: 800;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+
       .legend {
         display: grid;
         gap: 9px;
@@ -675,6 +714,9 @@
         grid-template-columns: 10px minmax(0, 1fr) auto;
         gap: 9px;
         align-items: center;
+        padding: 4px 6px;
+        border: 1px solid transparent;
+        border-radius: 7px;
         color: var(--muted);
         font-size: 12px;
       }
@@ -936,6 +978,45 @@
       .line-chart {
         width: 100%;
         height: 250px;
+      }
+
+      .line-hit {
+        cursor: crosshair;
+      }
+
+      .line-point {
+        fill: var(--sky);
+        opacity: 0;
+        transition: opacity 0.14s ease;
+      }
+
+      .line-hit:hover + .line-point {
+        opacity: 1;
+      }
+
+      .chart-tooltip {
+        position: fixed;
+        z-index: 80;
+        display: none;
+        min-width: 170px;
+        padding: 10px 12px;
+        border: 1px solid rgba(226, 232, 240, 0.18);
+        border-radius: 8px;
+        background: rgba(12, 18, 31, 0.96);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.34);
+        color: var(--text);
+        font-size: 12px;
+        pointer-events: none;
+      }
+
+      .chart-tooltip strong,
+      .chart-tooltip span {
+        display: block;
+      }
+
+      .chart-tooltip span {
+        margin-top: 4px;
+        color: var(--muted);
       }
 
       .line-chart text {
@@ -1310,6 +1391,29 @@
       </aside>
     </div>
 
+    <div id="market-drawer-backdrop" class="drawer-backdrop" onclick="closeMarketDrawer(event)">
+      <aside class="drawer" aria-label="Market group drilldown drawer" onclick="event.stopPropagation()">
+        <div class="drawer-head">
+          <div>
+            <span class="pill">Product group drill-down</span>
+            <h3 id="market-drawer-title">-</h3>
+          </div>
+          <button class="drawer-close" type="button" aria-label="Close market drawer" onclick="closeMarketDrawer()">×</button>
+        </div>
+        <div id="market-drawer-metrics" class="drawer-grid"></div>
+        <div class="drawer-panel">
+          <h4>Market Read</h4>
+          <p id="market-drawer-recommendation">-</p>
+        </div>
+        <div class="drawer-actions">
+          <button class="drawer-action primary" type="button" onclick="focusMarketGroup()">Focus Market Page</button>
+          <button class="drawer-action" type="button" onclick="closeMarketDrawer();scrollToTarget('transaction-line')">View Momentum</button>
+        </div>
+      </aside>
+    </div>
+
+    <div id="chart-tooltip" class="chart-tooltip"></div>
+
     <script>
       const paths = {
         category: "../data/ucsd_clothing_fit/processed/ucsd_category_metrics.csv",
@@ -1324,7 +1428,7 @@
         kaggleSentiment: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_sentiment_metrics.csv",
       };
 
-      const state = { data: {}, page: "overview", category: "all", risk: "all", selectedCategory: null };
+      const state = { data: {}, page: "overview", category: "all", risk: "all", selectedCategory: null, selectedMarketGroup: null, lineRows: [] };
 
       function parseCSV(text) {
         const rows = [];
@@ -1396,6 +1500,19 @@
         return state.data.evidence.filter((row) => row.category_group === category);
       }
 
+      function scrollToTarget(targetId) {
+        const target = document.getElementById(targetId);
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      function setRiskView(risk, page = state.page, targetId = null) {
+        state.risk = risk;
+        document.getElementById("risk-filter").value = risk;
+        setPage(page);
+        renderAll();
+        if (targetId) requestAnimationFrame(() => scrollToTarget(targetId));
+      }
+
       function categoryRecommendation(row) {
         const small = num(row.too_small_rate);
         const large = num(row.too_large_rate);
@@ -1440,6 +1557,53 @@
         document.body.classList.remove("drawer-open");
       }
 
+      function marketGroupMetrics(group) {
+        return state.data.hmProduct.find((row) => row.product_group_name === group);
+      }
+
+      function marketGroupRecommendation(row, share) {
+        if (share >= 0.35) return "This group dominates the assortment. Treat it as the baseline for search demand and use fit-risk evidence before adding more traffic.";
+        if (share >= 0.12) return "This group is large enough to deserve a dedicated merchandising read. Compare campaign movement against category risk before scaling.";
+        return "This is a smaller group. Use it for niche opportunity monitoring rather than broad traffic allocation unless trend signals improve.";
+      }
+
+      function openMarketGroup(encodedGroup) {
+        const group = decodeURIComponent(encodedGroup);
+        const row = marketGroupMetrics(group);
+        if (!row) return;
+        const total = state.data.hmProduct.reduce((sum, item) => sum + int(item.articles), 0) || 1;
+        const rank = state.data.hmProduct.findIndex((item) => item.product_group_name === group) + 1;
+        const share = int(row.articles) / total;
+        state.selectedMarketGroup = group;
+        document.getElementById("market-drawer-title").textContent = group;
+        document.getElementById("market-drawer-metrics").innerHTML = [
+          ["Articles", fmt(int(row.articles))],
+          ["Portfolio Share", `${(share * 100).toFixed(1)}%`],
+          ["Assortment Rank", `#${rank}`],
+          ["Portfolio Total", fmt(total)],
+        ].map(([label, value]) => `
+          <div class="drawer-metric">
+            <span>${label}</span>
+            <strong>${value}</strong>
+          </div>
+        `).join("");
+        document.getElementById("market-drawer-recommendation").textContent = marketGroupRecommendation(row, share);
+        document.getElementById("market-drawer-backdrop").classList.add("open");
+        document.body.classList.add("drawer-open");
+      }
+
+      function closeMarketDrawer(event) {
+        if (event && event.target.id !== "market-drawer-backdrop") return;
+        document.getElementById("market-drawer-backdrop").classList.remove("open");
+        document.body.classList.remove("drawer-open");
+      }
+
+      function focusMarketGroup() {
+        setPage("market");
+        closeMarketDrawer();
+        requestAnimationFrame(() => scrollToTarget("market-treemap"));
+      }
+
       function applyCategoryFromDrawer() {
         if (!state.selectedCategory) return;
         state.category = state.selectedCategory;
@@ -1468,9 +1632,28 @@
         renderAll();
       }
 
+      function showLineTooltip(event, index) {
+        const row = state.lineRows[index];
+        if (!row) return;
+        const tooltip = document.getElementById("chart-tooltip");
+        tooltip.innerHTML = `
+          <strong>${escapeHtml(row.date)}</strong>
+          <span>Transactions: ${fmt(int(row.transactions))}</span>
+          <span>Price sum: ${num(row.price_sum).toFixed(2)}</span>
+          <span>Avg price: ${num(row.avg_price).toFixed(4)}</span>
+        `;
+        tooltip.style.left = `${event.clientX + 14}px`;
+        tooltip.style.top = `${event.clientY + 14}px`;
+        tooltip.style.display = "block";
+      }
+
+      function hideLineTooltip() {
+        document.getElementById("chart-tooltip").style.display = "none";
+      }
+
       function renderKpis(target, cards) {
         document.getElementById(target).innerHTML = cards.map((card) => `
-          <div class="card ${card.accent ? "accent" : ""}">
+          <div class="card ${card.accent ? "accent" : ""} ${card.action ? "interactive" : ""}" ${card.action ? `role="button" tabindex="0" onclick="${card.action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${card.action}}"` : ""}>
             <h4>${card.label}</h4>
             <div class="kpi-value" style="color: ${card.color || "var(--text)"}">${card.value}</div>
             <div class="kpi-caption">${card.caption}</div>
@@ -1486,9 +1669,18 @@
           const shown = options.format ? options.format(row) : fmt(value);
           const encoded = encodeKey(row[options.label]);
           const isCategory = options.interactive === "category";
-          const behavior = isCategory ? `role="button" tabindex="0" onclick="openCategoryDetail('${encoded}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCategoryDetail('${encoded}');}"` : "";
+          const isMarketGroup = options.interactive === "marketGroup";
+          const isReviewRisk = options.interactive === "reviewRisk";
+          const action = isCategory
+            ? `openCategoryDetail('${encoded}')`
+            : isMarketGroup
+              ? `openMarketGroup('${encoded}')`
+              : isReviewRisk
+                ? "setRiskView('review', 'evidence', 'evidence-table')"
+                : "";
+          const behavior = action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : "";
           return `
-            <div class="bar-row ${isCategory ? "interactive" : ""}" ${behavior}>
+            <div class="bar-row ${action ? "interactive" : ""}" ${behavior}>
               <div class="bar-label" title="${escapeHtml(row[options.label])}">${escapeHtml(row[options.label])}</div>
               <div class="bar-track"><div class="bar-fill ${options.variant || ""}" style="width:${width}%"></div></div>
               <div class="bar-value">${shown}</div>
@@ -1500,6 +1692,7 @@
       function renderLineChart() {
         const svg = document.getElementById("transaction-line");
         const rows = state.data.hmDaily.filter((_, index) => index % 10 === 0).slice(0, 75);
+        state.lineRows = rows;
         const width = 980;
         const height = 250;
         const pad = 28;
@@ -1513,6 +1706,12 @@
         });
         const path = points.map((point, index) => `${index ? "L" : "M"}${point[0]},${point[1]}`).join(" ");
         const area = `${path} L${width - pad},${height - pad} L${pad},${height - pad} Z`;
+        const hoverPoints = points.map((point, index) => `
+          <circle class="line-hit" cx="${point[0]}" cy="${point[1]}" r="11" fill="transparent" onmousemove="showLineTooltip(event, ${index})" onmouseleave="hideLineTooltip()">
+            <title>${rows[index]?.date || ""} · ${fmt(int(rows[index]?.transactions))} transactions</title>
+          </circle>
+          <circle class="line-point" cx="${point[0]}" cy="${point[1]}" r="4"></circle>
+        `).join("");
         svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
         svg.innerHTML = `
           <defs>
@@ -1532,6 +1731,7 @@
           <text x="${width - pad - 70}" y="20">${rows[rows.length - 1]?.date || ""}</text>
           <text x="${pad}" y="${height - 7}">${fmt(min)}</text>
           <text x="${width - pad - 72}" y="${height - 7}">${fmt(max)}</text>
+          ${hoverPoints}
         `;
       }
 
@@ -1574,30 +1774,73 @@
         }).join("");
       }
 
+      function polarPoint(cx, cy, radius, angle) {
+        const radians = (angle - 90) * Math.PI / 180;
+        return {
+          x: cx + radius * Math.cos(radians),
+          y: cy + radius * Math.sin(radians),
+        };
+      }
+
+      function donutPath(cx, cy, outerRadius, innerRadius, startAngle, endAngle) {
+        const startOuter = polarPoint(cx, cy, outerRadius, endAngle);
+        const endOuter = polarPoint(cx, cy, outerRadius, startAngle);
+        const startInner = polarPoint(cx, cy, innerRadius, startAngle);
+        const endInner = polarPoint(cx, cy, innerRadius, endAngle);
+        const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+        return [
+          `M ${startOuter.x} ${startOuter.y}`,
+          `A ${outerRadius} ${outerRadius} 0 ${largeArc} 0 ${endOuter.x} ${endOuter.y}`,
+          `L ${startInner.x} ${startInner.y}`,
+          `A ${innerRadius} ${innerRadius} 0 ${largeArc} 1 ${endInner.x} ${endInner.y}`,
+          "Z",
+        ].join(" ");
+      }
+
+      function donutAction(row, options) {
+        if (row.action) return row.action;
+        if (options.interactive === "marketGroup") return `openMarketGroup('${encodeKey(row[options.label])}')`;
+        if (options.interactive === "reviewRisk") return "setRiskView('review', 'evidence', 'evidence-table')";
+        return "";
+      }
+
       function renderDonut(target, rows, options) {
         const colors = options.colors || ["var(--teal)", "var(--sky)", "var(--amber)", "var(--red)", "var(--violet)", "var(--green)"];
         const total = rows.reduce((sum, row) => sum + num(row[options.value]), 0) || 1;
         let cursor = 0;
-        const stops = rows.map((row, index) => {
+        const segments = rows.map((row, index) => {
           const start = cursor;
           const degrees = (num(row[options.value]) / total) * 360;
           cursor += degrees;
-          return `${colors[index % colors.length]} ${start.toFixed(2)}deg ${cursor.toFixed(2)}deg`;
+          const action = donutAction(row, options);
+          const value = num(row[options.value]);
+          const label = row[options.label];
+          const display = options.format ? options.format(row, total) : `${((value / total) * 100).toFixed(1)}%`;
+          return `
+            <path class="donut-segment" d="${donutPath(90, 90, 76, 43, start, cursor)}" fill="${colors[index % colors.length]}" ${action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : ""}>
+              <title>${escapeHtml(label)} · ${escapeHtml(display)}</title>
+            </path>
+          `;
         });
         const center = options.center || fmt(total);
         const legend = rows.map((row, index) => {
           const value = num(row[options.value]);
+          const action = donutAction(row, options);
           return `
-            <div class="legend-row">
+            <div class="legend-row ${action ? "interactive" : ""}" ${action ? `role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}"` : ""}>
               <span class="legend-dot" style="background:${colors[index % colors.length]}"></span>
-              <strong>${row[options.label]}</strong>
+              <strong>${escapeHtml(row[options.label])}</strong>
               <span>${options.format ? options.format(row, total) : `${((value / total) * 100).toFixed(1)}%`}</span>
             </div>
           `;
         }).join("");
         document.getElementById(target).innerHTML = `
           <div class="donut-wrap">
-            <div class="donut" data-center="${center}" style="background: conic-gradient(${stops.join(", ")})"></div>
+            <svg class="donut-svg" viewBox="0 0 180 180" role="img" aria-label="${escapeHtml(options.ariaLabel || "Interactive donut chart")}">
+              ${segments.join("")}
+              <circle class="donut-hole" cx="90" cy="90" r="42"></circle>
+              <text class="donut-center-text" x="90" y="91">${escapeHtml(center)}</text>
+            </svg>
             <div class="legend">${legend}</div>
           </div>
         `;
@@ -1633,9 +1876,10 @@
             "linear-gradient(145deg, rgba(56,189,248,.26), rgba(167,139,250,.11))",
             "linear-gradient(145deg, rgba(245,158,11,.20), rgba(249,115,115,.10))",
           ];
+          const action = `openMarketGroup('${encodeKey(row.product_group_name)}')`;
           return `
-            <div class="tile" style="grid-column: span ${span}; background:${palette[index % palette.length]}">
-              <strong>${row.product_group_name}</strong>
+            <div class="tile interactive" role="button" tabindex="0" onclick="${action}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();${action};}" style="grid-column: span ${span}; background:${palette[index % palette.length]}">
+              <strong>${escapeHtml(row.product_group_name)}</strong>
               <span>${fmt(int(row.articles))} articles</span>
             </div>
           `;
@@ -1753,26 +1997,27 @@
         renderPriorityActions(categories, weightedNonfit);
 
         renderKpis("overview-kpis", [
-          { label: "Risk Hotspots", value: categories.filter((row) => num(row.risk_score) >= 32).length, caption: "Categories that need immediate review", accent: true, color: "var(--red)" },
-          { label: "Portfolio Fit Health", value: `${(weightedFit * 100).toFixed(1)}%`, caption: "Weighted fit rate across eligible categories", color: "var(--teal)" },
-          { label: "Sizing Exposure", value: `${(weightedNonfit * 100).toFixed(1)}%`, caption: "Feedback reporting too small or too large", color: "var(--amber)" },
-          { label: "Priority Category", value: topCategory.category_group || "-", caption: topCategory.risk_score ? `Open action: risk score ${num(topCategory.risk_score).toFixed(1)}` : "No category selected", color: "var(--sky)" },
+          { label: "Risk Hotspots", value: categories.filter((row) => num(row.risk_score) >= 32).length, caption: "Click to isolate high-risk categories", accent: true, color: "var(--red)", action: "setRiskView('high', 'overview', 'overview-risk-bars')" },
+          { label: "Portfolio Fit Health", value: `${(weightedFit * 100).toFixed(1)}%`, caption: "Click to inspect fit outcome split", color: "var(--teal)", action: "scrollToTarget('overview-fit-donut')" },
+          { label: "Sizing Exposure", value: `${(weightedNonfit * 100).toFixed(1)}%`, caption: "Click to review fit instability", color: "var(--amber)", action: "setRiskView('fit', 'fit', 'fit-stacked')" },
+          { label: "Priority Category", value: topCategory.category_group || "-", caption: topCategory.risk_score ? `Click to open risk score ${num(topCategory.risk_score).toFixed(1)}` : "No category selected", color: "var(--sky)", action: topCategory.category_group ? `openCategoryDetail('${encodeKey(topCategory.category_group)}')` : "" },
         ]);
         const fitSplit = [
-          { label: "Fit", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0) },
-          { label: "Too small", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.too_small_rate), 0) },
-          { label: "Too large", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.too_large_rate), 0) },
+          { label: "Fit", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0), action: "setRiskView('all', 'fit', 'fit-stacked')" },
+          { label: "Too small", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.too_small_rate), 0), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
+          { label: "Too large", value: state.data.category.reduce((sum, row) => sum + int(row.records) * num(row.too_large_rate), 0), action: "setRiskView('fit', 'fit', 'fit-stacked')" },
         ];
         renderDonut("overview-fit-donut", fitSplit, {
           label: "label",
           value: "value",
           center: `${(weightedFit * 100).toFixed(0)}%`,
           colors: ["var(--teal)", "var(--amber)", "var(--sky)"],
+          ariaLabel: "Interactive fit outcome split",
         });
         const triageRows = [
-          { label: "Act now", value: categories.filter((row) => num(row.risk_score) >= 32).length },
-          { label: "Watch", value: categories.filter((row) => num(row.risk_score) < 32 && num(row.risk_score) >= 28).length },
-          { label: "Stable", value: categories.filter((row) => num(row.risk_score) < 28).length },
+          { label: "Act now", value: categories.filter((row) => num(row.risk_score) >= 32).length, action: "setRiskView('high', 'overview', 'overview-risk-bars')" },
+          { label: "Watch", value: categories.filter((row) => num(row.risk_score) < 32 && num(row.risk_score) >= 28).length, action: "scrollToTarget('overview-risk-bars')" },
+          { label: "Stable", value: categories.filter((row) => num(row.risk_score) < 28).length, action: "setRiskView('all', 'overview', 'overview-risk-bars')" },
         ];
         renderDonut("overview-triage-donut", triageRows, {
           label: "label",
@@ -1780,18 +2025,19 @@
           center: `${categories.length} cats`,
           colors: ["var(--red)", "var(--amber)", "var(--teal)"],
           format: (row) => `${num(row.value).toFixed(0)} categories`,
+          ariaLabel: "Interactive category triage donut",
         });
         renderBars("overview-risk-bars", categories.slice(0, 10), { label: "category_group", value: "risk_score", variant: "risk", interactive: "category", format: (row) => num(row.risk_score).toFixed(1) });
-        renderBars("overview-pain-bars", state.data.pain.slice(0, 8), { label: "pain_point", value: "records", variant: "violet" });
+        renderBars("overview-pain-bars", state.data.pain.slice(0, 8), { label: "pain_point", value: "records", variant: "violet", interactive: "reviewRisk" });
 
         const productTotal = state.data.hmProduct.reduce((sum, row) => sum + int(row.articles), 0);
         renderKpis("market-kpis", [
-          { label: "Tracked Articles", value: fmt(productTotal), caption: "Assortment universe under analysis", accent: true, color: "var(--sky)" },
-          { label: "Market Events", value: fmt(hmTransactions), caption: "Observed transaction records" },
-          { label: "Largest Group", value: state.data.hmProduct[0]?.product_group_name || "-", caption: `${fmt(int(state.data.hmProduct[0]?.articles))} articles`, color: "var(--teal)" },
-          { label: "Sales Channels", value: "2", caption: "Channel-level aggregation available" },
+          { label: "Tracked Articles", value: fmt(productTotal), caption: "Click to inspect assortment structure", accent: true, color: "var(--sky)", action: "scrollToTarget('market-treemap')" },
+          { label: "Market Events", value: fmt(hmTransactions), caption: "Click to inspect daily momentum", action: "scrollToTarget('transaction-line')" },
+          { label: "Largest Group", value: state.data.hmProduct[0]?.product_group_name || "-", caption: `${fmt(int(state.data.hmProduct[0]?.articles))} articles`, color: "var(--teal)", action: state.data.hmProduct[0]?.product_group_name ? `openMarketGroup('${encodeKey(state.data.hmProduct[0].product_group_name)}')` : "" },
+          { label: "Sales Channels", value: "2", caption: "Click to review product group mix", action: "scrollToTarget('market-product-bars')" },
         ]);
-        renderBars("market-product-bars", state.data.hmProduct.slice(0, 10), { label: "product_group_name", value: "articles" });
+        renderBars("market-product-bars", state.data.hmProduct.slice(0, 10), { label: "product_group_name", value: "articles", interactive: "marketGroup" });
         renderBars("market-index-bars", state.data.hmIndex.slice(0, 10), { label: "index_group_name", value: "articles", variant: "violet" });
         renderTreemap("market-treemap", state.data.hmProduct.slice(0, 12));
         renderDonut("market-product-donut", state.data.hmProduct.slice(0, 6), {
@@ -1799,14 +2045,16 @@
           value: "articles",
           center: fmt(productTotal),
           colors: ["var(--teal)", "var(--sky)", "var(--violet)", "var(--amber)", "var(--green)", "var(--red)"],
+          interactive: "marketGroup",
+          ariaLabel: "Interactive product group share",
         });
         renderLineChart();
 
         renderKpis("fit-kpis", [
-          { label: "High Risk Categories", value: categories.filter((row) => num(row.risk_score) >= 32).length, caption: "Eligible categories above risk threshold", color: "var(--red)" },
-          { label: "Worst Size", value: state.data.size[0]?.size || "-", caption: `Risk score ${num(state.data.size[0]?.risk_score).toFixed(1)}`, accent: true, color: "var(--amber)" },
-          { label: "Body Segments", value: state.data.body.length, caption: "Body type groups in UCSD data" },
-          { label: "Evidence Sample", value: fmt(state.data.evidence.length), caption: "Review rows linked to diagnosis" },
+          { label: "High Risk Categories", value: categories.filter((row) => num(row.risk_score) >= 32).length, caption: "Click to isolate high-risk matrix cells", color: "var(--red)", action: "setRiskView('high', 'fit', 'risk-matrix')" },
+          { label: "Worst Size", value: state.data.size[0]?.size || "-", caption: `Click to inspect score ${num(state.data.size[0]?.risk_score).toFixed(1)}`, accent: true, color: "var(--amber)", action: "scrollToTarget('size-bars')" },
+          { label: "Body Segments", value: state.data.body.length, caption: "Click to inspect body type risk", action: "scrollToTarget('body-bars')" },
+          { label: "Evidence Sample", value: fmt(state.data.evidence.length), caption: "Click to open review evidence", action: "setPage('evidence');scrollToTarget('evidence-table')" },
         ]);
         renderBars("size-bars", state.data.size.filter((row) => int(row.display_eligible) === 1).slice(0, 10), { label: "size", value: "risk_score", variant: "risk", format: (row) => num(row.risk_score).toFixed(1) });
         renderBars("body-bars", state.data.body.filter((row) => int(row.display_eligible) === 1).slice(0, 10), { label: "body_type", value: "risk_score", variant: "risk", format: (row) => num(row.risk_score).toFixed(1) });
@@ -1815,20 +2063,23 @@
 
         const negativeClasses = state.data.kaggleClass.filter((row) => num(row.low_rating_rate) > 0.1).length;
         renderKpis("evidence-kpis", [
-          { label: "Evidence Rows", value: fmt(state.data.evidence.length), caption: "UCSD drill-down sample", accent: true, color: "var(--teal)" },
-          { label: "Pain Tags", value: state.data.pain.length, caption: "Rule-based review issue types" },
-          { label: "Kaggle Risk Classes", value: negativeClasses, caption: "Women’s review classes with >10% low ratings", color: "var(--amber)" },
+          { label: "Evidence Rows", value: fmt(state.data.evidence.length), caption: "Click to inspect review table", accent: true, color: "var(--teal)", action: "scrollToTarget('evidence-table')" },
+          { label: "Pain Tags", value: state.data.pain.length, caption: "Click to focus review pain points", action: "setRiskView('review', 'evidence', 'evidence-pain-donut')" },
+          { label: "Kaggle Risk Classes", value: negativeClasses, caption: "Click to inspect low-rating classes", color: "var(--amber)", action: "scrollToTarget('evidence-class-bars')" },
         ]);
         renderDonut("evidence-pain-donut", state.data.pain.slice(0, 6), {
           label: "pain_point",
           value: "records",
           center: `${state.data.pain.length} tags`,
           colors: ["var(--red)", "var(--amber)", "var(--sky)", "var(--violet)", "var(--teal)", "var(--green)"],
+          interactive: "reviewRisk",
+          ariaLabel: "Interactive pain point share",
         });
         renderBars("evidence-class-bars", state.data.kaggleClass.slice(0, 10), {
           label: "class_name",
           value: "low_rating_rate",
           variant: "risk",
+          interactive: "reviewRisk",
           format: (row) => pct(row.low_rating_rate),
         });
         renderRecommendations(categories);
@@ -1875,7 +2126,11 @@
         });
         document.getElementById("reset-filters").addEventListener("click", resetFilters);
         document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") closeCategoryDrawer();
+          if (event.key === "Escape") {
+            closeCategoryDrawer();
+            closeMarketDrawer();
+            hideLineTooltip();
+          }
         });
         renderAll();
         document.getElementById("loading").style.display = "none";
