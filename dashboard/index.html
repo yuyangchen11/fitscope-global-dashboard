@@ -975,6 +975,65 @@
         background: rgba(2, 6, 23, 0.22);
       }
 
+      .detail-list {
+        display: grid;
+        gap: 9px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .detail-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .detail-row strong {
+        overflow: hidden;
+        color: var(--text);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .detail-track {
+        grid-column: 1 / -1;
+        height: 7px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(100, 116, 139, 0.2);
+      }
+
+      .detail-fill {
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--teal), var(--sky));
+      }
+
+      .sample-grid {
+        display: grid;
+        gap: 8px;
+      }
+
+      .sample-card {
+        padding: 10px;
+        border: 1px solid rgba(226, 232, 240, 0.1);
+        border-radius: 8px;
+        background: rgba(2, 6, 23, 0.22);
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .sample-card strong {
+        display: block;
+        color: var(--text);
+        font-size: 13px;
+      }
+
       .line-chart {
         width: 100%;
         height: 250px;
@@ -1407,7 +1466,7 @@
       <aside class="drawer" aria-label="Market group drilldown drawer" onclick="event.stopPropagation()">
         <div class="drawer-head">
           <div>
-            <span class="pill">Product group drill-down</span>
+            <span id="market-drawer-context" class="pill">Product group drill-down</span>
             <h3 id="market-drawer-title">-</h3>
           </div>
           <button class="drawer-close" type="button" aria-label="Close market drawer" onclick="closeMarketDrawer()">×</button>
@@ -1421,6 +1480,8 @@
           <button class="drawer-action primary" type="button" onclick="focusMarketGroup()">Focus Market Page</button>
           <button class="drawer-action" type="button" onclick="closeMarketDrawer();scrollToTarget('transaction-line')">View Momentum</button>
         </div>
+        <div id="market-drawer-breakdown" class="drawer-panel"></div>
+        <div id="market-drawer-samples" class="drawer-panel"></div>
       </aside>
     </div>
 
@@ -1436,6 +1497,12 @@
         hmProduct: "../data/huggingface_hm_search/processed/huggingface_hm_search_product_group_metrics.csv",
         hmIndex: "../data/huggingface_hm_search/processed/huggingface_hm_search_index_group_metrics.csv",
         hmDaily: "../data/huggingface_hm_search/processed/huggingface_hm_search_transaction_daily_metrics.csv",
+        hmArticles: "../data/huggingface_hm_search/processed/huggingface_hm_search_articles_sample.csv",
+        hmProductType: "../data/huggingface_hm_search/processed/huggingface_hm_search_product_type_metrics.csv",
+        hmColor: "../data/huggingface_hm_search/processed/huggingface_hm_search_color_metrics.csv",
+        hmChannel: "../data/huggingface_hm_search/processed/huggingface_hm_search_sales_channel_metrics.csv",
+        hmTopArticles: "../data/huggingface_hm_search/processed/huggingface_hm_search_top_article_transactions.csv",
+        hmTransactionsSample: "../data/huggingface_hm_search/processed/huggingface_hm_search_transactions_sample.csv",
         kaggleClass: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_class_metrics.csv",
         kaggleSentiment: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_sentiment_metrics.csv",
       };
@@ -1573,13 +1640,101 @@
         return state.data.hmProduct.find((row) => row.product_group_name === group);
       }
 
-      function marketGroupRecommendation(row, share) {
+      function countBy(rows, key) {
+        const counts = new Map();
+        rows.forEach((row) => {
+          const label = row[key] || "Unknown";
+          counts.set(label, (counts.get(label) || 0) + 1);
+        });
+        return [...counts.entries()]
+          .map(([label, value]) => ({ label, value }))
+          .sort((a, b) => b.value - a.value);
+      }
+
+      function renderDetailBars(rows, total = null) {
+        const max = Math.max(...rows.map((row) => row.value), 1);
+        const denominator = total || rows.reduce((sum, row) => sum + row.value, 0) || 1;
+        return `<ul class="detail-list">${rows.map((row) => `
+          <li class="detail-row">
+            <strong title="${escapeHtml(row.label)}">${escapeHtml(row.label)}</strong>
+            <span>${fmt(row.value)} · ${((row.value / denominator) * 100).toFixed(1)}%</span>
+            <div class="detail-track"><div class="detail-fill" style="width:${Math.max(3, (row.value / max) * 100)}%"></div></div>
+          </li>
+        `).join("")}</ul>`;
+      }
+
+      function articleRowsForGroup(group) {
+        return (state.data.hmArticles || []).filter((row) => row.product_group_name === group);
+      }
+
+      function renderArticleSamples(rows) {
+        const sampleRows = rows.slice(0, 4);
+        if (!sampleRows.length) return `<h4>Product Evidence</h4><p>No product sample is available for this group in the published sample file.</p>`;
+        return `
+          <h4>Product Evidence</h4>
+          <div class="sample-grid">
+            ${sampleRows.map((row) => `
+              <div class="sample-card">
+                <strong>${escapeHtml(row.prod_name || row.article_id)}</strong>
+                ${escapeHtml(row.product_type_name || "Unknown type")} · ${escapeHtml(row.colour_group_name || "Unknown color")} · ${escapeHtml(row.index_group_name || "Unknown index")}
+              </div>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      function marketGroupRecommendation(row, share, context) {
+        if (context === "donut") return "This view is about portfolio share. Use it to judge whether the group is over-concentrated or under-represented before comparing it with demand signals.";
+        if (context === "treemap") return "This view is about assortment space. Large blocks deserve deeper SKU-level checks because they carry more inventory and merchandising exposure.";
+        if (context === "bar") return "This view is about volume rank. Use it to compare product groups before choosing which assortment area to audit first.";
         if (share >= 0.35) return "This group dominates the assortment. Treat it as the baseline for search demand and use fit-risk evidence before adding more traffic.";
         if (share >= 0.12) return "This group is large enough to deserve a dedicated merchandising read. Compare campaign movement against category risk before scaling.";
         return "This is a smaller group. Use it for niche opportunity monitoring rather than broad traffic allocation unless trend signals improve.";
       }
 
-      function openMarketGroup(encodedGroup) {
+      function renderMarketContext(group, row, share, rank, context) {
+        const articles = articleRowsForGroup(group);
+        const allGroups = state.data.hmProduct;
+        const previous = allGroups[rank - 2];
+        const next = allGroups[rank];
+        const productTypes = countBy(articles, "product_type_name").slice(0, 6);
+        const colors = countBy(articles, "colour_group_name").slice(0, 6);
+        const sections = countBy(articles, "section_name").slice(0, 5);
+        if (context === "donut") {
+          const comparisonRows = [
+            { label: group, value: int(row.articles) },
+            previous ? { label: `Above: ${previous.product_group_name}`, value: int(previous.articles) } : null,
+            next ? { label: `Below: ${next.product_group_name}`, value: int(next.articles) } : null,
+          ].filter(Boolean);
+          document.getElementById("market-drawer-breakdown").innerHTML = `
+            <h4>Share Comparison</h4>
+            ${renderDetailBars(comparisonRows, allGroups.reduce((sum, item) => sum + int(item.articles), 0))}
+          `;
+          document.getElementById("market-drawer-samples").innerHTML = `
+            <h4>Composition Clues</h4>
+            ${productTypes.length ? renderDetailBars(productTypes) : "<p>No product-type sample available for this group.</p>"}
+          `;
+          return;
+        }
+        if (context === "treemap") {
+          document.getElementById("market-drawer-breakdown").innerHTML = `
+            <h4>Assortment Breakdown</h4>
+            ${productTypes.length ? renderDetailBars(productTypes) : "<p>No product-type sample available for this group.</p>"}
+          `;
+          document.getElementById("market-drawer-samples").innerHTML = renderArticleSamples(articles);
+          return;
+        }
+        document.getElementById("market-drawer-breakdown").innerHTML = `
+          <h4>Color and Section Signals</h4>
+          ${colors.length ? renderDetailBars(colors) : "<p>No color sample available for this group.</p>"}
+        `;
+        document.getElementById("market-drawer-samples").innerHTML = `
+          <h4>Section Mix</h4>
+          ${sections.length ? renderDetailBars(sections) : "<p>No section sample available for this group.</p>"}
+        `;
+      }
+
+      function openMarketGroup(encodedGroup, context = "treemap") {
         const group = decodeURIComponent(encodedGroup);
         const row = marketGroupMetrics(group);
         if (!row) return;
@@ -1587,6 +1742,14 @@
         const rank = state.data.hmProduct.findIndex((item) => item.product_group_name === group) + 1;
         const share = int(row.articles) / total;
         state.selectedMarketGroup = group;
+        state.selectedMarketContext = context;
+        const contextLabel = {
+          treemap: "Treemap assortment drill-down",
+          donut: "Share composition drill-down",
+          bar: "Ranked volume drill-down",
+          kpi: "KPI shortcut drill-down",
+        }[context] || "Product group drill-down";
+        document.getElementById("market-drawer-context").textContent = contextLabel;
         document.getElementById("market-drawer-title").textContent = group;
         document.getElementById("market-drawer-metrics").innerHTML = [
           ["Articles", fmt(int(row.articles))],
@@ -1599,7 +1762,49 @@
             <strong>${value}</strong>
           </div>
         `).join("");
-        document.getElementById("market-drawer-recommendation").textContent = marketGroupRecommendation(row, share);
+        document.getElementById("market-drawer-recommendation").textContent = marketGroupRecommendation(row, share, context);
+        renderMarketContext(group, row, share, rank, context);
+        document.getElementById("market-drawer-backdrop").classList.add("open");
+        document.body.classList.add("drawer-open");
+      }
+
+      function openTransactionDay(index) {
+        const row = state.lineRows[index];
+        if (!row) return;
+        const allRows = state.lineRows;
+        const prev = allRows[index - 1];
+        const next = allRows[index + 1];
+        const avg = allRows.reduce((sum, item) => sum + int(item.transactions), 0) / Math.max(allRows.length, 1);
+        const delta = prev ? int(row.transactions) - int(prev.transactions) : 0;
+        const deltaPct = prev ? delta / Math.max(int(prev.transactions), 1) : 0;
+        document.getElementById("market-drawer-context").textContent = "Daily momentum drill-down";
+        document.getElementById("market-drawer-title").textContent = row.date;
+        document.getElementById("market-drawer-metrics").innerHTML = [
+          ["Transactions", fmt(int(row.transactions))],
+          ["Price Sum", num(row.price_sum).toFixed(2)],
+          ["Avg Price", num(row.avg_price).toFixed(4)],
+          ["Vs Sample Avg", `${((int(row.transactions) / Math.max(avg, 1) - 1) * 100).toFixed(1)}%`],
+        ].map(([label, value]) => `
+          <div class="drawer-metric">
+            <span>${label}</span>
+            <strong>${value}</strong>
+          </div>
+        `).join("");
+        document.getElementById("market-drawer-recommendation").textContent = Math.abs(deltaPct) > 0.3
+          ? "This date is a movement spike. In a production version, this should trigger a campaign, seasonality, or channel-mix check."
+          : "This date is close to local trend movement. Treat it as baseline unless Google Trends or channel mix shows a matching signal.";
+        document.getElementById("market-drawer-breakdown").innerHTML = `
+          <h4>Neighbor Comparison</h4>
+          ${renderDetailBars([
+            prev ? { label: `Previous: ${prev.date}`, value: int(prev.transactions) } : null,
+            { label: `Selected: ${row.date}`, value: int(row.transactions) },
+            next ? { label: `Next: ${next.date}`, value: int(next.transactions) } : null,
+          ].filter(Boolean))}
+        `;
+        document.getElementById("market-drawer-samples").innerHTML = `
+          <h4>Channel Context</h4>
+          ${renderDetailBars((state.data.hmChannel || []).map((item) => ({ label: `Channel ${item.sales_channel_id}`, value: int(item.transactions) })))}
+        `;
         document.getElementById("market-drawer-backdrop").classList.add("open");
         document.body.classList.add("drawer-open");
       }
@@ -1692,7 +1897,7 @@
           const action = isCategory
             ? `openCategoryDetail('${encoded}')`
             : isMarketGroup
-              ? `openMarketGroup('${encoded}')`
+              ? `openMarketGroup('${encoded}', '${options.source || "bar"}')`
               : isReviewRisk
                 ? "setRiskView('review', 'evidence', 'evidence-table')"
                 : "";
@@ -1730,7 +1935,7 @@
         const area = `${path} L${width - pad},${height - pad} L${pad},${height - pad} Z`;
         const step = (width - pad * 2) / Math.max(points.length - 1, 1);
         const hoverPoints = points.map((point, index) => `
-          <rect class="line-hit" x="${point[0] - step / 2}" y="${pad}" width="${step}" height="${height - pad * 2}" onmousemove="showLineTooltip(event, ${index})" onmouseleave="hideTooltip()">
+          <rect class="line-hit" x="${point[0] - step / 2}" y="${pad}" width="${step}" height="${height - pad * 2}" onclick="openTransactionDay(${index})" onmousemove="showLineTooltip(event, ${index})" onmouseleave="hideTooltip()">
             <title>${rows[index]?.date || ""} · ${fmt(int(rows[index]?.transactions))} transactions</title>
           </rect>
           <line class="line-guide" x1="${point[0]}" y1="${pad}" x2="${point[0]}" y2="${height - pad}"></line>
@@ -1823,7 +2028,7 @@
 
       function donutAction(row, options) {
         if (row.action) return row.action;
-        if (options.interactive === "marketGroup") return `openMarketGroup('${encodeKey(row[options.label])}')`;
+        if (options.interactive === "marketGroup") return `openMarketGroup('${encodeKey(row[options.label])}', '${options.source || "donut"}')`;
         if (options.interactive === "reviewRisk") return "setRiskView('review', 'evidence', 'evidence-table')";
         return "";
       }
@@ -1906,7 +2111,7 @@
             "linear-gradient(145deg, rgba(56,189,248,.26), rgba(167,139,250,.11))",
             "linear-gradient(145deg, rgba(245,158,11,.20), rgba(249,115,115,.10))",
           ];
-          const action = `openMarketGroup('${encodeKey(row.product_group_name)}')`;
+          const action = `openMarketGroup('${encodeKey(row.product_group_name)}', 'treemap')`;
           const share = (int(row.articles) / total) * 100;
           const tooltipLines = [
             `Articles: ${fmt(int(row.articles))}`,
@@ -2071,10 +2276,10 @@
         renderKpis("market-kpis", [
           { label: "Tracked Articles", value: fmt(productTotal), caption: "Click to inspect assortment structure", accent: true, color: "var(--sky)", action: "scrollToTarget('market-treemap')" },
           { label: "Market Events", value: fmt(hmTransactions), caption: "Click to inspect daily momentum", action: "scrollToTarget('transaction-line')" },
-          { label: "Largest Group", value: state.data.hmProduct[0]?.product_group_name || "-", caption: `${fmt(int(state.data.hmProduct[0]?.articles))} articles`, color: "var(--teal)", action: state.data.hmProduct[0]?.product_group_name ? `openMarketGroup('${encodeKey(state.data.hmProduct[0].product_group_name)}')` : "" },
+          { label: "Largest Group", value: state.data.hmProduct[0]?.product_group_name || "-", caption: `${fmt(int(state.data.hmProduct[0]?.articles))} articles`, color: "var(--teal)", action: state.data.hmProduct[0]?.product_group_name ? `openMarketGroup('${encodeKey(state.data.hmProduct[0].product_group_name)}', 'kpi')` : "" },
           { label: "Sales Channels", value: "2", caption: "Click to review product group mix", action: "scrollToTarget('market-product-bars')" },
         ]);
-        renderBars("market-product-bars", state.data.hmProduct.slice(0, 10), { label: "product_group_name", value: "articles", interactive: "marketGroup" });
+        renderBars("market-product-bars", state.data.hmProduct.slice(0, 10), { label: "product_group_name", value: "articles", interactive: "marketGroup", source: "bar", valueTitle: "Articles" });
         renderBars("market-index-bars", state.data.hmIndex.slice(0, 10), { label: "index_group_name", value: "articles", variant: "violet" });
         renderTreemap("market-treemap", state.data.hmProduct.slice(0, 12));
         renderDonut("market-product-donut", state.data.hmProduct.slice(0, 6), {
@@ -2083,6 +2288,7 @@
           center: fmt(productTotal),
           colors: ["var(--teal)", "var(--sky)", "var(--violet)", "var(--amber)", "var(--green)", "var(--red)"],
           interactive: "marketGroup",
+          source: "donut",
           ariaLabel: "Interactive product group share",
         });
         renderLineChart();
