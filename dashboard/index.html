@@ -776,14 +776,18 @@
       .treemap {
         display: grid;
         grid-template-columns: repeat(12, minmax(0, 1fr));
-        grid-auto-rows: 58px;
+        grid-auto-rows: 96px;
         gap: 8px;
       }
 
       .tile {
-        display: grid;
-        align-content: end;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 4px;
         min-width: 0;
+        min-height: 96px;
+        overflow: hidden;
         padding: 9px;
         border: 1px solid rgba(226, 232, 240, 0.13);
         border-radius: 8px;
@@ -794,17 +798,22 @@
       .tile span {
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;
       }
 
       .tile strong {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        min-height: 0;
         font-size: 12px;
+        line-height: 1.22;
       }
 
       .tile span {
-        margin-top: 3px;
         color: var(--muted);
         font-size: 11px;
+        line-height: 1.25;
+        white-space: nowrap;
       }
 
       .signal-badge {
@@ -812,7 +821,7 @@
         align-items: center;
         justify-self: start;
         min-height: 21px;
-        margin-top: 7px;
+        margin-top: 3px;
         padding: 3px 7px;
         border: 1px solid rgba(226, 232, 240, 0.16);
         border-radius: 999px;
@@ -822,6 +831,37 @@
         font-weight: 800;
         letter-spacing: 0.02em;
         text-transform: uppercase;
+      }
+
+      .signal-rules {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin: 10px 0 0;
+      }
+
+      .rule-card {
+        min-width: 0;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.32);
+      }
+
+      .rule-card strong {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 12px;
+      }
+
+      .rule-card > span {
+        display: block;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.35;
       }
 
       .signal-badge.scale,
@@ -1024,11 +1064,25 @@
         font-size: 13px;
       }
 
+      .drawer-panel .detail-row {
+        grid-template-columns: minmax(92px, 0.42fr) minmax(0, 1fr);
+      }
+
       .detail-row strong {
         overflow: hidden;
         color: var(--text);
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+
+      .detail-row span {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        text-align: right;
+      }
+
+      .drawer-panel .detail-row span {
+        text-align: left;
       }
 
       .detail-track {
@@ -1266,7 +1320,15 @@
         }
 
         .bar-row {
-          grid-template-columns: 96px minmax(0, 1fr) 56px;
+          grid-template-columns: 96px minmax(0, 1fr) 88px;
+        }
+
+        .signal-rules {
+          grid-template-columns: 1fr;
+        }
+
+        .treemap {
+          grid-auto-rows: 104px;
         }
       }
     </style>
@@ -1378,8 +1440,14 @@
             <div class="section-head">
               <div>
                 <h3>Assortment Map</h3>
-                <p>A compact product structure view for spotting category concentration.</p>
+                <p>Signals compare transaction demand against article supply. Demand gap = transaction share minus article share.</p>
               </div>
+            </div>
+            <div class="signal-rules" aria-label="Market signal rules">
+              <div class="rule-card"><strong><span class="signal-badge scale">Scale ↑</span></strong><span>Transaction share is at least 30% and not meaningfully under-supplied. Treat as a core demand engine.</span></div>
+              <div class="rule-card"><strong><span class="signal-badge potential">Potential ↑</span></strong><span>Demand gap is at least +2.5 percentage points. Demand is stronger than catalog allocation.</span></div>
+              <div class="rule-card"><strong><span class="signal-badge watch">Watch →</span></strong><span>Demand gap is between -2.5 and +2.5 points. Keep monitoring before changing allocation.</span></div>
+              <div class="rule-card"><strong><span class="signal-badge fix">Fix ↓</span></strong><span>Demand gap is at most -2.5 percentage points. Catalog allocation is heavier than transaction response.</span></div>
             </div>
             <div class="grid cols-2-1">
               <div class="card"><h3>Product Group Treemap</h3><div id="market-treemap" class="treemap" style="margin-top: 14px"></div></div>
@@ -1508,6 +1576,7 @@
           <h4>Market Read</h4>
           <p id="market-drawer-recommendation">-</p>
         </div>
+        <div id="market-drawer-logic" class="drawer-panel"></div>
         <div class="drawer-actions">
           <button class="drawer-action primary" type="button" onclick="focusMarketGroup()">Focus Market Page</button>
           <button class="drawer-action" type="button" onclick="closeMarketDrawer();scrollToTarget('transaction-line')">View Momentum</button>
@@ -1692,6 +1761,31 @@
         return { label: "Watch →", tone: "watch", direction: "flat", note: "Demand and assortment are broadly aligned" };
       }
 
+      function marketSignalRule(row) {
+        const gap = num(row.demand_gap);
+        const txShare = num(row.transaction_share);
+        if (txShare >= 0.3 && gap >= -0.015) return "Scale because transaction share is at least 30% and the demand gap is not below -1.5 pts.";
+        if (gap >= 0.025) return "Potential because demand gap is at least +2.5 pts.";
+        if (gap <= -0.025) return "Fix because demand gap is at most -2.5 pts.";
+        return "Watch because demand gap is between -2.5 and +2.5 pts.";
+      }
+
+      function renderMarketLogic(row) {
+        const articleShare = num(row.article_share) * 100;
+        const transactionShare = num(row.transaction_share) * 100;
+        const demandGap = num(row.demand_gap) * 100;
+        return `
+          <h4>Decision Logic</h4>
+          <ul class="detail-list">
+            <li class="detail-row"><strong>Formula</strong><span>Demand gap = transaction share - article share</span></li>
+            <li class="detail-row"><strong>Current calculation</strong><span>${transactionShare.toFixed(1)}% - ${articleShare.toFixed(1)}% = ${demandGap >= 0 ? "+" : ""}${demandGap.toFixed(1)} pts</span></li>
+            <li class="detail-row"><strong>Matched rule</strong><span>${escapeHtml(marketSignalRule(row))}</span></li>
+            <li class="detail-row"><strong>Decision</strong><span>${escapeHtml(row.signal_label)}</span></li>
+            <li class="detail-row"><strong>Confidence</strong><span>Medium: strong public transaction signal, but no margin, inventory, return-rate, or live trend feed yet.</span></li>
+          </ul>
+        `;
+      }
+
       function marketRows() {
         const txMap = new Map((state.data.hmTxProduct || []).map((row) => [row.product_group_name, row]));
         return (state.data.hmProduct || []).map((row) => {
@@ -1850,6 +1944,7 @@
           </div>
         `).join("");
         document.getElementById("market-drawer-recommendation").textContent = marketGroupRecommendation(row, share, context);
+        document.getElementById("market-drawer-logic").innerHTML = renderMarketLogic(row);
         renderMarketContext(group, row, share, rank, context);
         document.getElementById("market-drawer-backdrop").classList.add("open");
         document.body.classList.add("drawer-open");
@@ -1880,6 +1975,15 @@
         document.getElementById("market-drawer-recommendation").textContent = Math.abs(deltaPct) > 0.3
           ? "This date is a movement spike. In a production version, this should trigger a campaign, seasonality, or channel-mix check."
           : "This date is close to local trend movement. Treat it as baseline unless Google Trends or channel mix shows a matching signal.";
+        document.getElementById("market-drawer-logic").innerHTML = `
+          <h4>Decision Logic</h4>
+          <ul class="detail-list">
+            <li class="detail-row"><strong>Formula</strong><span>Day movement = selected day transactions vs previous sampled day</span></li>
+            <li class="detail-row"><strong>Current movement</strong><span>${prev ? `${delta >= 0 ? "+" : ""}${fmt(delta)} transactions · ${(deltaPct * 100).toFixed(1)}%` : "No previous sampled day"}</span></li>
+            <li class="detail-row"><strong>Spike threshold</strong><span>Flag if absolute movement exceeds 30%</span></li>
+            <li class="detail-row"><strong>Confidence</strong><span>Medium: daily transaction movement is available, but campaign calendar and inventory constraints are not included.</span></li>
+          </ul>
+        `;
         document.getElementById("market-drawer-breakdown").innerHTML = `
           <h4>Neighbor Comparison</h4>
           ${renderDetailBars([
