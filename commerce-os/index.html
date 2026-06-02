@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>FitScope Commerce OS</title>
-    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script async src="https://unpkg.com/three@0.160.0/build/three.min.js" onload="window.refreshStarfield && window.refreshStarfield()"></script>
     <style>
       :root {
         color-scheme: dark;
@@ -262,6 +262,8 @@
       .ghost-button {
         padding: 0 14px;
         color: var(--text);
+        white-space: nowrap;
+        min-width: 96px;
       }
 
       .login-note {
@@ -370,6 +372,11 @@
         display: flex;
         gap: 10px;
         align-items: center;
+        flex-wrap: nowrap;
+      }
+
+      .top-actions select {
+        min-width: 240px;
       }
 
       .pill {
@@ -469,6 +476,16 @@
         padding: 16px;
       }
 
+      .network-panel {
+        padding: 0;
+        border-color: transparent;
+        background: transparent;
+      }
+
+      .network-panel .panel-header {
+        padding: 0 0 10px;
+      }
+
       .panel-header {
         display: flex;
         justify-content: space-between;
@@ -512,12 +529,11 @@
         position: relative;
         min-height: 560px;
         overflow: hidden;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
+        border: 0;
+        border-radius: 0;
         background:
-          radial-gradient(circle at 44% 42%, oklch(0.28 0.08 240 / 0.24), transparent 30%),
-          radial-gradient(circle at 65% 70%, oklch(0.24 0.08 292 / 0.2), transparent 28%),
-          oklch(0.12 0.012 255);
+          radial-gradient(circle at 44% 42%, oklch(0.28 0.08 240 / 0.18), transparent 30%),
+          radial-gradient(circle at 65% 70%, oklch(0.24 0.08 292 / 0.16), transparent 28%);
       }
 
       #starfield {
@@ -530,15 +546,67 @@
       .node-label {
         position: absolute;
         transform: translate(-50%, -50%);
-        padding: 4px 7px;
-        border: 1px solid oklch(0.86 0.04 255 / 0.18);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 8px;
+        border: 1px solid oklch(0.86 0.04 255 / 0.2);
         border-radius: 999px;
-        background: oklch(0.15 0.014 255 / 0.72);
+        background: oklch(0.12 0.014 255 / 0.68);
         color: var(--text);
         font-size: 11px;
         font-weight: 720;
-        pointer-events: none;
+        pointer-events: auto;
         white-space: nowrap;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+      }
+
+      .node-icon {
+        width: 16px;
+        height: 16px;
+        display: inline-grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        padding: 2px;
+        border: 1px solid oklch(0.1 0 0);
+        border-radius: 4px;
+        background: white;
+      }
+
+      .node-icon i {
+        width: 100%;
+        aspect-ratio: 1;
+        background: var(--blue);
+      }
+
+      .node-icon.pain i { background: var(--red); }
+      .node-icon.kpi i,
+      .node-icon.action i { background: var(--green); }
+      .node-icon.body i,
+      .node-icon.size i { background: var(--violet); }
+
+      .network-category-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 6px 0 14px;
+      }
+
+      .network-category-strip button {
+        min-height: 32px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: oklch(0.16 0.014 255 / 0.72);
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .network-category-strip button.active {
+        border-color: oklch(0.72 0.16 230 / 0.55);
+        color: var(--text);
+        background: oklch(0.25 0.06 230 / 0.42);
       }
 
       .star-legend {
@@ -602,6 +670,19 @@
         font-size: 13px;
       }
 
+      button.metric-row {
+        width: 100%;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        background: transparent;
+        text-align: left;
+      }
+
+      button.metric-row:hover {
+        color: var(--text);
+      }
+
       .metric-row strong {
         color: var(--text);
         text-align: right;
@@ -624,18 +705,60 @@
       .bar-track {
         height: 8px;
         border-radius: 999px;
-        background: oklch(0.34 0.02 255 / 0.5);
+        background: oklch(0.42 0.025 255 / 0.58);
         overflow: hidden;
+        display: block;
       }
 
       .bar-fill {
+        display: block;
         height: 100%;
         border-radius: inherit;
         background: linear-gradient(90deg, var(--blue), var(--violet));
+        box-shadow: 0 0 14px oklch(0.72 0.16 230 / 0.24);
       }
 
       .bar-fill.risk-fill {
         background: linear-gradient(90deg, var(--amber), var(--red));
+        box-shadow: 0 0 14px oklch(0.68 0.2 25 / 0.24);
+      }
+
+      .decision-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .decision-tile {
+        padding: 13px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.18 0.014 255 / 0.58);
+      }
+
+      .decision-tile span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 720;
+      }
+
+      .decision-tile strong {
+        display: block;
+        margin-top: 8px;
+        line-height: 1.45;
+      }
+
+      .decision-tile button {
+        margin-top: 10px;
+        min-height: 30px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 750;
       }
 
       .action-grid {
@@ -918,7 +1041,7 @@
           <div class="brand-mark">FS</div>
           <div class="brand-title">
             <strong>FitScope Commerce OS</strong>
-            <span id="current-mode-label">Management mode</span>
+            <span id="current-mode-label">管理模式</span>
           </div>
         </div>
         <nav class="nav" aria-label="Main navigation">
@@ -937,7 +1060,7 @@
       <main>
         <div class="topbar">
           <div>
-            <div class="pill"><span class="dot"></span><span>Data-linked product site</span></div>
+            <div class="pill"><span class="dot"></span><span>数据联动产品站点</span></div>
             <h2 id="page-title">经营总览</h2>
             <p id="page-subtitle">先看市场机会和公司经营承接能力，再进入品类级决策。</p>
           </div>
@@ -1005,7 +1128,7 @@
 
         <section class="page" id="network">
           <div class="layout-grid">
-            <div class="panel">
+            <div class="panel network-panel">
               <div class="panel-header">
                 <div>
                   <h3>业务关系星域图</h3>
@@ -1018,6 +1141,7 @@
                   <button class="chip" data-network-filter="kpi">KPI</button>
                 </div>
               </div>
+              <div class="network-category-strip" id="network-category-strip"></div>
               <div class="starfield-wrap">
                 <canvas id="starfield"></canvas>
                 <div id="node-label-layer"></div>
@@ -1130,6 +1254,7 @@
         data: {},
         graph: { nodes: [], edges: [] },
         three: null,
+        twoD: null,
       };
 
       const labelMap = {
@@ -1228,6 +1353,17 @@
         const select = document.getElementById("category-select");
         select.innerHTML = categoryRows().slice(0, 20).map((row) => `<option value="${escapeHtml(row.category_group)}">${escapeHtml(nameOf(row.category_group))}</option>`).join("");
         select.value = state.selectedCategory;
+        renderNetworkCategoryStrip();
+      }
+
+      function renderNetworkCategoryStrip() {
+        const holder = document.getElementById("network-category-strip");
+        if (!holder) return;
+        holder.innerHTML = categoryRows().slice(0, 8).map((row) => `
+          <button type="button" class="${row.category_group === state.selectedCategory ? "active" : ""}" onclick="selectCategory('${escapeHtml(row.category_group)}', 'network')">
+            ${escapeHtml(nameOf(row.category_group))}
+          </button>
+        `).join("");
       }
 
       function businessScore(row) {
@@ -1240,9 +1376,10 @@
         const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
         const risk = num(row.risk_score);
         const demand = marketDemandFor(row.category_group);
-        if (demand > 0.2 && risk < 32 && num(company.returnRate) < 0.2) return { label: "放量", tone: "positive", action: "增加流量和核心 SKU 曝光，保留评论风险监控。" };
-        if (demand > 0.16 && risk >= 32) return { label: "先修正再放量", tone: "warning", action: "先处理尺码说明、详情页文案和高频痛点，再扩大投放。" };
-        if (risk >= 34) return { label: "修正", tone: "risk", action: "暂停大规模放量，优先复核尺码、材质和评论痛点。" };
+        const returnRate = num(company.returnRate);
+        if (demand > 0.2 && risk < 32 && returnRate < 0.2) return { label: "放量", tone: "positive", action: "增加核心 SKU 曝光，同时保持评论风险监控。" };
+        if (demand > 0.18 && (risk >= 30 || returnRate >= 0.22)) return { label: "先修正再放量", tone: "warning", action: "该品类有市场需求，但退货和评论痛点会限制转化。先改详情页、尺码说明和高风险 SKU，再扩大投放。" };
+        if (risk >= 34 || returnRate >= 0.28) return { label: "修正", tone: "risk", action: "暂停大规模放量，优先复核尺码、材质和评论痛点。" };
         return { label: "观察", tone: "info", action: "保持监控，等待市场需求或内部 KPI 出现更强信号。" };
       }
 
@@ -1253,6 +1390,7 @@
         renderWorkspace();
         renderEvidence();
         renderNodeInspector();
+        renderNetworkCategoryStrip();
         requestAnimationFrame(initStarfield);
       }
 
@@ -1309,7 +1447,7 @@
         const latest = daily[daily.length - 1] || {};
         const top = merged[0] || {};
         document.getElementById("market-kpis").innerHTML = [
-          { label: "市场交易事件", value: fmt(totalTx), note: "H&M transaction table" },
+          { label: "市场交易事件", value: fmt(totalTx), note: "H&M 交易表" },
           { label: "最高需求组", value: top.product_group_name || "-", note: `${pct(top.demandShare)} 交易占比` },
           { label: "最新日交易", value: fmt(int(latest.transactions)), note: latest.date || "-" },
           { label: "供需差最大", value: (merged.slice().sort((a, b) => b.gap - a.gap)[0]?.gap * 100 || 0).toFixed(1) + " pts", note: "需求占比减商品占比" },
@@ -1338,21 +1476,37 @@
           ["退货率", pct(company.returnRate)],
           ["合身率", pct(row.fit_rate)],
           ["风险分", num(row.risk_score).toFixed(1)],
-        ].map(([label, value]) => `<div class="metric-row"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join("");
+        ].map(([label, value]) => `<button class="metric-row" type="button" onclick="setPage('${label.includes("退货") || label.includes("合身") || label.includes("风险") ? "evidence" : "market"}')"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></button>`).join("");
         const topPain = painForCategory(row.category_group);
+        const primaryPain = topPain[0] || { pain: "评论痛点", id: "none", count: 0 };
+        const painScope = primaryPain.fallback ? "该细分品类暂无专属评论样本，先使用全局服装评论高频痛点作为代理信号。" : "来自当前品类评论样本，可直接进入证据表复核。";
+        const returnGap = Math.max(0, num(company.returnRate) - 0.18);
+        const conversionGap = Math.max(0, 0.085 - num(company.conversion));
         document.getElementById("decision-logic").innerHTML = `
-          <div class="mini-card" style="padding:14px">
-            <div class="inspector-type">Decision rule</div>
-            <h4 style="margin:8px 0 8px;font-size:17px">${escapeHtml(decision.label)}</h4>
-            <p style="margin:0;color:var(--muted);line-height:1.6">${escapeHtml(decision.action)}</p>
-          </div>
-          <div class="metric-list">
-            <div class="metric-row"><span>为什么</span><strong>${escapeHtml(topPain[0]?.pain || "评论痛点")} 与 ${escapeHtml(nameOf(row.category_group))} 形成主要风险关系</strong></div>
-            <div class="metric-row"><span>影响 KPI</span><strong>退货率、转化率、PDP 质量分</strong></div>
-            <div class="metric-row"><span>下一步</span><strong>打开证据与动作，复核评论样本</strong></div>
+          <div class="decision-grid">
+            <div class="decision-tile">
+              <span>业务判断</span>
+              <strong>${escapeHtml(decision.label)}：${escapeHtml(decision.action)}</strong>
+              <button type="button" onclick="setPage('network')">查看关系星域</button>
+            </div>
+            <div class="decision-tile">
+              <span>主要阻塞</span>
+              <strong>${escapeHtml(primaryPain.pain)} 出现 ${fmt(primaryPain.count)} 次。${escapeHtml(painScope)}</strong>
+              <button type="button" onclick="selectGraphNode('${escapeHtml(primaryPain.id)}', 'evidence')">打开证据</button>
+            </div>
+            <div class="decision-tile">
+              <span>经营影响</span>
+              <strong>退货率比健康线高 ${(returnGap * 100).toFixed(1)} pts，转化率缺口 ${(conversionGap * 100).toFixed(1)} pts。</strong>
+              <button type="button" onclick="setPage('market')">查看 KPI</button>
+            </div>
+            <div class="decision-tile">
+              <span>执行动作</span>
+              <strong>先改 PDP 尺码/材质说明，抽查高风险 SKU，再观察转化和退货变化。</strong>
+              <button type="button" onclick="setPage('evidence')">查看动作</button>
+            </div>
           </div>
         `;
-        renderBars("workspace-pain-bars", topPain, "pain", (item) => item.count, { max: Math.max(...topPain.map((r) => r.count), 1), format: (v) => fmt(v), risk: true });
+        renderBars("workspace-pain-bars", topPain, "pain", (item) => item.count, { max: Math.max(...topPain.map((r) => r.count), 1), format: (v) => fmt(v), risk: true, nodeClick: true });
       }
 
       function renderEvidence() {
@@ -1400,10 +1554,13 @@
 
       function painForCategory(category) {
         const counts = new Map();
-        (state.data.evidence || []).filter((row) => row.category_group === category).forEach((row) => {
+        let sourceRows = (state.data.evidence || []).filter((row) => row.category_group === category);
+        const fallback = sourceRows.length === 0;
+        if (fallback) sourceRows = state.data.evidence || [];
+        sourceRows.forEach((row) => {
           String(row.pain_points || "none").split(";").filter(Boolean).forEach((pain) => counts.set(pain, (counts.get(pain) || 0) + 1));
         });
-        return [...counts.entries()].map(([pain, count]) => ({ pain: nameOf(pain), id: pain, count })).sort((a, b) => b.count - a.count).slice(0, 8);
+        return [...counts.entries()].map(([pain, count]) => ({ pain: nameOf(pain), id: pain, count, fallback })).sort((a, b) => b.count - a.count).slice(0, 8);
       }
 
       function renderBars(containerId, rows, labelKey, valueFn, options = {}) {
@@ -1412,7 +1569,11 @@
           const value = valueFn(row);
           const label = nameOf(row[labelKey] || row.pain || row.category);
           const width = Math.max(2, Math.min(100, value / max * 100));
-          const onclick = options.click ? `onclick="selectCategory('${escapeHtml(row.category_group || row.category || "dress")}', 'workspace')"` : "";
+          const onclick = options.nodeClick && row.id
+            ? `onclick="selectGraphNode('${escapeHtml(row.id)}', 'evidence')"`
+            : options.click
+              ? `onclick="selectCategory('${escapeHtml(row.category_group || row.category || "dress")}', 'workspace')"`
+              : "";
           return `<button class="bar-row" type="button" ${onclick} style="background:transparent;border:0;text-align:left;width:100%;padding:0">
             <span>${escapeHtml(label)}</span>
             <span class="bar-track"><span class="bar-fill ${options.risk ? "risk-fill" : ""}" style="width:${width}%"></span></span>
@@ -1427,14 +1588,14 @@
         const bodyRows = (state.data.bodies || []).slice(0, 5);
         const sizeRows = (state.data.sizes || []).filter((row) => int(row.display_eligible) === 1).slice(0, 5);
         let nodes = [
-          { id: selected.category_group, label: nameOf(selected.category_group), kind: "category", value: num(selected.records), color: 0x52a8ff, radius: 13 },
-          { id: "return-risk", label: "退货风险", kind: "kpi", value: 100, color: 0x38d68f, radius: 10 },
-          { id: "conversion-risk", label: "转化风险", kind: "kpi", value: 100, color: 0x38d68f, radius: 10 },
-          { id: "pdp-action", label: "详情页动作", kind: "action", value: 100, color: 0x38d68f, radius: 10 },
+          { id: selected.category_group, label: nameOf(selected.category_group), kind: "category", value: num(selected.records), color: 0x52a8ff, radius: 5.8 },
+          { id: "return-risk", label: "退货风险", kind: "kpi", value: 100, color: 0x38d68f, radius: 5.2 },
+          { id: "conversion-risk", label: "转化风险", kind: "kpi", value: 100, color: 0x38d68f, radius: 5.2 },
+          { id: "pdp-action", label: "详情页动作", kind: "action", value: 100, color: 0x38d68f, radius: 5.2 },
         ];
-        pain.forEach((item) => nodes.push({ id: item.id, label: item.pain, kind: "pain", value: item.count, color: 0xff5a4f, radius: 7 + Math.min(6, item.count / 8) }));
-        bodyRows.forEach((row) => nodes.push({ id: row.body_type, label: nameOf(row.body_type), kind: "body", value: num(row.records), color: 0xb86bff, radius: 7 }));
-        sizeRows.forEach((row) => nodes.push({ id: `size-${row.size}`, label: `尺码 ${row.size}`, kind: "size", value: num(row.risk_score), color: 0xffb02e, radius: 6 }));
+        pain.forEach((item, index) => nodes.push({ id: item.id, label: item.pain, kind: "pain", value: item.count, color: 0xff5a4f, radius: 4.6 + Math.min(1.8, index * 0.18) }));
+        bodyRows.forEach((row) => nodes.push({ id: row.body_type, label: nameOf(row.body_type), kind: "body", value: num(row.records), color: 0xb86bff, radius: 4.8 }));
+        sizeRows.forEach((row) => nodes.push({ id: `size-${row.size}`, label: `尺码 ${row.size}`, kind: "size", value: num(row.risk_score), color: 0xffb02e, radius: 4.5 }));
         if (state.networkFilter === "risk") nodes = nodes.filter((node) => ["category", "pain", "kpi"].includes(node.kind));
         if (state.networkFilter === "action") nodes = nodes.filter((node) => ["category", "pain", "action"].includes(node.kind));
         if (state.networkFilter === "kpi") nodes = nodes.filter((node) => ["category", "kpi", "action"].includes(node.kind));
@@ -1448,10 +1609,184 @@
         state.graph = { nodes, edges };
       }
 
+      function createNodeTexture(node, selected) {
+        const canvas = document.createElement("canvas");
+        canvas.width = 96;
+        canvas.height = 96;
+        const ctx = canvas.getContext("2d");
+        const color = nodeColor(node);
+        ctx.clearRect(0, 0, 96, 96);
+        ctx.globalAlpha = selected ? 0.28 : 0.16;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(48, 48, 42, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = "#050608";
+        ctx.beginPath();
+        ctx.arc(48, 48, 23, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#f8fafc";
+        ctx.beginPath();
+        ctx.arc(48, 48, 16, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = color;
+        const startX = 56;
+        const startY = 24;
+        const pattern = {
+          category: [1, 1, 0, 1, 1, 1],
+          pain: [1, 0, 1, 1, 0, 1],
+          kpi: [1, 1, 1, 0, 1, 0],
+          action: [0, 1, 1, 1, 1, 0],
+          body: [1, 0, 0, 1, 1, 1],
+          size: [0, 1, 1, 0, 1, 1],
+        }[node.kind] || [1, 1, 1, 1, 0, 0];
+        pattern.forEach((on, index) => {
+          if (!on) return;
+          const x = startX + (index % 3) * 6;
+          const y = startY + Math.floor(index / 3) * 6;
+          ctx.fillRect(x, y, 5, 5);
+        });
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.needsUpdate = true;
+        return texture;
+      }
+
+      function nodeColor(node) {
+        return `#${(node.color || 0x52a8ff).toString(16).padStart(6, "0")}`;
+      }
+
+      function starNodeLayout(width, height, tick = 0) {
+        return state.graph.nodes.map((node, index) => {
+          const angle = index === 0 ? 0 : (index - 1) / Math.max(state.graph.nodes.length - 1, 1) * Math.PI * 2;
+          const ring = node.kind === "category" ? 0 : node.kind === "kpi" || node.kind === "action" ? 88 : 120 + (index % 3) * 18;
+          const orbit = tick * 0.0008;
+          return {
+            ...node,
+            x: width / 2 + Math.cos(angle + orbit) * ring * 1.35,
+            y: height / 2 + Math.sin(angle + orbit) * ring * 0.82,
+            hit: Math.max(18, node.radius * 5.6),
+          };
+        });
+      }
+
+      function drawPixelNode(ctx, node, selected) {
+        const color = nodeColor(node);
+        const pulse = selected ? 1.18 : 1;
+        const r = node.hit * pulse;
+        ctx.save();
+        ctx.translate(node.x, node.y);
+        ctx.globalAlpha = selected ? 0.22 : 0.12;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 1.55, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = "#050608";
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 0.54, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#f8fafc";
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 0.36, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = color;
+        const pattern = {
+          category: [1, 1, 0, 1, 1, 1],
+          pain: [1, 0, 1, 1, 0, 1],
+          kpi: [1, 1, 1, 0, 1, 0],
+          action: [0, 1, 1, 1, 1, 0],
+          body: [1, 0, 0, 1, 1, 1],
+          size: [0, 1, 1, 0, 1, 1],
+        }[node.kind] || [1, 1, 1, 1, 0, 0];
+        const block = Math.max(3, r * 0.11);
+        pattern.forEach((on, index) => {
+          if (!on) return;
+          ctx.fillRect(r * 0.35 + (index % 3) * (block + 1), -r * 0.42 + Math.floor(index / 3) * (block + 1), block, block);
+        });
+        ctx.restore();
+      }
+
+      function initStarfieldFallback(canvas) {
+        if (state.three?.animation) cancelAnimationFrame(state.three.animation);
+        if (state.three?.renderer) state.three.renderer.dispose();
+        state.three = null;
+        if (state.twoD?.animation) cancelAnimationFrame(state.twoD.animation);
+        const wrap = canvas.parentElement;
+        const width = wrap.clientWidth;
+        const height = wrap.clientHeight;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        const ctx = canvas.getContext("2d");
+        const labelLayer = document.getElementById("node-label-layer");
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let hovered = null;
+        let lastLabelSignature = "";
+
+        function nodesAt(tick) {
+          return starNodeLayout(width, height, tick);
+        }
+
+        function pick(event, commit = false) {
+          const rect = canvas.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          const nodes = nodesAt(performance.now());
+          hovered = nodes.find((node) => Math.hypot(node.x - x, node.y - y) <= node.hit) || null;
+          canvas.style.cursor = hovered ? "pointer" : "default";
+          if (commit && hovered) selectGraphNode(hovered.id);
+        }
+
+        function draw(tick) {
+          const nodes = nodesAt(reduced ? 0 : tick);
+          const nodeById = new Map(nodes.map((node) => [node.id, node]));
+          ctx.save();
+          ctx.scale(dpr, dpr);
+          ctx.clearRect(0, 0, width, height);
+          ctx.lineWidth = 1;
+          state.graph.edges.forEach((edge) => {
+            const a = nodeById.get(edge.source), b = nodeById.get(edge.target);
+            if (!a || !b) return;
+            ctx.strokeStyle = "rgba(104, 151, 224, 0.24)";
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          });
+          nodes.forEach((node) => drawPixelNode(ctx, node, node.id === state.selectedNode?.id || node.id === hovered?.id));
+          ctx.restore();
+          const visibleLabels = nodes.filter((node) => node.kind === "category" || node.kind === "kpi" || node.kind === "action" || node.id === hovered?.id || node.id === state.selectedNode?.id);
+          const signature = visibleLabels.map((node) => node.id).join("|");
+          if (signature !== lastLabelSignature) {
+            lastLabelSignature = signature;
+            labelLayer.innerHTML = visibleLabels.map((node) => {
+            return `<button class="node-label" type="button" onclick="selectGraphNode('${escapeHtml(node.id)}')" style="left:${node.x}px;top:${node.y}px">${nodeIconMarkup(node.kind)}${escapeHtml(node.label)}</button>`;
+            }).join("");
+          }
+          state.twoD.animation = requestAnimationFrame(draw);
+        }
+
+        canvas.onpointermove = (event) => pick(event, false);
+        canvas.onclick = (event) => pick(event, true);
+        state.twoD = { animation: requestAnimationFrame(draw) };
+      }
+
       function initStarfield() {
         const canvas = document.getElementById("starfield");
-        if (!canvas || !window.THREE || !document.getElementById("network").classList.contains("active")) return;
+        if (!canvas || !document.getElementById("network").classList.contains("active")) return;
+        if (!window.THREE) {
+          initStarfieldFallback(canvas);
+          return;
+        }
+        if (state.twoD?.animation) {
+          cancelAnimationFrame(state.twoD.animation);
+          state.twoD = null;
+        }
         if (state.three?.renderer) {
+          if (state.three.animation) cancelAnimationFrame(state.three.animation);
           state.three.renderer.dispose();
           state.three = null;
         }
@@ -1471,13 +1806,18 @@
           const ring = node.kind === "category" ? 0 : node.kind === "kpi" || node.kind === "action" ? 88 : 120 + (index % 3) * 18;
           const z = node.kind === "category" ? 20 : Math.sin(angle * 2.2) * 34;
           const position = new THREE.Vector3(Math.cos(angle) * ring, Math.sin(angle) * ring * 0.74, z);
-          const geometry = new THREE.SphereGeometry(node.radius, 24, 16);
-          const material = new THREE.MeshBasicMaterial({ color: node.color, transparent: true, opacity: node.id === state.selectedNode?.id ? 1 : 0.84 });
-          const mesh = new THREE.Mesh(geometry, material);
-          mesh.position.copy(position);
-          mesh.userData = node;
-          group.add(mesh);
-          return { ...node, mesh, position };
+          const selected = node.id === state.selectedNode?.id;
+          const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+            map: createNodeTexture(node, selected),
+            transparent: true,
+            depthWrite: false,
+          }));
+          const size = selected ? node.radius * 7.2 : node.radius * 6.4;
+          sprite.scale.set(size, size, 1);
+          sprite.position.copy(position);
+          sprite.userData = node;
+          group.add(sprite);
+          return { ...node, mesh: sprite, pickMesh: sprite, position };
         });
         const nodeById = new Map(nodes.map((node) => [node.id, node]));
         const linePositions = [];
@@ -1495,12 +1835,17 @@
         const labelLayer = document.getElementById("node-label-layer");
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         let hovered = null;
+        let lastLabelSignature = "";
         function updateLabels() {
-          labelLayer.innerHTML = nodes.filter((node) => node.kind === "category" || node.kind === "kpi" || node.id === hovered?.id || node.id === state.selectedNode?.id).map((node) => {
+          const visibleLabels = nodes.filter((node) => node.kind === "category" || node.kind === "kpi" || node.kind === "action" || node.id === hovered?.id || node.id === state.selectedNode?.id);
+          const signature = visibleLabels.map((node) => node.id).join("|");
+          if (signature === lastLabelSignature) return;
+          lastLabelSignature = signature;
+          labelLayer.innerHTML = visibleLabels.map((node) => {
             const vector = node.mesh.position.clone().applyMatrix4(group.matrixWorld).project(camera);
             const x = (vector.x * 0.5 + 0.5) * width;
             const y = (-vector.y * 0.5 + 0.5) * height;
-            return `<span class="node-label" style="left:${x}px;top:${y}px">${escapeHtml(node.label)}</span>`;
+            return `<button class="node-label" type="button" onclick="selectGraphNode('${escapeHtml(node.id)}')" style="left:${x}px;top:${y}px">${nodeIconMarkup(node.kind)}${escapeHtml(node.label)}</button>`;
           }).join("");
         }
         function pick(event, commit = false) {
@@ -1508,7 +1853,7 @@
           pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
           pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
           raycaster.setFromCamera(pointer, camera);
-          const hit = raycaster.intersectObjects(nodes.map((node) => node.mesh))[0];
+          const hit = raycaster.intersectObjects(nodes.map((node) => node.pickMesh))[0];
           hovered = hit?.object?.userData || null;
           canvas.style.cursor = hovered ? "pointer" : "default";
           if (commit && hovered) {
@@ -1531,6 +1876,10 @@
         state.three = { renderer, animation: requestAnimationFrame(frame) };
       }
 
+      window.refreshStarfield = () => {
+        if (document.getElementById("network")?.classList.contains("active")) requestAnimationFrame(initStarfield);
+      };
+
       function renderNodeInspector() {
         const node = state.selectedNode || state.graph.nodes[0] || {};
         document.getElementById("node-inspector").innerHTML = `
@@ -1539,17 +1888,36 @@
             <h4 class="inspector-title">${escapeHtml(node.label || "选择一个节点")}</h4>
           </div>
           <div class="metric-list">
-            <div class="metric-row"><span>关系权重</span><strong>${fmt(node.value || 0)}</strong></div>
-            <div class="metric-row"><span>影响范围</span><strong>${escapeHtml(node.kind === "pain" ? "退货风险 / PDP 文案" : node.kind === "kpi" ? "经营 KPI" : "品类决策")}</strong></div>
-            <div class="metric-row"><span>下一步</span><strong>${escapeHtml(node.kind === "pain" ? "查看评论证据" : "打开决策工作区")}</strong></div>
+            <button class="metric-row" type="button" onclick="setPage('network')"><span>关系权重</span><strong>${fmt(node.value || 0)}</strong></button>
+            <button class="metric-row" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')"><span>影响范围</span><strong>${escapeHtml(node.kind === "pain" ? "退货风险 / PDP 文案" : node.kind === "kpi" ? "经营 KPI" : "品类决策")}</strong></button>
+            <button class="metric-row" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')"><span>下一步</span><strong>${escapeHtml(node.kind === "pain" ? "查看评论证据" : "打开决策工作区")}</strong></button>
           </div>
           <button class="primary-button" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')">${node.kind === "pain" ? "查看证据" : "打开工作区"}</button>
         `;
       }
 
       function kindLabel(kind) {
-        return { category: "Category Node", pain: "Pain Point Node", body: "Body Type Node", size: "Size Node", kpi: "KPI Node", action: "Action Node" }[kind] || "Network Node";
+        return { category: "品类节点", pain: "痛点节点", body: "体型节点", size: "尺码节点", kpi: "KPI 节点", action: "行动节点" }[kind] || "关系节点";
       }
+
+      function nodeIconMarkup(kind) {
+        const type = escapeHtml(kind || "category");
+        return `<span class="node-icon ${type}" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>`;
+      }
+
+      function selectGraphNode(id, page = null) {
+        const node = state.graph.nodes.find((item) => item.id === id);
+        if (!node) return;
+        state.selectedNode = node;
+        if (node.kind === "category") state.selectedCategory = node.id;
+        renderNodeInspector();
+        renderWorkspace();
+        renderEvidence();
+        buildCategorySelect();
+        if (page) setPage(page);
+        if (state.page === "network") requestAnimationFrame(initStarfield);
+      }
+      window.selectGraphNode = selectGraphNode;
 
       function selectCategory(category, page = state.page) {
         state.selectedCategory = category;
@@ -1627,7 +1995,7 @@
           document.querySelectorAll("[data-login-mode]").forEach((item) => item.classList.remove("active"));
           button.classList.add("active");
           state.mode = button.dataset.loginMode;
-          document.getElementById("current-mode-label").textContent = state.mode === "management" ? "Management mode" : "Operator mode";
+          document.getElementById("current-mode-label").textContent = state.mode === "management" ? "管理模式" : "运营模式";
         });
       });
 
@@ -1642,7 +2010,7 @@
           requestAnimationFrame(initStarfield);
         });
       });
-      document.getElementById("category-select").addEventListener("change", (event) => selectCategory(event.target.value, "workspace"));
+      document.getElementById("category-select").addEventListener("change", (event) => selectCategory(event.target.value, state.page));
       document.getElementById("reset-button").addEventListener("click", () => {
         state.selectedCategory = "dress";
         state.selectedNode = null;
