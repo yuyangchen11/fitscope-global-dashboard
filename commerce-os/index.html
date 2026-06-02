@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>FitScope Commerce OS</title>
-    <script async src="https://unpkg.com/three@0.160.0/build/three.min.js" onload="window.refreshStarfield && window.refreshStarfield()"></script>
     <style>
       :root {
         color-scheme: dark;
@@ -481,8 +480,18 @@
         gap: 14px;
       }
 
+      @keyframes panelIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
       .panel {
         padding: 16px;
+      }
+
+      .page.active .panel,
+      .page.active .kpi-card {
+        animation: panelIn 240ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
       }
 
       .network-panel {
@@ -689,6 +698,123 @@
 
       .star-rule strong {
         color: var(--text);
+      }
+
+      .network-workbench {
+        display: grid;
+        grid-template-columns: 320px minmax(0, 1fr) 360px;
+        gap: 14px;
+        align-items: stretch;
+      }
+
+      .network-list {
+        display: grid;
+        gap: 8px;
+        max-height: 650px;
+        overflow: auto;
+      }
+
+      .network-list button {
+        display: grid;
+        gap: 6px;
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.17 0.012 255 / 0.68);
+        color: var(--muted);
+        text-align: left;
+        transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+      }
+
+      .network-list button:hover,
+      .network-list button.active {
+        border-color: oklch(0.72 0.16 230 / 0.55);
+        background: oklch(0.23 0.035 230 / 0.46);
+        transform: translateY(-1px);
+      }
+
+      .network-list strong {
+        color: var(--text);
+        font-size: 14px;
+      }
+
+      .network-list span {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 12px;
+      }
+
+      .connected-graph-wrap {
+        position: relative;
+        min-height: 620px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 48%, oklch(0.28 0.08 210 / 0.18), transparent 34%),
+          linear-gradient(180deg, oklch(0.18 0.012 255 / 0.78), oklch(0.125 0.01 255 / 0.88));
+      }
+
+      .connected-graph {
+        width: 100%;
+        height: 620px;
+        display: block;
+      }
+
+      .connected-graph .graph-bg {
+        pointer-events: none;
+      }
+
+      .graph-link {
+        stroke: oklch(0.72 0.05 230 / 0.24);
+        stroke-width: 1.1;
+        transition: stroke 180ms ease, stroke-width 180ms ease, opacity 180ms ease;
+      }
+
+      .graph-link.active {
+        stroke: oklch(0.72 0.16 230 / 0.76);
+        stroke-width: 2;
+      }
+
+      .graph-node circle {
+        cursor: pointer;
+        transition: opacity 180ms ease, stroke-width 180ms ease, transform 180ms ease;
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+
+      .graph-node:hover circle,
+      .graph-node.active circle {
+        transform: scale(1.06);
+        stroke-width: 4;
+      }
+
+      .graph-node text {
+        fill: var(--text);
+        font-size: 12px;
+        font-weight: 720;
+        paint-order: stroke;
+        stroke: oklch(0.12 0.012 255);
+        stroke-width: 4px;
+        stroke-linejoin: round;
+        pointer-events: none;
+      }
+
+      .graph-toolbar {
+        position: absolute;
+        left: 14px;
+        bottom: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .graph-detail-copy {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.6;
       }
 
       .legend-item {
@@ -989,16 +1115,43 @@
 
       .opportunity-map-layout {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 300px;
+        grid-template-columns: minmax(0, 1fr) 320px;
         gap: 16px;
         align-items: stretch;
       }
 
       .opportunity-map {
         width: 100%;
-        height: 330px;
-        min-height: 330px;
+        height: 390px;
+        min-height: 390px;
         display: block;
+      }
+
+      .opportunity-map text,
+      .contour-chart text,
+      .connected-graph text {
+        fill: var(--muted);
+      }
+
+      .matrix-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background:
+          radial-gradient(circle at 70% 28%, oklch(0.72 0.16 230 / 0.12), transparent 26%),
+          oklch(0.16 0.012 255 / 0.72);
+      }
+
+      .opportunity-node {
+        cursor: pointer;
+      }
+
+      .opportunity-node circle {
+        transition: opacity 180ms ease, r 180ms ease, stroke-width 180ms ease;
+      }
+
+      .opportunity-node:hover circle {
+        opacity: 1;
+        stroke-width: 4;
       }
 
       .network-grid {
@@ -1069,6 +1222,43 @@
         font-weight: 820;
         text-anchor: middle;
         dominant-baseline: middle;
+      }
+
+      .contour-layout {
+        display: grid;
+        grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1fr);
+        gap: 18px;
+        align-items: center;
+      }
+
+      .contour-chart {
+        width: 100%;
+        min-height: 310px;
+        display: block;
+        overflow: visible;
+      }
+
+      .contour-surface {
+        filter: drop-shadow(0 18px 28px rgb(0 0 0 / 0.32));
+        transition: opacity 180ms ease, transform 180ms ease;
+        transform-origin: center;
+      }
+
+      .contour-surface:hover {
+        opacity: 0.9;
+        transform: translateY(-3px);
+      }
+
+      .contour-point {
+        cursor: pointer;
+        transition: transform 180ms ease, opacity 180ms ease;
+        transform-box: fill-box;
+        transform-origin: center;
+      }
+
+      .contour-point:hover {
+        transform: scale(1.08);
+        opacity: 0.9;
       }
 
       .legend-list {
@@ -1436,7 +1626,7 @@
           <button class="nav-button active" data-page="overview"><span class="nav-number">01</span><span>经营总览</span></button>
           <button class="nav-button" data-page="market"><span class="nav-number">02</span><span>市场机会</span></button>
           <button class="nav-button" data-page="assortment"><span class="nav-number">03</span><span>商品组合</span></button>
-          <button class="nav-button" data-page="network"><span class="nav-number">04</span><span>关系星域</span></button>
+          <button class="nav-button" data-page="network"><span class="nav-number">04</span><span>关系图谱</span></button>
           <button class="nav-button" data-page="kpi"><span class="nav-number">05</span><span>KPI诊断</span></button>
           <button class="nav-button" data-page="semantic"><span class="nav-number">06</span><span>语义洞察</span></button>
           <button class="nav-button" data-page="workspace"><span class="nav-number">07</span><span>决策工作区</span></button>
@@ -1576,12 +1766,22 @@
         </section>
 
         <section class="page" id="network">
-          <div class="layout-grid network-grid">
+          <div class="network-workbench">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3>相关节点</h3>
+                  <p>参考 Connected Papers 的左侧列表逻辑，点击节点会同步更新中间图和右侧解释。</p>
+                </div>
+              </div>
+              <div class="network-category-strip" id="network-category-strip"></div>
+              <div class="network-list" id="network-node-list"></div>
+            </div>
             <div class="panel network-panel">
               <div class="panel-header">
                 <div>
-                  <h3>业务关系星域图</h3>
-                  <p>节点包括品类、痛点、体型、尺码、KPI 和行动建议。边代表共现、风险传导和业务影响。</p>
+                  <h3>业务关系图谱</h3>
+                  <p>不再自动旋转。节点大小代表证据强度，连线代表共现或 KPI 影响，悬浮可查看解释，点击会锁定节点。</p>
                 </div>
                 <div class="control-row">
                   <button class="chip active" data-network-filter="all">全部</button>
@@ -1590,17 +1790,14 @@
                   <button class="chip" data-network-filter="kpi">KPI</button>
                 </div>
               </div>
-              <div class="network-category-strip" id="network-category-strip"></div>
-              <div class="starfield-wrap">
-                <canvas id="starfield"></canvas>
-                <div id="node-label-layer"></div>
-                <div class="star-legend">
+              <div class="connected-graph-wrap">
+                <svg id="connected-graph" class="connected-graph" role="img" aria-label="business relationship graph"></svg>
+                <div class="graph-toolbar">
                   <span class="legend-item"><span class="legend-dot" style="background:var(--blue)"></span>品类</span>
-                  <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>痛点</span>
-                  <span class="legend-item"><span class="legend-dot" style="background:var(--violet)"></span>人群/尺码</span>
+                  <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>评论痛点</span>
+                  <span class="legend-item"><span class="legend-dot" style="background:var(--violet)"></span>体型/尺码</span>
                   <span class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>KPI/行动</span>
                 </div>
-                <div class="star-rule" id="star-rule"></div>
               </div>
             </div>
             <div class="panel">
@@ -1645,11 +1842,11 @@
             <div class="panel chart-box">
               <div class="panel-header">
                 <div>
-                  <h3>评论痛点语义</h3>
-                  <p>把英文评论标签转换为中文业务问题，点击可进入证据页。</p>
+                  <h3>评论痛点 3D 轮廓</h3>
+                  <p>把痛点频次转成语义地形。山峰越高代表出现越多，点击标签进入证据页。</p>
                 </div>
               </div>
-              <div id="semantic-pain-donut"></div>
+              <div id="semantic-pain-contour"></div>
             </div>
             <div class="panel">
               <div class="panel-header">
@@ -1905,9 +2102,11 @@
         const risk = num(row.risk_score);
         const demand = marketDemandFor(row.category_group);
         const returnRate = num(company.returnRate);
-        if (demand > 0.2 && risk < 32 && returnRate < 0.2) return { label: "放量", tone: "positive", action: "增加核心 SKU 曝光，同时保持评论风险监控。" };
-        if (demand > 0.18 && (risk >= 30 || returnRate >= 0.22)) return { label: "先修正再放量", tone: "warning", action: "该品类有市场需求，但退货和评论痛点会限制转化。先改详情页、尺码说明和高风险 SKU，再扩大投放。" };
-        if (risk >= 34 || returnRate >= 0.28) return { label: "修正", tone: "risk", action: "暂停大规模放量，优先复核尺码、材质和评论痛点。" };
+        if (demand > 0.3 && risk < 31 && returnRate < 0.22) return { label: "优先放量", tone: "positive", action: "市场需求强且经营风险可承接，可以增加核心 SKU 曝光，同时保留评论风险监控。" };
+        if (demand > 0.24 && returnRate >= 0.27) return { label: "先降退货", tone: "warning", action: "需求存在，但退货压力会侵蚀利润。先处理尺码说明、高风险 SKU 和退货原因，再扩大投放。" };
+        if (risk >= 34) return { label: "先改详情页", tone: "risk", action: "评论和合身风险较高，优先改 PDP 的材质、版型、尺码和模特说明。" };
+        if (demand > 0.18 && risk < 34) return { label: "小规模验证", tone: "info", action: "先做小流量测试，观察转化、退货和评论变化，再决定是否放量。" };
+        if (returnRate >= 0.3) return { label: "暂停放量", tone: "risk", action: "退货压力过高，暂不扩大曝光，先定位退货和差评原因。" };
         return { label: "观察", tone: "info", action: "保持监控，等待市场需求或内部 KPI 出现更强信号。" };
       }
 
@@ -1922,7 +2121,7 @@
         renderEvidence();
         renderNodeInspector();
         renderNetworkCategoryStrip();
-        requestAnimationFrame(initStarfield);
+        renderNetworkGraph();
       }
 
       function renderKpis() {
@@ -1934,7 +2133,7 @@
         const avgReturn = companies.reduce((sum, row) => sum + row.returnRate, 0) / Math.max(companies.length, 1);
         const avgMargin = companies.reduce((sum, row) => sum + row.margin, 0) / Math.max(companies.length, 1);
         const kpis = [
-          { key: "gmv", label: "模拟 GMV", value: `$${fmt(totalGmv)}`, note: "公司经营 KPI 示例，可替换数据库", delta: "+8.4% vs baseline", tone: "positive" },
+          { key: "gmv", label: "GMV 代理值", value: `$${fmt(totalGmv)}`, note: "由公开数据建模，非真实公司收入", delta: "待接真实数据库", tone: "info" },
           { key: "conversion", label: "转化率", value: pct(avgConversion), note: "由品类风险和需求模型估算", delta: "需要真实埋点校准", tone: "info" },
           { key: "return", label: "退货率", value: pct(avgReturn), note: "受合身和评论痛点影响", delta: "高于健康阈值", tone: "warning" },
           { key: "margin", label: "毛利质量", value: pct(avgMargin), note: "退货风险会侵蚀利润", delta: "可承接", tone: "positive" },
@@ -2006,7 +2205,7 @@
           { label: "市场交易事件", value: fmt(totalTx), note: "H&M 交易表" },
           { label: "最高需求组", value: top.product_group_name || "-", note: `${pct(top.demandShare)} 交易占比` },
           { label: "最新日交易", value: fmt(int(latest.transactions)), note: latest.date || "-" },
-          { label: "供需差最大", value: (merged.slice().sort((a, b) => b.gap - a.gap)[0]?.gap * 100 || 0).toFixed(1) + " pts", note: "需求占比减商品占比" },
+          { label: "供需差最大", value: (merged.slice().sort((a, b) => b.gap - a.gap)[0]?.gap * 100 || 0).toFixed(1) + " 个百分点", note: "需求占比减商品占比" },
           { label: "数据层", value: "CSV", note: "下一阶段可接 API" },
         ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
         renderBars("market-demand-bars", merged.slice(0, 9), "product_group_name", (row) => row.demandShare, { max: Math.max(...merged.map((r) => r.demandShare), 1), format: pct });
@@ -2028,7 +2227,7 @@
           { label: "商品目录", value: fmt(totalArticles), note: "H&M articles 表" },
           { label: "市场交易", value: fmt(totalTx), note: "transactions 表" },
           { label: "前三集中度", value: pct(concentration), note: "商品结构集中程度" },
-          { label: "最大需求差", value: `${(Math.max(...merged.map((r) => r.gap)) * 100).toFixed(1)} pts`, note: "需求占比减商品占比" },
+          { label: "最大需求差", value: `${(Math.max(...merged.map((r) => r.gap)) * 100).toFixed(1)} 个百分点`, note: "需求占比减商品占比" },
           { label: "组合判断", value: concentration > 0.7 ? "集中" : "分散", note: "决定是否需要品类扩展" },
         ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
         renderTreemap("assortment-treemap", merged.slice(0, 12));
@@ -2059,7 +2258,7 @@
         renderBars("kpi-gap-bars", rows, "category_group", (row) => {
           const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
           return Math.max(0, num(company.returnRate) - 0.18) * 100 + Math.max(0, 0.085 - num(company.conversion)) * 100;
-        }, { max: 18, format: (v) => `${v.toFixed(1)} pts`, risk: true, click: true });
+        }, { max: 18, format: (v) => `${v.toFixed(1)} 个百分点`, risk: true, click: true });
         renderScatter("kpi-scatter", rows);
       }
 
@@ -2080,12 +2279,12 @@
           ["带痛点评论", pct(tagged / Math.max(selectedRows.length, 1)), "语义覆盖率"],
           ["主痛点", painRows[0]?.label || "-", "用于生成行动建议"],
         ].map(([label, value, note]) => `<button class="insight-card" type="button" onclick="setPage('evidence')"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><p class="chart-caption">${escapeHtml(note)}</p></button>`).join("");
-        renderDonut("semantic-pain-donut", painRows, { center: "痛点", action: (row) => `selectGraphNode('${escapeHtml(row.id)}', 'evidence')` });
+        renderPainContour("semantic-pain-contour", painRows);
         renderBars("semantic-body-bars", (state.data.bodies || []).slice(0, 8), "body_type", (row) => num(row.risk_score), { max: 36, format: (v) => v.toFixed(1), risk: true });
         document.getElementById("semantic-table").innerHTML = selectedRows.slice(0, 16).map((row) => `
           <tr>
             <td>${escapeHtml(nameOf(row.category_group))}</td>
-            <td>${escapeHtml(String(row.pain_points || "none").split(";").map(nameOf).join("；"))}</td>
+            <td>${escapeHtml(cleanPainList(row.pain_points).map(nameOf).join("；") || "无明确痛点")}</td>
             <td>${escapeHtml(nameOf(row.body_type))}</td>
             <td>${escapeHtml(nameOf(row.occasion))}</td>
             <td>${escapeHtml(String(row.review_text || row.review_summary || "").slice(0, 180))}${String(row.review_text || "").length > 180 ? "..." : ""}</td>
@@ -2107,7 +2306,7 @@
         ].map(([label, value, note]) => `<div class="impact-cell"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><small>${escapeHtml(note)}</small></div>`).join("");
         document.getElementById("workspace-metrics").innerHTML = [
           ["市场需求指数", (marketDemandFor(row.category_group) * 100).toFixed(1)],
-          ["模拟 GMV", `$${fmt(company.gmv || 0)}`],
+          ["GMV 代理值", `$${fmt(company.gmv || 0)}`],
           ["转化率", pct(company.conversion)],
           ["退货率", pct(company.returnRate)],
           ["合身率", pct(row.fit_rate)],
@@ -2132,7 +2331,7 @@
             </div>
             <div class="decision-tile">
               <span>经营影响</span>
-              <strong>退货率比健康线高 ${(returnGap * 100).toFixed(1)} pts，转化率缺口 ${(conversionGap * 100).toFixed(1)} pts。</strong>
+              <strong>退货率比健康线高 ${(returnGap * 100).toFixed(1)} 个百分点，转化率缺口 ${(conversionGap * 100).toFixed(1)} 个百分点。</strong>
               <button type="button" onclick="setPage('market')">查看 KPI</button>
             </div>
             <div class="decision-tile">
@@ -2162,7 +2361,7 @@
             <td>${escapeHtml(row.rating || "-")}</td>
             <td>${escapeHtml(nameOf(row.body_type))}</td>
             <td>${escapeHtml(nameOf(row.occasion))}</td>
-            <td>${escapeHtml(String(row.pain_points || "none").split(";").map(nameOf).join("；"))}</td>
+            <td>${escapeHtml(cleanPainList(row.pain_points).map(nameOf).join("；") || "无明确痛点")}</td>
             <td>${escapeHtml(String(row.review_text || row.review_summary || "").slice(0, 260))}${String(row.review_text || "").length > 260 ? "..." : ""}</td>
           </tr>
         `).join("");
@@ -2188,13 +2387,20 @@
         return filtered.length ? filtered : rows.slice(0, 80);
       }
 
+      function cleanPainList(value) {
+        return String(value || "")
+          .split(";")
+          .map((item) => item.trim())
+          .filter((item) => item && item.toLowerCase() !== "none" && item.toLowerCase() !== "nan" && item !== "-");
+      }
+
       function painForCategory(category) {
         const counts = new Map();
         let sourceRows = (state.data.evidence || []).filter((row) => row.category_group === category);
         const fallback = sourceRows.length === 0;
         if (fallback) sourceRows = state.data.evidence || [];
         sourceRows.forEach((row) => {
-          String(row.pain_points || "none").split(";").filter(Boolean).forEach((pain) => counts.set(pain, (counts.get(pain) || 0) + 1));
+          cleanPainList(row.pain_points).forEach((pain) => counts.set(pain, (counts.get(pain) || 0) + 1));
         });
         return [...counts.entries()].map(([pain, count]) => ({ pain: nameOf(pain), id: pain, count, fallback })).sort((a, b) => b.count - a.count).slice(0, 8);
       }
@@ -2256,7 +2462,7 @@
           const decision = decisionFor(row);
           counts.set(decision.label, (counts.get(decision.label) || 0) + 1);
         });
-        const pageMap = { 放量: "workspace", 先修正再放量: "workspace", 修正: "semantic", 观察: "market" };
+        const pageMap = { 优先放量: "workspace", 先降退货: "kpi", 先改详情页: "semantic", 小规模验证: "market", 暂停放量: "evidence", 观察: "market" };
         return [...counts.entries()].map(([label, value], index) => ({
           label,
           value,
@@ -2330,6 +2536,68 @@
         `;
       }
 
+      function renderPainContour(containerId, rows) {
+        const holder = document.getElementById(containerId);
+        if (!holder) return;
+        const total = rows.reduce((sum, row) => sum + num(row.value), 0);
+        if (!rows.length || total <= 0) {
+          holder.innerHTML = `<p class="chart-caption">当前筛选没有足够样本，暂不显示痛点轮廓。</p>`;
+          return;
+        }
+        const width = 420, height = 310, cx = 210, cy = 156;
+        const max = Math.max(...rows.map((row) => num(row.value)), 1);
+        const pointsFor = (scale = 1, lift = 0) => rows.map((row, index) => {
+          const angle = -Math.PI / 2 + index / rows.length * Math.PI * 2;
+          const radius = 52 + Math.sqrt(num(row.value) / max) * 92 * scale;
+          return {
+            x: cx + Math.cos(angle) * radius,
+            y: cy + Math.sin(angle) * radius * 0.62 - lift,
+            row,
+            angle,
+            radius,
+          };
+        });
+        const surface = pointsFor(1, 14);
+        const base = pointsFor(0.72, -18);
+        const surfacePath = surface.map((point, index) => `${index ? "L" : "M"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ") + " Z";
+        const basePath = base.map((point, index) => `${index ? "L" : "M"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ") + " Z";
+        holder.innerHTML = `
+          <div class="contour-layout">
+            <svg class="contour-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="pain point semantic contour">
+              <ellipse cx="${cx}" cy="${cy + 52}" rx="150" ry="54" fill="oklch(0.08 0.012 255 / 0.42)"></ellipse>
+              <path class="contour-surface" d="${basePath}" fill="oklch(0.72 0.16 230 / 0.12)" stroke="oklch(0.72 0.16 230 / 0.22)"></path>
+              <path class="contour-surface" d="${surfacePath}" fill="url(#contourGradient)" stroke="oklch(0.72 0.16 230 / 0.64)" stroke-width="2"></path>
+              <defs>
+                <linearGradient id="contourGradient" x1="0" x2="1" y1="0" y2="1">
+                  <stop stop-color="#25b7ff" stop-opacity=".58"></stop>
+                  <stop offset=".52" stop-color="#a77cff" stop-opacity=".38"></stop>
+                  <stop offset="1" stop-color="#ff6b6b" stop-opacity=".42"></stop>
+                </linearGradient>
+              </defs>
+              ${surface.map((point, index) => {
+                const value = num(point.row.value);
+                const r = 5 + Math.sqrt(value / max) * 10;
+                const labelX = cx + Math.cos(point.angle) * 178;
+                const labelY = cy + Math.sin(point.angle) * 112;
+                return `<g class="contour-point" onclick="selectGraphNode('${escapeHtml(point.row.id)}', 'evidence')" onmousemove="showTooltip(event, '${escapeHtml(point.row.label)}', '${escapeHtml(`评论标签出现 ${fmt(value)} 次<br>占比 ${pct(value / total)}`)}')" onmouseleave="hideTooltip()">
+                  <line x1="${point.x.toFixed(1)}" y1="${point.y.toFixed(1)}" x2="${labelX.toFixed(1)}" y2="${labelY.toFixed(1)}" stroke="oklch(0.72 0.02 255 / 0.18)"></line>
+                  <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${r.toFixed(1)}" fill="${escapeHtml(point.row.color || chartColors[index % chartColors.length])}" opacity=".92"></circle>
+                  <text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelX < cx ? "end" : "start"}">${escapeHtml(point.row.label.split(" · ")[0])}</text>
+                </g>`;
+              }).join("")}
+              <text x="${cx}" y="${cy + 7}" text-anchor="middle" fill="var(--text)" style="font-size:20px;font-weight:820">语义轮廓</text>
+            </svg>
+            <div class="legend-list">
+              ${rows.map((row, index) => `<button class="legend-row" type="button" onclick="selectGraphNode('${escapeHtml(row.id)}', 'evidence')" onmousemove="showTooltip(event, '${escapeHtml(row.label)}', '${escapeHtml(`评论标签出现 ${fmt(row.value)} 次<br>占比 ${pct(num(row.value) / total)}`)}')" onmouseleave="hideTooltip()" style="background:transparent;border:0;color:inherit;text-align:left;padding:0">
+                <span class="legend-swatch" style="background:${escapeHtml(row.color || chartColors[index % chartColors.length])}"></span>
+                <span>${escapeHtml(row.label)}</span>
+                <strong>${pct(num(row.value) / total)}</strong>
+              </button>`).join("")}
+            </div>
+          </div>
+        `;
+      }
+
       function renderTreemap(containerId, rows) {
         const holder = document.getElementById(containerId);
         if (!holder) return;
@@ -2398,30 +2666,48 @@
       function renderOverviewOpportunityMap(containerId, rows) {
         const svg = document.getElementById(containerId);
         if (!svg) return;
-        const width = 720, height = 330, pad = 38;
+        const width = 760, height = 390, pad = 48;
         const maxRecords = Math.max(...rows.map((row) => int(row.records)), 1);
-        const xScale = (value) => pad + value / 42 * (width - pad * 2);
-        const yScale = (value) => height - pad - value / 38 * (height - pad * 2);
+        const maxOpportunity = Math.max(...rows.map((row) => businessScore(row)), 42);
+        const riskOf = (row) => {
+          const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
+          return num(row.risk_score) * 0.72 + num(company.returnRate) * 30;
+        };
+        const maxRisk = Math.max(...rows.map(riskOf), 38);
+        const xScale = (value) => pad + value / maxOpportunity * (width - pad * 2);
+        const yScale = (value) => height - pad - value / maxRisk * (height - pad * 2);
+        const midX = pad + (width - pad * 2) * 0.54;
+        const midY = pad + (height - pad * 2) * 0.48;
         svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
         svg.innerHTML = `
-          <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="10" fill="oklch(0.14 0.014 255 / 0.52)" stroke="oklch(0.72 0.02 255 / 0.16)"></rect>
-          <line x1="${pad}" y1="${height / 2}" x2="${width - pad}" y2="${height / 2}" stroke="oklch(0.72 0.02 255 / 0.18)"></line>
-          <line x1="${width / 2}" y1="${pad}" x2="${width / 2}" y2="${height - pad}" stroke="oklch(0.72 0.02 255 / 0.18)"></line>
-          <text x="${pad}" y="22">低机会</text>
-          <text x="${width - 92}" y="22">高机会</text>
-          <text x="${pad}" y="${height - 9}">低风险</text>
-          <text x="${width - 124}" y="${height - 9}">高风险区</text>
+          <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="16" fill="oklch(0.2 0.015 255 / 0.96)" stroke="oklch(0.86 0.03 255 / 0.22)"></rect>
+          <rect x="${pad}" y="${pad}" width="${midX - pad}" height="${midY - pad}" fill="oklch(0.68 0.2 25 / 0.08)"></rect>
+          <rect x="${midX}" y="${pad}" width="${width - pad - midX}" height="${midY - pad}" fill="oklch(0.78 0.17 75 / 0.12)"></rect>
+          <rect x="${pad}" y="${midY}" width="${midX - pad}" height="${height - pad - midY}" fill="oklch(0.72 0.16 230 / 0.08)"></rect>
+          <rect x="${midX}" y="${midY}" width="${width - pad - midX}" height="${height - pad - midY}" fill="oklch(0.76 0.16 160 / 0.11)"></rect>
+          <line x1="${pad}" y1="${midY}" x2="${width - pad}" y2="${midY}" stroke="oklch(0.86 0.03 255 / 0.24)"></line>
+          <line x1="${midX}" y1="${pad}" x2="${midX}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.24)"></line>
+          <text x="${pad + 14}" y="${pad + 26}" style="font-weight:800">先修正</text>
+          <text x="${midX + 14}" y="${pad + 26}" style="font-weight:800">谨慎验证</text>
+          <text x="${pad + 14}" y="${height - pad - 14}" style="font-weight:800">观察</text>
+          <text x="${midX + 14}" y="${height - pad - 14}" style="font-weight:800">优先放量</text>
+          <text x="${pad}" y="26">低机会</text>
+          <text x="${width - 96}" y="26">高机会</text>
+          <text x="${pad}" y="${height - 12}">低风险</text>
+          <text x="${width - 118}" y="${height - 12}">高风险</text>
           ${rows.map((row, index) => {
             const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
             const opportunity = businessScore(row);
-            const risk = num(row.risk_score) * 0.72 + num(company.returnRate) * 30;
+            const risk = riskOf(row);
             const radius = 7 + Math.sqrt(int(row.records) / maxRecords) * 18;
             const decision = decisionFor(row);
             const color = decision.tone === "risk" ? "#ff6b6b" : decision.tone === "warning" ? "#ffb02e" : "#25b7ff";
-            return `<g role="button" tabindex="0" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(`机会排名 #${index + 1}<br>机会分 ${opportunity.toFixed(1)}<br>风险分 ${num(row.risk_score).toFixed(1)}<br>退货率 ${pct(company.returnRate)}<br>建议 ${decision.label}`)}')" onmouseleave="hideTooltip()">
-              <circle cx="${xScale(opportunity).toFixed(1)}" cy="${yScale(risk).toFixed(1)}" r="${radius.toFixed(1)}" fill="${color}" opacity=".2"></circle>
-              <circle cx="${xScale(opportunity).toFixed(1)}" cy="${yScale(risk).toFixed(1)}" r="${Math.max(4, radius * .38).toFixed(1)}" fill="${color}" opacity=".9"></circle>
-              ${index < 9 ? `<text x="${(xScale(opportunity) + radius + 4).toFixed(1)}" y="${(yScale(risk) + 4).toFixed(1)}">#${index + 1} ${escapeHtml(nameOf(row.category_group).split(" · ")[0])}</text>` : ""}
+            const x = xScale(opportunity);
+            const y = yScale(risk);
+            return `<g class="opportunity-node" role="button" tabindex="0" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(`机会排名 #${index + 1}<br>机会分 ${opportunity.toFixed(1)}<br>风险指数 ${risk.toFixed(1)}<br>退货率 ${pct(company.returnRate)}<br>建议 ${decision.label}`)}')" onmouseleave="hideTooltip()">
+              <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${radius.toFixed(1)}" fill="${color}" opacity=".28" stroke="${color}" stroke-width="1.2"></circle>
+              <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.max(4, radius * .34).toFixed(1)}" fill="${color}" opacity=".95"></circle>
+              ${index < 8 ? `<text x="${Math.min(width - pad - 80, x + radius + 7).toFixed(1)}" y="${(y + 4).toFixed(1)}">#${index + 1} ${escapeHtml(nameOf(row.category_group).split(" · ")[0])}</text>` : ""}
             </g>`;
           }).join("")}
         `;
@@ -2478,6 +2764,128 @@
         });
         edges.push({ source: "return-risk", target: "conversion-risk", weight: 88 });
         state.graph = { nodes, edges };
+      }
+
+      function graphKindColor(kind) {
+        return {
+          category: "#25b7ff",
+          pain: "#ff6b6b",
+          body: "#a77cff",
+          size: "#ffb02e",
+          kpi: "#35dcb3",
+          action: "#35dcb3",
+        }[kind] || "#7aa7ff";
+      }
+
+      function renderNetworkGraph() {
+        const svg = document.getElementById("connected-graph");
+        const list = document.getElementById("network-node-list");
+        if (!svg || !list || !state.graph?.nodes?.length) return;
+        const selectedId = state.selectedNode?.id || state.selectedCategory;
+        const width = 760, height = 620;
+        const center = { x: 380, y: 306 };
+        const nodes = state.graph.nodes.map((node, index) => {
+          let x = center.x, y = center.y;
+          const ringIndex = Math.max(index - 1, 0);
+          if (node.kind === "pain") {
+            const pains = state.graph.nodes.filter((item) => item.kind === "pain");
+            const local = pains.findIndex((item) => item.id === node.id);
+            x = 188 + (local % 2) * 64;
+            y = 145 + local * 48;
+          } else if (node.kind === "kpi" || node.kind === "action") {
+            const kpis = state.graph.nodes.filter((item) => item.kind === "kpi" || item.kind === "action");
+            const local = kpis.findIndex((item) => item.id === node.id);
+            x = 592;
+            y = 214 + local * 78;
+          } else if (node.kind === "body") {
+            const bodies = state.graph.nodes.filter((item) => item.kind === "body");
+            const local = bodies.findIndex((item) => item.id === node.id);
+            x = 248 + local * 74;
+            y = 494 + Math.sin(local) * 22;
+          } else if (node.kind === "size") {
+            const sizes = state.graph.nodes.filter((item) => item.kind === "size");
+            const local = sizes.findIndex((item) => item.id === node.id);
+            x = 116 + local * 82;
+            y = 395 + Math.cos(local) * 20;
+          }
+          return { ...node, x, y, drawRadius: Math.max(13, Math.min(42, node.radius * 4.6 + Math.sqrt(num(node.value || 1)) * 0.04)), order: ringIndex };
+        });
+        const nodeById = new Map(nodes.map((node) => [node.id, node]));
+        const activeNode = nodeById.get(selectedId) || nodes[0];
+        const activeSet = new Set([activeNode?.id]);
+        state.graph.edges.forEach((edge) => {
+          if (edge.source === activeNode?.id) activeSet.add(edge.target);
+          if (edge.target === activeNode?.id) activeSet.add(edge.source);
+        });
+        list.innerHTML = nodes
+          .filter((node) => node.kind !== "category")
+          .sort((a, b) => (b.value || 0) - (a.value || 0))
+          .map((node) => `<button type="button" class="${node.id === activeNode?.id ? "active" : ""}" onclick="selectGraphNode('${escapeHtml(node.id)}')">
+            <strong>${escapeHtml(node.label)}</strong>
+            <span><em>${escapeHtml(kindLabel(node.kind))}</em><b>${fmt(node.value || 0)}</b></span>
+          </button>`).join("");
+        const links = state.graph.edges.map((edge) => {
+          const a = nodeById.get(edge.source), b = nodeById.get(edge.target);
+          if (!a || !b) return "";
+          const active = edge.source === activeNode?.id || edge.target === activeNode?.id;
+          return `<path class="graph-link ${active ? "active" : ""}" d="M ${a.x.toFixed(1)} ${a.y.toFixed(1)} C ${((a.x + b.x) / 2).toFixed(1)} ${(a.y - 46).toFixed(1)}, ${((a.x + b.x) / 2).toFixed(1)} ${(b.y + 46).toFixed(1)}, ${b.x.toFixed(1)} ${b.y.toFixed(1)}" opacity="${active ? ".9" : ".36"}"></path>`;
+        }).join("");
+        const nodeMarkup = nodes.map((node) => {
+          const active = node.id === activeNode?.id;
+          const related = activeSet.has(node.id);
+          const color = graphKindColor(node.kind);
+          const labelAnchor = node.x < width / 2 ? "end" : "start";
+          const labelX = node.x + (node.x < width / 2 ? -node.drawRadius - 10 : node.drawRadius + 10);
+          const labelY = node.y + 4;
+          const detail = graphNodeDetail(node);
+          return `<g class="graph-node ${active ? "active" : ""}" opacity="${related ? "1" : ".42"}" onclick="selectGraphNode('${escapeHtml(node.id)}')" onmousemove="showTooltip(event, '${escapeHtml(node.label)}', '${escapeHtml(detail.tooltip)}')" onmouseleave="hideTooltip()">
+            <circle cx="${node.x.toFixed(1)}" cy="${node.y.toFixed(1)}" r="${node.drawRadius.toFixed(1)}" fill="${color}" opacity="${node.kind === "category" ? ".46" : ".30"}" stroke="${active ? "#ffffff" : color}" stroke-width="${active ? "3" : "1.5"}"></circle>
+            <circle cx="${node.x.toFixed(1)}" cy="${node.y.toFixed(1)}" r="${Math.max(6, node.drawRadius * .38).toFixed(1)}" fill="${color}" opacity=".96"></circle>
+            <text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}">${escapeHtml(node.label)}</text>
+          </g>`;
+        }).join("");
+        svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        svg.innerHTML = `
+          <rect class="graph-bg" x="18" y="18" width="${width - 36}" height="${height - 36}" rx="18" fill="oklch(0.12 0.012 255 / 0.28)" stroke="oklch(0.72 0.02 255 / 0.12)"></rect>
+          ${links}
+          ${nodeMarkup}
+        `;
+      }
+
+      function graphNodeDetail(node) {
+        const row = selectedCategoryRow();
+        const company = selectedCompanyRow();
+        if (!node?.id) return { tooltip: "点击节点查看详情", summary: "请选择一个节点查看业务含义。", impact: "-", next: "选择节点" };
+        if (node.kind === "category") return {
+          tooltip: `品类记录 ${fmt(node.value || 0)}<br>当前建议 ${decisionFor(row).label}`,
+          summary: `${node.label} 是当前工作区主品类，连接到评论痛点、体型尺码和 KPI。`,
+          impact: `退货率 ${pct(company.returnRate)}，合身率 ${pct(row.fit_rate)}`,
+          next: "进入决策工作区复核动作",
+        };
+        if (node.kind === "pain") return {
+          tooltip: `痛点出现 ${fmt(node.value || 0)} 次<br>点击查看评论证据`,
+          summary: `${node.label} 是当前品类最需要解释给用户的评论痛点之一。`,
+          impact: "影响详情页文案、尺码说明、退货率和转化率",
+          next: "进入证据页抽查用户原文",
+        };
+        if (node.kind === "kpi") return {
+          tooltip: `KPI 节点<br>与当前品类风险联动`,
+          summary: `${node.label} 用来判断市场机会是否能被公司经营承接。`,
+          impact: `当前退货率 ${pct(company.returnRate)}，转化率 ${pct(company.conversion)}`,
+          next: "回到 KPI 诊断查看差距",
+        };
+        if (node.kind === "action") return {
+          tooltip: `动作建议<br>连接 PDP、尺码和 SKU 修正`,
+          summary: `${node.label} 是把评论证据转成执行任务的入口。`,
+          impact: "影响 PDP 质量分、转化率和退货率",
+          next: "进入证据与动作页",
+        };
+        return {
+          tooltip: `${kindLabel(node.kind)}<br>权重 ${fmt(node.value || 0)}`,
+          summary: `${node.label} 用于解释当前品类在哪些用户群或尺码上更容易出现偏差。`,
+          impact: "影响尺码表、模特说明和筛选推荐",
+          next: "查看相关评论样本",
+        };
       }
 
       function createNodeTexture(node, selected) {
@@ -2854,18 +3262,21 @@
 
       function renderNodeInspector() {
         const node = state.selectedNode || state.graph.nodes[0] || {};
+        const detail = graphNodeDetail(node);
         document.getElementById("node-inspector").innerHTML = `
           <div>
             <div class="inspector-type">${escapeHtml(kindLabel(node.kind))}</div>
             <h4 class="inspector-title">${escapeHtml(node.label || "选择一个节点")}</h4>
+            <p class="graph-detail-copy">${escapeHtml(detail.summary)}</p>
           </div>
           <div class="metric-list">
             <button class="metric-row" type="button" onclick="setPage('network')"><span>关系权重</span><strong>${fmt(node.value || 0)}</strong></button>
-            <button class="metric-row" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')"><span>影响范围</span><strong>${escapeHtml(node.kind === "pain" ? "退货风险 / PDP 文案" : node.kind === "kpi" ? "经营 KPI" : "品类决策")}</strong></button>
-            <button class="metric-row" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')"><span>下一步</span><strong>${escapeHtml(node.kind === "pain" ? "查看评论证据" : "打开决策工作区")}</strong></button>
+            <button class="metric-row" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')"><span>影响范围</span><strong>${escapeHtml(detail.impact)}</strong></button>
+            <button class="metric-row" type="button" onclick="setPage('${node.kind === "kpi" ? "kpi" : node.kind === "pain" ? "evidence" : "workspace"}')"><span>下一步</span><strong>${escapeHtml(detail.next)}</strong></button>
           </div>
           <button class="primary-button" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')">${node.kind === "pain" ? "查看证据" : "打开工作区"}</button>
         `;
+        renderNetworkGraph();
       }
 
       function kindLabel(kind) {
@@ -2906,7 +3317,7 @@
         renderEvidence();
         buildCategorySelect();
         if (page) setPage(page);
-        if (state.page === "network") requestAnimationFrame(initStarfield);
+        if (state.page === "network") renderNetworkGraph();
       }
       window.selectGraphNode = selectGraphNode;
 
@@ -2928,7 +3339,7 @@
           overview: ["经营总览", "先看市场机会和公司经营承接能力，再进入品类级决策。"],
           market: ["市场机会", "公开市场数据与模拟公司 KPI 对齐，判断哪些品类值得进入。"],
           assortment: ["商品组合", "用商品结构、占比和交易动量判断组合是否健康。"],
-          network: ["关系星域", "用 3D 关系图解释品类、痛点、KPI 和行动之间的连接。"],
+          network: ["关系图谱", "用 2D 关系图解释品类、痛点、KPI 和行动之间的连接。"],
           kpi: ["KPI诊断", "把市场机会拆成转化、退货、毛利和合身承接问题。"],
           semantic: ["语义洞察", "把评论文本和合身反馈转成可执行的商品与内容问题。"],
           workspace: ["决策工作区", "围绕当前品类集中展示 KPI、风险、证据和动作。"],
@@ -2940,7 +3351,7 @@
           overview: null,
           market: null,
           assortment: null,
-          network: ["星域聚焦", "重置星域"],
+          network: ["图谱聚焦", "重置图谱"],
           kpi: ["诊断品类", "重置KPI"],
           semantic: ["语义品类", "重置语义"],
           workspace: ["工作区品类", "重置品类"],
@@ -2952,7 +3363,7 @@
           document.getElementById("control-context").textContent = currentControls[0];
           document.getElementById("reset-button").textContent = currentControls[1];
         }
-        if (page === "network") requestAnimationFrame(initStarfield);
+        if (page === "network") renderNetworkGraph();
       }
       window.setPage = setPage;
 
@@ -2997,7 +3408,7 @@
         event.preventDefault();
         document.getElementById("login-screen").style.display = "none";
         document.getElementById("app-shell").classList.add("active");
-        requestAnimationFrame(initStarfield);
+        renderNetworkGraph();
       });
 
       document.querySelectorAll("[data-login-mode]").forEach((button) => {
@@ -3017,7 +3428,7 @@
           state.networkFilter = button.dataset.networkFilter;
           buildGraph();
           renderNodeInspector();
-          requestAnimationFrame(initStarfield);
+          renderNetworkGraph();
         });
       });
       document.getElementById("category-select").addEventListener("change", (event) => selectCategory(event.target.value, state.page));
@@ -3031,7 +3442,7 @@
       });
 
       window.addEventListener("resize", () => {
-        if (state.page === "network") requestAnimationFrame(initStarfield);
+        if (state.page === "network") renderNetworkGraph();
       });
 
       initLoginCanvas();
