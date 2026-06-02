@@ -383,6 +383,11 @@
         min-width: 240px;
       }
 
+      .control-context {
+        min-width: 86px;
+        justify-content: center;
+      }
+
       .pill {
         display: inline-flex;
         align-items: center;
@@ -532,13 +537,13 @@
 
       .starfield-wrap {
         position: relative;
-        min-height: 640px;
+        min-height: 500px;
         overflow: hidden;
         border: 0;
         border-radius: 0;
         background:
-          radial-gradient(circle at var(--star-x, 44%) var(--star-y, 42%), var(--star-bg, oklch(0.28 0.08 240 / 0.18)), transparent 32%),
-          radial-gradient(circle at 68% 72%, oklch(0.24 0.08 292 / 0.14), transparent 28%);
+          radial-gradient(circle at var(--star-x, 44%) var(--star-y, 42%), var(--star-bg, oklch(0.28 0.08 240 / 0.12)), transparent 24%),
+          radial-gradient(circle at 70% 72%, oklch(0.24 0.08 292 / 0.08), transparent 22%);
       }
 
       #starfield {
@@ -568,10 +573,10 @@
       }
 
       .node-icon {
-        width: 16px;
-        height: 16px;
+        width: var(--icon-size, 16px);
+        height: var(--icon-size, 16px);
         display: inline-grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(var(--pixel-cols, 4), 1fr);
         gap: 1px;
         padding: 2px;
         border: 1px solid oklch(0.1 0 0);
@@ -583,6 +588,38 @@
         width: 100%;
         aspect-ratio: 1;
         background: var(--blue);
+      }
+
+      .node-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        height: 20px;
+        padding: 0 6px;
+        border: 1px solid oklch(0.86 0.04 255 / 0.18);
+        border-radius: 6px;
+        background: oklch(0.18 0.018 255 / 0.92);
+        color: var(--text);
+        font-size: 10px;
+        font-weight: 820;
+      }
+
+      .node-badge.pain {
+        color: var(--red);
+        border-color: oklch(0.68 0.18 25 / 0.35);
+      }
+
+      .node-badge.kpi,
+      .node-badge.action {
+        color: var(--green);
+        border-color: oklch(0.72 0.16 160 / 0.35);
+      }
+
+      .node-badge.body,
+      .node-badge.size {
+        color: var(--violet);
+        border-color: oklch(0.72 0.16 292 / 0.35);
       }
 
       .node-icon.pain i { background: var(--red); }
@@ -950,6 +987,50 @@
         gap: 14px;
       }
 
+      .opportunity-map-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 16px;
+        align-items: stretch;
+      }
+
+      .opportunity-map {
+        width: 100%;
+        height: 330px;
+        min-height: 330px;
+        display: block;
+      }
+
+      .network-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(330px, 380px);
+        align-items: start;
+      }
+
+      .map-rationale {
+        display: grid;
+        gap: 10px;
+        align-content: start;
+      }
+
+      .rationale-card {
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.17 0.014 255 / 0.64);
+      }
+
+      .rationale-card span {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 720;
+      }
+
+      .rationale-card strong {
+        display: block;
+        margin-top: 7px;
+        line-height: 1.45;
+      }
+
       .chart-grid.three {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
@@ -1191,6 +1272,7 @@
         .layout-grid,
         .workspace-hero,
         .command-grid,
+        .opportunity-map-layout,
         .chart-grid,
         .chart-grid.three {
           grid-template-columns: 1fr;
@@ -1373,7 +1455,8 @@
             <h2 id="page-title">经营总览</h2>
             <p id="page-subtitle">先看市场机会和公司经营承接能力，再进入品类级决策。</p>
           </div>
-          <div class="top-actions">
+          <div class="top-actions hidden">
+            <span class="pill control-context" id="control-context">品类聚焦</span>
             <select id="category-select" aria-label="category selector"></select>
             <button class="ghost-button" id="reset-button" type="button">重置视图</button>
           </div>
@@ -1398,17 +1481,13 @@
               <div class="panel-header">
                 <div>
                   <h3>机会与风险地图</h3>
-                  <p>横向看市场需求差，纵向看合身和评论风险。点击任意品类会同步更新工作区和星域图。</p>
+                  <p>横向是市场机会，纵向是退货/合身风险。气泡越大代表样本越多，点击任意品类会同步更新工作区和星域图。</p>
                 </div>
-                <span class="pill">Market × Company KPI</span>
+                <span class="pill">排序规则：机会分 = 需求 + 转化 - 退货 + 毛利</span>
               </div>
-              <div class="two-col">
-                <div>
-                  <div class="bars" id="opportunity-bars"></div>
-                </div>
-                <div>
-                  <div class="bars" id="risk-bars"></div>
-                </div>
+              <div class="opportunity-map-layout">
+                <svg id="overview-opportunity-map" class="opportunity-map" role="img" aria-label="opportunity and risk map"></svg>
+                <div class="map-rationale" id="overview-map-rationale"></div>
               </div>
             </div>
             <div class="panel">
@@ -1497,7 +1576,7 @@
         </section>
 
         <section class="page" id="network">
-          <div class="layout-grid">
+          <div class="layout-grid network-grid">
             <div class="panel network-panel">
               <div class="panel-header">
                 <div>
@@ -1748,6 +1827,7 @@
         buildCategorySelect();
         buildGraph();
         renderAll();
+        setPage(state.page);
       }
 
       function buildCompanyModel() {
@@ -1871,7 +1951,8 @@
       }
 
       function renderOverview() {
-        const ranked = categoryRows().slice().sort((a, b) => businessScore(b) - businessScore(a)).slice(0, 8);
+        const rankedAll = categoryRows().slice().sort((a, b) => businessScore(b) - businessScore(a));
+        const ranked = rankedAll.slice(0, 8);
         const leader = ranked[0] || {};
         const leaderDecision = decisionFor(leader);
         const company = (state.data.company || []).find((item) => item.category === leader.category_group) || {};
@@ -1889,9 +1970,12 @@
           ["2. 再看市场", "市场机会和商品组合判断需求是否真实。", "market"],
           ["3. 最后落动作", "工作区和证据页给出 PDP、尺码、SKU 动作。", "workspace"],
         ].map(([title, body, page]) => `<button class="metric-row" type="button" onclick="setPage('${page}')"><span>${escapeHtml(title)}<br><small>${escapeHtml(body)}</small></span><strong>打开</strong></button>`).join("");
-        renderBars("opportunity-bars", ranked, "category_group", (row) => businessScore(row), { title: "机会评分", max: Math.max(...ranked.map(businessScore), 1), format: (v) => v.toFixed(1), click: true });
-        const riskRows = categoryRows().slice(0, 8);
-        renderBars("risk-bars", riskRows, "category_group", (row) => num(row.risk_score), { title: "风险评分", max: Math.max(...riskRows.map((r) => num(r.risk_score)), 1), format: (v) => v.toFixed(1), risk: true, click: true });
+        renderOverviewOpportunityMap("overview-opportunity-map", rankedAll.slice(0, 18));
+        document.getElementById("overview-map-rationale").innerHTML = [
+          ["横轴", "市场机会：公开交易需求和品类需求代理信号，越靠右越值得进入。"],
+          ["纵轴", "风险暴露：合身偏差、评论痛点和模型化退货率，越靠上越需要先修正。"],
+          ["排序", `当前第一是 ${nameOf(ranked[0]?.category_group)}，因为它的需求强，但退货/评论风险也需要先处理。`],
+        ].map(([label, body]) => `<div class="rationale-card"><span>${escapeHtml(label)}</span><strong>${escapeHtml(body)}</strong></div>`).join("");
         const decisionCounts = decisionSummary();
         renderDonut("overview-triage-donut", decisionCounts, { center: `${categoryRows().length}类`, action: (row) => `setPage('${row.page}')` });
         renderDonut("overview-fit-donut", fitSummary(), { center: "合身", action: () => "setPage('semantic')" });
@@ -2269,7 +2353,7 @@
           svg.innerHTML = "";
           return;
         }
-        const sample = data.filter((_, index) => options.compact ? index % 12 === 0 : index % 7 === 0);
+        const sample = data;
         const width = 720, height = 260, pad = 28;
         const values = sample.map((row) => int(row.transactions));
         const min = Math.min(...values), max = Math.max(...values);
@@ -2285,7 +2369,7 @@
           <line x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" stroke="oklch(0.72 0.02 255 / 0.22)"></line>
           <text x="${pad}" y="22">${escapeHtml(sample[0].date || "")}</text>
           <text x="${width - pad - 74}" y="22">${escapeHtml(sample[sample.length - 1].date || "")}</text>
-          ${sample.filter((_, index) => index % Math.max(1, Math.floor(sample.length / 10)) === 0).map((row, index) => `<circle cx="${x(index * Math.max(1, Math.floor(sample.length / 10))).toFixed(1)}" cy="${y(int(row.transactions)).toFixed(1)}" r="6" fill="transparent" stroke="transparent" stroke-width="12" onmousemove="showTooltip(event, '${escapeHtml(row.date)}', '${escapeHtml(`交易 ${fmt(row.transactions)}<br>均价 ${Number(row.avg_price || 0).toFixed(4)}`)}')" onmouseleave="hideTooltip()"></circle>`).join("")}
+          ${sample.map((row, index) => `<circle cx="${x(index).toFixed(1)}" cy="${y(int(row.transactions)).toFixed(1)}" r="${options.compact ? "1.6" : "2.2"}" fill="#25b7ff" opacity=".22"></circle><circle cx="${x(index).toFixed(1)}" cy="${y(int(row.transactions)).toFixed(1)}" r="${options.compact ? "5.8" : "7.4"}" fill="transparent" stroke="transparent" stroke-width="8" onmousemove="showTooltip(event, '${escapeHtml(row.date)}', '${escapeHtml(`交易 ${fmt(row.transactions)}<br>均价 ${Number(row.avg_price || 0).toFixed(4)}`)}')" onmouseleave="hideTooltip()"></circle>`).join("")}
         `;
       }
 
@@ -2307,6 +2391,38 @@
             const returns = num(company.returnRate) * 100;
             const radius = 6 + Math.min(12, num(row.risk_score) / 4);
             return `<circle cx="${x(score).toFixed(1)}" cy="${y(returns).toFixed(1)}" r="${radius.toFixed(1)}" fill="${returns > 25 ? "#ff6b6b" : "#25b7ff"}" opacity=".78" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(`机会 ${score.toFixed(1)}<br>退货 ${returns.toFixed(1)}%<br>风险 ${num(row.risk_score).toFixed(1)}`)}')" onmouseleave="hideTooltip()"></circle>`;
+          }).join("")}
+        `;
+      }
+
+      function renderOverviewOpportunityMap(containerId, rows) {
+        const svg = document.getElementById(containerId);
+        if (!svg) return;
+        const width = 720, height = 330, pad = 38;
+        const maxRecords = Math.max(...rows.map((row) => int(row.records)), 1);
+        const xScale = (value) => pad + value / 42 * (width - pad * 2);
+        const yScale = (value) => height - pad - value / 38 * (height - pad * 2);
+        svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        svg.innerHTML = `
+          <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="10" fill="oklch(0.14 0.014 255 / 0.52)" stroke="oklch(0.72 0.02 255 / 0.16)"></rect>
+          <line x1="${pad}" y1="${height / 2}" x2="${width - pad}" y2="${height / 2}" stroke="oklch(0.72 0.02 255 / 0.18)"></line>
+          <line x1="${width / 2}" y1="${pad}" x2="${width / 2}" y2="${height - pad}" stroke="oklch(0.72 0.02 255 / 0.18)"></line>
+          <text x="${pad}" y="22">低机会</text>
+          <text x="${width - 92}" y="22">高机会</text>
+          <text x="${pad}" y="${height - 9}">低风险</text>
+          <text x="${width - 124}" y="${height - 9}">高风险区</text>
+          ${rows.map((row, index) => {
+            const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
+            const opportunity = businessScore(row);
+            const risk = num(row.risk_score) * 0.72 + num(company.returnRate) * 30;
+            const radius = 7 + Math.sqrt(int(row.records) / maxRecords) * 18;
+            const decision = decisionFor(row);
+            const color = decision.tone === "risk" ? "#ff6b6b" : decision.tone === "warning" ? "#ffb02e" : "#25b7ff";
+            return `<g role="button" tabindex="0" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(`机会排名 #${index + 1}<br>机会分 ${opportunity.toFixed(1)}<br>风险分 ${num(row.risk_score).toFixed(1)}<br>退货率 ${pct(company.returnRate)}<br>建议 ${decision.label}`)}')" onmouseleave="hideTooltip()">
+              <circle cx="${xScale(opportunity).toFixed(1)}" cy="${yScale(risk).toFixed(1)}" r="${radius.toFixed(1)}" fill="${color}" opacity=".2"></circle>
+              <circle cx="${xScale(opportunity).toFixed(1)}" cy="${yScale(risk).toFixed(1)}" r="${Math.max(4, radius * .38).toFixed(1)}" fill="${color}" opacity=".9"></circle>
+              ${index < 9 ? `<text x="${(xScale(opportunity) + radius + 4).toFixed(1)}" y="${(yScale(risk) + 4).toFixed(1)}">#${index + 1} ${escapeHtml(nameOf(row.category_group).split(" · ")[0])}</text>` : ""}
+            </g>`;
           }).join("")}
         `;
       }
@@ -2371,30 +2487,14 @@
         const ctx = canvas.getContext("2d");
         const color = nodeColor(node);
         ctx.clearRect(0, 0, 96, 96);
-        ctx.globalAlpha = selected ? 0.28 : 0.16;
+        ctx.globalAlpha = selected ? 0.16 : 0.07;
         ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.arc(48, 48, 42, 0, Math.PI * 2);
+        ctx.arc(48, 48, 24, 0, Math.PI * 2);
         ctx.fill();
         ctx.globalAlpha = 1;
-        ctx.fillStyle = "#050608";
-        ctx.beginPath();
-        ctx.arc(48, 48, 23, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = "#f8fafc";
-        ctx.beginPath();
-        ctx.arc(48, 48, 16, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = color;
-        const startX = 56;
-        const startY = 24;
-        const pattern = pixelPattern(node);
-        pattern.forEach((on, index) => {
-          if (!on) return;
-          const x = startX + (index % 4) * 5;
-          const y = startY + Math.floor(index / 4) * 5;
-          ctx.fillRect(x, y, 5, 5);
-        });
+        if (node.kind === "category") drawPixelGlyph(ctx, node, 48, 48, 5.4);
+        else drawSignalGlyph(ctx, node, 48, 48, 4.5);
         const texture = new THREE.CanvasTexture(canvas);
         texture.needsUpdate = true;
         return texture;
@@ -2407,13 +2507,13 @@
       function starNodeLayout(width, height, tick = 0) {
         return state.graph.nodes.map((node, index) => {
           const angle = index === 0 ? 0 : (index - 1) / Math.max(state.graph.nodes.length - 1, 1) * Math.PI * 2;
-          const ring = node.kind === "category" ? 0 : node.kind === "kpi" || node.kind === "action" ? 88 : 120 + (index % 3) * 18;
+          const ring = node.kind === "category" ? 0 : node.kind === "kpi" || node.kind === "action" ? 118 : 150 + (index % 3) * 14;
           const orbit = tick * 0.0008;
           return {
             ...node,
             x: width / 2 + Math.cos(angle + orbit) * ring * 1.35,
             y: height / 2 + Math.sin(angle + orbit) * ring * 0.82,
-            hit: Math.max(18, node.radius * 5.6),
+            hit: Math.max(16, node.radius * 3.4),
           };
         });
       }
@@ -2424,28 +2524,105 @@
         const r = node.hit * pulse;
         ctx.save();
         ctx.translate(node.x, node.y);
-        ctx.globalAlpha = selected ? 0.22 : 0.12;
+        ctx.globalAlpha = selected ? 0.14 : 0.055;
         ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.arc(0, 0, r * 1.55, 0, Math.PI * 2);
+        ctx.arc(0, 0, r * 0.92, 0, Math.PI * 2);
         ctx.fill();
         ctx.globalAlpha = 1;
+        if (node.kind === "category") drawPixelGlyph(ctx, node, 0, 0, Math.max(3.4, r * 0.16));
+        else drawSignalGlyph(ctx, node, 0, 0, Math.max(3, r * 0.13));
+        ctx.restore();
+      }
+
+      function drawSignalGlyph(ctx, node, cx, cy, block) {
+        const color = nodeColor(node);
+        ctx.save();
+        ctx.translate(cx, cy);
         ctx.fillStyle = "#050608";
         ctx.beginPath();
-        ctx.arc(0, 0, r * 0.54, 0, Math.PI * 2);
+        ctx.arc(0, 0, block * 4.8, 0, Math.PI * 2);
         ctx.fill();
         ctx.fillStyle = "#f8fafc";
         ctx.beginPath();
-        ctx.arc(0, 0, r * 0.36, 0, Math.PI * 2);
+        ctx.arc(0, 0, block * 3.4, 0, Math.PI * 2);
         ctx.fill();
         ctx.fillStyle = color;
         const pattern = pixelPattern(node);
-        const block = Math.max(3, r * 0.11);
         pattern.forEach((on, index) => {
           if (!on) return;
-          ctx.fillRect(r * 0.28 + (index % 4) * (block + 1), -r * 0.45 + Math.floor(index / 4) * (block + 1), block, block);
+          ctx.fillRect(block * 2.2 + (index % 4) * (block * 0.9), -block * 3.2 + Math.floor(index / 4) * (block * 0.9), block * 0.72, block * 0.72);
         });
         ctx.restore();
+      }
+
+      function pixelGlyphRows(node) {
+        const id = String(node.id || "").toLowerCase();
+        if (id.includes("sweat") || id.includes("hood") || id.includes("pullover")) return [
+          "...oo...",
+          "..o..o..",
+          ".bbbbbb.",
+          "bcwccwcb",
+          "bccccccb",
+          "bccccccb",
+          "bcbbbbcb",
+          "bb....bb",
+        ];
+        if (id.includes("dress") || id.includes("frock")) return [
+          "..bb....",
+          ".bccb...",
+          ".bccb...",
+          "bccccb..",
+          "bccccb..",
+          "bcbbcb..",
+          "b....b..",
+          "........",
+        ];
+        if (id.includes("pant") || id.includes("bottom") || id.includes("culotte")) return [
+          "bbbbbb..",
+          ".bccb...",
+          ".bccb...",
+          ".bccb...",
+          ".bccb...",
+          "bc..cb..",
+          "b....b..",
+          "........",
+        ];
+        if (id.includes("vest") || id.includes("outer") || id.includes("blazer")) return [
+          "b....b..",
+          "bc..cb..",
+          "bccccb..",
+          "bcbbcb..",
+          "bc..cb..",
+          "bccccb..",
+          "b....b..",
+          "........",
+        ];
+        return [
+          ".bbbb...",
+          "bccccb..",
+          "bccccb..",
+          ".bccb...",
+          ".bccb...",
+          ".bccb...",
+          ".bbbb...",
+          "........",
+        ];
+      }
+
+      function drawPixelGlyph(ctx, node, cx, cy, block) {
+        const color = nodeColor(node);
+        const rows = pixelGlyphRows(node);
+        const startX = cx - block * 4;
+        const startY = cy - block * 4;
+        const palette = { b: "#050608", c: color, o: "#ff9f2e", w: "#f8fafc" };
+        rows.forEach((row, y) => {
+          [...row].forEach((cell, x) => {
+            if (cell === ".") return;
+            ctx.fillStyle = palette[cell] || color;
+            ctx.fillRect(startX + x * block, startY + y * block, Math.ceil(block), Math.ceil(block));
+          });
+        });
       }
 
       function pixelPattern(node) {
@@ -2543,7 +2720,7 @@
           nodes.forEach((node) => drawPixelNode(ctx, node, node.id === state.selectedNode?.id || node.id === hovered?.id));
           ctx.restore();
           const visibleLabels = nodes.filter((node) => node.kind === "category" || node.kind === "kpi" || node.kind === "action" || node.id === hovered?.id || node.id === state.selectedNode?.id);
-          const signature = visibleLabels.map((node) => node.id).join("|");
+          const signature = visibleLabels.map((node) => `${node.id}:${Math.round(node.x)}:${Math.round(node.y)}`).join("|");
           if (signature !== lastLabelSignature) {
             lastLabelSignature = signature;
             labelLayer.innerHTML = visibleLabels.map((node) => {
@@ -2593,7 +2770,7 @@
         scene.add(group);
         const nodes = state.graph.nodes.map((node, index) => {
           const angle = index === 0 ? 0 : (index - 1) / Math.max(state.graph.nodes.length - 1, 1) * Math.PI * 2;
-          const ring = node.kind === "category" ? 0 : node.kind === "kpi" || node.kind === "action" ? 88 : 120 + (index % 3) * 18;
+          const ring = node.kind === "category" ? 0 : node.kind === "kpi" || node.kind === "action" ? 118 : 150 + (index % 3) * 14;
           const z = node.kind === "category" ? 20 : Math.sin(angle * 2.2) * 34;
           const position = new THREE.Vector3(Math.cos(angle) * ring, Math.sin(angle) * ring * 0.74, z);
           const selected = node.id === state.selectedNode?.id;
@@ -2628,7 +2805,12 @@
         let lastLabelSignature = "";
         function updateLabels() {
           const visibleLabels = nodes.filter((node) => node.kind === "category" || node.kind === "kpi" || node.kind === "action" || node.id === hovered?.id || node.id === state.selectedNode?.id);
-          const signature = visibleLabels.map((node) => node.id).join("|");
+          const signature = visibleLabels.map((node) => {
+            const vector = node.mesh.position.clone().applyMatrix4(group.matrixWorld).project(camera);
+            const x = Math.round((vector.x * 0.5 + 0.5) * width);
+            const y = Math.round((-vector.y * 0.5 + 0.5) * height);
+            return `${node.id}:${x}:${y}`;
+          }).join("|");
           if (signature === lastLabelSignature) return;
           lastLabelSignature = signature;
           labelLayer.innerHTML = visibleLabels.map((node) => {
@@ -2692,9 +2874,19 @@
 
       function nodeIconMarkup(kind, id = "") {
         const type = escapeHtml(kind || "category");
-        const pattern = pixelPattern({ kind, id });
         const slug = escapeHtml(String(id || "").toLowerCase().replace(/[^a-z0-9_-]/g, "-"));
-        return `<span class="node-icon ${type} ${slug}" aria-hidden="true">${pattern.map((on) => `<i style="${on ? "" : "background:transparent"}"></i>`).join("")}</span>`;
+        if (kind === "category") {
+          const rows = pixelGlyphRows({ kind, id });
+          const color = nodeColor({ kind, id, color: categoryColor(id) });
+          const palette = { b: "#050608", c: color, o: "#ff9f2e", w: "#f8fafc" };
+          const cells = rows.flatMap((row) => [...row]).map((cell) => {
+            const bg = cell === "." ? "transparent" : palette[cell] || color;
+            return `<i style="background:${bg}"></i>`;
+          }).join("");
+          return `<span class="node-icon ${type} ${slug}" style="--pixel-cols:8;--icon-size:24px" aria-hidden="true">${cells}</span>`;
+        }
+        const label = { pain: "痛点", kpi: "KPI", action: "动作", body: "体型", size: "尺码" }[kind] || "关系";
+        return `<span class="node-badge ${type} ${slug}" aria-hidden="true">${escapeHtml(label)}</span>`;
       }
 
       function selectGraphNode(id, page = null) {
@@ -2744,7 +2936,22 @@
         };
         document.getElementById("page-title").textContent = titles[page][0];
         document.getElementById("page-subtitle").textContent = titles[page][1];
-        document.querySelector(".top-actions").classList.toggle("hidden", ["overview", "market", "assortment"].includes(page));
+        const controlConfig = {
+          overview: null,
+          market: null,
+          assortment: null,
+          network: ["星域聚焦", "重置星域"],
+          kpi: ["诊断品类", "重置KPI"],
+          semantic: ["语义品类", "重置语义"],
+          workspace: ["工作区品类", "重置品类"],
+          evidence: ["证据品类", "重置证据"],
+        };
+        const currentControls = controlConfig[page];
+        document.querySelector(".top-actions").classList.toggle("hidden", !currentControls);
+        if (currentControls) {
+          document.getElementById("control-context").textContent = currentControls[0];
+          document.getElementById("reset-button").textContent = currentControls[1];
+        }
         if (page === "network") requestAnimationFrame(initStarfield);
       }
       window.setPage = setPage;
@@ -2820,7 +3027,7 @@
         buildGraph();
         buildCategorySelect();
         renderAll();
-        setPage("overview");
+        setPage(state.page);
       });
 
       window.addEventListener("resize", () => {
