@@ -1777,7 +1777,7 @@
       function initStarfield() {
         const canvas = document.getElementById("starfield");
         if (!canvas || !document.getElementById("network").classList.contains("active")) return;
-        if (!window.THREE) {
+        if (state.twoD || !window.THREE) {
           initStarfieldFallback(canvas);
           return;
         }
@@ -1877,7 +1877,7 @@
       }
 
       window.refreshStarfield = () => {
-        if (document.getElementById("network")?.classList.contains("active")) requestAnimationFrame(initStarfield);
+        if (!state.twoD && document.getElementById("network")?.classList.contains("active")) requestAnimationFrame(initStarfield);
       };
 
       function renderNodeInspector() {
