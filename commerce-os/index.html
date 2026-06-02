@@ -375,6 +375,10 @@
         flex-wrap: nowrap;
       }
 
+      .top-actions.hidden {
+        display: none;
+      }
+
       .top-actions select {
         min-width: 240px;
       }
@@ -510,7 +514,7 @@
 
       .control-row {
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 8px;
         align-items: center;
       }
@@ -518,6 +522,7 @@
       .chip {
         padding: 0 11px;
         font-size: 12px;
+        white-space: nowrap;
       }
 
       .chip.active {
@@ -527,13 +532,13 @@
 
       .starfield-wrap {
         position: relative;
-        min-height: 560px;
+        min-height: 640px;
         overflow: hidden;
         border: 0;
         border-radius: 0;
         background:
-          radial-gradient(circle at 44% 42%, oklch(0.28 0.08 240 / 0.18), transparent 30%),
-          radial-gradient(circle at 65% 70%, oklch(0.24 0.08 292 / 0.16), transparent 28%);
+          radial-gradient(circle at var(--star-x, 44%) var(--star-y, 42%), var(--star-bg, oklch(0.28 0.08 240 / 0.18)), transparent 32%),
+          radial-gradient(circle at 68% 72%, oklch(0.24 0.08 292 / 0.14), transparent 28%);
       }
 
       #starfield {
@@ -586,6 +591,16 @@
       .node-icon.body i,
       .node-icon.size i { background: var(--violet); }
 
+      .node-icon.category.sweatshirt i:nth-child(2),
+      .node-icon.category.sweatshirt i:nth-child(3),
+      .node-icon.category.sweatshirt i:nth-child(5),
+      .node-icon.category.sweatshirt i:nth-child(6),
+      .node-icon.category.sweatshirt i:nth-child(7),
+      .node-icon.category.sweatshirt i:nth-child(8) { background: var(--blue); }
+
+      .node-icon.category.sweatshirt i:nth-child(1),
+      .node-icon.category.sweatshirt i:nth-child(4) { background: transparent; }
+
       .network-category-strip {
         display: flex;
         flex-wrap: wrap;
@@ -617,6 +632,26 @@
         flex-wrap: wrap;
         gap: 8px;
         z-index: 2;
+      }
+
+      .star-rule {
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        z-index: 2;
+        max-width: 300px;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.13 0.014 255 / 0.78);
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.55;
+        backdrop-filter: blur(10px);
+      }
+
+      .star-rule strong {
+        color: var(--text);
       }
 
       .legend-item {
@@ -845,6 +880,234 @@
         gap: 14px;
       }
 
+      .three-col {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .command-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+
+      .command-brief {
+        display: grid;
+        gap: 14px;
+      }
+
+      .decision-statement {
+        padding: 18px;
+        border: 1px solid oklch(0.72 0.16 230 / 0.34);
+        border-radius: var(--radius);
+        background:
+          radial-gradient(circle at 8% 0%, oklch(0.42 0.12 230 / 0.2), transparent 34%),
+          oklch(0.18 0.014 255 / 0.72);
+      }
+
+      .decision-statement h3 {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .decision-statement p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .mini-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .mini-metric {
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.17 0.014 255 / 0.66);
+      }
+
+      .mini-metric span,
+      .chart-caption {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .mini-metric strong {
+        display: block;
+        margin-top: 7px;
+        font-size: 22px;
+      }
+
+      .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .chart-grid.three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .chart-box {
+        min-height: 260px;
+      }
+
+      .donut-layout {
+        display: grid;
+        grid-template-columns: 180px minmax(0, 1fr);
+        gap: 14px;
+        align-items: center;
+      }
+
+      .donut-svg {
+        width: 180px;
+        height: 180px;
+        overflow: visible;
+      }
+
+      .donut-segment {
+        cursor: pointer;
+        transition: opacity 160ms ease, transform 160ms ease;
+        transform-origin: 90px 90px;
+      }
+
+      .donut-segment:hover {
+        opacity: 0.82;
+        transform: scale(1.025);
+      }
+
+      .donut-center {
+        fill: var(--text);
+        font-size: 20px;
+        font-weight: 820;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+
+      .legend-list {
+        display: grid;
+        gap: 9px;
+      }
+
+      .legend-row {
+        display: grid;
+        grid-template-columns: 12px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .legend-swatch {
+        width: 9px;
+        height: 9px;
+        border-radius: 3px;
+      }
+
+      .treemap {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-auto-rows: 74px;
+        gap: 8px;
+      }
+
+      .treemap-tile {
+        display: grid;
+        align-content: end;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: color-mix(in oklch, var(--blue) var(--tile-intensity, 18%), var(--surface));
+        color: var(--text);
+        overflow: hidden;
+        text-align: left;
+      }
+
+      .treemap-tile strong {
+        font-size: 13px;
+      }
+
+      .treemap-tile span {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .span-3 { grid-column: span 3; }
+      .span-2 { grid-column: span 2; }
+      .row-2 { grid-row: span 2; }
+
+      .line-chart,
+      .scatter-chart {
+        width: 100%;
+        height: 260px;
+        display: block;
+      }
+
+      .line-chart text,
+      .scatter-chart text {
+        fill: var(--muted);
+        font-size: 11px;
+      }
+
+      .line-chart path,
+      .scatter-chart path,
+      .scatter-chart line {
+        vector-effect: non-scaling-stroke;
+      }
+
+      .chart-tooltip {
+        position: fixed;
+        z-index: 20;
+        display: none;
+        max-width: 260px;
+        padding: 9px 10px;
+        border: 1px solid var(--line-strong);
+        border-radius: 9px;
+        background: oklch(0.12 0.014 255 / 0.94);
+        color: var(--text);
+        font-size: 12px;
+        pointer-events: none;
+        box-shadow: 0 10px 22px rgb(0 0 0 / 0.28);
+      }
+
+      .chart-tooltip strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .insight-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .insight-card {
+        padding: 13px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--surface);
+      }
+
+      .insight-card span {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .insight-card strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 22px;
+      }
+
       .workspace-hero {
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(300px, 0.42fr);
@@ -926,8 +1189,16 @@
         }
 
         .layout-grid,
-        .workspace-hero {
+        .workspace-hero,
+        .command-grid,
+        .chart-grid,
+        .chart-grid.three {
           grid-template-columns: 1fr;
+        }
+
+        .insight-strip,
+        .three-col {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
 
@@ -948,7 +1219,10 @@
 
         .login-proof,
         .action-grid,
-        .two-col {
+        .two-col,
+        .three-col,
+        .insight-strip,
+        .mini-metrics {
           grid-template-columns: 1fr;
         }
 
@@ -971,6 +1245,38 @@
 
         .topbar {
           display: grid;
+        }
+
+        .top-actions {
+          width: 100%;
+        }
+
+        .top-actions select {
+          min-width: 0;
+        }
+
+        .control-row {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .donut-layout {
+          grid-template-columns: 1fr;
+          justify-items: start;
+        }
+
+        .treemap {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-auto-rows: 96px;
+        }
+
+        .span-3,
+        .span-2 {
+          grid-column: span 1;
+        }
+
+        .row-2 {
+          grid-row: span 1;
         }
 
         .kpi-grid {
@@ -1047,9 +1353,12 @@
         <nav class="nav" aria-label="Main navigation">
           <button class="nav-button active" data-page="overview"><span class="nav-number">01</span><span>经营总览</span></button>
           <button class="nav-button" data-page="market"><span class="nav-number">02</span><span>市场机会</span></button>
-          <button class="nav-button" data-page="network"><span class="nav-number">03</span><span>关系星域</span></button>
-          <button class="nav-button" data-page="workspace"><span class="nav-number">04</span><span>决策工作区</span></button>
-          <button class="nav-button" data-page="evidence"><span class="nav-number">05</span><span>证据与动作</span></button>
+          <button class="nav-button" data-page="assortment"><span class="nav-number">03</span><span>商品组合</span></button>
+          <button class="nav-button" data-page="network"><span class="nav-number">04</span><span>关系星域</span></button>
+          <button class="nav-button" data-page="kpi"><span class="nav-number">05</span><span>KPI诊断</span></button>
+          <button class="nav-button" data-page="semantic"><span class="nav-number">06</span><span>语义洞察</span></button>
+          <button class="nav-button" data-page="workspace"><span class="nav-number">07</span><span>决策工作区</span></button>
+          <button class="nav-button" data-page="evidence"><span class="nav-number">08</span><span>证据与动作</span></button>
         </nav>
         <div class="side-meta">
           <strong>数据连接状态</strong>
@@ -1072,6 +1381,18 @@
 
         <section class="page active" id="overview">
           <div class="kpi-grid" id="executive-kpis"></div>
+          <div class="command-grid">
+            <div class="decision-statement" id="overview-command"></div>
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3>经营工作台使用路径</h3>
+                  <p>总览只回答方向，细节由后续页面承接。</p>
+                </div>
+              </div>
+              <div class="metric-list" id="overview-path"></div>
+            </div>
+          </div>
           <div class="layout-grid">
             <div class="panel">
               <div class="panel-header">
@@ -1100,6 +1421,21 @@
               <div class="inspector" id="priority-queue"></div>
             </div>
           </div>
+          <div style="height:14px"></div>
+          <div class="chart-grid three">
+            <div class="panel chart-box">
+              <div class="panel-header"><div><h3>行动组合</h3><p>放量、修正、观察的品类占比。</p></div></div>
+              <div id="overview-triage-donut"></div>
+            </div>
+            <div class="panel chart-box">
+              <div class="panel-header"><div><h3>合身结果</h3><p>组合层面的 fit / small / large 信号。</p></div></div>
+              <div id="overview-fit-donut"></div>
+            </div>
+            <div class="panel chart-box">
+              <div class="panel-header"><div><h3>交易动量</h3><p>H&M 公开交易日趋势，用于判断市场节奏。</p></div></div>
+              <svg id="overview-momentum-line" class="line-chart" role="img" aria-label="overview transaction momentum"></svg>
+            </div>
+          </div>
         </section>
 
         <section class="page" id="market">
@@ -1123,6 +1459,40 @@
               </div>
               <div class="bars" id="company-health-bars"></div>
             </div>
+          </div>
+        </section>
+
+        <section class="page" id="assortment">
+          <div class="kpi-grid" id="assortment-kpis"></div>
+          <div class="layout-grid">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3>商品组 Treemap</h3>
+                  <p>面积代表商品数量，颜色深浅代表交易需求，点击后切到市场机会页。</p>
+                </div>
+              </div>
+              <div class="treemap" id="assortment-treemap"></div>
+            </div>
+            <div class="panel chart-box">
+              <div class="panel-header">
+                <div>
+                  <h3>商品组占比</h3>
+                  <p>用 donut 看组合集中度，避免只看条形排名。</p>
+                </div>
+              </div>
+              <div id="assortment-share-donut"></div>
+            </div>
+          </div>
+          <div style="height:14px"></div>
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>交易动量</h3>
+                <p>鼠标悬浮可查看具体日期、交易量和均价。</p>
+              </div>
+            </div>
+            <svg id="assortment-line" class="line-chart" role="img" aria-label="H&M transaction momentum"></svg>
           </div>
         </section>
 
@@ -1151,6 +1521,7 @@
                   <span class="legend-item"><span class="legend-dot" style="background:var(--violet)"></span>人群/尺码</span>
                   <span class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>KPI/行动</span>
                 </div>
+                <div class="star-rule" id="star-rule"></div>
               </div>
             </div>
             <div class="panel">
@@ -1161,6 +1532,71 @@
                 </div>
               </div>
               <div id="node-inspector" class="inspector"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="kpi">
+          <div class="kpi-grid" id="kpi-diagnostics"></div>
+          <div class="layout-grid">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3>KPI 承接差距</h3>
+                  <p>市场需求越强，越需要看转化、退货和毛利是否能承接。</p>
+                </div>
+              </div>
+              <div class="bars" id="kpi-gap-bars"></div>
+            </div>
+            <div class="panel chart-box">
+              <div class="panel-header">
+                <div>
+                  <h3>机会 / 退货矩阵</h3>
+                  <p>每个点代表一个品类，点击可进入该品类工作区。</p>
+                </div>
+              </div>
+              <svg id="kpi-scatter" class="scatter-chart" role="img" aria-label="opportunity return matrix"></svg>
+            </div>
+          </div>
+        </section>
+
+        <section class="page" id="semantic">
+          <div class="insight-strip" id="semantic-kpis"></div>
+          <div class="layout-grid">
+            <div class="panel chart-box">
+              <div class="panel-header">
+                <div>
+                  <h3>评论痛点语义</h3>
+                  <p>把英文评论标签转换为中文业务问题，点击可进入证据页。</p>
+                </div>
+              </div>
+              <div id="semantic-pain-donut"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3>体型风险优先级</h3>
+                  <p>用于决定尺码表、模特说明和 PDP 提示需要覆盖哪些人群。</p>
+                </div>
+              </div>
+              <div class="bars" id="semantic-body-bars"></div>
+            </div>
+          </div>
+          <div style="height:14px"></div>
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>评论语义样本</h3>
+                <p>默认展示当前品类，若样本不足则展示全局代理样本。</p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>品类</th><th>语义标签</th><th>体型</th><th>场景</th><th>用户语言</th></tr>
+                </thead>
+                <tbody id="semantic-table"></tbody>
+              </table>
             </div>
           </div>
         </section>
@@ -1231,6 +1667,7 @@
         <p class="footer-note">MVP 说明：登录、公司 KPI 和数据库连接在此版本中用于展示完整产品形态。公开数据已经真实接入，内部经营数据可在下一阶段替换为数据库 API。</p>
       </main>
     </section>
+    <div id="chart-tooltip" class="chart-tooltip" aria-hidden="true"></div>
 
     <script>
       const paths = {
@@ -1259,12 +1696,17 @@
 
       const labelMap = {
         dress: "连衣裙", top: "上衣", outerwear: "外套", bottom: "下装", pant: "裤装", vest: "马甲", sale: "促销款",
-        culottes: "阔腿裤", tunic: "长上衣", frock: "连衣裙", cardigan: "开衫", shirtdress: "衬衫裙",
+        culottes: "阔腿裤", tunic: "长上衣", frock: "连衣裙", cardigan: "开衫", shirtdress: "衬衫裙", sweatshirt: "卫衣",
+        sweater: "毛衣", pullover: "套头衫", tank: "背心", jumpsuit: "连体裤", blazer: "西装外套", leggings: "打底裤",
+        "Garment Upper body": "上装商品组", "Garment Lower body": "下装商品组", "Garment Full body": "连身商品组",
+        Accessories: "配饰", Underwear: "内衣", Shoes: "鞋履", Swimwear: "泳装", "Socks & Tights": "袜类",
         fabric_or_quality: "材质/质量", color_expectation: "颜色预期", chest_or_bust: "胸围/胸部",
         length_issue: "长度问题", too_small_or_tight: "偏小/偏紧", too_large_or_loose: "偏大/偏松", waist_or_hip: "腰臀问题",
         petite: "娇小", athletic: "运动型", pear: "梨形", hourglass: "沙漏型", apple: "苹果型", "full bust": "胸部丰满",
         wedding: "婚礼", party: "聚会", work: "通勤", everyday: "日常", "formal affair": "正式场合",
       };
+
+      const chartColors = ["#25b7ff", "#35dcb3", "#ffb02e", "#ff6b6b", "#a77cff", "#6bd5ff", "#f5d76b", "#8ddf7a"];
 
       const fmt = (value) => Intl.NumberFormat("en", { notation: Number(value) > 999999 ? "compact" : "standard", maximumFractionDigits: 1 }).format(Number(value) || 0);
       const pct = (value) => `${((Number(value) || 0) * 100).toFixed(1)}%`;
@@ -1359,7 +1801,13 @@
       function renderNetworkCategoryStrip() {
         const holder = document.getElementById("network-category-strip");
         if (!holder) return;
-        holder.innerHTML = categoryRows().slice(0, 8).map((row) => `
+        const rows = categoryRows();
+        const visible = rows.slice(0, 8);
+        if (!visible.some((row) => row.category_group === state.selectedCategory)) {
+          const selected = rows.find((row) => row.category_group === state.selectedCategory);
+          if (selected) visible.unshift(selected);
+        }
+        holder.innerHTML = visible.slice(0, 9).map((row) => `
           <button type="button" class="${row.category_group === state.selectedCategory ? "active" : ""}" onclick="selectCategory('${escapeHtml(row.category_group)}', 'network')">
             ${escapeHtml(nameOf(row.category_group))}
           </button>
@@ -1387,6 +1835,9 @@
         renderKpis();
         renderOverview();
         renderMarket();
+        renderAssortment();
+        renderKpiDiagnostics();
+        renderSemantic();
         renderWorkspace();
         renderEvidence();
         renderNodeInspector();
@@ -1421,9 +1872,30 @@
 
       function renderOverview() {
         const ranked = categoryRows().slice().sort((a, b) => businessScore(b) - businessScore(a)).slice(0, 8);
+        const leader = ranked[0] || {};
+        const leaderDecision = decisionFor(leader);
+        const company = (state.data.company || []).find((item) => item.category === leader.category_group) || {};
+        document.getElementById("overview-command").innerHTML = `
+          <h3>${escapeHtml(leaderDecision.label)}：${escapeHtml(nameOf(leader.category_group))}</h3>
+          <p>${escapeHtml(leaderDecision.action)} 当前机会分 ${businessScore(leader).toFixed(1)}，退货率 ${pct(company.returnRate)}，合身率 ${pct(leader.fit_rate)}。总览页不做最终执行，点击队列进入品类工作区。</p>
+          <div class="mini-metrics">
+            <div class="mini-metric"><span>推荐入口</span><strong>${escapeHtml(nameOf(leader.category_group))}</strong></div>
+            <div class="mini-metric"><span>阻塞 KPI</span><strong>${num(company.returnRate) > 0.22 ? "退货率" : "转化率"}</strong></div>
+            <div class="mini-metric"><span>下一页</span><strong>决策工作区</strong></div>
+          </div>
+        `;
+        document.getElementById("overview-path").innerHTML = [
+          ["1. 先看方向", "经营总览判断今天该看哪个品类。", "overview"],
+          ["2. 再看市场", "市场机会和商品组合判断需求是否真实。", "market"],
+          ["3. 最后落动作", "工作区和证据页给出 PDP、尺码、SKU 动作。", "workspace"],
+        ].map(([title, body, page]) => `<button class="metric-row" type="button" onclick="setPage('${page}')"><span>${escapeHtml(title)}<br><small>${escapeHtml(body)}</small></span><strong>打开</strong></button>`).join("");
         renderBars("opportunity-bars", ranked, "category_group", (row) => businessScore(row), { title: "机会评分", max: Math.max(...ranked.map(businessScore), 1), format: (v) => v.toFixed(1), click: true });
         const riskRows = categoryRows().slice(0, 8);
         renderBars("risk-bars", riskRows, "category_group", (row) => num(row.risk_score), { title: "风险评分", max: Math.max(...riskRows.map((r) => num(r.risk_score)), 1), format: (v) => v.toFixed(1), risk: true, click: true });
+        const decisionCounts = decisionSummary();
+        renderDonut("overview-triage-donut", decisionCounts, { center: `${categoryRows().length}类`, action: (row) => `setPage('${row.page}')` });
+        renderDonut("overview-fit-donut", fitSummary(), { center: "合身", action: () => "setPage('semantic')" });
+        renderLineChart("overview-momentum-line", state.data.hmDaily || [], { compact: true });
         document.getElementById("priority-queue").innerHTML = ranked.slice(0, 4).map((row, index) => {
           const decision = decisionFor(row);
           return `<button class="action-card" type="button" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')">
@@ -1455,6 +1927,86 @@
         ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
         renderBars("market-demand-bars", merged.slice(0, 9), "product_group_name", (row) => row.demandShare, { max: Math.max(...merged.map((r) => r.demandShare), 1), format: pct });
         renderBars("company-health-bars", (state.data.company || []).slice().sort((a, b) => b.gmv - a.gmv).slice(0, 9), "category", (row) => row.conversion, { max: 0.1, format: pct, click: true });
+      }
+
+      function renderAssortment() {
+        const productRows = state.data.hmProducts || [];
+        const txRows = state.data.hmTransactions || [];
+        const txMap = new Map(txRows.map((row) => [row.product_group_name, row]));
+        const merged = productRows.map((row) => {
+          const tx = txMap.get(row.product_group_name) || {};
+          return { ...row, demandShare: num(tx.share), gap: num(tx.share) - num(row.share), transactions: int(tx.transactions) };
+        }).sort((a, b) => b.articles - a.articles);
+        const totalArticles = productRows.reduce((sum, row) => sum + int(row.articles), 0);
+        const totalTx = txRows.reduce((sum, row) => sum + int(row.transactions), 0);
+        const concentration = merged.slice(0, 3).reduce((sum, row) => sum + num(row.share), 0);
+        document.getElementById("assortment-kpis").innerHTML = [
+          { label: "商品目录", value: fmt(totalArticles), note: "H&M articles 表" },
+          { label: "市场交易", value: fmt(totalTx), note: "transactions 表" },
+          { label: "前三集中度", value: pct(concentration), note: "商品结构集中程度" },
+          { label: "最大需求差", value: `${(Math.max(...merged.map((r) => r.gap)) * 100).toFixed(1)} pts`, note: "需求占比减商品占比" },
+          { label: "组合判断", value: concentration > 0.7 ? "集中" : "分散", note: "决定是否需要品类扩展" },
+        ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
+        renderTreemap("assortment-treemap", merged.slice(0, 12));
+        renderDonut("assortment-share-donut", merged.slice(0, 6).map((row, index) => ({
+          label: nameOf(row.product_group_name),
+          value: num(row.share),
+          color: chartColors[index % chartColors.length],
+          tooltip: [`商品数 ${fmt(row.articles)}`, `交易占比 ${pct(row.demandShare)}`],
+          page: "market",
+        })), { center: fmt(totalArticles), action: () => "setPage('market')" });
+        renderLineChart("assortment-line", state.data.hmDaily || [], { compact: false });
+      }
+
+      function renderKpiDiagnostics() {
+        const rows = categoryRows().slice().sort((a, b) => businessScore(b) - businessScore(a)).slice(0, 12);
+        const companies = state.data.company || [];
+        const avgConversion = companies.reduce((sum, row) => sum + row.conversion, 0) / Math.max(companies.length, 1);
+        const avgReturn = companies.reduce((sum, row) => sum + row.returnRate, 0) / Math.max(companies.length, 1);
+        const avgMargin = companies.reduce((sum, row) => sum + row.margin, 0) / Math.max(companies.length, 1);
+        const highRisk = rows.filter((row) => num(row.risk_score) >= 34).length;
+        document.getElementById("kpi-diagnostics").innerHTML = [
+          { label: "平均转化", value: pct(avgConversion), note: "模型化公司 KPI" },
+          { label: "平均退货", value: pct(avgReturn), note: "合身与评论风险驱动" },
+          { label: "平均毛利", value: pct(avgMargin), note: "退货压力折损后" },
+          { label: "高风险品类", value: highRisk, note: "风险分 >= 34" },
+          { label: "当前品类", value: nameOf(state.selectedCategory), note: "由右上选择器控制" },
+        ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
+        renderBars("kpi-gap-bars", rows, "category_group", (row) => {
+          const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
+          return Math.max(0, num(company.returnRate) - 0.18) * 100 + Math.max(0, 0.085 - num(company.conversion)) * 100;
+        }, { max: 18, format: (v) => `${v.toFixed(1)} pts`, risk: true, click: true });
+        renderScatter("kpi-scatter", rows);
+      }
+
+      function renderSemantic() {
+        const painRows = (state.data.pain || []).slice(0, 7).map((row, index) => ({
+          label: nameOf(row.pain_point),
+          value: int(row.records),
+          color: chartColors[index % chartColors.length],
+          id: row.pain_point,
+          tooltip: [`评论标签出现 ${fmt(row.records)} 次`],
+        }));
+        const selectedRows = evidenceForSelection();
+        const avgRating = selectedRows.reduce((sum, row) => sum + num(row.rating), 0) / Math.max(selectedRows.filter((row) => row.rating).length, 1);
+        const tagged = selectedRows.filter((row) => String(row.pain_points || "").trim()).length;
+        document.getElementById("semantic-kpis").innerHTML = [
+          ["评论样本", `${selectedRows.length} 条`, "当前筛选可复核样本"],
+          ["平均评分", avgRating.toFixed(1), "用户满意度代理信号"],
+          ["带痛点评论", pct(tagged / Math.max(selectedRows.length, 1)), "语义覆盖率"],
+          ["主痛点", painRows[0]?.label || "-", "用于生成行动建议"],
+        ].map(([label, value, note]) => `<button class="insight-card" type="button" onclick="setPage('evidence')"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><p class="chart-caption">${escapeHtml(note)}</p></button>`).join("");
+        renderDonut("semantic-pain-donut", painRows, { center: "痛点", action: (row) => `selectGraphNode('${escapeHtml(row.id)}', 'evidence')` });
+        renderBars("semantic-body-bars", (state.data.bodies || []).slice(0, 8), "body_type", (row) => num(row.risk_score), { max: 36, format: (v) => v.toFixed(1), risk: true });
+        document.getElementById("semantic-table").innerHTML = selectedRows.slice(0, 16).map((row) => `
+          <tr>
+            <td>${escapeHtml(nameOf(row.category_group))}</td>
+            <td>${escapeHtml(String(row.pain_points || "none").split(";").map(nameOf).join("；"))}</td>
+            <td>${escapeHtml(nameOf(row.body_type))}</td>
+            <td>${escapeHtml(nameOf(row.occasion))}</td>
+            <td>${escapeHtml(String(row.review_text || row.review_summary || "").slice(0, 180))}${String(row.review_text || "").length > 180 ? "..." : ""}</td>
+          </tr>
+        `).join("");
       }
 
       function renderWorkspace() {
@@ -1582,20 +2134,223 @@
         }).join("");
       }
 
+      function scaleRadius(value, max, min = 4.4, maxRadius = 7.2) {
+        return min + Math.sqrt(Math.max(0, value) / Math.max(max, 1)) * (maxRadius - min);
+      }
+
+      function categoryColor(category) {
+        const value = String(category || "");
+        if (value.includes("sweat") || value.includes("shirt") || value.includes("top") || value.includes("tunic")) return 0x25b7ff;
+        if (value.includes("dress") || value.includes("frock")) return 0xa77cff;
+        if (value.includes("pant") || value.includes("bottom") || value.includes("culotte")) return 0x35dcb3;
+        if (value.includes("vest") || value.includes("outer") || value.includes("blazer")) return 0xffb02e;
+        return 0x52a8ff;
+      }
+
+      function updateStarfieldTheme(selected, decision) {
+        const wrap = document.querySelector(".starfield-wrap");
+        if (!wrap) return;
+        const demand = marketDemandFor(selected.category_group);
+        const risk = num(selected.risk_score);
+        const bg = decision.tone === "risk"
+          ? "oklch(0.32 0.12 25 / 0.2)"
+          : decision.tone === "warning"
+            ? "oklch(0.36 0.13 75 / 0.18)"
+            : "oklch(0.32 0.12 230 / 0.18)";
+        wrap.style.setProperty("--star-bg", bg);
+        wrap.style.setProperty("--star-x", `${Math.min(76, 30 + demand * 100)}%`);
+        wrap.style.setProperty("--star-y", `${Math.max(24, 62 - risk)}%`);
+        const rule = document.getElementById("star-rule");
+        if (rule) {
+          rule.innerHTML = `<strong>图例规则</strong><br>颜色：节点类型和当前决策状态。大小：品类记录数、痛点出现次数或 KPI 强度。背景位置：市场需求越高越靠右，风险越高越靠上。`;
+        }
+      }
+
+      function decisionSummary() {
+        const counts = new Map();
+        categoryRows().forEach((row) => {
+          const decision = decisionFor(row);
+          counts.set(decision.label, (counts.get(decision.label) || 0) + 1);
+        });
+        const pageMap = { 放量: "workspace", 先修正再放量: "workspace", 修正: "semantic", 观察: "market" };
+        return [...counts.entries()].map(([label, value], index) => ({
+          label,
+          value,
+          color: chartColors[index % chartColors.length],
+          page: pageMap[label] || "workspace",
+          tooltip: [`${value} 个品类`, "由市场需求、风险分、退货率共同决定"],
+        }));
+      }
+
+      function fitSummary() {
+        const rows = categoryRows();
+        const total = rows.reduce((sum, row) => sum + int(row.records), 0) || 1;
+        const fit = rows.reduce((sum, row) => sum + int(row.records) * num(row.fit_rate), 0) / total;
+        const small = rows.reduce((sum, row) => sum + int(row.records) * num(row.too_small_rate), 0) / total;
+        const large = rows.reduce((sum, row) => sum + int(row.records) * num(row.too_large_rate), 0) / total;
+        return [
+          { label: "合身", value: fit, color: chartColors[1], tooltip: [`组合合身率 ${pct(fit)}`] },
+          { label: "偏小", value: small, color: chartColors[3], tooltip: [`偏小信号 ${pct(small)}`] },
+          { label: "偏大", value: large, color: chartColors[2], tooltip: [`偏大信号 ${pct(large)}`] },
+        ];
+      }
+
+      function polarToCartesian(cx, cy, radius, angle) {
+        const radians = (angle - 90) * Math.PI / 180;
+        return { x: cx + radius * Math.cos(radians), y: cy + radius * Math.sin(radians) };
+      }
+
+      function donutPath(cx, cy, outerRadius, innerRadius, startAngle, endAngle) {
+        const outerStart = polarToCartesian(cx, cy, outerRadius, endAngle);
+        const outerEnd = polarToCartesian(cx, cy, outerRadius, startAngle);
+        const innerStart = polarToCartesian(cx, cy, innerRadius, startAngle);
+        const innerEnd = polarToCartesian(cx, cy, innerRadius, endAngle);
+        const largeArc = endAngle - startAngle <= 180 ? "0" : "1";
+        return [
+          "M", outerStart.x, outerStart.y,
+          "A", outerRadius, outerRadius, 0, largeArc, 0, outerEnd.x, outerEnd.y,
+          "L", innerStart.x, innerStart.y,
+          "A", innerRadius, innerRadius, 0, largeArc, 1, innerEnd.x, innerEnd.y,
+          "Z",
+        ].join(" ");
+      }
+
+      function renderDonut(containerId, rows, options = {}) {
+        const holder = document.getElementById(containerId);
+        if (!holder) return;
+        const total = rows.reduce((sum, row) => sum + num(row.value), 0);
+        if (!rows.length || total <= 0) {
+          holder.innerHTML = `<p class="chart-caption">当前筛选没有足够样本，暂不显示圆环图。</p>`;
+          return;
+        }
+        let cursor = 0;
+        const paths = rows.map((row, index) => {
+          const start = cursor;
+          const end = cursor + num(row.value) / total * 359.99;
+          cursor = end;
+          const action = options.action ? options.action(row) : "";
+          const tooltip = [row.label, ...(row.tooltip || [`占比 ${pct(num(row.value) / total)}`])];
+          return `<path class="donut-segment" d="${donutPath(90, 90, 76, 44, start, end)}" fill="${escapeHtml(row.color || chartColors[index % chartColors.length])}" onmousemove="showTooltip(event, '${escapeHtml(row.label)}', '${escapeHtml(tooltip.slice(1).join("<br>"))}')" onmouseleave="hideTooltip()" ${action ? `onclick="${action}" role="button" tabindex="0"` : ""}></path>`;
+        }).join("");
+        holder.innerHTML = `
+          <div class="donut-layout">
+            <svg class="donut-svg" viewBox="0 0 180 180" role="img" aria-label="${escapeHtml(options.ariaLabel || "donut chart")}">
+              ${paths}
+              <circle cx="90" cy="90" r="42" fill="oklch(0.145 0.012 255)"></circle>
+              <text class="donut-center" x="90" y="91">${escapeHtml(options.center || fmt(total))}</text>
+            </svg>
+            <div class="legend-list">
+              ${rows.slice(0, 7).map((row, index) => `<div class="legend-row"><span class="legend-swatch" style="background:${escapeHtml(row.color || chartColors[index % chartColors.length])}"></span><span>${escapeHtml(row.label)}</span><strong>${pct(num(row.value) / total)}</strong></div>`).join("")}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderTreemap(containerId, rows) {
+        const holder = document.getElementById(containerId);
+        if (!holder) return;
+        const maxArticles = Math.max(...rows.map((row) => int(row.articles)), 1);
+        holder.innerHTML = rows.map((row, index) => {
+          const share = int(row.articles) / maxArticles;
+          const span = index === 0 ? "span-3 row-2" : index < 3 ? "span-3" : index < 7 ? "span-2" : "";
+          const intensity = Math.max(14, Math.min(44, (num(row.demandShare) || num(row.share)) * 100));
+          return `<button class="treemap-tile ${span}" type="button" style="--tile-intensity:${intensity}%" onclick="setPage('market')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.product_group_name))}', '${escapeHtml(`商品数 ${fmt(row.articles)}<br>商品占比 ${pct(row.share)}<br>交易占比 ${pct(row.demandShare)}`)}')" onmouseleave="hideTooltip()">
+            <strong>${escapeHtml(nameOf(row.product_group_name))}</strong>
+            <span>${fmt(row.articles)} articles · ${(share * 100).toFixed(0)}% scale</span>
+          </button>`;
+        }).join("");
+      }
+
+      function renderLineChart(containerId, rows, options = {}) {
+        const svg = document.getElementById(containerId);
+        if (!svg) return;
+        const data = rows.filter((row) => int(row.transactions) > 0);
+        if (!data.length) {
+          svg.innerHTML = "";
+          return;
+        }
+        const sample = data.filter((_, index) => options.compact ? index % 12 === 0 : index % 7 === 0);
+        const width = 720, height = 260, pad = 28;
+        const values = sample.map((row) => int(row.transactions));
+        const min = Math.min(...values), max = Math.max(...values);
+        const x = (index) => pad + index / Math.max(sample.length - 1, 1) * (width - pad * 2);
+        const y = (value) => height - pad - (value - min) / Math.max(max - min, 1) * (height - pad * 2);
+        const path = sample.map((row, index) => `${index ? "L" : "M"} ${x(index).toFixed(1)} ${y(int(row.transactions)).toFixed(1)}`).join(" ");
+        const area = `${path} L ${x(sample.length - 1)} ${height - pad} L ${pad} ${height - pad} Z`;
+        svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        svg.innerHTML = `
+          <path d="${area}" fill="url(#lineFill-${containerId})" opacity="0.42"></path>
+          <path d="${path}" fill="none" stroke="#25b7ff" stroke-width="3"></path>
+          <defs><linearGradient id="lineFill-${containerId}" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#25b7ff" stop-opacity=".42"/><stop offset="1" stop-color="#25b7ff" stop-opacity="0"/></linearGradient></defs>
+          <line x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" stroke="oklch(0.72 0.02 255 / 0.22)"></line>
+          <text x="${pad}" y="22">${escapeHtml(sample[0].date || "")}</text>
+          <text x="${width - pad - 74}" y="22">${escapeHtml(sample[sample.length - 1].date || "")}</text>
+          ${sample.filter((_, index) => index % Math.max(1, Math.floor(sample.length / 10)) === 0).map((row, index) => `<circle cx="${x(index * Math.max(1, Math.floor(sample.length / 10))).toFixed(1)}" cy="${y(int(row.transactions)).toFixed(1)}" r="6" fill="transparent" stroke="transparent" stroke-width="12" onmousemove="showTooltip(event, '${escapeHtml(row.date)}', '${escapeHtml(`交易 ${fmt(row.transactions)}<br>均价 ${Number(row.avg_price || 0).toFixed(4)}`)}')" onmouseleave="hideTooltip()"></circle>`).join("")}
+        `;
+      }
+
+      function renderScatter(containerId, rows) {
+        const svg = document.getElementById(containerId);
+        if (!svg) return;
+        const width = 560, height = 260, pad = 34;
+        const x = (value) => pad + value / 44 * (width - pad * 2);
+        const y = (value) => height - pad - value / 38 * (height - pad * 2);
+        svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        svg.innerHTML = `
+          <line x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" stroke="oklch(0.72 0.02 255 / 0.2)"></line>
+          <line x1="${pad}" y1="${pad}" x2="${pad}" y2="${height - pad}" stroke="oklch(0.72 0.02 255 / 0.2)"></line>
+          <text x="${pad}" y="20">机会指数</text>
+          <text x="${width - 102}" y="${height - 8}">退货压力</text>
+          ${rows.map((row) => {
+            const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
+            const score = marketDemandFor(row.category_group) * 100;
+            const returns = num(company.returnRate) * 100;
+            const radius = 6 + Math.min(12, num(row.risk_score) / 4);
+            return `<circle cx="${x(score).toFixed(1)}" cy="${y(returns).toFixed(1)}" r="${radius.toFixed(1)}" fill="${returns > 25 ? "#ff6b6b" : "#25b7ff"}" opacity=".78" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(`机会 ${score.toFixed(1)}<br>退货 ${returns.toFixed(1)}%<br>风险 ${num(row.risk_score).toFixed(1)}`)}')" onmouseleave="hideTooltip()"></circle>`;
+          }).join("")}
+        `;
+      }
+
+      function showTooltip(event, title, body) {
+        let tooltip = document.getElementById("chart-tooltip");
+        if (!tooltip) {
+          tooltip = document.createElement("div");
+          tooltip.id = "chart-tooltip";
+          tooltip.className = "chart-tooltip";
+          document.body.appendChild(tooltip);
+        }
+        tooltip.innerHTML = `<strong>${title}</strong><span>${body}</span>`;
+        tooltip.style.display = "block";
+        tooltip.style.left = `${Math.min(window.innerWidth - 280, event.clientX + 14)}px`;
+        tooltip.style.top = `${event.clientY + 14}px`;
+      }
+
+      function hideTooltip() {
+        const tooltip = document.getElementById("chart-tooltip");
+        if (tooltip) tooltip.style.display = "none";
+      }
+
+      window.showTooltip = showTooltip;
+      window.hideTooltip = hideTooltip;
+
       function buildGraph() {
         const selected = selectedCategoryRow();
         const pain = painForCategory(selected.category_group);
         const bodyRows = (state.data.bodies || []).slice(0, 5);
         const sizeRows = (state.data.sizes || []).filter((row) => int(row.display_eligible) === 1).slice(0, 5);
+        const maxPain = Math.max(...pain.map((item) => item.count), 1);
+        const maxBody = Math.max(...bodyRows.map((row) => num(row.records)), 1);
+        const maxSize = Math.max(...sizeRows.map((row) => num(row.risk_score)), 1);
+        updateStarfieldTheme(selected, decisionFor(selected));
         let nodes = [
-          { id: selected.category_group, label: nameOf(selected.category_group), kind: "category", value: num(selected.records), color: 0x52a8ff, radius: 5.8 },
+          { id: selected.category_group, label: nameOf(selected.category_group), kind: "category", value: num(selected.records), color: categoryColor(selected.category_group), radius: scaleRadius(num(selected.records), 4000, 5.5, 7.4) },
           { id: "return-risk", label: "退货风险", kind: "kpi", value: 100, color: 0x38d68f, radius: 5.2 },
           { id: "conversion-risk", label: "转化风险", kind: "kpi", value: 100, color: 0x38d68f, radius: 5.2 },
           { id: "pdp-action", label: "详情页动作", kind: "action", value: 100, color: 0x38d68f, radius: 5.2 },
         ];
-        pain.forEach((item, index) => nodes.push({ id: item.id, label: item.pain, kind: "pain", value: item.count, color: 0xff5a4f, radius: 4.6 + Math.min(1.8, index * 0.18) }));
-        bodyRows.forEach((row) => nodes.push({ id: row.body_type, label: nameOf(row.body_type), kind: "body", value: num(row.records), color: 0xb86bff, radius: 4.8 }));
-        sizeRows.forEach((row) => nodes.push({ id: `size-${row.size}`, label: `尺码 ${row.size}`, kind: "size", value: num(row.risk_score), color: 0xffb02e, radius: 4.5 }));
+        pain.forEach((item) => nodes.push({ id: item.id, label: item.pain, kind: "pain", value: item.count, color: 0xff5a4f, radius: scaleRadius(item.count, maxPain, 4.6, 7.2) }));
+        bodyRows.forEach((row) => nodes.push({ id: row.body_type, label: nameOf(row.body_type), kind: "body", value: num(row.records), color: 0xb86bff, radius: scaleRadius(num(row.records), maxBody, 4.6, 6.6) }));
+        sizeRows.forEach((row) => nodes.push({ id: `size-${row.size}`, label: `尺码 ${row.size}`, kind: "size", value: num(row.risk_score), color: 0xffb02e, radius: scaleRadius(num(row.risk_score), maxSize, 4.5, 6.2) }));
         if (state.networkFilter === "risk") nodes = nodes.filter((node) => ["category", "pain", "kpi"].includes(node.kind));
         if (state.networkFilter === "action") nodes = nodes.filter((node) => ["category", "pain", "action"].includes(node.kind));
         if (state.networkFilter === "kpi") nodes = nodes.filter((node) => ["category", "kpi", "action"].includes(node.kind));
@@ -1633,18 +2388,11 @@
         ctx.fillStyle = color;
         const startX = 56;
         const startY = 24;
-        const pattern = {
-          category: [1, 1, 0, 1, 1, 1],
-          pain: [1, 0, 1, 1, 0, 1],
-          kpi: [1, 1, 1, 0, 1, 0],
-          action: [0, 1, 1, 1, 1, 0],
-          body: [1, 0, 0, 1, 1, 1],
-          size: [0, 1, 1, 0, 1, 1],
-        }[node.kind] || [1, 1, 1, 1, 0, 0];
+        const pattern = pixelPattern(node);
         pattern.forEach((on, index) => {
           if (!on) return;
-          const x = startX + (index % 3) * 6;
-          const y = startY + Math.floor(index / 3) * 6;
+          const x = startX + (index % 4) * 5;
+          const y = startY + Math.floor(index / 4) * 5;
           ctx.fillRect(x, y, 5, 5);
         });
         const texture = new THREE.CanvasTexture(canvas);
@@ -1691,20 +2439,56 @@
         ctx.arc(0, 0, r * 0.36, 0, Math.PI * 2);
         ctx.fill();
         ctx.fillStyle = color;
-        const pattern = {
-          category: [1, 1, 0, 1, 1, 1],
-          pain: [1, 0, 1, 1, 0, 1],
-          kpi: [1, 1, 1, 0, 1, 0],
-          action: [0, 1, 1, 1, 1, 0],
-          body: [1, 0, 0, 1, 1, 1],
-          size: [0, 1, 1, 0, 1, 1],
-        }[node.kind] || [1, 1, 1, 1, 0, 0];
+        const pattern = pixelPattern(node);
         const block = Math.max(3, r * 0.11);
         pattern.forEach((on, index) => {
           if (!on) return;
-          ctx.fillRect(r * 0.35 + (index % 3) * (block + 1), -r * 0.42 + Math.floor(index / 3) * (block + 1), block, block);
+          ctx.fillRect(r * 0.28 + (index % 4) * (block + 1), -r * 0.45 + Math.floor(index / 4) * (block + 1), block, block);
         });
         ctx.restore();
+      }
+
+      function pixelPattern(node) {
+        const id = String(node.id || "").toLowerCase();
+        if (node.kind === "category") {
+          if (id.includes("sweat") || id.includes("hood") || id.includes("pullover")) return [
+            0, 1, 1, 0,
+            1, 1, 1, 1,
+            1, 1, 1, 1,
+            1, 0, 0, 1,
+          ];
+          if (id.includes("dress") || id.includes("frock")) return [
+            0, 1, 1, 0,
+            0, 1, 1, 0,
+            1, 1, 1, 1,
+            1, 0, 0, 1,
+          ];
+          if (id.includes("pant") || id.includes("bottom") || id.includes("culotte")) return [
+            1, 1, 1, 1,
+            0, 1, 1, 0,
+            0, 1, 1, 0,
+            1, 0, 0, 1,
+          ];
+          if (id.includes("vest") || id.includes("outer") || id.includes("blazer")) return [
+            1, 0, 0, 1,
+            1, 1, 1, 1,
+            1, 0, 0, 1,
+            1, 1, 1, 1,
+          ];
+          return [
+            0, 1, 1, 0,
+            1, 1, 1, 1,
+            0, 1, 1, 0,
+            0, 1, 1, 0,
+          ];
+        }
+        return {
+          pain: [1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1],
+          kpi: [1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0],
+          action: [0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0],
+          body: [0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1],
+          size: [1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0],
+        }[node.kind] || [1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0];
       }
 
       function initStarfieldFallback(canvas) {
@@ -1763,7 +2547,7 @@
           if (signature !== lastLabelSignature) {
             lastLabelSignature = signature;
             labelLayer.innerHTML = visibleLabels.map((node) => {
-            return `<button class="node-label" type="button" onclick="selectGraphNode('${escapeHtml(node.id)}')" style="left:${node.x}px;top:${node.y}px">${nodeIconMarkup(node.kind)}${escapeHtml(node.label)}</button>`;
+            return `<button class="node-label" type="button" onclick="selectGraphNode('${escapeHtml(node.id)}')" style="left:${node.x}px;top:${node.y}px">${nodeIconMarkup(node.kind, node.id)}${escapeHtml(node.label)}</button>`;
             }).join("");
           }
           state.twoD.animation = requestAnimationFrame(draw);
@@ -1851,7 +2635,7 @@
             const vector = node.mesh.position.clone().applyMatrix4(group.matrixWorld).project(camera);
             const x = (vector.x * 0.5 + 0.5) * width;
             const y = (-vector.y * 0.5 + 0.5) * height;
-            return `<button class="node-label" type="button" onclick="selectGraphNode('${escapeHtml(node.id)}')" style="left:${x}px;top:${y}px">${nodeIconMarkup(node.kind)}${escapeHtml(node.label)}</button>`;
+            return `<button class="node-label" type="button" onclick="selectGraphNode('${escapeHtml(node.id)}')" style="left:${x}px;top:${y}px">${nodeIconMarkup(node.kind, node.id)}${escapeHtml(node.label)}</button>`;
           }).join("");
         }
         function pick(event, commit = false) {
@@ -1906,14 +2690,23 @@
         return { category: "品类节点", pain: "痛点节点", body: "体型节点", size: "尺码节点", kpi: "KPI 节点", action: "行动节点" }[kind] || "关系节点";
       }
 
-      function nodeIconMarkup(kind) {
+      function nodeIconMarkup(kind, id = "") {
         const type = escapeHtml(kind || "category");
-        return `<span class="node-icon ${type}" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>`;
+        const pattern = pixelPattern({ kind, id });
+        const slug = escapeHtml(String(id || "").toLowerCase().replace(/[^a-z0-9_-]/g, "-"));
+        return `<span class="node-icon ${type} ${slug}" aria-hidden="true">${pattern.map((on) => `<i style="${on ? "" : "background:transparent"}"></i>`).join("")}</span>`;
       }
 
       function selectGraphNode(id, page = null) {
         const node = state.graph.nodes.find((item) => item.id === id);
-        if (!node) return;
+        if (!node) {
+          state.selectedNode = { id, label: nameOf(id), kind: "pain", value: 0 };
+          renderNodeInspector();
+          renderWorkspace();
+          renderEvidence();
+          if (page) setPage(page);
+          return;
+        }
         state.selectedNode = node;
         if (node.kind === "category") state.selectedCategory = node.id;
         renderNodeInspector();
@@ -1927,8 +2720,8 @@
 
       function selectCategory(category, page = state.page) {
         state.selectedCategory = category;
-        state.selectedNode = { id: category, label: nameOf(category), kind: "category", value: 1 };
         buildGraph();
+        state.selectedNode = state.graph.nodes.find((node) => node.id === category) || { id: category, label: nameOf(category), kind: "category", value: num(selectedCategoryRow().records) };
         buildCategorySelect();
         renderAll();
         setPage(page);
@@ -1942,12 +2735,16 @@
         const titles = {
           overview: ["经营总览", "先看市场机会和公司经营承接能力，再进入品类级决策。"],
           market: ["市场机会", "公开市场数据与模拟公司 KPI 对齐，判断哪些品类值得进入。"],
+          assortment: ["商品组合", "用商品结构、占比和交易动量判断组合是否健康。"],
           network: ["关系星域", "用 3D 关系图解释品类、痛点、KPI 和行动之间的连接。"],
+          kpi: ["KPI诊断", "把市场机会拆成转化、退货、毛利和合身承接问题。"],
+          semantic: ["语义洞察", "把评论文本和合身反馈转成可执行的商品与内容问题。"],
           workspace: ["决策工作区", "围绕当前品类集中展示 KPI、风险、证据和动作。"],
           evidence: ["证据与动作", "把评论证据和语义痛点转成可执行优化动作。"],
         };
         document.getElementById("page-title").textContent = titles[page][0];
         document.getElementById("page-subtitle").textContent = titles[page][1];
+        document.querySelector(".top-actions").classList.toggle("hidden", ["overview", "market", "assortment"].includes(page));
         if (page === "network") requestAnimationFrame(initStarfield);
       }
       window.setPage = setPage;
