@@ -2033,8 +2033,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>今日优先队列</h3>
-                  <p>每条建议都连接到 KPI、风险和证据。</p>
+                  <h3>当前优先队列</h3>
+                  <p>数据刷新后按同一套规则重新排序，每条建议都连接到 KPI、风险和证据。</p>
                 </div>
               </div>
               <div class="inspector" id="priority-queue"></div>
@@ -2064,7 +2064,7 @@
               <div class="panel-header">
                 <div>
                   <h3>市场需求与商品配置</h3>
-                  <p>基于 H&M 商品结构和交易占比生成，作为出海服装品类机会的公开市场代理信号。</p>
+                  <p>基于公开商品结构和交易占比生成需求 proxy；接入真实订单、搜索或广告数据后，同一视图会自动重算。</p>
                 </div>
               </div>
               <div class="bars" id="market-demand-bars"></div>
@@ -2472,12 +2472,12 @@
       function headlineForDecision(row, decision) {
         const name = nameOf(row.category_group || "-");
         const templates = {
-          "优先放量": `今日可放量：${name}`,
-          "先降退货": `先修正再放量：${name}`,
-          "先改详情页": `先改详情页：${name}`,
-          "小规模验证": `进入验证池：${name}`,
-          "暂停放量": `暂停放量：${name}`,
-          "观察": `保持观察：${name}`,
+          "优先放量": `当前可优先放量：${name}`,
+          "先降退货": `当前应先降退货：${name}`,
+          "先改详情页": `当前应先改详情页：${name}`,
+          "小规模验证": `当前需要验证：${name}`,
+          "暂停放量": `当前暂停放量：${name}`,
+          "观察": `当前保持观察：${name}`,
         };
         return templates[decision.label] || `${decision.label}：${name}`;
       }
@@ -2522,7 +2522,7 @@
           { key: "conversion", label: "转化承接", value: pct(avgConversion), note: "由品类需求、风险和评论信号估算", delta: "需用埋点校准", tone: "info", accent: "#6bd5ff", chip: "增长侧", spark: [5.8, 6.1, 6.0, 6.4, 6.2, 6.6, avgConversion * 100] },
           { key: "return", label: "退货暴露", value: pct(avgReturn), note: "合身偏差和评论痛点推高退货压力", delta: avgReturn > 0.24 ? "需要治理" : "处于健康区", tone: avgReturn > 0.24 ? "warning" : "positive", accent: "#ffb02e", chip: "风险侧", spark: [23.5, 24.2, 25.1, 24.8, 26.0, 25.7, avgReturn * 100] },
           { key: "margin", label: "毛利质量", value: pct(avgMargin), note: "扣除退货压力后的经营承接能力", delta: avgMargin > 0.45 ? "可承接" : "需复核", tone: avgMargin > 0.45 ? "positive" : "warning", accent: "#35dcb3", chip: "利润侧", spark: [44, 45, 47, 46, 48, 49, avgMargin * 100] },
-          { key: "opportunity", label: "今日入口", value: nameOf(topOpportunity.category_group || "-"), note: "综合市场机会、转化、退货和毛利排序", delta: decisionFor(topOpportunity).label, tone: decisionFor(topOpportunity).tone, accent: decisionColor(decisionFor(topOpportunity)), chip: "优先级", spark: [21, 24, 22, 29, 31, 28, businessScore(topOpportunity)] },
+          { key: "opportunity", label: "当前入口", value: nameOf(topOpportunity.category_group || "-"), note: "随当前数据窗口重新计算，不固定绑定某个品类", delta: decisionFor(topOpportunity).label, tone: decisionFor(topOpportunity).tone, accent: decisionColor(decisionFor(topOpportunity)), chip: "优先级", spark: [21, 24, 22, 29, 31, 28, businessScore(topOpportunity)] },
         ];
         document.getElementById("executive-kpis").innerHTML = kpis.map((item) => `
           <button class="kpi-card ${item.key === "opportunity" ? "selected" : ""}" type="button" data-kpi="${item.key}" style="--kpi-accent:${escapeHtml(item.accent)};--kpi-glow:${escapeHtml(item.accent)}33" onclick="${item.key === "opportunity" ? `selectCategory('${escapeHtml(topOpportunity.category_group)}', 'workspace')` : "setPage('kpi')"}">
@@ -2544,9 +2544,9 @@
         const company = (state.data.company || []).find((item) => item.category === leader.category_group) || {};
         document.getElementById("overview-command").innerHTML = `
           <div>
-            <span class="brief-eyebrow">今日经营判断</span>
+            <span class="brief-eyebrow">当前数据窗口判断</span>
             <h3>${escapeHtml(headlineForDecision(leader, leaderDecision))}</h3>
-            <p>${escapeHtml(leaderDecision.action)} 这是首页的方向判断，不直接替代业务决策；点击队列进入品类工作区复核证据。</p>
+            <p>${escapeHtml(leaderDecision.action)} 这是按当前数据窗口生成的方向判断；当市场、评论或经营 KPI 更新时，入口品类、动作和优先级会重新计算。</p>
           </div>
           <div class="mini-metrics">
             <div class="mini-metric"><span>机会分</span><strong>${businessScore(leader).toFixed(1)}</strong></div>
@@ -2567,8 +2567,8 @@
         document.getElementById("overview-map-rationale").innerHTML = [
           ["机会分怎么来", "需求占比、转化承接、退货压力、毛利质量四项合成。右侧越高，说明值得投入更多注意力。"],
           ["风险为什么上升", "风险来自评论痛点、合身偏差和模型化退货率。越靠上越不适合直接放量。"],
-          ["当前结论", `${nameOf(ranked[0]?.category_group)} 排名第一，但动作由位置决定：右下可放量，右上先修正，左侧先观察。`],
-        ].map(([label, body]) => `<div class="rationale-card"><span>${escapeHtml(label)}</span><strong>${escapeHtml(body)}</strong></div>`).join("") + `<p class="map-footnote">排序不是简单销量榜，而是用公开市场代理信号和公司 KPI 样例共同判断“该不该进入、能不能承接”。</p>`;
+          ["当前结果怎么读", `${nameOf(ranked[0]?.category_group)} 是当前数据窗口下的第一入口；它不是固定推荐，刷新数据后会由同一规则重新排序。`],
+        ].map(([label, body]) => `<div class="rationale-card"><span>${escapeHtml(label)}</span><strong>${escapeHtml(body)}</strong></div>`).join("") + `<p class="map-footnote">排序逻辑：用市场机会、转化承接、退货暴露和毛利质量共同判断每个品类的进入优先级与动作类型；数据更新后自动重算。</p>`;
         const decisionCounts = decisionSummary();
         renderActionPortfolio("overview-triage-donut", decisionCounts);
         renderFitGauge("overview-fit-donut", fitSummary());
