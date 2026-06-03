@@ -460,6 +460,82 @@
         line-height: 1.45;
       }
 
+      .executive-kpi-grid {
+        grid-template-columns: 1.24fr repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .executive-kpi-grid .kpi-card {
+        position: relative;
+        overflow: hidden;
+        min-height: 154px;
+        border-color: oklch(0.86 0.03 255 / 0.18);
+        background:
+          linear-gradient(180deg, oklch(0.235 0.014 255 / 0.82), oklch(0.16 0.012 255 / 0.86)),
+          var(--surface);
+      }
+
+      .executive-kpi-grid .kpi-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 18% 0%, var(--kpi-glow, oklch(0.72 0.16 230 / 0.2)), transparent 38%);
+        opacity: .72;
+        pointer-events: none;
+      }
+
+      .executive-kpi-grid .kpi-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .kpi-meta-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .kpi-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 0 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--muted);
+        background: oklch(0.12 0.012 255 / 0.46);
+        font-size: 11px;
+        font-weight: 760;
+      }
+
+      .kpi-spark {
+        width: 100%;
+        height: 34px;
+        margin-top: 12px;
+        display: block;
+        overflow: visible;
+      }
+
+      .kpi-spark path {
+        fill: none;
+        stroke: var(--kpi-accent, #25b7ff);
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        filter: drop-shadow(0 0 8px color-mix(in oklch, var(--kpi-accent, #25b7ff) 48%, transparent));
+      }
+
+      .kpi-threshold {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: 9px;
+        color: var(--faint);
+        font-size: 11px;
+      }
+
       .delta {
         display: inline-flex;
         align-items: center;
@@ -478,6 +554,11 @@
         display: grid;
         grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.65fr);
         gap: 14px;
+      }
+
+      .overview-map-grid {
+        grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.55fr);
+        align-items: start;
       }
 
       @keyframes panelIn {
@@ -1056,6 +1137,11 @@
         margin-bottom: 14px;
       }
 
+      .overview-hero-grid {
+        grid-template-columns: minmax(0, 1.16fr) minmax(360px, 0.84fr);
+        align-items: stretch;
+      }
+
       .command-brief {
         display: grid;
         gap: 14px;
@@ -1070,9 +1156,45 @@
           oklch(0.18 0.014 255 / 0.72);
       }
 
+      .decision-statement.executive-brief {
+        min-height: 286px;
+        display: grid;
+        align-content: space-between;
+        padding: 22px;
+        background:
+          radial-gradient(circle at 8% 0%, oklch(0.72 0.16 230 / 0.24), transparent 36%),
+          radial-gradient(circle at 78% 28%, oklch(0.76 0.16 160 / 0.12), transparent 30%),
+          linear-gradient(145deg, oklch(0.205 0.014 255 / 0.92), oklch(0.145 0.012 255 / 0.96));
+      }
+
+      .brief-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 13px;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 850;
+      }
+
+      .brief-eyebrow::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--green);
+        box-shadow: 0 0 18px oklch(0.76 0.16 160 / 0.7);
+      }
+
       .decision-statement h3 {
         margin: 0;
         font-size: 22px;
+      }
+
+      .executive-brief h3 {
+        font-size: clamp(30px, 3.5vw, 52px);
+        line-height: 1.02;
+        max-width: 880px;
       }
 
       .decision-statement p {
@@ -1107,6 +1229,77 @@
         font-size: 22px;
       }
 
+      .decision-flow-card {
+        padding: 18px;
+        background:
+          linear-gradient(180deg, oklch(0.21 0.014 255 / 0.78), oklch(0.15 0.012 255 / 0.82));
+      }
+
+      .decision-stack {
+        display: grid;
+        gap: 10px;
+      }
+
+      .stack-step {
+        position: relative;
+        display: grid;
+        grid-template-columns: 44px 1fr auto;
+        gap: 12px;
+        align-items: center;
+        width: 100%;
+        min-height: 78px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        background: oklch(0.14 0.012 255 / 0.76);
+        color: inherit;
+        text-align: left;
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+
+      .stack-step:hover {
+        transform: translateX(3px);
+        border-color: var(--line-strong);
+        background: oklch(0.19 0.016 255 / 0.86);
+      }
+
+      .stack-step + .stack-step::before {
+        content: "";
+        position: absolute;
+        top: -12px;
+        left: 33px;
+        width: 1px;
+        height: 12px;
+        background: var(--line-strong);
+      }
+
+      .step-index {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border-radius: 11px;
+        background: linear-gradient(135deg, var(--blue), var(--green));
+        color: oklch(0.1 0.012 255);
+        font-weight: 900;
+      }
+
+      .stack-step strong {
+        display: block;
+        margin-bottom: 3px;
+      }
+
+      .stack-step small {
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .step-metric {
+        color: var(--text);
+        font-weight: 850;
+        white-space: nowrap;
+      }
+
       .chart-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1115,16 +1308,34 @@
 
       .opportunity-map-layout {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 320px;
-        gap: 16px;
+        grid-template-columns: 1fr;
+        gap: 12px;
         align-items: stretch;
       }
 
       .opportunity-map {
         width: 100%;
-        height: 390px;
-        min-height: 390px;
+        height: 410px;
+        min-height: 410px;
         display: block;
+      }
+
+      .opportunity-panel {
+        overflow: hidden;
+      }
+
+      .opportunity-panel .panel-header {
+        align-items: center;
+      }
+
+      .opportunity-rules {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .opportunity-rules .pill {
+        min-height: 30px;
       }
 
       .opportunity-map text,
@@ -1154,6 +1365,125 @@
         stroke-width: 4;
       }
 
+      .opportunity-node.selected circle:first-child {
+        stroke-width: 3.4;
+        filter: drop-shadow(0 0 14px oklch(0.72 0.16 230 / 0.58));
+      }
+
+      .axis-label {
+        font-size: 12px;
+        font-weight: 780;
+      }
+
+      .quadrant-label {
+        fill: var(--text) !important;
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      .map-footnote {
+        margin-top: 10px;
+        color: var(--faint);
+        font-size: 12px;
+      }
+
+      .action-portfolio {
+        display: grid;
+        gap: 12px;
+        padding-top: 4px;
+      }
+
+      .portfolio-row {
+        display: grid;
+        grid-template-columns: minmax(96px, 142px) 1fr auto;
+        gap: 12px;
+        align-items: center;
+        width: 100%;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        padding: 0;
+        text-align: left;
+      }
+
+      .portfolio-track {
+        position: relative;
+        height: 13px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: oklch(0.28 0.018 255 / 0.72);
+      }
+
+      .portfolio-fill {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: var(--w);
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--c), color-mix(in oklch, var(--c) 72%, white));
+        box-shadow: 0 0 16px color-mix(in oklch, var(--c) 44%, transparent);
+        transform-origin: left;
+        animation: growBar 520ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) both;
+      }
+
+      .portfolio-row strong {
+        font-size: 13px;
+      }
+
+      .portfolio-row span {
+        color: var(--muted);
+        font-weight: 780;
+      }
+
+      .fit-split {
+        display: grid;
+        gap: 12px;
+      }
+
+      .fit-hero {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 16px;
+        align-items: center;
+        width: 100%;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        padding: 0;
+        text-align: left;
+      }
+
+      .fit-ring {
+        width: 132px;
+        height: 132px;
+      }
+
+      .fit-copy strong {
+        display: block;
+        font-size: 30px;
+        letter-spacing: -0.02em;
+      }
+
+      .fit-copy span {
+        display: block;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .line-chart path:nth-of-type(2) {
+        stroke-dasharray: 900;
+        stroke-dashoffset: 900;
+        animation: drawLine 720ms var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+      }
+
+      @keyframes drawLine {
+        to { stroke-dashoffset: 0; }
+      }
+
+      @keyframes growBar {
+        from { transform: scaleX(0); opacity: .35; }
+        to { transform: scaleX(1); opacity: 1; }
+      }
+
       .network-grid {
         grid-template-columns: minmax(0, 1fr) minmax(330px, 380px);
         align-items: start;
@@ -1161,6 +1491,7 @@
 
       .map-rationale {
         display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 10px;
         align-content: start;
       }
@@ -1451,7 +1782,8 @@
       }
 
       @media (max-width: 1180px) {
-        .kpi-grid {
+        .kpi-grid,
+        .executive-kpi-grid {
           grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
@@ -1460,6 +1792,7 @@
         }
 
         .layout-grid,
+        .overview-map-grid,
         .workspace-hero,
         .command-grid,
         .opportunity-map-layout,
@@ -1469,7 +1802,8 @@
         }
 
         .insight-strip,
-        .three-col {
+        .three-col,
+        .map-rationale {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
@@ -1494,6 +1828,7 @@
         .two-col,
         .three-col,
         .insight-strip,
+        .map-rationale,
         .mini-metrics {
           grid-template-columns: 1fr;
         }
@@ -1551,12 +1886,23 @@
           grid-row: span 1;
         }
 
-        .kpi-grid {
+        .kpi-grid,
+        .executive-kpi-grid {
           grid-template-columns: 1fr;
         }
 
         .impact-grid {
           grid-template-columns: 1fr;
+        }
+
+        .stack-step,
+        .portfolio-row,
+        .fit-hero {
+          grid-template-columns: 1fr;
+        }
+
+        .opportunity-rules {
+          width: 100%;
         }
       }
 
@@ -1653,27 +1999,31 @@
         </div>
 
         <section class="page active" id="overview">
-          <div class="kpi-grid" id="executive-kpis"></div>
-          <div class="command-grid">
-            <div class="decision-statement" id="overview-command"></div>
-            <div class="panel">
+          <div class="kpi-grid executive-kpi-grid" id="executive-kpis"></div>
+          <div class="command-grid overview-hero-grid">
+            <div class="decision-statement executive-brief" id="overview-command"></div>
+            <div class="panel decision-flow-card">
               <div class="panel-header">
                 <div>
-                  <h3>经营工作台使用路径</h3>
-                  <p>总览只回答方向，细节由后续页面承接。</p>
+                  <h3>经营工作台路径</h3>
+                  <p>首页给结论，后续页面提供市场、证据和执行动作。</p>
                 </div>
               </div>
               <div class="metric-list" id="overview-path"></div>
             </div>
           </div>
-          <div class="layout-grid">
-            <div class="panel">
+          <div class="layout-grid overview-map-grid">
+            <div class="panel opportunity-panel">
               <div class="panel-header">
                 <div>
                   <h3>机会与风险地图</h3>
-                  <p>横向是市场机会，纵向是退货/合身风险。气泡越大代表样本越多，点击任意品类会同步更新工作区和星域图。</p>
+                  <p>横向看机会，纵向看风险；气泡大小代表评论/合身样本量。点击任意品类会同步更新工作区和图谱。</p>
                 </div>
-                <span class="pill">排序规则：机会分 = 需求 + 转化 - 退货 + 毛利</span>
+                <div class="opportunity-rules">
+                  <span class="pill">X：市场机会</span>
+                  <span class="pill">Y：经营风险</span>
+                  <span class="pill">气泡：证据量</span>
+                </div>
               </div>
               <div class="opportunity-map-layout">
                 <svg id="overview-opportunity-map" class="opportunity-map" role="img" aria-label="opportunity and risk map"></svg>
@@ -1693,11 +2043,11 @@
           <div style="height:14px"></div>
           <div class="chart-grid three">
             <div class="panel chart-box">
-              <div class="panel-header"><div><h3>行动组合</h3><p>放量、修正、观察的品类占比。</p></div></div>
+              <div class="panel-header"><div><h3>行动组合分布</h3><p>每一种动作有多少品类进入队列。</p></div></div>
               <div id="overview-triage-donut"></div>
             </div>
             <div class="panel chart-box">
-              <div class="panel-header"><div><h3>合身结果</h3><p>组合层面的 fit / small / large 信号。</p></div></div>
+              <div class="panel-header"><div><h3>合身健康度</h3><p>用合身、偏小、偏大信号判断退货压力来源。</p></div></div>
               <div id="overview-fit-donut"></div>
             </div>
             <div class="panel chart-box">
@@ -2097,6 +2447,41 @@
         return demand * 44 + num(company.conversion) * 150 - num(company.returnRate) * 34 + num(company.margin) * 12;
       }
 
+      function kpiSpark(values) {
+        const nums = values.map(num);
+        const min = Math.min(...nums);
+        const max = Math.max(...nums);
+        const width = 116;
+        const height = 34;
+        const x = (index) => index / Math.max(nums.length - 1, 1) * width;
+        const y = (value) => height - 4 - (value - min) / Math.max(max - min, 1) * (height - 10);
+        const path = nums.map((value, index) => `${index ? "L" : "M"} ${x(index).toFixed(1)} ${y(value).toFixed(1)}`).join(" ");
+        return `<svg class="kpi-spark" viewBox="0 0 ${width} ${height}" aria-hidden="true"><path d="${path}"></path></svg>`;
+      }
+
+      function decisionColor(decision) {
+        const label = typeof decision === "string" ? decision : decision?.label;
+        const tone = typeof decision === "string" ? "" : decision?.tone;
+        if (label === "优先放量" || tone === "positive") return "#35dcb3";
+        if (label === "先降退货" || tone === "warning") return "#ffb02e";
+        if (label === "先改详情页" || label === "暂停放量" || tone === "risk") return "#ff6b6b";
+        if (label === "小规模验证") return "#25b7ff";
+        return "#a9b8c9";
+      }
+
+      function headlineForDecision(row, decision) {
+        const name = nameOf(row.category_group || "-");
+        const templates = {
+          "优先放量": `今日可放量：${name}`,
+          "先降退货": `先修正再放量：${name}`,
+          "先改详情页": `先改详情页：${name}`,
+          "小规模验证": `进入验证池：${name}`,
+          "暂停放量": `暂停放量：${name}`,
+          "观察": `保持观察：${name}`,
+        };
+        return templates[decision.label] || `${decision.label}：${name}`;
+      }
+
       function decisionFor(row) {
         const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
         const risk = num(row.risk_score);
@@ -2133,17 +2518,19 @@
         const avgReturn = companies.reduce((sum, row) => sum + row.returnRate, 0) / Math.max(companies.length, 1);
         const avgMargin = companies.reduce((sum, row) => sum + row.margin, 0) / Math.max(companies.length, 1);
         const kpis = [
-          { key: "gmv", label: "GMV 代理值", value: `$${fmt(totalGmv)}`, note: "由公开数据建模，非真实公司收入", delta: "待接真实数据库", tone: "info" },
-          { key: "conversion", label: "转化率", value: pct(avgConversion), note: "由品类风险和需求模型估算", delta: "需要真实埋点校准", tone: "info" },
-          { key: "return", label: "退货率", value: pct(avgReturn), note: "受合身和评论痛点影响", delta: "高于健康阈值", tone: "warning" },
-          { key: "margin", label: "毛利质量", value: pct(avgMargin), note: "退货风险会侵蚀利润", delta: "可承接", tone: "positive" },
-          { key: "opportunity", label: "优先机会", value: nameOf(topOpportunity.category_group || "-"), note: "综合市场需求和内部风险", delta: decisionFor(topOpportunity).label, tone: decisionFor(topOpportunity).tone },
+          { key: "gmv", label: "规模代理", value: `$${fmt(totalGmv)}`, note: "模型化 GMV，用于演示经营承接层", delta: "接真实订单后替换", tone: "info", accent: "#25b7ff", chip: "模拟 KPI", spark: [48, 54, 51, 62, 58, 66, 71] },
+          { key: "conversion", label: "转化承接", value: pct(avgConversion), note: "由品类需求、风险和评论信号估算", delta: "需用埋点校准", tone: "info", accent: "#6bd5ff", chip: "增长侧", spark: [5.8, 6.1, 6.0, 6.4, 6.2, 6.6, avgConversion * 100] },
+          { key: "return", label: "退货暴露", value: pct(avgReturn), note: "合身偏差和评论痛点推高退货压力", delta: avgReturn > 0.24 ? "需要治理" : "处于健康区", tone: avgReturn > 0.24 ? "warning" : "positive", accent: "#ffb02e", chip: "风险侧", spark: [23.5, 24.2, 25.1, 24.8, 26.0, 25.7, avgReturn * 100] },
+          { key: "margin", label: "毛利质量", value: pct(avgMargin), note: "扣除退货压力后的经营承接能力", delta: avgMargin > 0.45 ? "可承接" : "需复核", tone: avgMargin > 0.45 ? "positive" : "warning", accent: "#35dcb3", chip: "利润侧", spark: [44, 45, 47, 46, 48, 49, avgMargin * 100] },
+          { key: "opportunity", label: "今日入口", value: nameOf(topOpportunity.category_group || "-"), note: "综合市场机会、转化、退货和毛利排序", delta: decisionFor(topOpportunity).label, tone: decisionFor(topOpportunity).tone, accent: decisionColor(decisionFor(topOpportunity)), chip: "优先级", spark: [21, 24, 22, 29, 31, 28, businessScore(topOpportunity)] },
         ];
         document.getElementById("executive-kpis").innerHTML = kpis.map((item) => `
-          <button class="kpi-card ${item.key === "opportunity" ? "selected" : ""}" type="button" data-kpi="${item.key}">
-            <div class="kpi-label">${escapeHtml(item.label)}</div>
+          <button class="kpi-card ${item.key === "opportunity" ? "selected" : ""}" type="button" data-kpi="${item.key}" style="--kpi-accent:${escapeHtml(item.accent)};--kpi-glow:${escapeHtml(item.accent)}33" onclick="${item.key === "opportunity" ? `selectCategory('${escapeHtml(topOpportunity.category_group)}', 'workspace')` : "setPage('kpi')"}">
+            <div class="kpi-meta-row"><div class="kpi-label">${escapeHtml(item.label)}</div><span class="kpi-chip">${escapeHtml(item.chip)}</span></div>
             <div class="kpi-value">${escapeHtml(item.value)}</div>
             <div class="kpi-note">${escapeHtml(item.note)}</div>
+            ${kpiSpark(item.spark)}
+            <div class="kpi-threshold"><span>低</span><span>当前</span><span>高</span></div>
             <div class="delta ${item.tone}">${escapeHtml(item.delta)}</div>
           </button>
         `).join("");
@@ -2156,35 +2543,43 @@
         const leaderDecision = decisionFor(leader);
         const company = (state.data.company || []).find((item) => item.category === leader.category_group) || {};
         document.getElementById("overview-command").innerHTML = `
-          <h3>${escapeHtml(leaderDecision.label)}：${escapeHtml(nameOf(leader.category_group))}</h3>
-          <p>${escapeHtml(leaderDecision.action)} 当前机会分 ${businessScore(leader).toFixed(1)}，退货率 ${pct(company.returnRate)}，合身率 ${pct(leader.fit_rate)}。总览页不做最终执行，点击队列进入品类工作区。</p>
+          <div>
+            <span class="brief-eyebrow">今日经营判断</span>
+            <h3>${escapeHtml(headlineForDecision(leader, leaderDecision))}</h3>
+            <p>${escapeHtml(leaderDecision.action)} 这是首页的方向判断，不直接替代业务决策；点击队列进入品类工作区复核证据。</p>
+          </div>
           <div class="mini-metrics">
-            <div class="mini-metric"><span>推荐入口</span><strong>${escapeHtml(nameOf(leader.category_group))}</strong></div>
-            <div class="mini-metric"><span>阻塞 KPI</span><strong>${num(company.returnRate) > 0.22 ? "退货率" : "转化率"}</strong></div>
-            <div class="mini-metric"><span>下一页</span><strong>决策工作区</strong></div>
+            <div class="mini-metric"><span>机会分</span><strong>${businessScore(leader).toFixed(1)}</strong></div>
+            <div class="mini-metric"><span>退货率</span><strong>${pct(company.returnRate)}</strong></div>
+            <div class="mini-metric"><span>合身率</span><strong>${pct(leader.fit_rate)}</strong></div>
           </div>
         `;
         document.getElementById("overview-path").innerHTML = [
-          ["1. 先看方向", "经营总览判断今天该看哪个品类。", "overview"],
-          ["2. 再看市场", "市场机会和商品组合判断需求是否真实。", "market"],
-          ["3. 最后落动作", "工作区和证据页给出 PDP、尺码、SKU 动作。", "workspace"],
-        ].map(([title, body, page]) => `<button class="metric-row" type="button" onclick="setPage('${page}')"><span>${escapeHtml(title)}<br><small>${escapeHtml(body)}</small></span><strong>打开</strong></button>`).join("");
+          ["01", "市场是否值得进", "市场机会页验证需求、交易节奏和组合缺口。", "market", pct(marketDemandFor(leader.category_group))],
+          ["02", "公司是否能承接", "KPI 诊断页确认转化、退货、毛利是否拖累放量。", "kpi", pct(company.margin)],
+          ["03", "证据是否支持动作", "语义洞察和证据页复核评论痛点，再进入工作区。", "semantic", `${fmt(int(leader.records))}条`],
+        ].map(([index, title, body, page, metric]) => `<button class="stack-step" type="button" onclick="setPage('${page}')">
+          <span class="step-index">${escapeHtml(index)}</span>
+          <span><strong>${escapeHtml(title)}</strong><small>${escapeHtml(body)}</small></span>
+          <span class="step-metric">${escapeHtml(metric)}</span>
+        </button>`).join("");
         renderOverviewOpportunityMap("overview-opportunity-map", rankedAll.slice(0, 18));
         document.getElementById("overview-map-rationale").innerHTML = [
-          ["横轴", "市场机会：公开交易需求和品类需求代理信号，越靠右越值得进入。"],
-          ["纵轴", "风险暴露：合身偏差、评论痛点和模型化退货率，越靠上越需要先修正。"],
-          ["排序", `当前第一是 ${nameOf(ranked[0]?.category_group)}，因为它的需求强，但退货/评论风险也需要先处理。`],
-        ].map(([label, body]) => `<div class="rationale-card"><span>${escapeHtml(label)}</span><strong>${escapeHtml(body)}</strong></div>`).join("");
+          ["机会分怎么来", "需求占比、转化承接、退货压力、毛利质量四项合成。右侧越高，说明值得投入更多注意力。"],
+          ["风险为什么上升", "风险来自评论痛点、合身偏差和模型化退货率。越靠上越不适合直接放量。"],
+          ["当前结论", `${nameOf(ranked[0]?.category_group)} 排名第一，但动作由位置决定：右下可放量，右上先修正，左侧先观察。`],
+        ].map(([label, body]) => `<div class="rationale-card"><span>${escapeHtml(label)}</span><strong>${escapeHtml(body)}</strong></div>`).join("") + `<p class="map-footnote">排序不是简单销量榜，而是用公开市场代理信号和公司 KPI 样例共同判断“该不该进入、能不能承接”。</p>`;
         const decisionCounts = decisionSummary();
-        renderDonut("overview-triage-donut", decisionCounts, { center: `${categoryRows().length}类`, action: (row) => `setPage('${row.page}')` });
-        renderDonut("overview-fit-donut", fitSummary(), { center: "合身", action: () => "setPage('semantic')" });
+        renderActionPortfolio("overview-triage-donut", decisionCounts);
+        renderFitGauge("overview-fit-donut", fitSummary());
         renderLineChart("overview-momentum-line", state.data.hmDaily || [], { compact: true });
         document.getElementById("priority-queue").innerHTML = ranked.slice(0, 4).map((row, index) => {
           const decision = decisionFor(row);
+          const rowCompany = (state.data.company || []).find((item) => item.category === row.category_group) || {};
           return `<button class="action-card" type="button" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')">
             <span class="priority">优${index + 1}</span>
             <h4>${escapeHtml(decision.label)} ${escapeHtml(nameOf(row.category_group))}</h4>
-            <p>${escapeHtml(decision.action)} 风险分 ${num(row.risk_score).toFixed(1)}，合身率 ${pct(row.fit_rate)}。</p>
+            <p>${escapeHtml(decision.action)} 风险分 ${num(row.risk_score).toFixed(1)}，退货率 ${pct(rowCompany.returnRate)}，合身率 ${pct(row.fit_rate)}。</p>
           </button>`;
         }).join("");
       }
@@ -2463,10 +2858,11 @@
           counts.set(decision.label, (counts.get(decision.label) || 0) + 1);
         });
         const pageMap = { 优先放量: "workspace", 先降退货: "kpi", 先改详情页: "semantic", 小规模验证: "market", 暂停放量: "evidence", 观察: "market" };
-        return [...counts.entries()].map(([label, value], index) => ({
+        const order = ["优先放量", "先降退货", "先改详情页", "小规模验证", "暂停放量", "观察"];
+        return [...counts.entries()].sort((a, b) => order.indexOf(a[0]) - order.indexOf(b[0])).map(([label, value]) => ({
           label,
           value,
-          color: chartColors[index % chartColors.length],
+          color: decisionColor(label),
           page: pageMap[label] || "workspace",
           tooltip: [`${value} 个品类`, "由市场需求、风险分、退货率共同决定"],
         }));
@@ -2483,6 +2879,58 @@
           { label: "偏小", value: small, color: chartColors[3], tooltip: [`偏小信号 ${pct(small)}`] },
           { label: "偏大", value: large, color: chartColors[2], tooltip: [`偏大信号 ${pct(large)}`] },
         ];
+      }
+
+      function renderActionPortfolio(containerId, rows) {
+        const holder = document.getElementById(containerId);
+        if (!holder) return;
+        const total = rows.reduce((sum, row) => sum + num(row.value), 0);
+        if (!rows.length || total <= 0) {
+          holder.innerHTML = `<p class="chart-caption">当前没有可展示的行动组合。</p>`;
+          return;
+        }
+        holder.innerHTML = `
+          <div class="action-portfolio">
+            ${rows.map((row) => {
+              const share = num(row.value) / total;
+              return `<button class="portfolio-row" type="button" onclick="setPage('${escapeHtml(row.page)}')" onmousemove="showTooltip(event, '${escapeHtml(row.label)}', '${escapeHtml(`${fmt(row.value)} 个品类<br>占比 ${pct(share)}`)}')" onmouseleave="hideTooltip()">
+                <strong>${escapeHtml(row.label)}</strong>
+                <span class="portfolio-track"><i class="portfolio-fill" style="--w:${Math.max(5, share * 100).toFixed(1)}%;--c:${escapeHtml(row.color)}"></i></span>
+                <span>${pct(share)}</span>
+              </button>`;
+            }).join("")}
+          </div>
+        `;
+      }
+
+      function renderFitGauge(containerId, rows) {
+        const holder = document.getElementById(containerId);
+        if (!holder) return;
+        const fit = num(rows.find((row) => row.label === "合身")?.value);
+        const small = num(rows.find((row) => row.label === "偏小")?.value);
+        const large = num(rows.find((row) => row.label === "偏大")?.value);
+        const circumference = 2 * Math.PI * 54;
+        const dash = Math.max(0, Math.min(1, fit)) * circumference;
+        holder.innerHTML = `
+          <div class="fit-split">
+            <button class="fit-hero" type="button" onclick="setPage('semantic')" onmousemove="showTooltip(event, '合身健康度', '${escapeHtml(`合身 ${pct(fit)}<br>偏小 ${pct(small)}<br>偏大 ${pct(large)}`)}')" onmouseleave="hideTooltip()">
+              <svg class="fit-ring" viewBox="0 0 132 132" role="img" aria-label="fit health gauge">
+                <circle cx="66" cy="66" r="54" fill="none" stroke="oklch(0.28 0.018 255 / 0.8)" stroke-width="16"></circle>
+                <circle cx="66" cy="66" r="54" fill="none" stroke="url(#fitGradient)" stroke-width="16" stroke-linecap="round" stroke-dasharray="${dash.toFixed(1)} ${circumference.toFixed(1)}" transform="rotate(-90 66 66)"></circle>
+                <defs><linearGradient id="fitGradient" x1="0" x2="1"><stop stop-color="#35dcb3"></stop><stop offset="1" stop-color="#25b7ff"></stop></linearGradient></defs>
+                <text x="66" y="70" text-anchor="middle" fill="var(--text)" style="font-size:20px;font-weight:850">${pct(fit)}</text>
+              </svg>
+              <span class="fit-copy"><strong>${fit >= 0.72 ? "健康" : "需治理"}</strong><span>偏小 ${pct(small)}，偏大 ${pct(large)}。点击进入语义洞察复核合身原因。</span></span>
+            </button>
+            <div class="action-portfolio">
+              ${rows.map((row) => `<button class="portfolio-row" type="button" onclick="setPage('semantic')" onmousemove="showTooltip(event, '${escapeHtml(row.label)}', '${escapeHtml(row.tooltip?.[0] || "")}')" onmouseleave="hideTooltip()">
+                <strong>${escapeHtml(row.label)}</strong>
+                <span class="portfolio-track"><i class="portfolio-fill" style="--w:${Math.max(5, num(row.value) * 100).toFixed(1)}%;--c:${escapeHtml(row.color)}"></i></span>
+                <span>${pct(row.value)}</span>
+              </button>`).join("")}
+            </div>
+          </div>
+        `;
       }
 
       function polarToCartesian(cx, cy, radius, angle) {
@@ -2666,7 +3114,7 @@
       function renderOverviewOpportunityMap(containerId, rows) {
         const svg = document.getElementById(containerId);
         if (!svg) return;
-        const width = 760, height = 390, pad = 48;
+        const width = 820, height = 410, pad = 58;
         const maxRecords = Math.max(...rows.map((row) => int(row.records)), 1);
         const maxOpportunity = Math.max(...rows.map((row) => businessScore(row)), 42);
         const riskOf = (row) => {
@@ -2680,34 +3128,42 @@
         const midY = pad + (height - pad * 2) * 0.48;
         svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
         svg.innerHTML = `
-          <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="16" fill="oklch(0.2 0.015 255 / 0.96)" stroke="oklch(0.86 0.03 255 / 0.22)"></rect>
-          <rect x="${pad}" y="${pad}" width="${midX - pad}" height="${midY - pad}" fill="oklch(0.68 0.2 25 / 0.08)"></rect>
-          <rect x="${midX}" y="${pad}" width="${width - pad - midX}" height="${midY - pad}" fill="oklch(0.78 0.17 75 / 0.12)"></rect>
-          <rect x="${pad}" y="${midY}" width="${midX - pad}" height="${height - pad - midY}" fill="oklch(0.72 0.16 230 / 0.08)"></rect>
-          <rect x="${midX}" y="${midY}" width="${width - pad - midX}" height="${height - pad - midY}" fill="oklch(0.76 0.16 160 / 0.11)"></rect>
-          <line x1="${pad}" y1="${midY}" x2="${width - pad}" y2="${midY}" stroke="oklch(0.86 0.03 255 / 0.24)"></line>
-          <line x1="${midX}" y1="${pad}" x2="${midX}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.24)"></line>
-          <text x="${pad + 14}" y="${pad + 26}" style="font-weight:800">先修正</text>
-          <text x="${midX + 14}" y="${pad + 26}" style="font-weight:800">谨慎验证</text>
-          <text x="${pad + 14}" y="${height - pad - 14}" style="font-weight:800">观察</text>
-          <text x="${midX + 14}" y="${height - pad - 14}" style="font-weight:800">优先放量</text>
-          <text x="${pad}" y="26">低机会</text>
-          <text x="${width - 96}" y="26">高机会</text>
-          <text x="${pad}" y="${height - 12}">低风险</text>
-          <text x="${width - 118}" y="${height - 12}">高风险</text>
+          <defs>
+            <linearGradient id="mapOpportunity" x1="0" x2="1"><stop stop-color="#25b7ff" stop-opacity=".12"></stop><stop offset="1" stop-color="#35dcb3" stop-opacity=".22"></stop></linearGradient>
+            <linearGradient id="mapRisk" x1="0" x2="0" y1="1" y2="0"><stop stop-color="#25b7ff" stop-opacity=".08"></stop><stop offset="1" stop-color="#ff6b6b" stop-opacity=".18"></stop></linearGradient>
+          </defs>
+          <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="18" fill="oklch(0.155 0.012 255 / 0.96)" stroke="oklch(0.86 0.03 255 / 0.22)"></rect>
+          <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="18" fill="url(#mapOpportunity)"></rect>
+          <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="18" fill="url(#mapRisk)"></rect>
+          <line x1="${pad}" y1="${midY}" x2="${width - pad}" y2="${midY}" stroke="oklch(0.86 0.03 255 / 0.24)" stroke-dasharray="5 6"></line>
+          <line x1="${midX}" y1="${pad}" x2="${midX}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.24)" stroke-dasharray="5 6"></line>
+          <text class="quadrant-label" x="${pad + 18}" y="${pad + 28}">先治理风险</text>
+          <text class="quadrant-label" x="${midX + 18}" y="${pad + 28}">先修正再放量</text>
+          <text class="quadrant-label" x="${pad + 18}" y="${height - pad - 18}">低优先观察</text>
+          <text class="quadrant-label" x="${midX + 18}" y="${height - pad - 18}">优先验证放量</text>
+          <text class="axis-label" x="${pad}" y="26">低市场机会</text>
+          <text class="axis-label" x="${width - 118}" y="26">高市场机会</text>
+          <text class="axis-label" x="${pad}" y="${height - 14}">低经营风险</text>
+          <text class="axis-label" x="${width - 122}" y="${height - 14}">高经营风险</text>
+          <line x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.3)"></line>
+          <line x1="${pad}" y1="${pad}" x2="${pad}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.3)"></line>
           ${rows.map((row, index) => {
             const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
             const opportunity = businessScore(row);
             const risk = riskOf(row);
-            const radius = 7 + Math.sqrt(int(row.records) / maxRecords) * 18;
+            const radius = 8 + Math.sqrt(int(row.records) / maxRecords) * 20;
             const decision = decisionFor(row);
-            const color = decision.tone === "risk" ? "#ff6b6b" : decision.tone === "warning" ? "#ffb02e" : "#25b7ff";
-            const x = xScale(opportunity);
-            const y = yScale(risk);
-            return `<g class="opportunity-node" role="button" tabindex="0" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(`机会排名 #${index + 1}<br>机会分 ${opportunity.toFixed(1)}<br>风险指数 ${risk.toFixed(1)}<br>退货率 ${pct(company.returnRate)}<br>建议 ${decision.label}`)}')" onmouseleave="hideTooltip()">
-              <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${radius.toFixed(1)}" fill="${color}" opacity=".28" stroke="${color}" stroke-width="1.2"></circle>
-              <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.max(4, radius * .34).toFixed(1)}" fill="${color}" opacity=".95"></circle>
-              ${index < 8 ? `<text x="${Math.min(width - pad - 80, x + radius + 7).toFixed(1)}" y="${(y + 4).toFixed(1)}">#${index + 1} ${escapeHtml(nameOf(row.category_group).split(" · ")[0])}</text>` : ""}
+            const color = decisionColor(decision);
+            const x = Math.max(pad + radius + 4, Math.min(width - pad - radius - 4, xScale(opportunity)));
+            const y = Math.max(pad + radius + 4, Math.min(height - pad - radius - 4, yScale(risk)));
+            const labelRight = x < width - 230;
+            const labelX = labelRight ? x + radius + 8 : x - radius - 8;
+            const showLabel = index < 5 || row.category_group === state.selectedCategory;
+            return `<g class="opportunity-node ${row.category_group === state.selectedCategory ? "selected" : ""}" role="button" tabindex="0" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(`机会排名 #${index + 1}<br>机会分 ${opportunity.toFixed(1)}<br>风险指数 ${risk.toFixed(1)}<br>退货率 ${pct(company.returnRate)}<br>建议 ${decision.label}`)}')" onmouseleave="hideTooltip()">
+              <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${radius.toFixed(1)}" fill="${color}" opacity=".2" stroke="${color}" stroke-width="1.3"></circle>
+              <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.max(4.8, radius * .34).toFixed(1)}" fill="${color}" opacity=".95"></circle>
+              <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.max(2.2, radius * .13).toFixed(1)}" fill="white" opacity=".92"></circle>
+              ${showLabel ? `<text x="${labelX.toFixed(1)}" y="${(y + 4).toFixed(1)}" text-anchor="${labelRight ? "start" : "end"}">#${index + 1} ${escapeHtml(nameOf(row.category_group).split(" · ")[0])}</text>` : ""}
             </g>`;
           }).join("")}
         `;
