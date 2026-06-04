@@ -341,6 +341,41 @@
         line-height: 1.55;
       }
 
+      .language-panel {
+        margin-top: auto;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+      }
+
+      .language-panel strong {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 13px;
+      }
+
+      .language-toggle {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .language-toggle button {
+        min-height: 38px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: transparent;
+        color: var(--muted);
+        font-weight: 820;
+      }
+
+      .language-toggle button.active {
+        border-color: oklch(0.72 0.16 230 / 0.58);
+        background: oklch(0.28 0.07 230 / 0.48);
+        color: var(--text);
+      }
+
       main {
         min-width: 0;
         padding: 24px;
@@ -1925,36 +1960,40 @@
             <div class="brand-mark">FS</div>
             <div class="brand-title">
               <strong>FitScope Commerce OS</strong>
-              <span>KPI-first apparel intelligence</span>
+              <span data-i18n="login.brandTagline">KPI 优先的服装经营智能</span>
             </div>
           </div>
-          <h1>把市场机会、经营 KPI 和用户证据连接成一个决策网站。</h1>
-          <p>新版不再是传统 BI 看板。它先判断外部市场是否值得进入，再判断内部经营能否承接，最后用星域关系图追踪品类、痛点、体型、尺码和行动建议之间的业务关系。</p>
+          <h1 data-i18n="login.heroTitle">把市场机会、经营 KPI 和用户证据连接成一个决策网站。</h1>
+          <p data-i18n="login.heroCopy">它先判断外部市场是否值得进入，再判断内部经营能否承接，最后用关系图谱追踪品类、痛点、体型、尺码和行动建议之间的业务关系。</p>
           <div class="login-proof">
-            <div class="proof-card"><strong>3</strong><span>主要公开数据源，用于市场、评论和合身风险。</span></div>
-            <div class="proof-card"><strong>2</strong><span>使用模式：管理层视角和执行者视角。</span></div>
-            <div class="proof-card"><strong>1</strong><span>业务星域图，把节点关系变成可点击的产品体验。</span></div>
+            <div class="proof-card"><strong>3</strong><span data-i18n="login.proofData">主要公开数据源，用于市场、评论和合身风险。</span></div>
+            <div class="proof-card"><strong>2</strong><span data-i18n="login.proofModes">使用模式：管理层视角和执行者视角。</span></div>
+            <div class="proof-card"><strong>1</strong><span data-i18n="login.proofGraph">业务关系图，把节点关系变成可点击的产品体验。</span></div>
           </div>
         </div>
       </div>
       <div class="login-panel-wrap">
         <form class="login-panel" id="login-form">
-          <h2>进入工作台</h2>
-          <p>当前为 MVP 演示登录，用于展示产品入口和使用模式。后续可接 Supabase、PostgreSQL 或企业 SSO。</p>
+          <div class="language-toggle" aria-label="Language switcher">
+            <button type="button" class="active" data-lang="zh">中</button>
+            <button type="button" data-lang="en">EN</button>
+          </div>
+          <h2 data-i18n="login.formTitle">进入工作台</h2>
+          <p data-i18n="login.formCopy">当前为 MVP 演示登录，用于展示产品入口和使用模式。后续可接 Supabase、PostgreSQL 或企业 SSO。</p>
           <label class="field">
-            <span>邮箱</span>
+            <span data-i18n="login.email">邮箱</span>
             <input value="demo@fitscope.ai" aria-label="email" />
           </label>
           <label class="field">
-            <span>密码</span>
+            <span data-i18n="login.password">密码</span>
             <input value="demo-access" type="password" aria-label="password" />
           </label>
           <div class="mode-toggle" aria-label="mode selector">
-            <button class="active" type="button" data-login-mode="management">管理视角</button>
-            <button type="button" data-login-mode="operator">执行视角</button>
+            <button class="active" type="button" data-login-mode="management" data-i18n="login.managementMode">管理视角</button>
+            <button type="button" data-login-mode="operator" data-i18n="login.operatorMode">执行视角</button>
           </div>
-          <button class="primary-button" type="submit">打开 Commerce OS</button>
-          <p class="login-note">说明：这是产品体验入口，不是真实鉴权。我们先做完整业务网站，再决定是否接数据库登录。</p>
+          <button class="primary-button" type="submit" data-i18n="login.submit">打开 Commerce OS</button>
+          <p class="login-note" data-i18n="login.note">说明：这是产品体验入口，不是真实鉴权。我们先做完整业务网站，再决定是否接数据库登录。</p>
         </form>
       </div>
     </section>
@@ -1965,29 +2004,32 @@
           <div class="brand-mark">FS</div>
           <div class="brand-title">
             <strong>FitScope Commerce OS</strong>
-            <span id="current-mode-label">管理模式</span>
+            <span id="current-mode-label" data-i18n="mode.management">管理模式</span>
           </div>
         </div>
         <nav class="nav" aria-label="Main navigation">
-          <button class="nav-button active" data-page="overview"><span class="nav-number">01</span><span>经营总览</span></button>
-          <button class="nav-button" data-page="market"><span class="nav-number">02</span><span>市场机会</span></button>
-          <button class="nav-button" data-page="assortment"><span class="nav-number">03</span><span>商品组合</span></button>
-          <button class="nav-button" data-page="network"><span class="nav-number">04</span><span>关系图谱</span></button>
-          <button class="nav-button" data-page="kpi"><span class="nav-number">05</span><span>KPI诊断</span></button>
-          <button class="nav-button" data-page="semantic"><span class="nav-number">06</span><span>语义洞察</span></button>
-          <button class="nav-button" data-page="workspace"><span class="nav-number">07</span><span>决策工作区</span></button>
-          <button class="nav-button" data-page="evidence"><span class="nav-number">08</span><span>证据与动作</span></button>
+          <button class="nav-button active" data-page="overview"><span class="nav-number">01</span><span data-i18n="nav.overview">经营总览</span></button>
+          <button class="nav-button" data-page="market"><span class="nav-number">02</span><span data-i18n="nav.market">市场机会</span></button>
+          <button class="nav-button" data-page="assortment"><span class="nav-number">03</span><span data-i18n="nav.assortment">商品组合</span></button>
+          <button class="nav-button" data-page="network"><span class="nav-number">04</span><span data-i18n="nav.network">关系图谱</span></button>
+          <button class="nav-button" data-page="kpi"><span class="nav-number">05</span><span data-i18n="nav.kpi">KPI诊断</span></button>
+          <button class="nav-button" data-page="semantic"><span class="nav-number">06</span><span data-i18n="nav.semantic">语义洞察</span></button>
+          <button class="nav-button" data-page="workspace"><span class="nav-number">07</span><span data-i18n="nav.workspace">决策工作区</span></button>
+          <button class="nav-button" data-page="evidence"><span class="nav-number">08</span><span data-i18n="nav.evidence">证据与动作</span></button>
         </nav>
-        <div class="side-meta">
-          <strong>数据连接状态</strong>
-          <p>公开 CSV 已接入。公司经营 KPI 目前使用模型化样例，下一步可替换为数据库 API。</p>
+        <div class="language-panel">
+          <strong data-i18n="language.title">Language</strong>
+          <div class="language-toggle" aria-label="Language switcher">
+            <button type="button" class="active" data-lang="zh">中</button>
+            <button type="button" data-lang="en">EN</button>
+          </div>
         </div>
       </aside>
 
       <main>
         <div class="topbar">
           <div>
-            <div class="pill"><span class="dot"></span><span>数据联动产品站点</span></div>
+            <div class="pill"><span class="dot"></span><span data-i18n="top.pill">数据联动产品站点</span></div>
             <h2 id="page-title">经营总览</h2>
             <p id="page-subtitle">先看市场机会和公司经营承接能力，再进入品类级决策。</p>
           </div>
@@ -2005,8 +2047,8 @@
             <div class="panel decision-flow-card">
               <div class="panel-header">
                 <div>
-                  <h3>经营工作台路径</h3>
-                  <p>首页给结论，后续页面提供市场、证据和执行动作。</p>
+                  <h3 data-i18n="overview.path.title">经营工作台路径</h3>
+                  <p data-i18n="overview.path.copy">首页给结论，后续页面提供市场、证据和执行动作。</p>
                 </div>
               </div>
               <div class="metric-list" id="overview-path"></div>
@@ -2016,13 +2058,13 @@
             <div class="panel opportunity-panel">
               <div class="panel-header">
                 <div>
-                  <h3>机会与风险地图</h3>
-                  <p>横向看机会，纵向看风险；气泡大小代表评论/合身样本量。点击任意品类会同步更新工作区和图谱。</p>
+                  <h3 data-i18n="overview.map.title">机会与风险地图</h3>
+                  <p data-i18n="overview.map.copy">横向看机会，纵向看风险；气泡大小代表评论/合身样本量。点击任意品类会同步更新工作区和图谱。</p>
                 </div>
                 <div class="opportunity-rules">
-                  <span class="pill">X：市场机会</span>
-                  <span class="pill">Y：经营风险</span>
-                  <span class="pill">气泡：证据量</span>
+                  <span class="pill" data-i18n="overview.map.x">X：市场机会</span>
+                  <span class="pill" data-i18n="overview.map.y">Y：经营风险</span>
+                  <span class="pill" data-i18n="overview.map.bubble">气泡：证据量</span>
                 </div>
               </div>
               <div class="opportunity-map-layout">
@@ -2033,8 +2075,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>当前优先队列</h3>
-                  <p>数据刷新后按同一套规则重新排序，每条建议都连接到 KPI、风险和证据。</p>
+                  <h3 data-i18n="overview.queue.title">当前优先队列</h3>
+                  <p data-i18n="overview.queue.copy">数据刷新后按同一套规则重新排序，每条建议都连接到 KPI、风险和证据。</p>
                 </div>
               </div>
               <div class="inspector" id="priority-queue"></div>
@@ -2043,15 +2085,15 @@
           <div style="height:14px"></div>
           <div class="chart-grid three">
             <div class="panel chart-box">
-              <div class="panel-header"><div><h3>行动组合分布</h3><p>每一种动作有多少品类进入队列。</p></div></div>
+              <div class="panel-header"><div><h3 data-i18n="overview.action.title">行动组合分布</h3><p data-i18n="overview.action.copy">每一种动作有多少品类进入队列。</p></div></div>
               <div id="overview-triage-donut"></div>
             </div>
             <div class="panel chart-box">
-              <div class="panel-header"><div><h3>合身健康度</h3><p>用合身、偏小、偏大信号判断退货压力来源。</p></div></div>
+              <div class="panel-header"><div><h3 data-i18n="overview.fit.title">合身健康度</h3><p data-i18n="overview.fit.copy">用合身、偏小、偏大信号判断退货压力来源。</p></div></div>
               <div id="overview-fit-donut"></div>
             </div>
             <div class="panel chart-box">
-              <div class="panel-header"><div><h3>交易动量</h3><p>H&M 公开交易日趋势，用于判断市场节奏。</p></div></div>
+              <div class="panel-header"><div><h3 data-i18n="overview.momentum.title">交易动量</h3><p data-i18n="overview.momentum.copy">H&M 公开交易日趋势，用于判断市场节奏。</p></div></div>
               <svg id="overview-momentum-line" class="line-chart" role="img" aria-label="overview transaction momentum"></svg>
             </div>
           </div>
@@ -2063,8 +2105,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>市场需求与商品配置</h3>
-                  <p>基于公开商品结构和交易占比生成需求 proxy；接入真实订单、搜索或广告数据后，同一视图会自动重算。</p>
+                  <h3 data-i18n="market.demand.title">市场需求与商品配置</h3>
+                  <p data-i18n="market.demand.copy">基于公开商品结构和交易占比生成需求 proxy；接入真实订单、搜索或广告数据后，同一视图会自动重算。</p>
                 </div>
               </div>
               <div class="bars" id="market-demand-bars"></div>
@@ -2072,8 +2114,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>模拟公司经营承接</h3>
-                  <p>这是未来接入数据库后的公司 KPI 层，包括转化、退货和毛利。</p>
+                  <h3 data-i18n="market.company.title">模拟公司经营承接</h3>
+                  <p data-i18n="market.company.copy">这是未来接入数据库后的公司 KPI 层，包括转化、退货和毛利。</p>
                 </div>
               </div>
               <div class="bars" id="company-health-bars"></div>
@@ -2087,8 +2129,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>商品组 Treemap</h3>
-                  <p>面积代表商品数量，颜色深浅代表交易需求，点击后切到市场机会页。</p>
+                  <h3 data-i18n="assortment.tree.title">商品组 Treemap</h3>
+                  <p data-i18n="assortment.tree.copy">面积代表商品数量，颜色深浅代表交易需求，点击后切到市场机会页。</p>
                 </div>
               </div>
               <div class="treemap" id="assortment-treemap"></div>
@@ -2096,8 +2138,8 @@
             <div class="panel chart-box">
               <div class="panel-header">
                 <div>
-                  <h3>商品组占比</h3>
-                  <p>用 donut 看组合集中度，避免只看条形排名。</p>
+                  <h3 data-i18n="assortment.share.title">商品组占比</h3>
+                  <p data-i18n="assortment.share.copy">用 donut 看组合集中度，避免只看条形排名。</p>
                 </div>
               </div>
               <div id="assortment-share-donut"></div>
@@ -2107,8 +2149,8 @@
           <div class="panel">
             <div class="panel-header">
               <div>
-                <h3>交易动量</h3>
-                <p>鼠标悬浮可查看具体日期、交易量和均价。</p>
+                <h3 data-i18n="assortment.momentum.title">交易动量</h3>
+                <p data-i18n="assortment.momentum.copy">鼠标悬浮可查看具体日期、交易量和均价。</p>
               </div>
             </div>
             <svg id="assortment-line" class="line-chart" role="img" aria-label="H&M transaction momentum"></svg>
@@ -2120,8 +2162,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>相关节点</h3>
-                  <p>参考 Connected Papers 的左侧列表逻辑，点击节点会同步更新中间图和右侧解释。</p>
+                  <h3 data-i18n="network.list.title">相关节点</h3>
+                  <p data-i18n="network.list.copy">参考 Connected Papers 的左侧列表逻辑，点击节点会同步更新中间图和右侧解释。</p>
                 </div>
               </div>
               <div class="network-category-strip" id="network-category-strip"></div>
@@ -2130,31 +2172,31 @@
             <div class="panel network-panel">
               <div class="panel-header">
                 <div>
-                  <h3>业务关系图谱</h3>
-                  <p>不再自动旋转。节点大小代表证据强度，连线代表共现或 KPI 影响，悬浮可查看解释，点击会锁定节点。</p>
+                  <h3 data-i18n="network.graph.title">业务关系图谱</h3>
+                  <p data-i18n="network.graph.copy">不再自动旋转。节点大小代表证据强度，连线代表共现或 KPI 影响，悬浮可查看解释，点击会锁定节点。</p>
                 </div>
                 <div class="control-row">
-                  <button class="chip active" data-network-filter="all">全部</button>
-                  <button class="chip" data-network-filter="risk">风险</button>
-                  <button class="chip" data-network-filter="action">行动</button>
+                  <button class="chip active" data-network-filter="all" data-i18n="filter.all">全部</button>
+                  <button class="chip" data-network-filter="risk" data-i18n="filter.risk">风险</button>
+                  <button class="chip" data-network-filter="action" data-i18n="filter.action">行动</button>
                   <button class="chip" data-network-filter="kpi">KPI</button>
                 </div>
               </div>
               <div class="connected-graph-wrap">
                 <svg id="connected-graph" class="connected-graph" role="img" aria-label="business relationship graph"></svg>
                 <div class="graph-toolbar">
-                  <span class="legend-item"><span class="legend-dot" style="background:var(--blue)"></span>品类</span>
-                  <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>评论痛点</span>
-                  <span class="legend-item"><span class="legend-dot" style="background:var(--violet)"></span>体型/尺码</span>
-                  <span class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>KPI/行动</span>
+                  <span class="legend-item"><span class="legend-dot" style="background:var(--blue)"></span><span data-i18n="legend.category">品类</span></span>
+                  <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span><span data-i18n="legend.pain">评论痛点</span></span>
+                  <span class="legend-item"><span class="legend-dot" style="background:var(--violet)"></span><span data-i18n="legend.bodySize">体型/尺码</span></span>
+                  <span class="legend-item"><span class="legend-dot" style="background:var(--green)"></span><span data-i18n="legend.kpiAction">KPI/行动</span></span>
                 </div>
               </div>
             </div>
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>节点解释</h3>
-                  <p>点击星域中的节点查看它影响哪些 KPI 和行动。</p>
+                  <h3 data-i18n="network.inspector.title">节点解释</h3>
+                  <p data-i18n="network.inspector.copy">点击星域中的节点查看它影响哪些 KPI 和行动。</p>
                 </div>
               </div>
               <div id="node-inspector" class="inspector"></div>
@@ -2168,8 +2210,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>KPI 承接差距</h3>
-                  <p>市场需求越强，越需要看转化、退货和毛利是否能承接。</p>
+                  <h3 data-i18n="kpi.gap.title">KPI 承接差距</h3>
+                  <p data-i18n="kpi.gap.copy">市场需求越强，越需要看转化、退货和毛利是否能承接。</p>
                 </div>
               </div>
               <div class="bars" id="kpi-gap-bars"></div>
@@ -2177,8 +2219,8 @@
             <div class="panel chart-box">
               <div class="panel-header">
                 <div>
-                  <h3>机会 / 退货矩阵</h3>
-                  <p>每个点代表一个品类，点击可进入该品类工作区。</p>
+                  <h3 data-i18n="kpi.matrix.title">机会 / 退货矩阵</h3>
+                  <p data-i18n="kpi.matrix.copy">每个点代表一个品类，点击可进入该品类工作区。</p>
                 </div>
               </div>
               <svg id="kpi-scatter" class="scatter-chart" role="img" aria-label="opportunity return matrix"></svg>
@@ -2192,8 +2234,8 @@
             <div class="panel chart-box">
               <div class="panel-header">
                 <div>
-                  <h3>评论痛点 3D 轮廓</h3>
-                  <p>把痛点频次转成语义地形。山峰越高代表出现越多，点击标签进入证据页。</p>
+                  <h3 data-i18n="semantic.contour.title">评论痛点 3D 轮廓</h3>
+                  <p data-i18n="semantic.contour.copy">把痛点频次转成语义地形。山峰越高代表出现越多，点击标签进入证据页。</p>
                 </div>
               </div>
               <div id="semantic-pain-contour"></div>
@@ -2201,8 +2243,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>体型风险优先级</h3>
-                  <p>用于决定尺码表、模特说明和 PDP 提示需要覆盖哪些人群。</p>
+                  <h3 data-i18n="semantic.body.title">体型风险优先级</h3>
+                  <p data-i18n="semantic.body.copy">用于决定尺码表、模特说明和 PDP 提示需要覆盖哪些人群。</p>
                 </div>
               </div>
               <div class="bars" id="semantic-body-bars"></div>
@@ -2212,14 +2254,14 @@
           <div class="panel">
             <div class="panel-header">
               <div>
-                <h3>评论语义样本</h3>
-                <p>默认展示当前品类，若样本不足则展示全局代理样本。</p>
+                <h3 data-i18n="semantic.table.title">评论语义样本</h3>
+                <p data-i18n="semantic.table.copy">默认展示当前品类，若样本不足则展示全局代理样本。</p>
               </div>
             </div>
             <div class="table-wrap">
               <table>
                 <thead>
-                  <tr><th>品类</th><th>语义标签</th><th>体型</th><th>场景</th><th>用户语言</th></tr>
+                  <tr><th data-i18n="table.category">品类</th><th data-i18n="table.semanticTag">语义标签</th><th data-i18n="table.body">体型</th><th data-i18n="table.occasion">场景</th><th data-i18n="table.userLanguage">用户语言</th></tr>
                 </thead>
                 <tbody id="semantic-table"></tbody>
               </table>
@@ -2230,8 +2272,8 @@
         <section class="page" id="workspace">
           <div class="workspace-hero">
             <div class="decision-band">
-              <h3 id="workspace-title">选择一个品类</h3>
-              <p id="workspace-summary">工作区会把该品类的市场机会、公司经营承接、合身风险、评论证据和行动建议集中展示。</p>
+              <h3 id="workspace-title" data-i18n="workspace.empty.title">选择一个品类</h3>
+              <p id="workspace-summary" data-i18n="workspace.empty.copy">工作区会把该品类的市场机会、公司经营承接、合身风险、评论证据和行动建议集中展示。</p>
               <div class="impact-grid" id="workspace-impact-grid"></div>
             </div>
             <div class="panel">
@@ -2242,8 +2284,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>品类决策逻辑</h3>
-                  <p>这里不是简单排名，而是解释为什么该品类应该放量、观察或修正。</p>
+                  <h3 data-i18n="workspace.logic.title">品类决策逻辑</h3>
+                  <p data-i18n="workspace.logic.copy">这里不是简单排名，而是解释为什么该品类应该放量、观察或修正。</p>
                 </div>
               </div>
               <div id="decision-logic" class="inspector"></div>
@@ -2251,8 +2293,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3>相关痛点</h3>
-                  <p>来自评论标签和合身反馈。</p>
+                  <h3 data-i18n="workspace.pain.title">相关痛点</h3>
+                  <p data-i18n="workspace.pain.copy">来自评论标签和合身反馈。</p>
                 </div>
               </div>
               <div class="bars" id="workspace-pain-bars"></div>
@@ -2264,8 +2306,8 @@
           <div class="panel">
             <div class="panel-header">
               <div>
-                <h3>证据与行动</h3>
-                <p>点击 KPI、节点或品类后，这里会展示对应评论样本和可执行动作。</p>
+                <h3 data-i18n="evidence.title">证据与行动</h3>
+                <p data-i18n="evidence.copy">点击 KPI、节点或品类后，这里会展示对应评论样本和可执行动作。</p>
               </div>
               <span class="pill" id="evidence-count">0 rows</span>
             </div>
@@ -2275,13 +2317,13 @@
               <table>
                 <thead>
                   <tr>
-                    <th>品类</th>
-                    <th>合身</th>
-                    <th>评分</th>
-                    <th>体型</th>
-                    <th>场景</th>
-                    <th>痛点</th>
-                    <th>评论证据</th>
+                    <th data-i18n="table.category">品类</th>
+                    <th data-i18n="table.fit">合身</th>
+                    <th data-i18n="table.rating">评分</th>
+                    <th data-i18n="table.body">体型</th>
+                    <th data-i18n="table.occasion">场景</th>
+                    <th data-i18n="table.pain">痛点</th>
+                    <th data-i18n="table.reviewEvidence">评论证据</th>
                   </tr>
                 </thead>
                 <tbody id="evidence-table"></tbody>
@@ -2290,7 +2332,7 @@
           </div>
         </section>
 
-        <p class="footer-note">MVP 说明：登录、公司 KPI 和数据库连接在此版本中用于展示完整产品形态。公开数据已经真实接入，内部经营数据可在下一阶段替换为数据库 API。</p>
+        <p class="footer-note" data-i18n="footer.note">MVP 说明：登录、公司 KPI 和数据库连接在此版本中用于展示完整产品形态。公开数据已经真实接入，内部经营数据可在下一阶段替换为数据库 API。</p>
       </main>
     </section>
     <div id="chart-tooltip" class="chart-tooltip" aria-hidden="true"></div>
@@ -2310,6 +2352,7 @@
 
       const state = {
         mode: "management",
+        lang: "zh",
         page: "overview",
         selectedCategory: "dress",
         selectedNode: null,
@@ -2332,14 +2375,230 @@
         wedding: "婚礼", party: "聚会", work: "通勤", everyday: "日常", "formal affair": "正式场合",
       };
 
+      const labelMapEn = {
+        dress: "Dress", top: "Top", outerwear: "Outerwear", bottom: "Bottom", pant: "Pants", vest: "Vest", sale: "Sale",
+        culottes: "Culottes", tunic: "Tunic", frock: "Frock", cardigan: "Cardigan", shirtdress: "Shirtdress", sweatshirt: "Sweatshirt",
+        sweater: "Sweater", pullover: "Pullover", tank: "Tank", jumpsuit: "Jumpsuit", blazer: "Blazer", leggings: "Leggings",
+        "Garment Upper body": "Upper-body garments", "Garment Lower body": "Lower-body garments", "Garment Full body": "Full-body garments",
+        Accessories: "Accessories", Underwear: "Underwear", Shoes: "Shoes", Swimwear: "Swimwear", "Socks & Tights": "Socks & tights",
+        fabric_or_quality: "Fabric / quality", color_expectation: "Color expectation", chest_or_bust: "Chest / bust",
+        length_issue: "Length issue", too_small_or_tight: "Too small / tight", too_large_or_loose: "Too large / loose", waist_or_hip: "Waist / hip",
+        petite: "Petite", athletic: "Athletic", pear: "Pear", hourglass: "Hourglass", apple: "Apple", "full bust": "Full bust",
+        wedding: "Wedding", party: "Party", work: "Work", everyday: "Everyday", "formal affair": "Formal"
+      };
+
+      const I18N = {
+        zh: {
+          "mode.management": "管理模式", "mode.operator": "运营模式", "language.title": "语言",
+          "login.brandTagline": "KPI 优先的服装经营智能",
+          "login.heroTitle": "把市场机会、经营 KPI 和用户证据连接成一个决策网站。",
+          "login.heroCopy": "它先判断外部市场是否值得进入，再判断内部经营能否承接，最后用关系图谱追踪品类、痛点、体型、尺码和行动建议之间的业务关系。",
+          "login.proofData": "主要公开数据源，用于市场、评论和合身风险。",
+          "login.proofModes": "使用模式：管理层视角和执行者视角。",
+          "login.proofGraph": "业务关系图，把节点关系变成可点击的产品体验。",
+          "login.formTitle": "进入工作台", "login.formCopy": "当前为 MVP 演示登录，用于展示产品入口和使用模式。后续可接 Supabase、PostgreSQL 或企业 SSO。",
+          "login.email": "邮箱", "login.password": "密码", "login.managementMode": "管理视角", "login.operatorMode": "执行视角", "login.submit": "打开 Commerce OS",
+          "login.note": "说明：这是产品体验入口，不是真实鉴权。我们先做完整业务网站，再决定是否接数据库登录。",
+          "top.pill": "数据联动产品站点",
+          "nav.overview": "经营总览", "nav.market": "市场机会", "nav.assortment": "商品组合", "nav.network": "关系图谱",
+          "nav.kpi": "KPI诊断", "nav.semantic": "语义洞察", "nav.workspace": "决策工作区", "nav.evidence": "证据与动作",
+          "page.overview.title": "经营总览", "page.overview.copy": "先看市场机会和公司经营承接能力，再进入品类级决策。",
+          "page.market.title": "市场机会", "page.market.copy": "公开市场数据与模拟公司 KPI 对齐，判断哪些品类值得进入。",
+          "page.assortment.title": "商品组合", "page.assortment.copy": "用商品结构、占比和交易动量判断组合是否健康。",
+          "page.network.title": "关系图谱", "page.network.copy": "用 2D 关系图解释品类、痛点、KPI 和行动之间的连接。",
+          "page.kpi.title": "KPI诊断", "page.kpi.copy": "把市场机会拆成转化、退货、毛利和合身承接问题。",
+          "page.semantic.title": "语义洞察", "page.semantic.copy": "把评论文本和合身反馈转成可执行的商品与内容问题。",
+          "page.workspace.title": "决策工作区", "page.workspace.copy": "围绕当前品类集中展示 KPI、风险、证据和动作。",
+          "page.evidence.title": "证据与动作", "page.evidence.copy": "把评论证据和语义痛点转成可执行优化动作。",
+          "control.graphFocus": "图谱聚焦", "control.resetGraph": "重置图谱", "control.kpiCategory": "诊断品类", "control.resetKpi": "重置KPI",
+          "control.semanticCategory": "语义品类", "control.resetSemantic": "重置语义", "control.workspaceCategory": "工作区品类", "control.resetCategory": "重置品类",
+          "control.evidenceCategory": "证据品类", "control.resetEvidence": "重置证据",
+          "overview.path.title": "经营工作台路径", "overview.path.copy": "首页给结论，后续页面提供市场、证据和执行动作。",
+          "overview.map.title": "机会与风险地图", "overview.map.copy": "横向看机会，纵向看风险；气泡大小代表评论/合身样本量。点击任意品类会同步更新工作区和图谱。",
+          "overview.map.x": "X：市场机会", "overview.map.y": "Y：经营风险", "overview.map.bubble": "气泡：证据量",
+          "overview.queue.title": "当前优先队列", "overview.queue.copy": "数据刷新后按同一套规则重新排序，每条建议都连接到 KPI、风险和证据。",
+          "overview.action.title": "行动组合分布", "overview.action.copy": "每一种动作有多少品类进入队列。",
+          "overview.fit.title": "合身健康度", "overview.fit.copy": "用合身、偏小、偏大信号判断退货压力来源。",
+          "overview.momentum.title": "交易动量", "overview.momentum.copy": "H&M 公开交易日趋势，用于判断市场节奏。",
+          "market.demand.title": "市场需求与商品配置", "market.demand.copy": "基于公开商品结构和交易占比生成需求 proxy；接入真实订单、搜索或广告数据后，同一视图会自动重算。",
+          "market.company.title": "模拟公司经营承接", "market.company.copy": "这是未来接入数据库后的公司 KPI 层，包括转化、退货和毛利。",
+          "assortment.tree.title": "商品组 Treemap", "assortment.tree.copy": "面积代表商品数量，颜色深浅代表交易需求，点击后切到市场机会页。",
+          "assortment.share.title": "商品组占比", "assortment.share.copy": "用 donut 看组合集中度，避免只看条形排名。",
+          "assortment.momentum.title": "交易动量", "assortment.momentum.copy": "鼠标悬浮可查看具体日期、交易量和均价。",
+          "network.list.title": "相关节点", "network.list.copy": "参考 Connected Papers 的左侧列表逻辑，点击节点会同步更新中间图和右侧解释。",
+          "network.graph.title": "业务关系图谱", "network.graph.copy": "不再自动旋转。节点大小代表证据强度，连线代表共现或 KPI 影响，悬浮可查看解释，点击会锁定节点。",
+          "network.inspector.title": "节点解释", "network.inspector.copy": "点击星域中的节点查看它影响哪些 KPI 和行动。",
+          "filter.all": "全部", "filter.risk": "风险", "filter.action": "行动",
+          "legend.category": "品类", "legend.pain": "评论痛点", "legend.bodySize": "体型/尺码", "legend.kpiAction": "KPI/行动",
+          "kpi.gap.title": "KPI 承接差距", "kpi.gap.copy": "市场需求越强，越需要看转化、退货和毛利是否能承接。",
+          "kpi.matrix.title": "机会 / 退货矩阵", "kpi.matrix.copy": "每个点代表一个品类，点击可进入该品类工作区。",
+          "semantic.contour.title": "评论痛点 3D 轮廓", "semantic.contour.copy": "把痛点频次转成语义地形。山峰越高代表出现越多，点击标签进入证据页。",
+          "semantic.body.title": "体型风险优先级", "semantic.body.copy": "用于决定尺码表、模特说明和 PDP 提示需要覆盖哪些人群。",
+          "semantic.table.title": "评论语义样本", "semantic.table.copy": "默认展示当前品类，若样本不足则展示全局代理样本。",
+          "workspace.empty.title": "选择一个品类", "workspace.empty.copy": "工作区会把该品类的市场机会、公司经营承接、合身风险、评论证据和行动建议集中展示。",
+          "workspace.logic.title": "品类决策逻辑", "workspace.logic.copy": "这里不是简单排名，而是解释为什么该品类应该放量、观察或修正。",
+          "workspace.pain.title": "相关痛点", "workspace.pain.copy": "来自评论标签和合身反馈。",
+          "evidence.title": "证据与行动", "evidence.copy": "点击 KPI、节点或品类后，这里会展示对应评论样本和可执行动作。",
+          "table.category": "品类", "table.semanticTag": "语义标签", "table.body": "体型", "table.occasion": "场景", "table.userLanguage": "用户语言",
+          "table.fit": "合身", "table.rating": "评分", "table.pain": "痛点", "table.reviewEvidence": "评论证据",
+          "footer.note": "MVP 说明：登录、公司 KPI 和数据库连接在此版本中用于展示完整产品形态。公开数据已经真实接入，内部经营数据可在下一阶段替换为数据库 API。"
+        },
+        en: {
+          "mode.management": "Management mode", "mode.operator": "Operator mode", "language.title": "Language",
+          "login.brandTagline": "KPI-first apparel intelligence",
+          "login.heroTitle": "Connect market opportunity, operating KPIs, and user evidence in one decision website.",
+          "login.heroCopy": "It first checks whether an external market is worth entering, then whether internal operations can support it, and finally maps relationships among categories, pain points, body types, sizes, KPIs, and actions.",
+          "login.proofData": "Main public datasets for market, review, and fit-risk signals.",
+          "login.proofModes": "Two usage modes: management view and operator view.",
+          "login.proofGraph": "A business relationship graph turns node links into clickable product context.",
+          "login.formTitle": "Enter Workspace", "login.formCopy": "This MVP login demonstrates the product entry and usage modes. Supabase, PostgreSQL, or enterprise SSO can be connected later.",
+          "login.email": "Email", "login.password": "Password", "login.managementMode": "Management view", "login.operatorMode": "Operator view", "login.submit": "Open Commerce OS",
+          "login.note": "Note: this is a product demo entry, not real authentication. The full website experience comes first; database login can follow.",
+          "top.pill": "Data-linked product workspace",
+          "nav.overview": "Overview", "nav.market": "Market Opportunity", "nav.assortment": "Assortment", "nav.network": "Relationship Graph",
+          "nav.kpi": "KPI Diagnosis", "nav.semantic": "Semantic Insight", "nav.workspace": "Decision Workspace", "nav.evidence": "Evidence & Actions",
+          "page.overview.title": "Overview", "page.overview.copy": "Read market opportunity and company readiness first, then move into category-level decisions.",
+          "page.market.title": "Market Opportunity", "page.market.copy": "Align public market data with modeled company KPIs to decide which categories are worth entering.",
+          "page.assortment.title": "Assortment", "page.assortment.copy": "Use product structure, share, and transaction momentum to judge assortment health.",
+          "page.network.title": "Relationship Graph", "page.network.copy": "Explain links between categories, pain points, KPIs, and actions through a 2D graph.",
+          "page.kpi.title": "KPI Diagnosis", "page.kpi.copy": "Break market opportunity into conversion, return, margin, and fit-readiness gaps.",
+          "page.semantic.title": "Semantic Insight", "page.semantic.copy": "Turn review text and fit feedback into actionable product and content issues.",
+          "page.workspace.title": "Decision Workspace", "page.workspace.copy": "Concentrate KPI, risk, evidence, and action for the current category.",
+          "page.evidence.title": "Evidence & Actions", "page.evidence.copy": "Translate review evidence and semantic pain points into executable improvements.",
+          "control.graphFocus": "Graph focus", "control.resetGraph": "Reset graph", "control.kpiCategory": "KPI category", "control.resetKpi": "Reset KPI",
+          "control.semanticCategory": "Semantic category", "control.resetSemantic": "Reset semantic", "control.workspaceCategory": "Workspace category", "control.resetCategory": "Reset category",
+          "control.evidenceCategory": "Evidence category", "control.resetEvidence": "Reset evidence",
+          "overview.path.title": "Operating Path", "overview.path.copy": "The overview gives the decision; follow-up pages provide market, evidence, and execution detail.",
+          "overview.map.title": "Opportunity and Risk Map", "overview.map.copy": "X shows opportunity, Y shows risk, and bubble size shows review/fit evidence volume. Click any category to update the workspace and graph.",
+          "overview.map.x": "X: Market opportunity", "overview.map.y": "Y: Operating risk", "overview.map.bubble": "Bubble: Evidence volume",
+          "overview.queue.title": "Current Priority Queue", "overview.queue.copy": "When data refreshes, the same rule recalculates ranking. Every recommendation links to KPI, risk, and evidence.",
+          "overview.action.title": "Action Mix", "overview.action.copy": "How many categories are assigned to each action type.",
+          "overview.fit.title": "Fit Health", "overview.fit.copy": "Use fit, too-small, and too-large signals to identify return-pressure sources.",
+          "overview.momentum.title": "Transaction Momentum", "overview.momentum.copy": "Daily public H&M transactions help read market rhythm.",
+          "market.demand.title": "Market Demand vs Assortment", "market.demand.copy": "Public product structure and transaction share create a demand proxy. Real orders, search, or ads data can replace it later.",
+          "market.company.title": "Modeled Company Readiness", "market.company.copy": "A future company KPI layer for conversion, returns, and margin once database data is connected.",
+          "assortment.tree.title": "Product Group Treemap", "assortment.tree.copy": "Area shows article count, color intensity shows demand. Click to switch to Market Opportunity.",
+          "assortment.share.title": "Product Group Share", "assortment.share.copy": "The donut shows concentration without relying only on ranked bars.",
+          "assortment.momentum.title": "Transaction Momentum", "assortment.momentum.copy": "Hover to inspect date, transactions, and average price.",
+          "network.list.title": "Related Nodes", "network.list.copy": "A Connected Papers style list. Clicking a node updates the graph and inspector.",
+          "network.graph.title": "Business Relationship Graph", "network.graph.copy": "No auto-rotation. Node size represents evidence strength; edges represent co-occurrence or KPI influence. Hover for explanation, click to lock.",
+          "network.inspector.title": "Node Inspector", "network.inspector.copy": "Click a node in the graph to see which KPIs and actions it affects.",
+          "filter.all": "All", "filter.risk": "Risk", "filter.action": "Action",
+          "legend.category": "Category", "legend.pain": "Review pain point", "legend.bodySize": "Body / Size", "legend.kpiAction": "KPI / Action",
+          "kpi.gap.title": "KPI Readiness Gap", "kpi.gap.copy": "The stronger market demand is, the more conversion, return, and margin readiness matter.",
+          "kpi.matrix.title": "Opportunity / Return Matrix", "kpi.matrix.copy": "Each point is a category. Click to open the category workspace.",
+          "semantic.contour.title": "Review Pain 3D Contour", "semantic.contour.copy": "Pain-point frequency becomes a semantic terrain. Higher peaks mean more mentions. Click labels to open evidence.",
+          "semantic.body.title": "Body-Type Risk Priority", "semantic.body.copy": "Use this to decide which user groups need size chart, model note, and PDP guidance coverage.",
+          "semantic.table.title": "Review Semantic Samples", "semantic.table.copy": "Default shows the current category; when samples are limited it falls back to global proxy samples.",
+          "workspace.empty.title": "Select a Category", "workspace.empty.copy": "The workspace concentrates market opportunity, company readiness, fit risk, review evidence, and actions for the selected category.",
+          "workspace.logic.title": "Category Decision Logic", "workspace.logic.copy": "This is not a simple ranking. It explains why a category should scale, be watched, or be fixed.",
+          "workspace.pain.title": "Related Pain Points", "workspace.pain.copy": "From review tags and fit feedback.",
+          "evidence.title": "Evidence & Actions", "evidence.copy": "After clicking a KPI, node, or category, this page shows matched review samples and executable actions.",
+          "table.category": "Category", "table.semanticTag": "Semantic tag", "table.body": "Body type", "table.occasion": "Occasion", "table.userLanguage": "User language",
+          "table.fit": "Fit", "table.rating": "Rating", "table.pain": "Pain point", "table.reviewEvidence": "Review evidence",
+          "footer.note": "MVP note: login, company KPIs, and database connection signals are included to show the full product shape. Public datasets are loaded; internal operating data can be replaced by a database API later."
+        }
+      };
+
+      const phraseEn = {
+        "当前数据窗口判断": "Current data-window decision",
+        "当前可优先放量": "Current scale candidate", "当前应先降退货": "Reduce returns first", "当前应先改详情页": "Fix PDP first",
+        "当前需要验证": "Needs validation", "当前暂停放量": "Pause scaling", "当前保持观察": "Watch",
+        "优先放量": "Scale", "先降退货": "Reduce returns", "先改详情页": "Fix PDP", "小规模验证": "Validate", "暂停放量": "Pause", "观察": "Watch",
+        "市场需求强且经营风险可承接，可以增加核心 SKU 曝光，同时保留评论风险监控。": "Market demand is strong and operating risk is manageable. Increase core SKU exposure while monitoring review risk.",
+        "需求存在，但退货压力会侵蚀利润。先处理尺码说明、高风险 SKU 和退货原因，再扩大投放。": "Demand exists, but return pressure can erode margin. Fix size guidance, high-risk SKUs, and return drivers before scaling.",
+        "评论和合身风险较高，优先改 PDP 的材质、版型、尺码和模特说明。": "Review and fit risk are high. Prioritize PDP material, fit, size, and model notes.",
+        "先做小流量测试，观察转化、退货和评论变化，再决定是否放量。": "Run a small traffic test first, then watch conversion, returns, and review changes before scaling.",
+        "退货压力过高，暂不扩大曝光，先定位退货和差评原因。": "Return pressure is too high. Do not expand exposure until return and low-rating causes are isolated.",
+        "保持监控，等待市场需求或内部 KPI 出现更强信号。": "Keep monitoring until market demand or internal KPIs show a stronger signal.",
+        "机会分": "Opportunity score", "退货率": "Return rate", "合身率": "Fit rate", "平均转化": "Average conversion", "平均退货": "Average returns",
+        "平均毛利": "Average margin", "高风险品类": "High-risk categories", "当前品类": "Current category",
+        "机会分怎么来": "How the opportunity score is calculated", "风险为什么上升": "Why risk increases", "当前结果怎么读": "How to read the current result",
+        "是当前数据窗口下的第一入口；它不是固定推荐，刷新数据后会由同一规则重新排序。": " is the top entry in the current data window. It is not a fixed recommendation; the same rule reranks it after data refresh.",
+        "个品类": " categories", "占比": "Share", "评论标签出现": "Review tag mentions", "组合合身率": "Portfolio fit rate", "偏小信号": "Too-small signal", "偏大信号": "Too-large signal",
+        "合身": "Fit", "偏小": "Too small", "偏大": "Too large", "条": " rows", "表": "table", "分": "score", "指数": "index", "暴露": "exposure", "代理值": "proxy value", "个百分点": "percentage points", "百分点": "percentage points",
+        "点击进入语义洞察复核合身原因。": "Click to open Semantic Insight and review fit drivers.", "健康": "Healthy", "需治理": "Needs action",
+        "低": "Low", "当前": "Current", "高": "High", "低市场机会": "Low opportunity", "高市场机会": "High opportunity", "低经营风险": "Low operating risk", "高经营风险": "High operating risk",
+        "先治理风险": "Treat risk first", "先修正再放量": "Fix before scaling", "低优先观察": "Low-priority watch", "优先验证放量": "Validate then scale",
+        "机会排名": "Opportunity rank", "风险指数": "Risk index", "建议": "Recommendation", "商品数": "Articles", "商品占比": "Article share", "交易占比": "Transaction share",
+        "交易": "Transactions", "均价": "Avg. price", "机会": "Opportunity", "风险": "Risk", "权重": "Weight", "选择一个节点": "Select a node",
+        "规模代理": "Scale proxy", "转化承接": "Conversion readiness", "退货暴露": "Return exposure", "毛利质量": "Margin quality", "当前入口": "Current entry",
+        "模拟 KPI": "Modeled KPI", "增长侧": "Growth", "风险侧": "Risk", "利润侧": "Margin", "优先级": "Priority",
+        "模型化 GMV，用于演示经营承接层": "Modeled GMV for the readiness layer", "接真实订单后替换": "Replace with real orders",
+        "由品类需求、风险和评论信号估算": "Estimated from demand, risk, and reviews", "需用埋点校准": "Needs event-data calibration",
+        "合身偏差和评论痛点推高退货压力": "Fit gaps and review pain points drive return pressure", "需要治理": "Needs action", "处于健康区": "Healthy range",
+        "扣除退货压力后的经营承接能力": "Readiness after return-pressure adjustment", "可承接": "Ready", "需复核": "Review",
+        "随当前数据窗口重新计算，不固定绑定某个品类": "Recalculated by the current data window, not fixed to one category",
+        "市场是否值得进": "Is the market worth entering?", "公司是否能承接": "Can the company support it?", "证据是否支持动作": "Does evidence support action?",
+        "市场机会页验证需求、交易节奏和组合缺口。": "Validate demand, transaction rhythm, and assortment gaps in Market Opportunity.",
+        "KPI 诊断页确认转化、退货、毛利是否拖累放量。": "Use KPI Diagnosis to check whether conversion, returns, or margin block scaling.",
+        "语义洞察和证据页复核评论痛点，再进入工作区。": "Review semantic pain points and evidence before opening the workspace.",
+        "需求占比、转化承接、退货压力、毛利质量四项合成。右侧越高，说明值得投入更多注意力。": "Demand share, conversion readiness, return pressure, and margin quality are combined. Farther right means more attention is warranted.",
+        "风险来自评论痛点、合身偏差和模型化退货率。越靠上越不适合直接放量。": "Risk comes from review pain, fit gaps, and modeled return rate. Higher points should not scale directly.",
+        "排序逻辑：用市场机会、转化承接、退货暴露和毛利质量共同判断每个品类的进入优先级与动作类型；数据更新后自动重算。": "Ranking logic: market opportunity, conversion readiness, return exposure, and margin quality determine category priority and action type. It recalculates after data updates.",
+        "行动状态": "Action status", "外部市场代理信号": "External market proxy", "毛利与退货压力综合": "Margin and return pressure combined",
+        "预计退货和合身压力": "Estimated return and fit pressure", "当前推荐处理方式": "Current recommended handling",
+        "关系权重": "Relationship weight", "影响范围": "Impact scope", "下一步": "Next step", "查看证据": "View evidence", "打开工作区": "Open workspace",
+        "品类节点": "Category node", "痛点节点": "Pain node", "体型节点": "Body node", "尺码节点": "Size node", "行动节点": "Action node", "关系节点": "Relationship node",
+        "市场交易事件": "Market transactions", "最高需求组": "Top demand group", "最新日交易": "Latest daily transactions", "供需差最大": "Largest supply-demand gap", "数据层": "Data layer",
+        "商品目录": "Product catalog", "市场交易": "Market transactions", "前三集中度": "Top-3 concentration", "最大需求差": "Largest demand gap", "组合判断": "Assortment read",
+        "集中": "Concentrated", "分散": "Distributed", "评论样本": "Review samples", "平均评分": "Average rating", "带痛点评论": "Tagged reviews", "主痛点": "Main pain point",
+        "H&M 交易表": "H&M transaction table", "H&M articles 表": "H&M articles table", "transactions 表": "transactions table", "下一阶段可接 API": "API-ready in the next stage",
+        "需求占比减商品占比": "Demand share minus article share", "商品结构集中程度": "Assortment concentration", "决定是否需要品类扩展": "Determines whether category expansion is needed",
+        "模型化公司 KPI": "Modeled company KPI", "合身与评论风险驱动": "Driven by fit and review risk", "退货压力折损后": "After return-pressure discount",
+        "由右上选择器控制": "Controlled by the top-right selector", "退货压力": "Return pressure", "语义轮廓": "Semantic contour",
+        "当前筛选可复核样本": "Reviewable samples under current filters", "用户满意度代理信号": "User satisfaction proxy", "语义覆盖率": "Semantic coverage", "用于生成行动建议": "Used to generate action recommendations",
+        "市场需求指数": "Market demand index", "GMV 代理值": "GMV proxy value", "转化率": "Conversion rate", "经营承接": "Operating readiness",
+        "来自当前品类评论样本，可直接进入证据表复核。": "From current category review samples; open the evidence table to verify."
+      };
+
       const chartColors = ["#25b7ff", "#35dcb3", "#ffb02e", "#ff6b6b", "#a77cff", "#6bd5ff", "#f5d76b", "#8ddf7a"];
 
       const fmt = (value) => Intl.NumberFormat("en", { notation: Number(value) > 999999 ? "compact" : "standard", maximumFractionDigits: 1 }).format(Number(value) || 0);
       const pct = (value) => `${((Number(value) || 0) * 100).toFixed(1)}%`;
       const num = (value) => Number.parseFloat(value || "0") || 0;
       const int = (value) => Number.parseInt(value || "0", 10) || 0;
-      const nameOf = (value) => labelMap[value] ? `${labelMap[value]} · ${value}` : value || "-";
+      const t = (key) => I18N[state.lang]?.[key] || I18N.zh[key] || key;
+      const tr = (text) => {
+        if (state.lang === "zh") return String(text ?? "");
+        let output = String(text ?? "");
+        Object.entries(phraseEn).sort((a, b) => b[0].length - a[0].length).forEach(([zh, en]) => {
+          output = output.split(zh).join(en);
+        });
+        return output;
+      };
+      const nameOf = (value) => {
+        const labels = state.lang === "en" ? labelMapEn : labelMap;
+        return labels[value] ? `${labels[value]} · ${value}` : value || "-";
+      };
       const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+
+      function localizeStatic() {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+        document.querySelectorAll("[data-lang]").forEach((button) => {
+          button.classList.toggle("active", button.dataset.lang === state.lang);
+        });
+        const modeLabel = document.getElementById("current-mode-label");
+        if (modeLabel) modeLabel.textContent = state.mode === "management" ? t("mode.management") : t("mode.operator");
+      }
+
+      function localizeGenerated(root = document) {
+        if (state.lang === "zh") return;
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            const parent = node.parentElement;
+            if (!parent || ["SCRIPT", "STYLE"].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+            return node.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+          }
+        });
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach((node) => {
+          node.nodeValue = tr(node.nodeValue);
+        });
+      }
 
       function parseCSV(text) {
         const rows = [];
@@ -2507,6 +2766,8 @@
         renderNodeInspector();
         renderNetworkCategoryStrip();
         renderNetworkGraph();
+        localizeStatic();
+        localizeGenerated(document.querySelector("main"));
       }
 
       function renderKpis() {
@@ -2544,9 +2805,9 @@
         const company = (state.data.company || []).find((item) => item.category === leader.category_group) || {};
         document.getElementById("overview-command").innerHTML = `
           <div>
-            <span class="brief-eyebrow">当前数据窗口判断</span>
+            <span class="brief-eyebrow">${state.lang === "en" ? "Current data-window decision" : "当前数据窗口判断"}</span>
             <h3>${escapeHtml(headlineForDecision(leader, leaderDecision))}</h3>
-            <p>${escapeHtml(leaderDecision.action)} 这是按当前数据窗口生成的方向判断；当市场、评论或经营 KPI 更新时，入口品类、动作和优先级会重新计算。</p>
+            <p>${escapeHtml(state.lang === "en" ? `${tr(leaderDecision.action)} This direction is generated from the current data window. When market, review, or operating KPI data updates, the entry category, action, and priority are recalculated.` : `${leaderDecision.action} 这是按当前数据窗口生成的方向判断；当市场、评论或经营 KPI 更新时，入口品类、动作和优先级会重新计算。`)}</p>
           </div>
           <div class="mini-metrics">
             <div class="mini-metric"><span>机会分</span><strong>${businessScore(leader).toFixed(1)}</strong></div>
@@ -2557,10 +2818,10 @@
         document.getElementById("overview-path").innerHTML = [
           ["01", "市场是否值得进", "市场机会页验证需求、交易节奏和组合缺口。", "market", pct(marketDemandFor(leader.category_group))],
           ["02", "公司是否能承接", "KPI 诊断页确认转化、退货、毛利是否拖累放量。", "kpi", pct(company.margin)],
-          ["03", "证据是否支持动作", "语义洞察和证据页复核评论痛点，再进入工作区。", "semantic", `${fmt(int(leader.records))}条`],
+          ["03", "证据是否支持动作", "语义洞察和证据页复核评论痛点，再进入工作区。", "semantic", state.lang === "en" ? `${fmt(int(leader.records))} rows` : `${fmt(int(leader.records))}条`],
         ].map(([index, title, body, page, metric]) => `<button class="stack-step" type="button" onclick="setPage('${page}')">
           <span class="step-index">${escapeHtml(index)}</span>
-          <span><strong>${escapeHtml(title)}</strong><small>${escapeHtml(body)}</small></span>
+          <span><strong>${escapeHtml(tr(title))}</strong><small>${escapeHtml(tr(body))}</small></span>
           <span class="step-metric">${escapeHtml(metric)}</span>
         </button>`).join("");
         renderOverviewOpportunityMap("overview-opportunity-map", rankedAll.slice(0, 18));
@@ -2577,9 +2838,9 @@
           const decision = decisionFor(row);
           const rowCompany = (state.data.company || []).find((item) => item.category === row.category_group) || {};
           return `<button class="action-card" type="button" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')">
-            <span class="priority">优${index + 1}</span>
-            <h4>${escapeHtml(decision.label)} ${escapeHtml(nameOf(row.category_group))}</h4>
-            <p>${escapeHtml(decision.action)} 风险分 ${num(row.risk_score).toFixed(1)}，退货率 ${pct(rowCompany.returnRate)}，合身率 ${pct(row.fit_rate)}。</p>
+            <span class="priority">${state.lang === "en" ? `P${index + 1}` : `优${index + 1}`}</span>
+            <h4>${escapeHtml(tr(decision.label))} ${escapeHtml(nameOf(row.category_group))}</h4>
+            <p>${escapeHtml(state.lang === "en" ? `${tr(decision.action)} Risk score ${num(row.risk_score).toFixed(1)}, return rate ${pct(rowCompany.returnRate)}, fit rate ${pct(row.fit_rate)}.` : `${decision.action} 风险分 ${num(row.risk_score).toFixed(1)}，退货率 ${pct(rowCompany.returnRate)}，合身率 ${pct(row.fit_rate)}。`)}</p>
           </button>`;
         }).join("");
       }
@@ -2679,7 +2940,7 @@
         document.getElementById("semantic-table").innerHTML = selectedRows.slice(0, 16).map((row) => `
           <tr>
             <td>${escapeHtml(nameOf(row.category_group))}</td>
-            <td>${escapeHtml(cleanPainList(row.pain_points).map(nameOf).join("；") || "无明确痛点")}</td>
+            <td>${escapeHtml(cleanPainList(row.pain_points).map(nameOf).join(state.lang === "en" ? "; " : "；") || (state.lang === "en" ? "No clear pain point" : "无明确痛点"))}</td>
             <td>${escapeHtml(nameOf(row.body_type))}</td>
             <td>${escapeHtml(nameOf(row.occasion))}</td>
             <td>${escapeHtml(String(row.review_text || row.review_summary || "").slice(0, 180))}${String(row.review_text || "").length > 180 ? "..." : ""}</td>
@@ -2691,13 +2952,13 @@
         const row = selectedCategoryRow();
         const company = selectedCompanyRow();
         const decision = decisionFor(row);
-        document.getElementById("workspace-title").textContent = `${decision.label}：${nameOf(row.category_group)}`;
-        document.getElementById("workspace-summary").textContent = decision.action;
+        document.getElementById("workspace-title").textContent = state.lang === "en" ? `${tr(decision.label)}: ${nameOf(row.category_group)}` : `${decision.label}：${nameOf(row.category_group)}`;
+        document.getElementById("workspace-summary").textContent = tr(decision.action);
         document.getElementById("workspace-impact-grid").innerHTML = [
           ["机会指数", (marketDemandFor(row.category_group) * 100).toFixed(1), "外部市场代理信号"],
           ["经营承接", pct(company.margin), "毛利与退货压力综合"],
           ["风险暴露", pct(company.returnRate), "预计退货和合身压力"],
-          ["行动状态", decision.label, "当前推荐处理方式"],
+          ["行动状态", tr(decision.label), "当前推荐处理方式"],
         ].map(([label, value, note]) => `<div class="impact-cell"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><small>${escapeHtml(note)}</small></div>`).join("");
         document.getElementById("workspace-metrics").innerHTML = [
           ["市场需求指数", (marketDemandFor(row.category_group) * 100).toFixed(1)],
@@ -2708,31 +2969,31 @@
           ["风险分", num(row.risk_score).toFixed(1)],
         ].map(([label, value]) => `<button class="metric-row" type="button" onclick="setPage('${label.includes("退货") || label.includes("合身") || label.includes("风险") ? "evidence" : "market"}')"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></button>`).join("");
         const topPain = painForCategory(row.category_group);
-        const primaryPain = topPain[0] || { pain: "评论痛点", id: "none", count: 0 };
+        const primaryPain = topPain[0] || { pain: state.lang === "en" ? "Review pain point" : "评论痛点", id: "none", count: 0 };
         const painScope = primaryPain.fallback ? "该细分品类暂无专属评论样本，先使用全局服装评论高频痛点作为代理信号。" : "来自当前品类评论样本，可直接进入证据表复核。";
         const returnGap = Math.max(0, num(company.returnRate) - 0.18);
         const conversionGap = Math.max(0, 0.085 - num(company.conversion));
         document.getElementById("decision-logic").innerHTML = `
           <div class="decision-grid">
             <div class="decision-tile">
-              <span>业务判断</span>
-              <strong>${escapeHtml(decision.label)}：${escapeHtml(decision.action)}</strong>
-              <button type="button" onclick="setPage('network')">查看关系星域</button>
+              <span>${state.lang === "en" ? "Business read" : "业务判断"}</span>
+              <strong>${escapeHtml(state.lang === "en" ? `${tr(decision.label)}: ${tr(decision.action)}` : `${decision.label}：${decision.action}`)}</strong>
+              <button type="button" onclick="setPage('network')">${state.lang === "en" ? "View relationship graph" : "查看关系星域"}</button>
             </div>
             <div class="decision-tile">
-              <span>主要阻塞</span>
-              <strong>${escapeHtml(primaryPain.pain)} 出现 ${fmt(primaryPain.count)} 次。${escapeHtml(painScope)}</strong>
-              <button type="button" onclick="selectGraphNode('${escapeHtml(primaryPain.id)}', 'evidence')">打开证据</button>
+              <span>${state.lang === "en" ? "Main blocker" : "主要阻塞"}</span>
+              <strong>${escapeHtml(state.lang === "en" ? `${nameOf(primaryPain.pain)} appears ${fmt(primaryPain.count)} times. ${tr(painScope)}` : `${primaryPain.pain} 出现 ${fmt(primaryPain.count)} 次。${painScope}`)}</strong>
+              <button type="button" onclick="selectGraphNode('${escapeHtml(primaryPain.id)}', 'evidence')">${state.lang === "en" ? "Open evidence" : "打开证据"}</button>
             </div>
             <div class="decision-tile">
-              <span>经营影响</span>
-              <strong>退货率比健康线高 ${(returnGap * 100).toFixed(1)} 个百分点，转化率缺口 ${(conversionGap * 100).toFixed(1)} 个百分点。</strong>
-              <button type="button" onclick="setPage('market')">查看 KPI</button>
+              <span>${state.lang === "en" ? "Operating impact" : "经营影响"}</span>
+              <strong>${state.lang === "en" ? `Return rate is ${(returnGap * 100).toFixed(1)} percentage points above the health line; conversion gap is ${(conversionGap * 100).toFixed(1)} percentage points.` : `退货率比健康线高 ${(returnGap * 100).toFixed(1)} 个百分点，转化率缺口 ${(conversionGap * 100).toFixed(1)} 个百分点。`}</strong>
+              <button type="button" onclick="setPage('market')">${state.lang === "en" ? "View KPI" : "查看 KPI"}</button>
             </div>
             <div class="decision-tile">
-              <span>执行动作</span>
-              <strong>先改 PDP 尺码/材质说明，抽查高风险 SKU，再观察转化和退货变化。</strong>
-              <button type="button" onclick="setPage('evidence')">查看动作</button>
+              <span>${state.lang === "en" ? "Execution action" : "执行动作"}</span>
+              <strong>${state.lang === "en" ? "Fix PDP size/material guidance first, audit high-risk SKUs, then monitor conversion and return changes." : "先改 PDP 尺码/材质说明，抽查高风险 SKU，再观察转化和退货变化。"}</strong>
+              <button type="button" onclick="setPage('evidence')">${state.lang === "en" ? "View actions" : "查看动作"}</button>
             </div>
           </div>
         `;
@@ -2756,7 +3017,7 @@
             <td>${escapeHtml(row.rating || "-")}</td>
             <td>${escapeHtml(nameOf(row.body_type))}</td>
             <td>${escapeHtml(nameOf(row.occasion))}</td>
-            <td>${escapeHtml(cleanPainList(row.pain_points).map(nameOf).join("；") || "无明确痛点")}</td>
+            <td>${escapeHtml(cleanPainList(row.pain_points).map(nameOf).join(state.lang === "en" ? "; " : "；") || (state.lang === "en" ? "No clear pain point" : "无明确痛点"))}</td>
             <td>${escapeHtml(String(row.review_text || row.review_summary || "").slice(0, 260))}${String(row.review_text || "").length > 260 ? "..." : ""}</td>
           </tr>
         `).join("");
@@ -2765,6 +3026,13 @@
       function actionCards() {
         const row = selectedCategoryRow();
         const pain = painForCategory(row.category_group)[0]?.pain || "length_issue";
+        if (state.lang === "en") {
+          return [
+            { title: `Rewrite ${nameOf(row.category_group)} PDP risk copy`, body: `Turn ${nameOf(pain)} user language into size, material, or fit guidance to reduce expectation mismatch.` },
+            { title: "Add size and body-type guidance", body: "Add PDP size recommendations by body type and occasion, especially for too-small, too-large, chest, waist, and hip feedback." },
+            { title: "Create action tracking", body: "Write this recommendation to action_log and track owner, launch date, conversion, and return-rate changes." },
+          ];
+        }
         return [
           { title: `重写 ${nameOf(row.category_group)} 详情页风险文案`, body: `把 ${nameOf(pain)} 相关用户语言转成尺码、材质或版型说明，降低预期偏差。` },
           { title: "补充尺码和体型提示", body: "在 PDP 中加入按体型和场景的尺码建议，尤其关注偏小、偏大和胸腰臀相关反馈。" },
@@ -3177,7 +3445,7 @@
           tooltip.className = "chart-tooltip";
           document.body.appendChild(tooltip);
         }
-        tooltip.innerHTML = `<strong>${title}</strong><span>${body}</span>`;
+        tooltip.innerHTML = `<strong>${escapeHtml(tr(title))}</strong><span>${tr(body)}</span>`;
         tooltip.style.display = "block";
         tooltip.style.left = `${Math.min(window.innerWidth - 280, event.clientX + 14)}px`;
         tooltip.style.top = `${event.clientY + 14}px`;
@@ -3202,13 +3470,13 @@
         updateStarfieldTheme(selected, decisionFor(selected));
         let nodes = [
           { id: selected.category_group, label: nameOf(selected.category_group), kind: "category", value: num(selected.records), color: categoryColor(selected.category_group), radius: scaleRadius(num(selected.records), 4000, 5.5, 7.4) },
-          { id: "return-risk", label: "退货风险", kind: "kpi", value: 100, color: 0x38d68f, radius: 5.2 },
-          { id: "conversion-risk", label: "转化风险", kind: "kpi", value: 100, color: 0x38d68f, radius: 5.2 },
-          { id: "pdp-action", label: "详情页动作", kind: "action", value: 100, color: 0x38d68f, radius: 5.2 },
+          { id: "return-risk", label: state.lang === "en" ? "Return risk" : "退货风险", kind: "kpi", value: 100, color: 0x38d68f, radius: 5.2 },
+          { id: "conversion-risk", label: state.lang === "en" ? "Conversion risk" : "转化风险", kind: "kpi", value: 100, color: 0x38d68f, radius: 5.2 },
+          { id: "pdp-action", label: state.lang === "en" ? "PDP action" : "详情页动作", kind: "action", value: 100, color: 0x38d68f, radius: 5.2 },
         ];
-        pain.forEach((item) => nodes.push({ id: item.id, label: item.pain, kind: "pain", value: item.count, color: 0xff5a4f, radius: scaleRadius(item.count, maxPain, 4.6, 7.2) }));
+        pain.forEach((item) => nodes.push({ id: item.id, label: nameOf(item.pain), kind: "pain", value: item.count, color: 0xff5a4f, radius: scaleRadius(item.count, maxPain, 4.6, 7.2) }));
         bodyRows.forEach((row) => nodes.push({ id: row.body_type, label: nameOf(row.body_type), kind: "body", value: num(row.records), color: 0xb86bff, radius: scaleRadius(num(row.records), maxBody, 4.6, 6.6) }));
-        sizeRows.forEach((row) => nodes.push({ id: `size-${row.size}`, label: `尺码 ${row.size}`, kind: "size", value: num(row.risk_score), color: 0xffb02e, radius: scaleRadius(num(row.risk_score), maxSize, 4.5, 6.2) }));
+        sizeRows.forEach((row) => nodes.push({ id: `size-${row.size}`, label: state.lang === "en" ? `Size ${row.size}` : `尺码 ${row.size}`, kind: "size", value: num(row.risk_score), color: 0xffb02e, radius: scaleRadius(num(row.risk_score), maxSize, 4.5, 6.2) }));
         if (state.networkFilter === "risk") nodes = nodes.filter((node) => ["category", "pain", "kpi"].includes(node.kind));
         if (state.networkFilter === "action") nodes = nodes.filter((node) => ["category", "pain", "action"].includes(node.kind));
         if (state.networkFilter === "kpi") nodes = nodes.filter((node) => ["category", "kpi", "action"].includes(node.kind));
@@ -3311,7 +3579,41 @@
       function graphNodeDetail(node) {
         const row = selectedCategoryRow();
         const company = selectedCompanyRow();
-        if (!node?.id) return { tooltip: "点击节点查看详情", summary: "请选择一个节点查看业务含义。", impact: "-", next: "选择节点" };
+        if (!node?.id) return state.lang === "en"
+          ? { tooltip: "Click a node for details", summary: "Select a node to inspect its business meaning.", impact: "-", next: "Select a node" }
+          : { tooltip: "点击节点查看详情", summary: "请选择一个节点查看业务含义。", impact: "-", next: "选择节点" };
+        if (state.lang === "en") {
+          if (node.kind === "category") return {
+            tooltip: `Category records ${fmt(node.value || 0)}<br>Current action ${tr(decisionFor(row).label)}`,
+            summary: `${node.label} is the current workspace category. It connects review pain points, body/size signals, and KPIs.`,
+            impact: `Return rate ${pct(company.returnRate)}, fit rate ${pct(row.fit_rate)}`,
+            next: "Open the workspace action review",
+          };
+          if (node.kind === "pain") return {
+            tooltip: `Pain mentions ${fmt(node.value || 0)}<br>Click to inspect review evidence`,
+            summary: `${node.label} is one of the review pain points that should be explained to shoppers.`,
+            impact: "Affects PDP copy, size guidance, return rate, and conversion",
+            next: "Open evidence samples",
+          };
+          if (node.kind === "kpi") return {
+            tooltip: "KPI node<br>Connected to current category risk",
+            summary: `${node.label} helps judge whether market opportunity can be supported operationally.`,
+            impact: `Current return rate ${pct(company.returnRate)}, conversion ${pct(company.conversion)}`,
+            next: "Open KPI diagnosis",
+          };
+          if (node.kind === "action") return {
+            tooltip: "Action node<br>Connects PDP, sizing, and SKU fixes",
+            summary: `${node.label} turns review evidence into execution tasks.`,
+            impact: "Affects PDP quality, conversion, and return rate",
+            next: "Open evidence and actions",
+          };
+          return {
+            tooltip: `${kindLabel(node.kind)}<br>Weight ${fmt(node.value || 0)}`,
+            summary: `${node.label} explains where the current category is more likely to create user or size mismatch.`,
+            impact: "Affects size chart, model notes, and filtering guidance",
+            next: "Review related comments",
+          };
+        }
         if (node.kind === "category") return {
           tooltip: `品类记录 ${fmt(node.value || 0)}<br>当前建议 ${decisionFor(row).label}`,
           summary: `${node.label} 是当前工作区主品类，连接到评论痛点、体型尺码和 KPI。`,
@@ -3736,6 +4038,7 @@
       }
 
       function kindLabel(kind) {
+        if (state.lang === "en") return { category: "Category node", pain: "Pain node", body: "Body-type node", size: "Size node", kpi: "KPI node", action: "Action node" }[kind] || "Relationship node";
         return { category: "品类节点", pain: "痛点节点", body: "体型节点", size: "尺码节点", kpi: "KPI 节点", action: "行动节点" }[kind] || "关系节点";
       }
 
@@ -3791,34 +4094,26 @@
         state.page = page;
         document.querySelectorAll(".page").forEach((el) => el.classList.toggle("active", el.id === page));
         document.querySelectorAll(".nav-button").forEach((button) => button.classList.toggle("active", button.dataset.page === page));
-        const titles = {
-          overview: ["经营总览", "先看市场机会和公司经营承接能力，再进入品类级决策。"],
-          market: ["市场机会", "公开市场数据与模拟公司 KPI 对齐，判断哪些品类值得进入。"],
-          assortment: ["商品组合", "用商品结构、占比和交易动量判断组合是否健康。"],
-          network: ["关系图谱", "用 2D 关系图解释品类、痛点、KPI 和行动之间的连接。"],
-          kpi: ["KPI诊断", "把市场机会拆成转化、退货、毛利和合身承接问题。"],
-          semantic: ["语义洞察", "把评论文本和合身反馈转成可执行的商品与内容问题。"],
-          workspace: ["决策工作区", "围绕当前品类集中展示 KPI、风险、证据和动作。"],
-          evidence: ["证据与动作", "把评论证据和语义痛点转成可执行优化动作。"],
-        };
-        document.getElementById("page-title").textContent = titles[page][0];
-        document.getElementById("page-subtitle").textContent = titles[page][1];
+        document.getElementById("page-title").textContent = t(`page.${page}.title`);
+        document.getElementById("page-subtitle").textContent = t(`page.${page}.copy`);
         const controlConfig = {
           overview: null,
           market: null,
           assortment: null,
-          network: ["图谱聚焦", "重置图谱"],
-          kpi: ["诊断品类", "重置KPI"],
-          semantic: ["语义品类", "重置语义"],
-          workspace: ["工作区品类", "重置品类"],
-          evidence: ["证据品类", "重置证据"],
+          network: ["control.graphFocus", "control.resetGraph"],
+          kpi: ["control.kpiCategory", "control.resetKpi"],
+          semantic: ["control.semanticCategory", "control.resetSemantic"],
+          workspace: ["control.workspaceCategory", "control.resetCategory"],
+          evidence: ["control.evidenceCategory", "control.resetEvidence"],
         };
         const currentControls = controlConfig[page];
         document.querySelector(".top-actions").classList.toggle("hidden", !currentControls);
         if (currentControls) {
-          document.getElementById("control-context").textContent = currentControls[0];
-          document.getElementById("reset-button").textContent = currentControls[1];
+          document.getElementById("control-context").textContent = t(currentControls[0]);
+          document.getElementById("reset-button").textContent = t(currentControls[1]);
         }
+        localizeStatic();
+        localizeGenerated(document.getElementById(page));
         if (page === "network") renderNetworkGraph();
       }
       window.setPage = setPage;
@@ -3872,8 +4167,23 @@
           document.querySelectorAll("[data-login-mode]").forEach((item) => item.classList.remove("active"));
           button.classList.add("active");
           state.mode = button.dataset.loginMode;
-          document.getElementById("current-mode-label").textContent = state.mode === "management" ? "管理模式" : "运营模式";
+          document.getElementById("current-mode-label").textContent = state.mode === "management" ? t("mode.management") : t("mode.operator");
         });
+      });
+
+      function setLanguage(lang) {
+        state.lang = lang;
+        localizeStatic();
+        if (state.data?.company?.length) {
+          buildCategorySelect();
+          buildGraph();
+          renderAll();
+          setPage(state.page);
+        }
+      }
+
+      document.querySelectorAll("[data-lang]").forEach((button) => {
+        button.addEventListener("click", () => setLanguage(button.dataset.lang));
       });
 
       document.querySelectorAll(".nav-button").forEach((button) => button.addEventListener("click", () => setPage(button.dataset.page)));
@@ -3902,6 +4212,7 @@
       });
 
       initLoginCanvas();
+      localizeStatic();
       loadData().catch((error) => {
         console.error(error);
         document.body.innerHTML = `<main style="padding:24px;color:white"><h1>数据加载失败</h1><p>${escapeHtml(error.message)}</p></main>`;
