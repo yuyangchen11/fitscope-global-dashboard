@@ -417,8 +417,13 @@
         min-width: 240px;
       }
 
+      .top-actions button,
       .control-context {
-        min-width: 86px;
+        white-space: nowrap;
+      }
+
+      .control-context {
+        min-width: max-content;
         justify-content: center;
       }
 
@@ -1391,14 +1396,13 @@
       .opportunity-map-layout {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 12px;
         align-items: stretch;
       }
 
       .opportunity-map {
         width: 100%;
-        height: 410px;
-        min-height: 410px;
+        height: 330px;
+        min-height: 330px;
         display: block;
       }
 
@@ -2336,7 +2340,7 @@
               <select id="evidence-body-filter" aria-label="body filter"></select>
               <select id="evidence-pain-filter" aria-label="pain filter"></select>
             </div>
-            <div class="table-wrap">
+            <div class="table-wrap" id="evidence-table-panel">
               <table>
                 <thead>
                   <tr>
@@ -3065,7 +3069,9 @@
         ].map(([label, value]) => `<button class="metric-row" type="button" onclick="setPage('${label.includes("退货") || label.includes("合身") || label.includes("风险") ? "evidence" : "market"}')"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></button>`).join("");
         const topPain = painForCategory(row.category_group);
         const primaryPain = topPain[0] || { pain: state.lang === "en" ? "Review pain point" : "评论痛点", id: "none", count: 0 };
-        const painScope = primaryPain.fallback ? "该细分品类暂无专属评论样本，先使用全局服装评论高频痛点作为代理信号。" : "来自当前品类评论样本，可直接进入证据表复核。";
+        const painScope = state.lang === "en"
+          ? (primaryPain.fallback ? "No dedicated review samples are available for this subcategory, so global apparel review pain points are used as a proxy." : "Matched review samples are available for this category and can be audited in the evidence table.")
+          : (primaryPain.fallback ? "该细分品类暂无专属评论样本，先使用全局服装评论高频痛点作为代理信号。" : "来自当前品类评论样本，可直接进入证据表复核。");
         const returnGap = Math.max(0, num(company.returnRate) - 0.18);
         const conversionGap = Math.max(0, 0.085 - num(company.conversion));
         document.getElementById("decision-logic").innerHTML = `
@@ -3077,18 +3083,18 @@
             </div>
             <div class="decision-tile">
               <span>${state.lang === "en" ? "Main blocker" : "主要阻塞"}</span>
-              <strong>${escapeHtml(state.lang === "en" ? `${nameOf(primaryPain.pain)} appears ${fmt(primaryPain.count)} times. ${tr(painScope)}` : `${primaryPain.pain} 出现 ${fmt(primaryPain.count)} 次。${painScope}`)}</strong>
-              <button type="button" onclick="selectGraphNode('${escapeHtml(primaryPain.id)}', 'evidence')">${state.lang === "en" ? "Open evidence" : "打开证据"}</button>
+              <strong>${escapeHtml(state.lang === "en" ? `${nameOf(primaryPain.pain)} appears ${fmt(primaryPain.count)} times. ${painScope}` : `${primaryPain.pain} 出现 ${fmt(primaryPain.count)} 次。${painScope}`)}</strong>
+              <button type="button" onclick="openEvidenceForPain('${escapeHtml(primaryPain.id)}')">${state.lang === "en" ? "Open evidence" : "打开证据"}</button>
             </div>
             <div class="decision-tile">
               <span>${state.lang === "en" ? "Operating impact" : "经营影响"}</span>
               <strong>${state.lang === "en" ? `Return rate is ${(returnGap * 100).toFixed(1)}pp above the health line; conversion gap is ${(conversionGap * 100).toFixed(1)}pp.` : `退货率比健康线高 ${(returnGap * 100).toFixed(1)} 个百分点，转化率缺口 ${(conversionGap * 100).toFixed(1)} 个百分点。`}</strong>
-              <button type="button" onclick="setPage('market')">${state.lang === "en" ? "View KPI" : "查看 KPI"}</button>
+              <button type="button" onclick="setPage('kpi')">${state.lang === "en" ? "View KPI" : "查看 KPI"}</button>
             </div>
             <div class="decision-tile">
               <span>${state.lang === "en" ? "Execution action" : "执行动作"}</span>
               <strong>${state.lang === "en" ? "Fix PDP size/material guidance first, audit high-risk SKUs, then monitor conversion and return changes." : "先改 PDP 尺码/材质说明，抽查高风险 SKU，再观察转化和退货变化。"}</strong>
-              <button type="button" onclick="setPage('evidence')">${state.lang === "en" ? "View actions" : "查看动作"}</button>
+              <button type="button" onclick="openActions()">${state.lang === "en" ? "View actions" : "查看动作"}</button>
             </div>
           </div>
         `;
@@ -3517,7 +3523,7 @@
       function renderOverviewOpportunityMap(containerId, rows) {
         const svg = document.getElementById(containerId);
         if (!svg) return;
-        const width = 820, height = 410, pad = 58;
+        const width = 820, height = 340, pad = 46;
         const maxRecords = Math.max(...rows.map((row) => int(row.records)), 1);
         const maxOpportunity = Math.max(...rows.map((row) => businessScore(row)), 42);
         const riskOf = (row) => {
@@ -3554,14 +3560,14 @@
             const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
             const opportunity = businessScore(row);
             const risk = riskOf(row);
-            const radius = 8 + Math.sqrt(int(row.records) / maxRecords) * 20;
+            const radius = 7 + Math.sqrt(int(row.records) / maxRecords) * 15;
             const decision = decisionFor(row);
             const color = decisionColor(decision);
             const x = Math.max(pad + radius + 4, Math.min(width - pad - radius - 4, xScale(opportunity)));
             const y = Math.max(pad + radius + 4, Math.min(height - pad - radius - 4, yScale(risk)));
             const labelRight = x < width - 230;
             const labelX = labelRight ? x + radius + 8 : x - radius - 8;
-            const showLabel = index < 5 || row.category_group === state.selectedCategory;
+            const showLabel = index < 3 || row.category_group === state.selectedCategory;
             return `<g class="opportunity-node ${row.category_group === state.selectedCategory ? "selected" : ""}" role="button" tabindex="0" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(`机会排名 #${index + 1}<br>机会分 ${opportunity.toFixed(1)}<br>风险指数 ${risk.toFixed(1)}<br>退货率 ${pct(company.returnRate)}<br>建议 ${decision.label}`)}')" onmouseleave="hideTooltip()">
               <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${radius.toFixed(1)}" fill="${color}" opacity=".2" stroke="${color}" stroke-width="1.3"></circle>
               <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.max(4.8, radius * .34).toFixed(1)}" fill="${color}" opacity=".95"></circle>
@@ -4163,11 +4169,11 @@
             <p class="graph-detail-copy">${escapeHtml(detail.summary)}</p>
           </div>
           <div class="metric-list">
-            <button class="metric-row" type="button" onclick="setPage('network')"><span>关系权重</span><strong>${fmt(node.value || 0)}</strong></button>
-            <button class="metric-row" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')"><span>影响范围</span><strong>${escapeHtml(detail.impact)}</strong></button>
-            <button class="metric-row" type="button" onclick="setPage('${node.kind === "kpi" ? "kpi" : node.kind === "pain" ? "evidence" : "workspace"}')"><span>下一步</span><strong>${escapeHtml(detail.next)}</strong></button>
+            <button class="metric-row" type="button" onclick="setPage('network')"><span>${state.lang === "en" ? "Relationship weight" : "关系权重"}</span><strong>${fmt(node.value || 0)}</strong></button>
+            <button class="metric-row" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')"><span>${state.lang === "en" ? "Impact scope" : "影响范围"}</span><strong>${escapeHtml(detail.impact)}</strong></button>
+            <button class="metric-row" type="button" onclick="setPage('${node.kind === "kpi" ? "kpi" : node.kind === "pain" ? "evidence" : "workspace"}')"><span>${state.lang === "en" ? "Next step" : "下一步"}</span><strong>${escapeHtml(detail.next)}</strong></button>
           </div>
-          <button class="primary-button" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')">${node.kind === "pain" ? "查看证据" : "打开工作区"}</button>
+          <button class="primary-button" type="button" onclick="${node.kind === "pain" ? `openEvidenceForPain('${escapeHtml(node.id)}')` : "setPage('workspace')"}">${state.lang === "en" ? (node.kind === "pain" ? "View evidence" : "Open workspace") : (node.kind === "pain" ? "查看证据" : "打开工作区")}</button>
         `;
         renderNetworkGraph();
       }
@@ -4215,6 +4221,40 @@
       }
       window.selectGraphNode = selectGraphNode;
 
+      function scrollToDashboardBlock(id) {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const target = document.getElementById(id);
+            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+      }
+
+      function scrollPageTop(behavior = "auto") {
+        requestAnimationFrame(() => {
+          document.querySelector("main")?.scrollTo({ top: 0, behavior });
+          window.scrollTo({ top: 0, behavior });
+        });
+      }
+
+      function openEvidenceForPain(painId) {
+        const normalizedPain = painId && painId !== "none" ? painId : "all";
+        state.evidenceFilters = { q: "", fit: "all", body: "all", pain: normalizedPain };
+        if (normalizedPain !== "all") selectGraphNode(normalizedPain, null);
+        else renderEvidence();
+        setPage("evidence", { scroll: false });
+        renderEvidence();
+        scrollToDashboardBlock("evidence-table-panel");
+      }
+      window.openEvidenceForPain = openEvidenceForPain;
+
+      function openActions() {
+        setPage("evidence", { scroll: false });
+        renderEvidence();
+        scrollToDashboardBlock("action-cards");
+      }
+      window.openActions = openActions;
+
       function selectCategory(category, page = state.page) {
         const targetPage = page === "assortment" ? "market" : page === "semantic" ? "kpi" : page === "workspace" ? "evidence" : page;
         state.selectedCategory = category;
@@ -4236,7 +4276,7 @@
         }[page] || [page];
       }
 
-      function setPage(page) {
+      function setPage(page, options = {}) {
         if (page === "assortment") page = "market";
         if (page === "semantic") page = "kpi";
         if (page === "workspace") page = "evidence";
@@ -4265,6 +4305,7 @@
         localizeStatic();
         visiblePages.forEach((id) => localizeGenerated(document.getElementById(id)));
         if (page === "network") renderNetworkGraph();
+        if (options.scroll !== false) scrollPageTop();
       }
       window.setPage = setPage;
 
