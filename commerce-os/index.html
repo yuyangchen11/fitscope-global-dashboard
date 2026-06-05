@@ -1235,7 +1235,7 @@
       }
 
       .decision-statement.executive-brief {
-        min-height: 286px;
+        min-height: 220px;
         display: grid;
         align-content: space-between;
         padding: 22px;
@@ -1273,6 +1273,10 @@
         font-size: clamp(30px, 3.5vw, 52px);
         line-height: 1.02;
         max-width: 880px;
+      }
+
+      .executive-brief .brief-copy {
+        display: none;
       }
 
       .decision-statement p {
@@ -1567,32 +1571,6 @@
         align-items: start;
       }
 
-      .map-rationale {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 10px;
-        align-content: start;
-      }
-
-      .rationale-card {
-        padding: 12px;
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        background: oklch(0.17 0.014 255 / 0.64);
-      }
-
-      .rationale-card span {
-        color: var(--muted);
-        font-size: 12px;
-        font-weight: 720;
-      }
-
-      .rationale-card strong {
-        display: block;
-        margin-top: 7px;
-        line-height: 1.45;
-      }
-
       .chart-grid.three {
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
@@ -1880,8 +1858,7 @@
         }
 
         .insight-strip,
-        .three-col,
-        .map-rationale {
+        .three-col {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
@@ -1906,7 +1883,6 @@
         .two-col,
         .three-col,
         .insight-strip,
-        .map-rationale,
         .mini-metrics {
           grid-template-columns: 1fr;
         }
@@ -2109,7 +2085,6 @@
               </div>
               <div class="opportunity-map-layout">
                 <svg id="overview-opportunity-map" class="opportunity-map" role="img" aria-label="opportunity and risk map"></svg>
-                <div class="map-rationale" id="overview-map-rationale"></div>
               </div>
             </div>
             <div class="panel">
@@ -2148,6 +2123,7 @@
                   <h3 data-i18n="market.demand.title">市场需求与商品配置</h3>
                   <p data-i18n="market.demand.copy">基于公开商品结构和交易占比生成需求 proxy；接入真实订单、搜索或广告数据后，同一视图会自动重算。</p>
                 </div>
+                <div class="control-row" id="market-demand-sort"></div>
               </div>
               <div class="bars" id="market-demand-bars"></div>
             </div>
@@ -2253,6 +2229,7 @@
                   <h3 data-i18n="kpi.gap.title">KPI 承接差距</h3>
                   <p data-i18n="kpi.gap.copy">市场需求越强，越需要看转化、退货和毛利是否能承接。</p>
                 </div>
+                <div class="control-row" id="kpi-gap-sort"></div>
               </div>
               <div class="bars" id="kpi-gap-bars"></div>
             </div>
@@ -2404,6 +2381,8 @@
         selectedNode: null,
         networkFilter: "all",
         evidenceFilters: { q: "", fit: "all", body: "all", pain: "all" },
+        kpiSort: "gapDesc",
+        marketSort: "demandDesc",
         data: {},
         graph: { nodes: [], edges: [] },
         three: null,
@@ -2411,11 +2390,18 @@
       };
 
       const labelMap = {
-        dress: "连衣裙", dresses: "连衣裙", suit: "套装", top: "上衣", outerwear: "外套", bottom: "下装", pant: "裤装", vest: "马甲", sale: "促销款",
-        culottes: "阔腿裤", tunic: "长上衣", frock: "连衣裙", cardigan: "开衫", shirtdress: "衬衫裙", sweatshirt: "卫衣",
-        sweater: "毛衣", pullover: "套头衫", tank: "背心", jumpsuit: "连体裤", blazer: "西装外套", leggings: "打底裤",
+        dress: "连衣裙", dresses: "连衣裙", suit: "套装", top: "上衣", outerwear: "外套", bottom: "下装", pant: "裤装", pants: "裤装", vest: "马甲", sale: "促销款",
+        culotte: "阔腿裤", culottes: "阔腿裤", tunic: "长上衣", frock: "连衣裙", cardigan: "开衫", shirtdress: "衬衫裙", sweatshirt: "卫衣",
+        sweater: "毛衣", sweatershirt: "针织衫", pullover: "套头衫", tank: "背心", jumpsuit: "连体裤", blazer: "西装外套", leggings: "打底裤",
+        ballgown: "礼服裙", blouson: "夹克衫", bomber: "飞行夹克", buttondown: "纽扣衬衫", caftan: "宽袍", cami: "吊带上衣", cape: "披肩",
+        combo: "组合款", crewneck: "圆领衫", down: "羽绒服", duster: "长外套", henley: "亨利领上衣", hoodie: "连帽衫", jogger: "束脚裤",
+        kaftan: "宽袍", kimono: "和服式外套", knit: "针织", legging: "打底裤", midi: "中长款", overalls: "背带裤", overcoat: "大衣",
+        parka: "派克大衣", peacoat: "海军呢大衣", poncho: "斗篷", print: "印花款", skirts: "半身裙", skort: "裙裤", sweatpants: "运动裤",
+        "t-shirt": "T恤", tee: "T恤", tight: "紧身裤", trench: "风衣", trouser: "长裤", trousers: "长裤", turtleneck: "高领衫", wedding: "婚礼款",
         "Garment Upper body": "上装商品组", "Garment Lower body": "下装商品组", "Garment Full body": "连身商品组",
         Accessories: "配饰", Underwear: "内衣", Shoes: "鞋履", Swimwear: "泳装", "Socks & Tights": "袜类",
+        Nightwear: "睡衣", Unknown: "未知", "Underwear/nightwear": "内衣/睡衣", Cosmetic: "美妆", Bags: "包袋", Items: "杂项",
+        Furniture: "家居", "Garment and Shoe care": "衣鞋护理", Stationery: "文具", "Interior textile": "家纺", Fun: "趣味配件",
         fabric_or_quality: "材质/质量", color_expectation: "颜色预期", chest_or_bust: "胸围/胸部",
         length_issue: "长度问题", too_small_or_tight: "偏小/偏紧", too_large_or_loose: "偏大/偏松", waist_or_hip: "腰臀问题",
         petite: "娇小", athletic: "运动型", pear: "梨形", hourglass: "沙漏型", apple: "苹果型", "full bust": "胸部丰满",
@@ -2423,11 +2409,18 @@
       };
 
       const labelMapEn = {
-        dress: "Dress", dresses: "Dresses", suit: "Suit", top: "Top", outerwear: "Outerwear", bottom: "Bottom", pant: "Pants", vest: "Vest", sale: "Sale",
-        culottes: "Culottes", tunic: "Tunic", frock: "Frock", cardigan: "Cardigan", shirtdress: "Shirtdress", sweatshirt: "Sweatshirt",
-        sweater: "Sweater", pullover: "Pullover", tank: "Tank", jumpsuit: "Jumpsuit", blazer: "Blazer", leggings: "Leggings",
+        dress: "Dress", dresses: "Dresses", suit: "Suit", top: "Top", outerwear: "Outerwear", bottom: "Bottom", pant: "Pants", pants: "Pants", vest: "Vest", sale: "Sale",
+        culotte: "Culottes", culottes: "Culottes", tunic: "Tunic", frock: "Frock", cardigan: "Cardigan", shirtdress: "Shirtdress", sweatshirt: "Sweatshirt",
+        sweater: "Sweater", sweatershirt: "Sweater", pullover: "Pullover", tank: "Tank", jumpsuit: "Jumpsuit", blazer: "Blazer", leggings: "Leggings",
+        ballgown: "Ballgown", blouson: "Blouson", bomber: "Bomber", buttondown: "Button-down", caftan: "Caftan", cami: "Cami", cape: "Cape",
+        combo: "Combo", crewneck: "Crewneck", down: "Down jacket", duster: "Duster", henley: "Henley", hoodie: "Hoodie", jogger: "Jogger",
+        kaftan: "Kaftan", kimono: "Kimono", knit: "Knit", legging: "Leggings", midi: "Midi", overalls: "Overalls", overcoat: "Overcoat",
+        parka: "Parka", peacoat: "Peacoat", poncho: "Poncho", print: "Print", skirts: "Skirts", skort: "Skort", sweatpants: "Sweatpants",
+        "t-shirt": "T-shirt", tee: "Tee", tight: "Tights", trench: "Trench", trouser: "Trousers", trousers: "Trousers", turtleneck: "Turtleneck", wedding: "Wedding",
         "Garment Upper body": "Upper-body garments", "Garment Lower body": "Lower-body garments", "Garment Full body": "Full-body garments",
         Accessories: "Accessories", Underwear: "Underwear", Shoes: "Shoes", Swimwear: "Swimwear", "Socks & Tights": "Socks & tights",
+        Nightwear: "Nightwear", Unknown: "Unknown", "Underwear/nightwear": "Underwear / nightwear", Cosmetic: "Cosmetic", Bags: "Bags", Items: "Items",
+        Furniture: "Furniture", "Garment and Shoe care": "Garment and shoe care", Stationery: "Stationery", "Interior textile": "Interior textile", Fun: "Fun",
         fabric_or_quality: "Fabric / quality", color_expectation: "Color expectation", chest_or_bust: "Chest / bust",
         length_issue: "Length issue", too_small_or_tight: "Too small / tight", too_large_or_loose: "Too large / loose", waist_or_hip: "Waist / hip",
         petite: "Petite", athletic: "Athletic", pear: "Pear", hourglass: "Hourglass", apple: "Apple", "full bust": "Full bust",
@@ -2564,8 +2557,6 @@
         "保持监控，等待市场需求或内部 KPI 出现更强信号。": "Keep monitoring until market demand or internal KPIs show a stronger signal.",
         "机会分": "Opportunity score", "机会指数": "Opportunity index", "风险暴露": "Risk exposure", "风险分": "Risk score", "退货率": "Return rate", "合身率": "Fit rate", "平均转化": "Average conversion", "平均退货": "Average returns",
         "平均毛利": "Average margin", "高风险品类": "High-risk categories", "当前品类": "Current category",
-        "机会分怎么来": "How the opportunity score is calculated", "风险为什么上升": "Why risk increases", "当前结果怎么读": "How to read the current result",
-        "是当前数据窗口下的第一入口；它不是固定推荐，刷新数据后会由同一规则重新排序。": " is the top entry in the current data window. It is not a fixed recommendation; the same rule reranks it after data refresh.",
         "个品类": " categories", "占比": "Share", "评论标签出现": "Review tag mentions", "组合合身率": "Portfolio fit rate", "偏小信号": "Too-small signal", "偏大信号": "Too-large signal",
         "合身": "Fit", "偏小": "Too small", "偏大": "Too large", "条": " rows", "表": "table", "分": "score", "指数": "index", "暴露": "exposure", "代理值": "proxy value", "个百分点": "pp", "百分点": "pp",
         "点击进入语义洞察复核合身原因。": "Click to open Semantic Insight and review fit drivers.", "健康": "Healthy", "需治理": "Needs action",
@@ -2584,14 +2575,12 @@
         "市场机会页验证需求、交易节奏和组合缺口。": "Validate demand, transaction rhythm, and assortment gaps in Market Opportunity.",
         "KPI 诊断页确认转化、退货、毛利是否拖累放量。": "Use KPI Diagnosis to check whether conversion, returns, or margin block scaling.",
         "语义洞察和证据页复核评论痛点，再进入工作区。": "Review semantic pain points and evidence before opening the workspace.",
-        "需求占比、转化承接、退货压力、毛利质量四项合成。右侧越高，说明值得投入更多注意力。": "Demand share, conversion readiness, return pressure, and margin quality are combined. Farther right means more attention is warranted.",
-        "风险来自评论痛点、合身偏差和模型化退货率。越靠上越不适合直接放量。": "Risk comes from review pain, fit gaps, and modeled return rate. Higher points should not scale directly.",
-        "排序逻辑：用市场机会、转化承接、退货暴露和毛利质量共同判断每个品类的进入优先级与动作类型；数据更新后自动重算。": "Ranking logic: market opportunity, conversion readiness, return exposure, and margin quality determine category priority and action type. It recalculates after data updates.",
         "行动状态": "Action status", "外部市场代理信号": "External market proxy", "毛利与退货压力综合": "Margin and return pressure combined",
         "预计退货和合身压力": "Estimated return and fit pressure", "当前推荐处理方式": "Current recommended handling",
         "关系权重": "Relationship weight", "影响范围": "Impact scope", "下一步": "Next step", "查看证据": "View evidence", "打开工作区": "Open workspace",
         "品类节点": "Category node", "痛点节点": "Pain node", "体型节点": "Body node", "尺码节点": "Size node", "行动节点": "Action node", "关系节点": "Relationship node",
-        "市场交易事件": "Market transactions", "最高需求组": "Top demand group", "最新日交易": "Latest daily transactions", "供需差最大": "Largest supply-demand gap", "数据层": "Data layer",
+        "市场交易事件": "Market transactions", "最高需求组": "Top demand group", "最新日交易": "Latest daily transactions", "供需差最大": "Largest supply-demand gap", "覆盖商品组": "Covered product groups",
+        "当前可比较范围": "Comparable scope",
         "商品目录": "Product catalog", "市场交易": "Market transactions", "前三集中度": "Top-3 concentration", "最大需求差": "Largest demand gap", "组合判断": "Assortment read",
         "集中": "Concentrated", "分散": "Distributed", "评论样本": "Review samples", "平均评分": "Average rating", "带痛点评论": "Tagged reviews", "主痛点": "Main pain point",
         "H&M 交易表": "H&M transaction table", "H&M articles 表": "H&M articles table", "transactions 表": "transactions table", "下一阶段可接 API": "API-ready in the next stage",
@@ -2862,7 +2851,7 @@
           <div>
             <span class="brief-eyebrow">${state.lang === "en" ? "Current data-window decision" : "当前数据窗口判断"}</span>
             <h3>${escapeHtml(headlineForDecision(leader, leaderDecision))}</h3>
-            <p>${escapeHtml(state.lang === "en" ? `${tr(leaderDecision.action)} This direction is generated from the current data window. When market, review, or operating KPI data updates, the entry category, action, and priority are recalculated.` : `${leaderDecision.action} 这是按当前数据窗口生成的方向判断；当市场、评论或经营 KPI 更新时，入口品类、动作和优先级会重新计算。`)}</p>
+            <p class="brief-copy">${escapeHtml(tr(leaderDecision.action))}</p>
           </div>
           <div class="mini-metrics">
             <div class="mini-metric"><span>机会分</span><strong>${businessScore(leader).toFixed(1)}</strong></div>
@@ -2880,11 +2869,6 @@
           <span class="step-metric">${escapeHtml(metric)}</span>
         </button>`).join("");
         renderOverviewOpportunityMap("overview-opportunity-map", rankedAll.slice(0, 18));
-        document.getElementById("overview-map-rationale").innerHTML = [
-          ["机会分怎么来", "需求占比、转化承接、退货压力、毛利质量四项合成。右侧越高，说明值得投入更多注意力。"],
-          ["风险为什么上升", "风险来自评论痛点、合身偏差和模型化退货率。越靠上越不适合直接放量。"],
-          ["当前结果怎么读", `${nameOf(ranked[0]?.category_group)} 是当前数据窗口下的第一入口；它不是固定推荐，刷新数据后会由同一规则重新排序。`],
-        ].map(([label, body]) => `<div class="rationale-card"><span>${escapeHtml(label)}</span><strong>${escapeHtml(body)}</strong></div>`).join("") + `<p class="map-footnote">排序逻辑：用市场机会、转化承接、退货暴露和毛利质量共同判断每个品类的进入优先级与动作类型；数据更新后自动重算。</p>`;
         const decisionCounts = decisionSummary();
         renderActionPortfolio("overview-triage-donut", decisionCounts);
         renderFitGauge("overview-fit-donut", fitSummary());
@@ -2907,20 +2891,47 @@
         const merged = productRows.map((row) => {
           const tx = txMap.get(row.product_group_name) || {};
           return { ...row, demandShare: num(tx.share), gap: num(tx.share) - num(row.share), transactions: int(tx.transactions) };
-        }).sort((a, b) => b.demandShare - a.demandShare);
+        });
+        const demandRows = sortedMarketRows(merged);
         const totalTx = txRows.reduce((sum, row) => sum + int(row.transactions), 0);
         const daily = state.data.hmDaily || [];
         const latest = daily[daily.length - 1] || {};
-        const top = merged[0] || {};
+        const top = merged.slice().sort((a, b) => b.demandShare - a.demandShare)[0] || {};
         document.getElementById("market-kpis").innerHTML = [
           { label: "市场交易事件", value: fmt(totalTx), note: "H&M 交易表" },
-          { label: "最高需求组", value: top.product_group_name || "-", note: `${pct(top.demandShare)} 交易占比` },
+          { label: "最高需求组", value: top.product_group_name ? nameOf(top.product_group_name) : "-", note: `${pct(top.demandShare)} 交易占比` },
           { label: "最新日交易", value: fmt(int(latest.transactions)), note: latest.date || "-" },
           { label: "供需差最大", value: (merged.slice().sort((a, b) => b.gap - a.gap)[0]?.gap * 100 || 0).toFixed(1) + " 个百分点", note: "需求占比减商品占比" },
-          { label: "数据层", value: "CSV", note: "下一阶段可接 API" },
+          { label: "覆盖商品组", value: fmt(merged.length), note: "当前可比较范围" },
         ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
-        renderBars("market-demand-bars", merged.slice(0, 9), "product_group_name", (row) => row.demandShare, { max: Math.max(...merged.map((r) => r.demandShare), 1), format: pct });
+        renderMarketDemandControls();
+        renderBars("market-demand-bars", demandRows.slice(0, 9), "product_group_name", (row) => row.demandShare, { max: Math.max(...merged.map((r) => r.demandShare), 1), format: pct });
         renderBars("company-health-bars", (state.data.company || []).slice().sort((a, b) => b.gmv - a.gmv).slice(0, 9), "category", (row) => row.conversion, { max: 0.1, format: pct, click: true });
+      }
+
+      function sortedMarketRows(rows) {
+        const sorters = {
+          demandDesc: (a, b) => num(b.demandShare) - num(a.demandShare),
+          gapDesc: (a, b) => num(b.gap) - num(a.gap),
+          nameAsc: (a, b) => nameOf(a.product_group_name).localeCompare(nameOf(b.product_group_name)),
+        };
+        return rows.slice().sort(sorters[state.marketSort] || sorters.demandDesc);
+      }
+
+      function renderMarketDemandControls() {
+        const container = document.getElementById("market-demand-sort");
+        if (!container) return;
+        const options = state.lang === "en"
+          ? [["demandDesc", "Demand ↓"], ["gapDesc", "Gap ↓"], ["nameAsc", "A-Z"]]
+          : [["demandDesc", "需求↓"], ["gapDesc", "供需差↓"], ["nameAsc", "名称"]];
+        container.innerHTML = options.map(([value, label]) => `<button class="chip ${state.marketSort === value ? "active" : ""}" type="button" data-market-sort="${escapeHtml(value)}">${escapeHtml(label)}</button>`).join("");
+        container.querySelectorAll("[data-market-sort]").forEach((button) => {
+          button.addEventListener("click", () => {
+            state.marketSort = button.dataset.marketSort;
+            renderMarket();
+            localizeGenerated(document.getElementById("market"));
+          });
+        });
       }
 
       function renderAssortment() {
@@ -2953,7 +2964,7 @@
       }
 
       function renderKpiDiagnostics() {
-        const rows = categoryRows().slice().sort((a, b) => businessScore(b) - businessScore(a)).slice(0, 12);
+        const rows = sortedKpiRows();
         const companies = state.data.company || [];
         const avgConversion = companies.reduce((sum, row) => sum + row.conversion, 0) / Math.max(companies.length, 1);
         const avgReturn = companies.reduce((sum, row) => sum + row.returnRate, 0) / Math.max(companies.length, 1);
@@ -2966,11 +2977,40 @@
           { label: "高风险品类", value: highRisk, note: "风险分 >= 34" },
           { label: "当前品类", value: nameOf(state.selectedCategory), note: "由右上选择器控制" },
         ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
-        renderBars("kpi-gap-bars", rows, "category_group", (row) => {
-          const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
-          return Math.max(0, num(company.returnRate) - 0.18) * 100 + Math.max(0, 0.085 - num(company.conversion)) * 100;
-        }, { max: 18, format: (v) => state.lang === "en" ? `${v.toFixed(1)}pp` : `${v.toFixed(1)}个百分点`, risk: true, click: true });
+        renderKpiGapControls();
+        renderBars("kpi-gap-bars", rows, "category_group", kpiGapValue, { max: Math.max(18, ...rows.map(kpiGapValue)), format: (v) => state.lang === "en" ? `${v.toFixed(1)}pp` : `${v.toFixed(1)}个百分点`, risk: true, click: true });
         renderScatter("kpi-scatter", rows);
+      }
+
+      function kpiGapValue(row) {
+        const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
+        return Math.max(0, num(company.returnRate) - 0.18) * 100 + Math.max(0, 0.085 - num(company.conversion)) * 100;
+      }
+
+      function sortedKpiRows() {
+        const rows = categoryRows().slice();
+        const sorters = {
+          gapDesc: (a, b) => kpiGapValue(b) - kpiGapValue(a),
+          opportunityDesc: (a, b) => businessScore(b) - businessScore(a),
+          nameAsc: (a, b) => nameOf(a.category_group).localeCompare(nameOf(b.category_group)),
+        };
+        return rows.sort(sorters[state.kpiSort] || sorters.gapDesc).slice(0, 12);
+      }
+
+      function renderKpiGapControls() {
+        const container = document.getElementById("kpi-gap-sort");
+        if (!container) return;
+        const options = state.lang === "en"
+          ? [["gapDesc", "Gap ↓"], ["opportunityDesc", "Opportunity ↓"], ["nameAsc", "A-Z"]]
+          : [["gapDesc", "差距↓"], ["opportunityDesc", "机会↓"], ["nameAsc", "名称"]];
+        container.innerHTML = options.map(([value, label]) => `<button class="chip ${state.kpiSort === value ? "active" : ""}" type="button" data-kpi-sort="${escapeHtml(value)}">${escapeHtml(label)}</button>`).join("");
+        container.querySelectorAll("[data-kpi-sort]").forEach((button) => {
+          button.addEventListener("click", () => {
+            state.kpiSort = button.dataset.kpiSort;
+            renderKpiDiagnostics();
+            localizeGenerated(document.getElementById("kpi"));
+          });
+        });
       }
 
       function renderSemantic() {
