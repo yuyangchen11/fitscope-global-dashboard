@@ -451,6 +451,10 @@
         display: block;
       }
 
+      .page.active + .page.active {
+        margin-top: 16px;
+      }
+
       .kpi-grid {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -640,6 +644,16 @@
         color: var(--muted);
         font-size: 13px;
         line-height: 1.55;
+      }
+
+      .page-context,
+      #page-subtitle,
+      .panel-header p {
+        display: none;
+      }
+
+      .panel-header {
+        margin-bottom: 10px;
       }
 
       .control-row {
@@ -862,6 +876,12 @@
         font-size: 12px;
       }
 
+      .network-category-strip button,
+      .network-list strong,
+      .bar-label {
+        overflow-wrap: anywhere;
+      }
+
       .connected-graph-wrap {
         position: relative;
         min-height: 620px;
@@ -1009,11 +1029,18 @@
 
       .bar-row {
         display: grid;
-        grid-template-columns: minmax(120px, 0.32fr) minmax(0, 1fr) 74px;
+        grid-template-columns: minmax(150px, 0.3fr) minmax(0, 1fr) minmax(72px, max-content);
         gap: 12px;
         align-items: center;
         color: var(--muted);
         font-size: 13px;
+      }
+
+      .bar-value {
+        color: var(--text);
+        text-align: right;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
       }
 
       .bar-track {
@@ -1115,6 +1142,18 @@
         border-radius: var(--radius);
       }
 
+      .evidence-toolbar {
+        display: grid;
+        grid-template-columns: minmax(160px, 1fr) minmax(150px, .7fr) minmax(150px, .7fr) minmax(150px, .7fr);
+        gap: 10px;
+        margin: 0 0 12px;
+      }
+
+      .evidence-toolbar input,
+      .evidence-toolbar select {
+        width: 100%;
+      }
+
       table {
         width: 100%;
         border-collapse: collapse;
@@ -1127,6 +1166,10 @@
         text-align: left;
         vertical-align: top;
         font-size: 12px;
+      }
+
+      td {
+        overflow-wrap: anywhere;
       }
 
       th {
@@ -2010,12 +2053,9 @@
         <nav class="nav" aria-label="Main navigation">
           <button class="nav-button active" data-page="overview"><span class="nav-number">01</span><span data-i18n="nav.overview">经营总览</span></button>
           <button class="nav-button" data-page="market"><span class="nav-number">02</span><span data-i18n="nav.market">市场机会</span></button>
-          <button class="nav-button" data-page="assortment"><span class="nav-number">03</span><span data-i18n="nav.assortment">商品组合</span></button>
-          <button class="nav-button" data-page="network"><span class="nav-number">04</span><span data-i18n="nav.network">关系图谱</span></button>
-          <button class="nav-button" data-page="kpi"><span class="nav-number">05</span><span data-i18n="nav.kpi">KPI诊断</span></button>
-          <button class="nav-button" data-page="semantic"><span class="nav-number">06</span><span data-i18n="nav.semantic">语义洞察</span></button>
-          <button class="nav-button" data-page="workspace"><span class="nav-number">07</span><span data-i18n="nav.workspace">决策工作区</span></button>
-          <button class="nav-button" data-page="evidence"><span class="nav-number">08</span><span data-i18n="nav.evidence">证据与动作</span></button>
+          <button class="nav-button" data-page="network"><span class="nav-number">03</span><span data-i18n="nav.network">关系图谱</span></button>
+          <button class="nav-button" data-page="kpi"><span class="nav-number">04</span><span data-i18n="nav.kpi">KPI诊断</span></button>
+          <button class="nav-button" data-page="evidence"><span class="nav-number">05</span><span data-i18n="nav.evidence">证据与动作</span></button>
         </nav>
         <div class="language-panel">
           <strong data-i18n="language.title">Language</strong>
@@ -2272,8 +2312,8 @@
         <section class="page" id="workspace">
           <div class="workspace-hero">
             <div class="decision-band">
-              <h3 id="workspace-title" data-i18n="workspace.empty.title">选择一个品类</h3>
-              <p id="workspace-summary" data-i18n="workspace.empty.copy">工作区会把该品类的市场机会、公司经营承接、合身风险、评论证据和行动建议集中展示。</p>
+              <h3 id="workspace-title">选择一个品类</h3>
+              <p id="workspace-summary">工作区会把该品类的市场机会、公司经营承接、合身风险、评论证据和行动建议集中展示。</p>
               <div class="impact-grid" id="workspace-impact-grid"></div>
             </div>
             <div class="panel">
@@ -2313,6 +2353,12 @@
             </div>
             <div class="action-grid" id="action-cards"></div>
             <div style="height:14px"></div>
+            <div class="evidence-toolbar">
+              <input id="evidence-search" data-i18n-placeholder="evidence.search" placeholder="搜索评论 / 痛点 / 场景" />
+              <select id="evidence-fit-filter" aria-label="fit filter"></select>
+              <select id="evidence-body-filter" aria-label="body filter"></select>
+              <select id="evidence-pain-filter" aria-label="pain filter"></select>
+            </div>
             <div class="table-wrap">
               <table>
                 <thead>
@@ -2357,6 +2403,7 @@
         selectedCategory: "dress",
         selectedNode: null,
         networkFilter: "all",
+        evidenceFilters: { q: "", fit: "all", body: "all", pain: "all" },
         data: {},
         graph: { nodes: [], edges: [] },
         three: null,
@@ -2364,7 +2411,7 @@
       };
 
       const labelMap = {
-        dress: "连衣裙", top: "上衣", outerwear: "外套", bottom: "下装", pant: "裤装", vest: "马甲", sale: "促销款",
+        dress: "连衣裙", dresses: "连衣裙", suit: "套装", top: "上衣", outerwear: "外套", bottom: "下装", pant: "裤装", vest: "马甲", sale: "促销款",
         culottes: "阔腿裤", tunic: "长上衣", frock: "连衣裙", cardigan: "开衫", shirtdress: "衬衫裙", sweatshirt: "卫衣",
         sweater: "毛衣", pullover: "套头衫", tank: "背心", jumpsuit: "连体裤", blazer: "西装外套", leggings: "打底裤",
         "Garment Upper body": "上装商品组", "Garment Lower body": "下装商品组", "Garment Full body": "连身商品组",
@@ -2376,7 +2423,7 @@
       };
 
       const labelMapEn = {
-        dress: "Dress", top: "Top", outerwear: "Outerwear", bottom: "Bottom", pant: "Pants", vest: "Vest", sale: "Sale",
+        dress: "Dress", dresses: "Dresses", suit: "Suit", top: "Top", outerwear: "Outerwear", bottom: "Bottom", pant: "Pants", vest: "Vest", sale: "Sale",
         culottes: "Culottes", tunic: "Tunic", frock: "Frock", cardigan: "Cardigan", shirtdress: "Shirtdress", sweatshirt: "Sweatshirt",
         sweater: "Sweater", pullover: "Pullover", tank: "Tank", jumpsuit: "Jumpsuit", blazer: "Blazer", leggings: "Leggings",
         "Garment Upper body": "Upper-body garments", "Garment Lower body": "Lower-body garments", "Garment Full body": "Full-body garments",
@@ -2400,16 +2447,16 @@
           "login.email": "邮箱", "login.password": "密码", "login.managementMode": "管理视角", "login.operatorMode": "执行视角", "login.submit": "打开 Commerce OS",
           "login.note": "说明：这是产品体验入口，不是真实鉴权。我们先做完整业务网站，再决定是否接数据库登录。",
           "top.pill": "数据联动产品站点",
-          "nav.overview": "经营总览", "nav.market": "市场机会", "nav.assortment": "商品组合", "nav.network": "关系图谱",
-          "nav.kpi": "KPI诊断", "nav.semantic": "语义洞察", "nav.workspace": "决策工作区", "nav.evidence": "证据与动作",
+          "nav.overview": "经营总览", "nav.market": "市场与商品", "nav.assortment": "商品组合", "nav.network": "关系图谱",
+          "nav.kpi": "KPI与语义", "nav.semantic": "语义洞察", "nav.workspace": "决策工作区", "nav.evidence": "行动证据",
           "page.overview.title": "经营总览", "page.overview.copy": "先看市场机会和公司经营承接能力，再进入品类级决策。",
-          "page.market.title": "市场机会", "page.market.copy": "公开市场数据与模拟公司 KPI 对齐，判断哪些品类值得进入。",
+          "page.market.title": "市场与商品", "page.market.copy": "公开市场数据与模拟公司 KPI 对齐，判断哪些品类值得进入。",
           "page.assortment.title": "商品组合", "page.assortment.copy": "用商品结构、占比和交易动量判断组合是否健康。",
           "page.network.title": "关系图谱", "page.network.copy": "用 2D 关系图解释品类、痛点、KPI 和行动之间的连接。",
-          "page.kpi.title": "KPI诊断", "page.kpi.copy": "把市场机会拆成转化、退货、毛利和合身承接问题。",
+          "page.kpi.title": "KPI与语义", "page.kpi.copy": "把市场机会拆成转化、退货、毛利和合身承接问题。",
           "page.semantic.title": "语义洞察", "page.semantic.copy": "把评论文本和合身反馈转成可执行的商品与内容问题。",
           "page.workspace.title": "决策工作区", "page.workspace.copy": "围绕当前品类集中展示 KPI、风险、证据和动作。",
-          "page.evidence.title": "证据与动作", "page.evidence.copy": "把评论证据和语义痛点转成可执行优化动作。",
+          "page.evidence.title": "行动证据", "page.evidence.copy": "把评论证据和语义痛点转成可执行优化动作。",
           "control.graphFocus": "图谱聚焦", "control.resetGraph": "重置图谱", "control.kpiCategory": "诊断品类", "control.resetKpi": "重置KPI",
           "control.semanticCategory": "语义品类", "control.resetSemantic": "重置语义", "control.workspaceCategory": "工作区品类", "control.resetCategory": "重置品类",
           "control.evidenceCategory": "证据品类", "control.resetEvidence": "重置证据",
@@ -2439,6 +2486,8 @@
           "workspace.logic.title": "品类决策逻辑", "workspace.logic.copy": "这里不是简单排名，而是解释为什么该品类应该放量、观察或修正。",
           "workspace.pain.title": "相关痛点", "workspace.pain.copy": "来自评论标签和合身反馈。",
           "evidence.title": "证据与行动", "evidence.copy": "点击 KPI、节点或品类后，这里会展示对应评论样本和可执行动作。",
+          "evidence.search": "搜索评论 / 痛点 / 场景",
+          "filter.fitAll": "全部合身", "filter.bodyAll": "全部体型", "filter.painAll": "全部痛点",
           "table.category": "品类", "table.semanticTag": "语义标签", "table.body": "体型", "table.occasion": "场景", "table.userLanguage": "用户语言",
           "table.fit": "合身", "table.rating": "评分", "table.pain": "痛点", "table.reviewEvidence": "评论证据",
           "footer.note": "MVP 说明：登录、公司 KPI 和数据库连接在此版本中用于展示完整产品形态。公开数据已经真实接入，内部经营数据可在下一阶段替换为数据库 API。"
@@ -2455,16 +2504,16 @@
           "login.email": "Email", "login.password": "Password", "login.managementMode": "Management view", "login.operatorMode": "Operator view", "login.submit": "Open Commerce OS",
           "login.note": "Note: this is a product demo entry, not real authentication. The full website experience comes first; database login can follow.",
           "top.pill": "Data-linked product workspace",
-          "nav.overview": "Overview", "nav.market": "Market Opportunity", "nav.assortment": "Assortment", "nav.network": "Relationship Graph",
-          "nav.kpi": "KPI Diagnosis", "nav.semantic": "Semantic Insight", "nav.workspace": "Decision Workspace", "nav.evidence": "Evidence & Actions",
+          "nav.overview": "Overview", "nav.market": "Market & Assortment", "nav.assortment": "Assortment", "nav.network": "Relationship Graph",
+          "nav.kpi": "KPI & Semantics", "nav.semantic": "Semantic Insight", "nav.workspace": "Decision Workspace", "nav.evidence": "Actions & Evidence",
           "page.overview.title": "Overview", "page.overview.copy": "Read market opportunity and company readiness first, then move into category-level decisions.",
-          "page.market.title": "Market Opportunity", "page.market.copy": "Align public market data with modeled company KPIs to decide which categories are worth entering.",
+          "page.market.title": "Market & Assortment", "page.market.copy": "Align public market data with modeled company KPIs to decide which categories are worth entering.",
           "page.assortment.title": "Assortment", "page.assortment.copy": "Use product structure, share, and transaction momentum to judge assortment health.",
           "page.network.title": "Relationship Graph", "page.network.copy": "Explain links between categories, pain points, KPIs, and actions through a 2D graph.",
-          "page.kpi.title": "KPI Diagnosis", "page.kpi.copy": "Break market opportunity into conversion, return, margin, and fit-readiness gaps.",
+          "page.kpi.title": "KPI & Semantics", "page.kpi.copy": "Break market opportunity into conversion, return, margin, and fit-readiness gaps.",
           "page.semantic.title": "Semantic Insight", "page.semantic.copy": "Turn review text and fit feedback into actionable product and content issues.",
           "page.workspace.title": "Decision Workspace", "page.workspace.copy": "Concentrate KPI, risk, evidence, and action for the current category.",
-          "page.evidence.title": "Evidence & Actions", "page.evidence.copy": "Translate review evidence and semantic pain points into executable improvements.",
+          "page.evidence.title": "Actions & Evidence", "page.evidence.copy": "Translate review evidence and semantic pain points into executable improvements.",
           "control.graphFocus": "Graph focus", "control.resetGraph": "Reset graph", "control.kpiCategory": "KPI category", "control.resetKpi": "Reset KPI",
           "control.semanticCategory": "Semantic category", "control.resetSemantic": "Reset semantic", "control.workspaceCategory": "Workspace category", "control.resetCategory": "Reset category",
           "control.evidenceCategory": "Evidence category", "control.resetEvidence": "Reset evidence",
@@ -2494,6 +2543,8 @@
           "workspace.logic.title": "Category Decision Logic", "workspace.logic.copy": "This is not a simple ranking. It explains why a category should scale, be watched, or be fixed.",
           "workspace.pain.title": "Related Pain Points", "workspace.pain.copy": "From review tags and fit feedback.",
           "evidence.title": "Evidence & Actions", "evidence.copy": "After clicking a KPI, node, or category, this page shows matched review samples and executable actions.",
+          "evidence.search": "Search review, pain point, or occasion",
+          "filter.fitAll": "All fit", "filter.bodyAll": "All body types", "filter.painAll": "All pain points",
           "table.category": "Category", "table.semanticTag": "Semantic tag", "table.body": "Body type", "table.occasion": "Occasion", "table.userLanguage": "User language",
           "table.fit": "Fit", "table.rating": "Rating", "table.pain": "Pain point", "table.reviewEvidence": "Review evidence",
           "footer.note": "MVP note: login, company KPIs, and database connection signals are included to show the full product shape. Public datasets are loaded; internal operating data can be replaced by a database API later."
@@ -2511,12 +2562,12 @@
         "先做小流量测试，观察转化、退货和评论变化，再决定是否放量。": "Run a small traffic test first, then watch conversion, returns, and review changes before scaling.",
         "退货压力过高，暂不扩大曝光，先定位退货和差评原因。": "Return pressure is too high. Do not expand exposure until return and low-rating causes are isolated.",
         "保持监控，等待市场需求或内部 KPI 出现更强信号。": "Keep monitoring until market demand or internal KPIs show a stronger signal.",
-        "机会分": "Opportunity score", "退货率": "Return rate", "合身率": "Fit rate", "平均转化": "Average conversion", "平均退货": "Average returns",
+        "机会分": "Opportunity score", "机会指数": "Opportunity index", "风险暴露": "Risk exposure", "风险分": "Risk score", "退货率": "Return rate", "合身率": "Fit rate", "平均转化": "Average conversion", "平均退货": "Average returns",
         "平均毛利": "Average margin", "高风险品类": "High-risk categories", "当前品类": "Current category",
         "机会分怎么来": "How the opportunity score is calculated", "风险为什么上升": "Why risk increases", "当前结果怎么读": "How to read the current result",
         "是当前数据窗口下的第一入口；它不是固定推荐，刷新数据后会由同一规则重新排序。": " is the top entry in the current data window. It is not a fixed recommendation; the same rule reranks it after data refresh.",
         "个品类": " categories", "占比": "Share", "评论标签出现": "Review tag mentions", "组合合身率": "Portfolio fit rate", "偏小信号": "Too-small signal", "偏大信号": "Too-large signal",
-        "合身": "Fit", "偏小": "Too small", "偏大": "Too large", "条": " rows", "表": "table", "分": "score", "指数": "index", "暴露": "exposure", "代理值": "proxy value", "个百分点": "percentage points", "百分点": "percentage points",
+        "合身": "Fit", "偏小": "Too small", "偏大": "Too large", "条": " rows", "表": "table", "分": "score", "指数": "index", "暴露": "exposure", "代理值": "proxy value", "个百分点": "pp", "百分点": "pp",
         "点击进入语义洞察复核合身原因。": "Click to open Semantic Insight and review fit drivers.", "健康": "Healthy", "需治理": "Needs action",
         "低": "Low", "当前": "Current", "高": "High", "低市场机会": "Low opportunity", "高市场机会": "High opportunity", "低经营风险": "Low operating risk", "高经营风险": "High operating risk",
         "先治理风险": "Treat risk first", "先修正再放量": "Fix before scaling", "低优先观察": "Low-priority watch", "优先验证放量": "Validate then scale",
@@ -2569,6 +2620,7 @@
       };
       const nameOf = (value) => {
         const labels = state.lang === "en" ? labelMapEn : labelMap;
+        if (state.lang === "en") return labels[value] || value || "-";
         return labels[value] ? `${labels[value]} · ${value}` : value || "-";
       };
       const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
@@ -2576,6 +2628,9 @@
       function localizeStatic() {
         document.querySelectorAll("[data-i18n]").forEach((el) => {
           el.textContent = t(el.dataset.i18n);
+        });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+          el.setAttribute("placeholder", t(el.dataset.i18nPlaceholder));
         });
         document.querySelectorAll("[data-lang]").forEach((button) => {
           button.classList.toggle("active", button.dataset.lang === state.lang);
@@ -2914,7 +2969,7 @@
         renderBars("kpi-gap-bars", rows, "category_group", (row) => {
           const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
           return Math.max(0, num(company.returnRate) - 0.18) * 100 + Math.max(0, 0.085 - num(company.conversion)) * 100;
-        }, { max: 18, format: (v) => `${v.toFixed(1)} 个百分点`, risk: true, click: true });
+        }, { max: 18, format: (v) => state.lang === "en" ? `${v.toFixed(1)}pp` : `${v.toFixed(1)}个百分点`, risk: true, click: true });
         renderScatter("kpi-scatter", rows);
       }
 
@@ -2987,7 +3042,7 @@
             </div>
             <div class="decision-tile">
               <span>${state.lang === "en" ? "Operating impact" : "经营影响"}</span>
-              <strong>${state.lang === "en" ? `Return rate is ${(returnGap * 100).toFixed(1)} percentage points above the health line; conversion gap is ${(conversionGap * 100).toFixed(1)} percentage points.` : `退货率比健康线高 ${(returnGap * 100).toFixed(1)} 个百分点，转化率缺口 ${(conversionGap * 100).toFixed(1)} 个百分点。`}</strong>
+              <strong>${state.lang === "en" ? `Return rate is ${(returnGap * 100).toFixed(1)}pp above the health line; conversion gap is ${(conversionGap * 100).toFixed(1)}pp.` : `退货率比健康线高 ${(returnGap * 100).toFixed(1)} 个百分点，转化率缺口 ${(conversionGap * 100).toFixed(1)} 个百分点。`}</strong>
               <button type="button" onclick="setPage('market')">${state.lang === "en" ? "View KPI" : "查看 KPI"}</button>
             </div>
             <div class="decision-tile">
@@ -3001,8 +3056,11 @@
       }
 
       function renderEvidence() {
-        const rows = evidenceForSelection().slice(0, 80);
-        document.getElementById("evidence-count").textContent = `${rows.length} rows`;
+        const sourceRows = evidenceForSelection();
+        updateEvidenceFilters(sourceRows);
+        const filteredRows = filterEvidenceRows(sourceRows);
+        const rows = filteredRows.slice(0, 36);
+        document.getElementById("evidence-count").textContent = state.lang === "en" ? `${filteredRows.length} rows` : `${filteredRows.length} 条`;
         document.getElementById("action-cards").innerHTML = actionCards().map((item, index) => `
           <div class="action-card">
             <span class="priority">A${index + 1}</span>
@@ -3021,6 +3079,43 @@
             <td>${escapeHtml(String(row.review_text || row.review_summary || "").slice(0, 260))}${String(row.review_text || "").length > 260 ? "..." : ""}</td>
           </tr>
         `).join("");
+      }
+
+      function optionLabel(value, allLabel) {
+        return value === "all" ? allLabel : nameOf(value);
+      }
+
+      function setSelectOptions(select, values, allLabel, selected) {
+        const normalized = selected && values.includes(selected) ? selected : "all";
+        select.innerHTML = ["all", ...values].map((value) => `<option value="${escapeHtml(value)}"${value === normalized ? " selected" : ""}>${escapeHtml(optionLabel(value, allLabel))}</option>`).join("");
+        return normalized;
+      }
+
+      function updateEvidenceFilters(rows) {
+        const q = document.getElementById("evidence-search");
+        const fit = document.getElementById("evidence-fit-filter");
+        const body = document.getElementById("evidence-body-filter");
+        const pain = document.getElementById("evidence-pain-filter");
+        if (!q || !fit || !body || !pain) return;
+        q.value = state.evidenceFilters.q || "";
+        const fits = [...new Set(rows.map((row) => row.fit).filter(Boolean))].sort();
+        const bodies = [...new Set(rows.map((row) => row.body_type).filter(Boolean))].sort();
+        const pains = [...new Set(rows.flatMap((row) => cleanPainList(row.pain_points)))].sort();
+        state.evidenceFilters.fit = setSelectOptions(fit, fits, t("filter.fitAll"), state.evidenceFilters.fit);
+        state.evidenceFilters.body = setSelectOptions(body, bodies, t("filter.bodyAll"), state.evidenceFilters.body);
+        state.evidenceFilters.pain = setSelectOptions(pain, pains, t("filter.painAll"), state.evidenceFilters.pain);
+      }
+
+      function filterEvidenceRows(rows) {
+        const { q, fit, body, pain } = state.evidenceFilters;
+        const query = String(q || "").trim().toLowerCase();
+        return rows.filter((row) => {
+          if (fit !== "all" && row.fit !== fit) return false;
+          if (body !== "all" && row.body_type !== body) return false;
+          if (pain !== "all" && !cleanPainList(row.pain_points).includes(pain)) return false;
+          if (!query) return true;
+          return [row.category_group, row.fit, row.body_type, row.occasion, row.pain_points, row.review_text, row.review_summary].some((value) => String(value || "").toLowerCase().includes(query));
+        });
       }
 
       function actionCards() {
@@ -3080,9 +3175,9 @@
               ? `onclick="selectCategory('${escapeHtml(row.category_group || row.category || "dress")}', 'workspace')"`
               : "";
           return `<button class="bar-row" type="button" ${onclick} style="background:transparent;border:0;text-align:left;width:100%;padding:0">
-            <span>${escapeHtml(label)}</span>
+            <span class="bar-label">${escapeHtml(label)}</span>
             <span class="bar-track"><span class="bar-fill ${options.risk ? "risk-fill" : ""}" style="width:${width}%"></span></span>
-            <strong style="color:var(--text);text-align:right">${escapeHtml(options.format ? options.format(value) : value.toFixed(1))}</strong>
+            <strong class="bar-value">${escapeHtml(options.format ? options.format(value) : value.toFixed(1))}</strong>
           </button>`;
         }).join("");
       }
@@ -3293,7 +3388,7 @@
               ${surface.map((point, index) => {
                 const value = num(point.row.value);
                 const r = 5 + Math.sqrt(value / max) * 10;
-                const labelX = cx + Math.cos(point.angle) * 178;
+                const labelX = Math.max(70, Math.min(width - 70, cx + Math.cos(point.angle) * 154));
                 const labelY = cy + Math.sin(point.angle) * 112;
                 return `<g class="contour-point" onclick="selectGraphNode('${escapeHtml(point.row.id)}', 'evidence')" onmousemove="showTooltip(event, '${escapeHtml(point.row.label)}', '${escapeHtml(`评论标签出现 ${fmt(value)} 次<br>占比 ${pct(value / total)}`)}')" onmouseleave="hideTooltip()">
                   <line x1="${point.x.toFixed(1)}" y1="${point.y.toFixed(1)}" x2="${labelX.toFixed(1)}" y2="${labelY.toFixed(1)}" stroke="oklch(0.72 0.02 255 / 0.18)"></line>
@@ -4081,18 +4176,33 @@
       window.selectGraphNode = selectGraphNode;
 
       function selectCategory(category, page = state.page) {
+        const targetPage = page === "assortment" ? "market" : page === "semantic" ? "kpi" : page === "workspace" ? "evidence" : page;
         state.selectedCategory = category;
         buildGraph();
         state.selectedNode = state.graph.nodes.find((node) => node.id === category) || { id: category, label: nameOf(category), kind: "category", value: num(selectedCategoryRow().records) };
         buildCategorySelect();
         renderAll();
-        setPage(page);
+        setPage(targetPage);
       }
       window.selectCategory = selectCategory;
 
+      function pageGroup(page) {
+        return {
+          overview: ["overview"],
+          market: ["market", "assortment"],
+          network: ["network"],
+          kpi: ["kpi", "semantic"],
+          evidence: ["workspace", "evidence"],
+        }[page] || [page];
+      }
+
       function setPage(page) {
+        if (page === "assortment") page = "market";
+        if (page === "semantic") page = "kpi";
+        if (page === "workspace") page = "evidence";
         state.page = page;
-        document.querySelectorAll(".page").forEach((el) => el.classList.toggle("active", el.id === page));
+        const visiblePages = pageGroup(page);
+        document.querySelectorAll(".page").forEach((el) => el.classList.toggle("active", visiblePages.includes(el.id)));
         document.querySelectorAll(".nav-button").forEach((button) => button.classList.toggle("active", button.dataset.page === page));
         document.getElementById("page-title").textContent = t(`page.${page}.title`);
         document.getElementById("page-subtitle").textContent = t(`page.${page}.copy`);
@@ -4113,7 +4223,7 @@
           document.getElementById("reset-button").textContent = t(currentControls[1]);
         }
         localizeStatic();
-        localizeGenerated(document.getElementById(page));
+        visiblePages.forEach((id) => localizeGenerated(document.getElementById(id)));
         if (page === "network") renderNetworkGraph();
       }
       window.setPage = setPage;
@@ -4198,9 +4308,26 @@
         });
       });
       document.getElementById("category-select").addEventListener("change", (event) => selectCategory(event.target.value, state.page));
+      document.getElementById("evidence-search").addEventListener("input", (event) => {
+        state.evidenceFilters.q = event.target.value;
+        renderEvidence();
+      });
+      document.getElementById("evidence-fit-filter").addEventListener("change", (event) => {
+        state.evidenceFilters.fit = event.target.value;
+        renderEvidence();
+      });
+      document.getElementById("evidence-body-filter").addEventListener("change", (event) => {
+        state.evidenceFilters.body = event.target.value;
+        renderEvidence();
+      });
+      document.getElementById("evidence-pain-filter").addEventListener("change", (event) => {
+        state.evidenceFilters.pain = event.target.value;
+        renderEvidence();
+      });
       document.getElementById("reset-button").addEventListener("click", () => {
         state.selectedCategory = "dress";
         state.selectedNode = null;
+        state.evidenceFilters = { q: "", fit: "all", body: "all", pain: "all" };
         buildGraph();
         buildCategorySelect();
         renderAll();
