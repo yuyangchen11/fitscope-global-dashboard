@@ -256,6 +256,8 @@
         background: linear-gradient(135deg, var(--blue-strong), var(--blue));
         color: white;
         font-weight: 750;
+        white-space: normal;
+        overflow-wrap: anywhere;
       }
 
       .ghost-button {
@@ -407,6 +409,7 @@
         gap: 10px;
         align-items: center;
         flex-wrap: nowrap;
+        max-width: min(52vw, 720px);
       }
 
       .top-actions.hidden {
@@ -414,12 +417,14 @@
       }
 
       .top-actions select {
-        min-width: 240px;
+        min-width: 190px;
+        max-width: 360px;
       }
 
       .top-actions button,
       .control-context {
         white-space: nowrap;
+        flex: 0 0 auto;
       }
 
       .control-context {
@@ -943,6 +948,13 @@
         pointer-events: none;
       }
 
+      .connected-graph .signal-lane-label {
+        fill: var(--muted);
+        font-size: 11px;
+        font-weight: 760;
+        letter-spacing: 0;
+      }
+
       .graph-toolbar {
         position: absolute;
         left: 14px;
@@ -1025,6 +1037,7 @@
       .metric-row strong {
         color: var(--text);
         text-align: right;
+        overflow-wrap: anywhere;
       }
 
       .bars {
@@ -2033,7 +2046,7 @@
         <nav class="nav" aria-label="Main navigation">
           <button class="nav-button active" data-page="overview"><span class="nav-number">01</span><span data-i18n="nav.overview">经营总览</span></button>
           <button class="nav-button" data-page="market"><span class="nav-number">02</span><span data-i18n="nav.market">市场机会</span></button>
-          <button class="nav-button" data-page="network"><span class="nav-number">03</span><span data-i18n="nav.network">关系图谱</span></button>
+          <button class="nav-button" data-page="network"><span class="nav-number">03</span><span data-i18n="nav.network">信号流</span></button>
           <button class="nav-button" data-page="kpi"><span class="nav-number">04</span><span data-i18n="nav.kpi">KPI诊断</span></button>
           <button class="nav-button" data-page="evidence"><span class="nav-number">05</span><span data-i18n="nav.evidence">证据与动作</span></button>
         </nav>
@@ -2182,8 +2195,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3 data-i18n="network.list.title">相关节点</h3>
-                  <p data-i18n="network.list.copy">参考 Connected Papers 的左侧列表逻辑，点击节点会同步更新中间图和右侧解释。</p>
+                  <h3 data-i18n="network.list.title">运营信号</h3>
+                  <p data-i18n="network.list.copy">优先看高频痛点、KPI 阻塞和可执行动作。</p>
                 </div>
               </div>
               <div class="network-category-strip" id="network-category-strip"></div>
@@ -2192,8 +2205,8 @@
             <div class="panel network-panel">
               <div class="panel-header">
                 <div>
-                  <h3 data-i18n="network.graph.title">业务关系图谱</h3>
-                  <p data-i18n="network.graph.copy">不再自动旋转。节点大小代表证据强度，连线代表共现或 KPI 影响，悬浮可查看解释，点击会锁定节点。</p>
+                  <h3 data-i18n="network.graph.title">品类信号流</h3>
+                  <p data-i18n="network.graph.copy">从当前品类出发，连接评论痛点、尺码/体型信号、KPI 阻塞和下一步动作。</p>
                 </div>
                 <div class="control-row">
                   <button class="chip active" data-network-filter="all" data-i18n="filter.all">全部</button>
@@ -2203,7 +2216,7 @@
                 </div>
               </div>
               <div class="connected-graph-wrap">
-                <svg id="connected-graph" class="connected-graph" role="img" aria-label="business relationship graph"></svg>
+                <svg id="connected-graph" class="connected-graph" role="img" aria-label="category signal flow"></svg>
                 <div class="graph-toolbar">
                   <span class="legend-item"><span class="legend-dot" style="background:var(--blue)"></span><span data-i18n="legend.category">品类</span></span>
                   <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span><span data-i18n="legend.pain">评论痛点</span></span>
@@ -2215,8 +2228,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3 data-i18n="network.inspector.title">节点解释</h3>
-                  <p data-i18n="network.inspector.copy">点击星域中的节点查看它影响哪些 KPI 和行动。</p>
+                  <h3 data-i18n="network.inspector.title">信号解释</h3>
+                  <p data-i18n="network.inspector.copy">点击信号查看它影响的 KPI、证据和动作。</p>
                 </div>
               </div>
               <div id="node-inspector" class="inspector"></div>
@@ -2439,22 +2452,22 @@
           "login.heroCopy": "它先判断外部市场是否值得进入，再判断内部经营能否承接，最后用关系图谱追踪品类、痛点、体型、尺码和行动建议之间的业务关系。",
           "login.proofData": "主要公开数据源，用于市场、评论和合身风险。",
           "login.proofModes": "使用模式：管理层视角和执行者视角。",
-          "login.proofGraph": "业务关系图，把节点关系变成可点击的产品体验。",
+          "login.proofGraph": "品类信号流，把痛点、KPI 和动作变成可点击的产品体验。",
           "login.formTitle": "进入工作台", "login.formCopy": "当前为 MVP 演示登录，用于展示产品入口和使用模式。后续可接 Supabase、PostgreSQL 或企业 SSO。",
           "login.email": "邮箱", "login.password": "密码", "login.managementMode": "管理视角", "login.operatorMode": "执行视角", "login.submit": "打开 Commerce OS",
           "login.note": "说明：这是产品体验入口，不是真实鉴权。我们先做完整业务网站，再决定是否接数据库登录。",
           "top.pill": "数据联动产品站点",
-          "nav.overview": "经营总览", "nav.market": "市场与商品", "nav.assortment": "商品组合", "nav.network": "关系图谱",
+          "nav.overview": "经营总览", "nav.market": "市场与商品", "nav.assortment": "商品组合", "nav.network": "信号流",
           "nav.kpi": "KPI与语义", "nav.semantic": "语义洞察", "nav.workspace": "决策工作区", "nav.evidence": "行动证据",
           "page.overview.title": "经营总览", "page.overview.copy": "先看市场机会和公司经营承接能力，再进入品类级决策。",
           "page.market.title": "市场与商品", "page.market.copy": "公开市场数据与模拟公司 KPI 对齐，判断哪些品类值得进入。",
           "page.assortment.title": "商品组合", "page.assortment.copy": "用商品结构、占比和交易动量判断组合是否健康。",
-          "page.network.title": "关系图谱", "page.network.copy": "用 2D 关系图解释品类、痛点、KPI 和行动之间的连接。",
+          "page.network.title": "品类信号流", "page.network.copy": "把当前品类的评论痛点、KPI 阻塞和动作路径放在同一个诊断视图。",
           "page.kpi.title": "KPI与语义", "page.kpi.copy": "把市场机会拆成转化、退货、毛利和合身承接问题。",
           "page.semantic.title": "语义洞察", "page.semantic.copy": "把评论文本和合身反馈转成可执行的商品与内容问题。",
           "page.workspace.title": "决策工作区", "page.workspace.copy": "围绕当前品类集中展示 KPI、风险、证据和动作。",
           "page.evidence.title": "行动证据", "page.evidence.copy": "把评论证据和语义痛点转成可执行优化动作。",
-          "control.graphFocus": "图谱聚焦", "control.resetGraph": "重置图谱", "control.kpiCategory": "诊断品类", "control.resetKpi": "重置KPI",
+          "control.graphFocus": "信号品类", "control.resetGraph": "重置", "control.kpiCategory": "诊断品类", "control.resetKpi": "重置KPI",
           "control.semanticCategory": "语义品类", "control.resetSemantic": "重置语义", "control.workspaceCategory": "工作区品类", "control.resetCategory": "重置品类",
           "control.evidenceCategory": "证据品类", "control.resetEvidence": "重置证据",
           "overview.path.title": "经营工作台路径", "overview.path.copy": "首页给结论，后续页面提供市场、证据和执行动作。",
@@ -2469,9 +2482,9 @@
           "assortment.tree.title": "商品组 Treemap", "assortment.tree.copy": "面积代表商品数量，颜色深浅代表交易需求，点击后切到市场机会页。",
           "assortment.share.title": "商品组占比", "assortment.share.copy": "用 donut 看组合集中度，避免只看条形排名。",
           "assortment.momentum.title": "交易动量", "assortment.momentum.copy": "鼠标悬浮可查看具体日期、交易量和均价。",
-          "network.list.title": "相关节点", "network.list.copy": "参考 Connected Papers 的左侧列表逻辑，点击节点会同步更新中间图和右侧解释。",
-          "network.graph.title": "业务关系图谱", "network.graph.copy": "不再自动旋转。节点大小代表证据强度，连线代表共现或 KPI 影响，悬浮可查看解释，点击会锁定节点。",
-          "network.inspector.title": "节点解释", "network.inspector.copy": "点击星域中的节点查看它影响哪些 KPI 和行动。",
+          "network.list.title": "运营信号", "network.list.copy": "优先看高频痛点、KPI 阻塞和可执行动作。",
+          "network.graph.title": "品类信号流", "network.graph.copy": "从当前品类出发，连接评论痛点、尺码/体型信号、KPI 阻塞和下一步动作。",
+          "network.inspector.title": "信号解释", "network.inspector.copy": "点击信号查看它影响的 KPI、证据和动作。",
           "filter.all": "全部", "filter.risk": "风险", "filter.action": "行动",
           "legend.category": "品类", "legend.pain": "评论痛点", "legend.bodySize": "体型/尺码", "legend.kpiAction": "KPI/行动",
           "kpi.gap.title": "KPI 承接差距", "kpi.gap.copy": "市场需求越强，越需要看转化、退货和毛利是否能承接。",
@@ -2496,22 +2509,22 @@
           "login.heroCopy": "It first checks whether an external market is worth entering, then whether internal operations can support it, and finally maps relationships among categories, pain points, body types, sizes, KPIs, and actions.",
           "login.proofData": "Main public datasets for market, review, and fit-risk signals.",
           "login.proofModes": "Two usage modes: management view and operator view.",
-          "login.proofGraph": "A business relationship graph turns node links into clickable product context.",
+          "login.proofGraph": "A category signal flow turns pain points, KPIs, and actions into clickable product context.",
           "login.formTitle": "Enter Workspace", "login.formCopy": "This MVP login demonstrates the product entry and usage modes. Supabase, PostgreSQL, or enterprise SSO can be connected later.",
           "login.email": "Email", "login.password": "Password", "login.managementMode": "Management view", "login.operatorMode": "Operator view", "login.submit": "Open Commerce OS",
           "login.note": "Note: this is a product demo entry, not real authentication. The full website experience comes first; database login can follow.",
           "top.pill": "Data-linked product workspace",
-          "nav.overview": "Overview", "nav.market": "Market & Assortment", "nav.assortment": "Assortment", "nav.network": "Relationship Graph",
+          "nav.overview": "Overview", "nav.market": "Market & Assortment", "nav.assortment": "Assortment", "nav.network": "Signal Flow",
           "nav.kpi": "KPI & Semantics", "nav.semantic": "Semantic Insight", "nav.workspace": "Decision Workspace", "nav.evidence": "Actions & Evidence",
           "page.overview.title": "Overview", "page.overview.copy": "Read market opportunity and company readiness first, then move into category-level decisions.",
           "page.market.title": "Market & Assortment", "page.market.copy": "Align public market data with modeled company KPIs to decide which categories are worth entering.",
           "page.assortment.title": "Assortment", "page.assortment.copy": "Use product structure, share, and transaction momentum to judge assortment health.",
-          "page.network.title": "Relationship Graph", "page.network.copy": "Explain links between categories, pain points, KPIs, and actions through a 2D graph.",
+          "page.network.title": "Category Signal Flow", "page.network.copy": "Diagnose the current category through review pain points, KPI blockers, and action paths.",
           "page.kpi.title": "KPI & Semantics", "page.kpi.copy": "Break market opportunity into conversion, return, margin, and fit-readiness gaps.",
           "page.semantic.title": "Semantic Insight", "page.semantic.copy": "Turn review text and fit feedback into actionable product and content issues.",
           "page.workspace.title": "Decision Workspace", "page.workspace.copy": "Concentrate KPI, risk, evidence, and action for the current category.",
           "page.evidence.title": "Actions & Evidence", "page.evidence.copy": "Translate review evidence and semantic pain points into executable improvements.",
-          "control.graphFocus": "Graph focus", "control.resetGraph": "Reset graph", "control.kpiCategory": "KPI category", "control.resetKpi": "Reset KPI",
+          "control.graphFocus": "Signal category", "control.resetGraph": "Reset", "control.kpiCategory": "KPI category", "control.resetKpi": "Reset KPI",
           "control.semanticCategory": "Semantic category", "control.resetSemantic": "Reset semantic", "control.workspaceCategory": "Workspace category", "control.resetCategory": "Reset category",
           "control.evidenceCategory": "Evidence category", "control.resetEvidence": "Reset evidence",
           "overview.path.title": "Operating Path", "overview.path.copy": "The overview gives the decision; follow-up pages provide market, evidence, and execution detail.",
@@ -2526,9 +2539,9 @@
           "assortment.tree.title": "Product Group Treemap", "assortment.tree.copy": "Area shows article count, color intensity shows demand. Click to switch to Market Opportunity.",
           "assortment.share.title": "Product Group Share", "assortment.share.copy": "The donut shows concentration without relying only on ranked bars.",
           "assortment.momentum.title": "Transaction Momentum", "assortment.momentum.copy": "Hover to inspect date, transactions, and average price.",
-          "network.list.title": "Related Nodes", "network.list.copy": "A Connected Papers style list. Clicking a node updates the graph and inspector.",
-          "network.graph.title": "Business Relationship Graph", "network.graph.copy": "No auto-rotation. Node size represents evidence strength; edges represent co-occurrence or KPI influence. Hover for explanation, click to lock.",
-          "network.inspector.title": "Node Inspector", "network.inspector.copy": "Click a node in the graph to see which KPIs and actions it affects.",
+          "network.list.title": "Operating Signals", "network.list.copy": "Prioritize top pain points, KPI blockers, and executable actions.",
+          "network.graph.title": "Category Signal Flow", "network.graph.copy": "Start from the current category, then trace review pain, size/body signals, KPI blockers, and next actions.",
+          "network.inspector.title": "Signal Inspector", "network.inspector.copy": "Click a signal to inspect its KPI, evidence, and action impact.",
           "filter.all": "All", "filter.risk": "Risk", "filter.action": "Action",
           "legend.category": "Category", "legend.pain": "Review pain point", "legend.bodySize": "Body / Size", "legend.kpiAction": "KPI / Action",
           "kpi.gap.title": "KPI Readiness Gap", "kpi.gap.copy": "The stronger market demand is, the more conversion, return, and margin readiness matter.",
@@ -3079,7 +3092,7 @@
             <div class="decision-tile">
               <span>${state.lang === "en" ? "Business read" : "业务判断"}</span>
               <strong>${escapeHtml(state.lang === "en" ? `${tr(decision.label)}: ${tr(decision.action)}` : `${decision.label}：${decision.action}`)}</strong>
-              <button type="button" onclick="setPage('network')">${state.lang === "en" ? "View relationship graph" : "查看关系星域"}</button>
+              <button type="button" onclick="setPage('network')">${state.lang === "en" ? "View signal flow" : "查看信号流"}</button>
             </div>
             <div class="decision-tile">
               <span>${state.lang === "en" ? "Main blocker" : "主要阻塞"}</span>
@@ -3684,10 +3697,10 @@
         });
         list.innerHTML = nodes
           .filter((node) => node.kind !== "category")
-          .sort((a, b) => (b.value || 0) - (a.value || 0))
+          .sort(signalSort)
           .map((node) => `<button type="button" class="${node.id === activeNode?.id ? "active" : ""}" onclick="selectGraphNode('${escapeHtml(node.id)}')">
             <strong>${escapeHtml(node.label)}</strong>
-            <span><em>${escapeHtml(kindLabel(node.kind))}</em><b>${fmt(node.value || 0)}</b></span>
+            <span><em>${escapeHtml(signalRoleLabel(node.kind))}</em><b>${fmt(node.value || 0)}</b></span>
           </button>`).join("");
         const links = state.graph.edges.map((edge) => {
           const a = nodeById.get(edge.source), b = nodeById.get(edge.target);
@@ -3712,9 +3725,41 @@
         svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
         svg.innerHTML = `
           <rect class="graph-bg" x="18" y="18" width="${width - 36}" height="${height - 36}" rx="18" fill="oklch(0.12 0.012 255 / 0.28)" stroke="oklch(0.72 0.02 255 / 0.12)"></rect>
+          <text class="signal-lane-label" x="126" y="62">${state.lang === "en" ? "Pain signals" : "痛点信号"}</text>
+          <text class="signal-lane-label" x="${center.x}" y="62" text-anchor="middle">${state.lang === "en" ? "Current category" : "当前品类"}</text>
+          <text class="signal-lane-label" x="592" y="62">${state.lang === "en" ? "KPI and actions" : "KPI 与动作"}</text>
+          <line x1="312" y1="82" x2="312" y2="${height - 62}" stroke="oklch(0.86 0.03 255 / 0.12)" stroke-dasharray="5 8"></line>
+          <line x1="506" y1="82" x2="506" y2="${height - 62}" stroke="oklch(0.86 0.03 255 / 0.12)" stroke-dasharray="5 8"></line>
           ${links}
           ${nodeMarkup}
         `;
+      }
+
+      function signalSort(a, b) {
+        const priority = { pain: 0, kpi: 1, action: 2, size: 3, body: 4, category: 5 };
+        const pa = priority[a.kind] ?? 9;
+        const pb = priority[b.kind] ?? 9;
+        if (pa !== pb) return pa - pb;
+        return (b.value || 0) - (a.value || 0);
+      }
+
+      function signalRoleLabel(kind) {
+        if (state.lang === "en") {
+          return {
+            pain: "Top pain signal",
+            kpi: "KPI blocker",
+            action: "Action path",
+            size: "Size signal",
+            body: "Body-type segment",
+          }[kind] || "Signal";
+        }
+        return {
+          pain: "高频痛点",
+          kpi: "KPI 阻塞",
+          action: "动作路径",
+          size: "尺码信号",
+          body: "体型人群",
+        }[kind] || "信号";
       }
 
       function graphNodeDetail(node) {
