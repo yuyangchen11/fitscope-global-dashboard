@@ -1,0 +1,7 @@
+category,source_category,products,gmv,conversion,returnRate,margin,inventoryTurn,avg_rating,avg_markdown,returned_items,top_return_reason,size_issue_returns,quality_issue_returns
+outerwear,Outerwear,334,48672.81,0.0494,0.1617,0.4713,3.798,2.411,10.769,54,Changed Mind,12,12
+shoes,Shoes,372,41152.78,0.0513,0.1505,0.4651,3.82,2.534,12.985,56,Changed Mind,8,10
+dress,Dresses,317,31028.35,0.0514,0.1483,0.4653,3.8,2.529,13.166,47,Quality Issue,7,12
+bottom,Bottoms,392,24079.39,0.0504,0.1582,0.4595,3.837,2.492,13.228,62,Changed Mind,12,5
+top,Tops,359,23719.91,0.0514,0.1281,0.4885,3.812,2.406,10.983,46,Quality Issue,10,10
+accessories,Accessories,402,17393.88,0.0523,0.1368,0.4798,3.751,2.555,11.687,55,Color Mismatch,11,6

@@ -606,8 +606,18 @@
       }
 
       .overview-map-grid {
-        grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.55fr);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
         align-items: start;
+      }
+
+      .overview-map-grid > .panel {
+        align-self: start;
+      }
+
+      #priority-queue {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
       @keyframes panelIn {
@@ -894,7 +904,7 @@
 
       .connected-graph-wrap {
         position: relative;
-        min-height: 620px;
+        min-height: 520px;
         border: 1px solid var(--line);
         border-radius: var(--radius);
         overflow: hidden;
@@ -903,56 +913,125 @@
           linear-gradient(180deg, oklch(0.18 0.012 255 / 0.78), oklch(0.125 0.01 255 / 0.88));
       }
 
-      .connected-graph {
-        width: 100%;
-        height: 620px;
-        display: block;
+      .signal-flow-board {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, .9fr) minmax(0, 1fr);
+        gap: 14px;
+        min-height: 520px;
+        padding: 18px;
+        align-items: stretch;
       }
 
-      .connected-graph .graph-bg {
-        pointer-events: none;
+      .signal-lane {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 10px;
+        min-width: 0;
       }
 
-      .graph-link {
-        stroke: oklch(0.72 0.05 230 / 0.24);
-        stroke-width: 1.1;
-        transition: stroke 180ms ease, stroke-width 180ms ease, opacity 180ms ease;
-      }
-
-      .graph-link.active {
-        stroke: oklch(0.72 0.16 230 / 0.76);
-        stroke-width: 2;
-      }
-
-      .graph-node circle {
-        cursor: pointer;
-        transition: opacity 180ms ease, stroke-width 180ms ease, transform 180ms ease;
-        transform-box: fill-box;
-        transform-origin: center;
-      }
-
-      .graph-node:hover circle,
-      .graph-node.active circle {
-        transform: scale(1.06);
-        stroke-width: 4;
-      }
-
-      .graph-node text {
-        fill: var(--text);
+      .signal-lane h4 {
+        margin: 0;
+        color: var(--muted);
         font-size: 12px;
-        font-weight: 720;
-        paint-order: stroke;
-        stroke: oklch(0.12 0.012 255);
-        stroke-width: 4px;
-        stroke-linejoin: round;
-        pointer-events: none;
+        font-weight: 820;
       }
 
-      .connected-graph .signal-lane-label {
-        fill: var(--muted);
+      .signal-stack {
+        display: grid;
+        align-content: center;
+        gap: 10px;
+      }
+
+      .signal-card {
+        display: grid;
+        gap: 7px;
+        width: 100%;
+        min-height: 74px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: oklch(0.16 0.014 255 / 0.78);
+        color: var(--muted);
+        text-align: left;
+        cursor: pointer;
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+
+      .signal-card:hover,
+      .signal-card.active {
+        transform: translateY(-2px);
+        border-color: oklch(0.72 0.16 230 / 0.56);
+        background: oklch(0.22 0.028 230 / 0.64);
+      }
+
+      .signal-card strong {
+        fill: var(--text);
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+        word-break: normal;
+      }
+
+      .signal-card span {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
         font-size: 11px;
-        font-weight: 760;
-        letter-spacing: 0;
+      }
+
+      .signal-card em {
+        color: var(--muted);
+        font-style: normal;
+      }
+
+      .signal-card b {
+        color: var(--text);
+      }
+
+      .signal-card.pain { border-color: oklch(0.68 0.2 25 / 0.34); }
+      .signal-card.kpi,
+      .signal-card.action { border-color: oklch(0.72 0.16 165 / 0.34); }
+      .signal-card.size,
+      .signal-card.body { border-color: oklch(0.72 0.15 295 / 0.28); }
+
+      .flow-center {
+        display: grid;
+        align-content: center;
+        gap: 12px;
+      }
+
+      .flow-category-card {
+        min-height: 170px;
+        border-color: oklch(0.72 0.16 230 / 0.52);
+        background:
+          radial-gradient(circle at 50% 30%, oklch(0.72 0.16 230 / 0.22), transparent 48%),
+          oklch(0.17 0.018 255 / 0.86);
+      }
+
+      .flow-mini-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .flow-mini {
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.13 0.012 255 / 0.72);
+      }
+
+      .flow-mini span {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .flow-mini strong {
+        color: var(--text);
+        font-size: 17px;
       }
 
       .graph-toolbar {
@@ -1414,8 +1493,8 @@
 
       .opportunity-map {
         width: 100%;
-        height: 330px;
-        min-height: 330px;
+        height: 300px;
+        min-height: 300px;
         display: block;
       }
 
@@ -1875,7 +1954,8 @@
         }
 
         .insight-strip,
-        .three-col {
+        .three-col,
+        #priority-queue {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
@@ -1900,6 +1980,7 @@
         .two-col,
         .three-col,
         .insight-strip,
+        #priority-queue,
         .mini-metrics {
           grid-template-columns: 1fr;
         }
@@ -2087,7 +2168,7 @@
               <div class="metric-list" id="overview-path"></div>
             </div>
           </div>
-          <div class="layout-grid overview-map-grid">
+          <div class="overview-map-grid">
             <div class="panel opportunity-panel">
               <div class="panel-header">
                 <div>
@@ -2147,8 +2228,8 @@
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3 data-i18n="market.company.title">模拟公司经营承接</h3>
-                  <p data-i18n="market.company.copy">这是未来接入数据库后的公司 KPI 层，包括转化、退货和毛利。</p>
+                  <h3 data-i18n="market.company.title">经营承接层</h3>
+                  <p data-i18n="market.company.copy">优先使用已接入经营 KPI，未覆盖品类用模型补齐。</p>
                 </div>
               </div>
               <div class="bars" id="company-health-bars"></div>
@@ -2216,13 +2297,7 @@
                 </div>
               </div>
               <div class="connected-graph-wrap">
-                <svg id="connected-graph" class="connected-graph" role="img" aria-label="category signal flow"></svg>
-                <div class="graph-toolbar">
-                  <span class="legend-item"><span class="legend-dot" style="background:var(--blue)"></span><span data-i18n="legend.category">品类</span></span>
-                  <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span><span data-i18n="legend.pain">评论痛点</span></span>
-                  <span class="legend-item"><span class="legend-dot" style="background:var(--violet)"></span><span data-i18n="legend.bodySize">体型/尺码</span></span>
-                  <span class="legend-item"><span class="legend-dot" style="background:var(--green)"></span><span data-i18n="legend.kpiAction">KPI/行动</span></span>
-                </div>
+                <div id="signal-flow-board" class="signal-flow-board" role="img" aria-label="category signal flow"></div>
               </div>
             </div>
             <div class="panel">
@@ -2388,6 +2463,7 @@
         hmTransactions: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transaction_product_group_metrics.csv",
         hmDaily: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transaction_daily_metrics.csv",
         reviews: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_class_metrics.csv",
+        companyKpis: "../data/kaggle_fashion_boutique/processed/kaggle_fashion_boutique_company_category_kpi.csv",
       };
 
       const state = {
@@ -2449,7 +2525,7 @@
           "mode.management": "管理模式", "mode.operator": "运营模式", "language.title": "语言",
           "login.brandTagline": "KPI 优先的服装经营智能",
           "login.heroTitle": "把市场机会、经营 KPI 和用户证据连接成一个决策网站。",
-          "login.heroCopy": "它先判断外部市场是否值得进入，再判断内部经营能否承接，最后用关系图谱追踪品类、痛点、体型、尺码和行动建议之间的业务关系。",
+          "login.heroCopy": "它先判断外部市场是否值得进入，再判断内部经营能否承接，最后用信号流追踪品类、痛点、体型、尺码和行动建议之间的业务关系。",
           "login.proofData": "主要公开数据源，用于市场、评论和合身风险。",
           "login.proofModes": "使用模式：管理层视角和执行者视角。",
           "login.proofGraph": "品类信号流，把痛点、KPI 和动作变成可点击的产品体验。",
@@ -2478,7 +2554,7 @@
           "overview.fit.title": "合身健康度", "overview.fit.copy": "用合身、偏小、偏大信号判断退货压力来源。",
           "overview.momentum.title": "交易动量", "overview.momentum.copy": "H&M 公开交易日趋势，用于判断市场节奏。",
           "market.demand.title": "市场需求与商品配置", "market.demand.copy": "基于公开商品结构和交易占比生成需求 proxy；接入真实订单、搜索或广告数据后，同一视图会自动重算。",
-          "market.company.title": "模拟公司经营承接", "market.company.copy": "这是未来接入数据库后的公司 KPI 层，包括转化、退货和毛利。",
+          "market.company.title": "经营承接层", "market.company.copy": "优先使用已接入经营 KPI，未覆盖品类用模型补齐。",
           "assortment.tree.title": "商品组 Treemap", "assortment.tree.copy": "面积代表商品数量，颜色深浅代表交易需求，点击后切到市场机会页。",
           "assortment.share.title": "商品组占比", "assortment.share.copy": "用 donut 看组合集中度，避免只看条形排名。",
           "assortment.momentum.title": "交易动量", "assortment.momentum.copy": "鼠标悬浮可查看具体日期、交易量和均价。",
@@ -2535,7 +2611,7 @@
           "overview.fit.title": "Fit Health", "overview.fit.copy": "Use fit, too-small, and too-large signals to identify return-pressure sources.",
           "overview.momentum.title": "Transaction Momentum", "overview.momentum.copy": "Daily public H&M transactions help read market rhythm.",
           "market.demand.title": "Market Demand vs Assortment", "market.demand.copy": "Public product structure and transaction share create a demand proxy. Real orders, search, or ads data can replace it later.",
-          "market.company.title": "Modeled Company Readiness", "market.company.copy": "A future company KPI layer for conversion, returns, and margin once database data is connected.",
+          "market.company.title": "Operating Readiness Layer", "market.company.copy": "Uses connected operating KPIs first, then model-fill categories without direct coverage.",
           "assortment.tree.title": "Product Group Treemap", "assortment.tree.copy": "Area shows article count, color intensity shows demand. Click to switch to Market Opportunity.",
           "assortment.share.title": "Product Group Share", "assortment.share.copy": "The donut shows concentration without relying only on ranked bars.",
           "assortment.momentum.title": "Transaction Momentum", "assortment.momentum.copy": "Hover to inspect date, transactions, and average price.",
@@ -2698,7 +2774,10 @@
       }
 
       function buildCompanyModel() {
+        const realRows = state.data.companyKpis || [];
+        const realByCategory = new Map(realRows.map((item) => [item.category, item]));
         return categoryRows().map((row, index) => {
+          const real = realByCategory.get(row.category_group);
           const risk = num(row.risk_score);
           const fit = num(row.fit_rate);
           const demand = marketDemandFor(row.category_group);
@@ -2706,6 +2785,19 @@
           const returnRate = Math.min(0.38, 0.08 + num(row.nonfit_rate) * 0.44 + num(row.pain_point_rate) * 0.08);
           const margin = Math.max(0.22, 0.58 - returnRate * 0.52 + fit * 0.08);
           const gmv = Math.round((320000 + demand * 1400000) * (1 - returnRate * 0.34) * (1 + index / 260));
+          if (real) {
+            return {
+              category: row.category_group,
+              gmv: num(real.gmv),
+              conversion: num(real.conversion),
+              returnRate: num(real.returnRate),
+              margin: num(real.margin),
+              inventoryTurn: num(real.inventoryTurn),
+              avgRating: num(real.avg_rating),
+              returnReason: real.top_return_reason || "",
+              source: "kaggle_fashion_boutique",
+            };
+          }
           return {
             category: row.category_group,
             gmv,
@@ -2713,6 +2805,7 @@
             returnRate,
             margin,
             inventoryTurn: 2.4 + demand * 9 - returnRate * 2,
+            source: "model_fill",
           };
         });
       }
@@ -2791,6 +2884,17 @@
 
       function headlineForDecision(row, decision) {
         const name = nameOf(row.category_group || "-");
+        if (state.lang === "en") {
+          const templates = {
+            "优先放量": `Scale candidate: ${name}`,
+            "先降退货": `Reduce returns first: ${name}`,
+            "先改详情页": `Fix PDP first: ${name}`,
+            "小规模验证": `Validate first: ${name}`,
+            "暂停放量": `Pause scaling: ${name}`,
+            "观察": `Watch: ${name}`,
+          };
+          return templates[decision.label] || `${tr(decision.label)}: ${name}`;
+        }
         const templates = {
           "优先放量": `当前可优先放量：${name}`,
           "先降退货": `当前应先降退货：${name}`,
@@ -2871,18 +2975,18 @@
             <p class="brief-copy">${escapeHtml(tr(leaderDecision.action))}</p>
           </div>
           <div class="mini-metrics">
-            <div class="mini-metric"><span>机会分</span><strong>${businessScore(leader).toFixed(1)}</strong></div>
-            <div class="mini-metric"><span>退货率</span><strong>${pct(company.returnRate)}</strong></div>
-            <div class="mini-metric"><span>合身率</span><strong>${pct(leader.fit_rate)}</strong></div>
+            <div class="mini-metric"><span>${state.lang === "en" ? "Opportunity" : "机会分"}</span><strong>${businessScore(leader).toFixed(1)}</strong></div>
+            <div class="mini-metric"><span>${state.lang === "en" ? "Return rate" : "退货率"}</span><strong>${pct(company.returnRate)}</strong></div>
+            <div class="mini-metric"><span>${state.lang === "en" ? "Fit rate" : "合身率"}</span><strong>${pct(leader.fit_rate)}</strong></div>
           </div>
         `;
         document.getElementById("overview-path").innerHTML = [
-          ["01", "市场是否值得进", "市场机会页验证需求、交易节奏和组合缺口。", "market", pct(marketDemandFor(leader.category_group))],
-          ["02", "公司是否能承接", "KPI 诊断页确认转化、退货、毛利是否拖累放量。", "kpi", pct(company.margin)],
-          ["03", "证据是否支持动作", "语义洞察和证据页复核评论痛点，再进入工作区。", "semantic", state.lang === "en" ? `${fmt(int(leader.records))} rows` : `${fmt(int(leader.records))}条`],
+          ["01", state.lang === "en" ? "Is demand strong enough?" : "市场是否值得进", state.lang === "en" ? "Check demand share, transaction rhythm, and assortment gap." : "验证需求、交易节奏和组合缺口。", "market", pct(marketDemandFor(leader.category_group))],
+          ["02", state.lang === "en" ? "Can operations absorb it?" : "公司是否能承接", state.lang === "en" ? "Review conversion, return pressure, and margin readiness." : "确认转化、退货、毛利是否拖累放量。", "kpi", pct(company.margin)],
+          ["03", state.lang === "en" ? "Does evidence support action?" : "证据是否支持动作", state.lang === "en" ? "Audit review pain points before moving to execution." : "复核评论痛点，再进入工作区。", "semantic", state.lang === "en" ? `${fmt(int(leader.records))} rows` : `${fmt(int(leader.records))}条`],
         ].map(([index, title, body, page, metric]) => `<button class="stack-step" type="button" onclick="setPage('${page}')">
           <span class="step-index">${escapeHtml(index)}</span>
-          <span><strong>${escapeHtml(tr(title))}</strong><small>${escapeHtml(tr(body))}</small></span>
+          <span><strong>${escapeHtml(title)}</strong><small>${escapeHtml(body)}</small></span>
           <span class="step-metric">${escapeHtml(metric)}</span>
         </button>`).join("");
         renderOverviewOpportunityMap("overview-opportunity-map", rankedAll.slice(0, 18));
@@ -3067,19 +3171,19 @@
         document.getElementById("workspace-title").textContent = state.lang === "en" ? `${tr(decision.label)}: ${nameOf(row.category_group)}` : `${decision.label}：${nameOf(row.category_group)}`;
         document.getElementById("workspace-summary").textContent = tr(decision.action);
         document.getElementById("workspace-impact-grid").innerHTML = [
-          ["机会指数", (marketDemandFor(row.category_group) * 100).toFixed(1), "外部市场代理信号"],
-          ["经营承接", pct(company.margin), "毛利与退货压力综合"],
-          ["风险暴露", pct(company.returnRate), "预计退货和合身压力"],
-          ["行动状态", tr(decision.label), "当前推荐处理方式"],
+          [state.lang === "en" ? "Opportunity index" : "机会指数", (marketDemandFor(row.category_group) * 100).toFixed(1), state.lang === "en" ? "External market proxy" : "外部市场代理信号"],
+          [state.lang === "en" ? "Operating readiness" : "经营承接", pct(company.margin), state.lang === "en" ? "Margin and return pressure" : "毛利与退货压力综合"],
+          [state.lang === "en" ? "Risk exposure" : "风险暴露", pct(company.returnRate), state.lang === "en" ? "Estimated return and fit pressure" : "预计退货和合身压力"],
+          [state.lang === "en" ? "Action status" : "行动状态", tr(decision.label), state.lang === "en" ? "Current recommended handling" : "当前推荐处理方式"],
         ].map(([label, value, note]) => `<div class="impact-cell"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><small>${escapeHtml(note)}</small></div>`).join("");
         document.getElementById("workspace-metrics").innerHTML = [
-          ["市场需求指数", (marketDemandFor(row.category_group) * 100).toFixed(1)],
-          ["GMV 代理值", `$${fmt(company.gmv || 0)}`],
-          ["转化率", pct(company.conversion)],
-          ["退货率", pct(company.returnRate)],
-          ["合身率", pct(row.fit_rate)],
-          ["风险分", num(row.risk_score).toFixed(1)],
-        ].map(([label, value]) => `<button class="metric-row" type="button" onclick="setPage('${label.includes("退货") || label.includes("合身") || label.includes("风险") ? "evidence" : "market"}')"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></button>`).join("");
+          [state.lang === "en" ? "Demand index" : "市场需求指数", (marketDemandFor(row.category_group) * 100).toFixed(1), "market"],
+          [state.lang === "en" ? "Revenue proxy" : "GMV 代理值", `$${fmt(company.gmv || 0)}`, "market"],
+          [state.lang === "en" ? "Conversion rate" : "转化率", pct(company.conversion), "kpi"],
+          [state.lang === "en" ? "Return rate" : "退货率", pct(company.returnRate), "evidence"],
+          [state.lang === "en" ? "Fit rate" : "合身率", pct(row.fit_rate), "evidence"],
+          [state.lang === "en" ? "Risk score" : "风险分", num(row.risk_score).toFixed(1), "evidence"],
+        ].map(([label, value, page]) => `<button class="metric-row" type="button" onclick="setPage('${page}')"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></button>`).join("");
         const topPain = painForCategory(row.category_group);
         const primaryPain = topPain[0] || { pain: state.lang === "en" ? "Review pain point" : "评论痛点", id: "none", count: 0 };
         const painScope = state.lang === "en"
@@ -3096,7 +3200,7 @@
             </div>
             <div class="decision-tile">
               <span>${state.lang === "en" ? "Main blocker" : "主要阻塞"}</span>
-              <strong>${escapeHtml(state.lang === "en" ? `${nameOf(primaryPain.pain)} appears ${fmt(primaryPain.count)} times. ${painScope}` : `${primaryPain.pain} 出现 ${fmt(primaryPain.count)} 次。${painScope}`)}</strong>
+              <strong>${escapeHtml(state.lang === "en" ? `${nameOf(primaryPain.pain)} appears ${fmt(primaryPain.count)} times. ${painScope}` : `${nameOf(primaryPain.pain)} 出现 ${fmt(primaryPain.count)} 次。${painScope}`)}</strong>
               <button type="button" onclick="openEvidenceForPain('${escapeHtml(primaryPain.id)}')">${state.lang === "en" ? "Open evidence" : "打开证据"}</button>
             </div>
             <div class="decision-tile">
@@ -3537,6 +3641,37 @@
         const svg = document.getElementById(containerId);
         if (!svg) return;
         const width = 820, height = 340, pad = 46;
+        const mapText = state.lang === "en"
+          ? {
+            risk: "Treat risk first",
+            fix: "Fix before scaling",
+            watch: "Low-priority watch",
+            scale: "Validate then scale",
+            lowOpp: "Low opportunity",
+            highOpp: "High opportunity",
+            lowRisk: "Low operating risk",
+            highRisk: "High operating risk",
+            rank: "Opportunity rank",
+            opportunity: "Opportunity",
+            riskIndex: "Risk index",
+            returnRate: "Return rate",
+            recommendation: "Recommendation",
+          }
+          : {
+            risk: "先治理风险",
+            fix: "先修正再放量",
+            watch: "低优先观察",
+            scale: "优先验证放量",
+            lowOpp: "低市场机会",
+            highOpp: "高市场机会",
+            lowRisk: "低经营风险",
+            highRisk: "高经营风险",
+            rank: "机会排名",
+            opportunity: "机会分",
+            riskIndex: "风险指数",
+            returnRate: "退货率",
+            recommendation: "建议",
+          };
         const maxRecords = Math.max(...rows.map((row) => int(row.records)), 1);
         const maxOpportunity = Math.max(...rows.map((row) => businessScore(row)), 42);
         const riskOf = (row) => {
@@ -3559,14 +3694,14 @@
           <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="18" fill="url(#mapRisk)"></rect>
           <line x1="${pad}" y1="${midY}" x2="${width - pad}" y2="${midY}" stroke="oklch(0.86 0.03 255 / 0.24)" stroke-dasharray="5 6"></line>
           <line x1="${midX}" y1="${pad}" x2="${midX}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.24)" stroke-dasharray="5 6"></line>
-          <text class="quadrant-label" x="${pad + 18}" y="${pad + 28}">先治理风险</text>
-          <text class="quadrant-label" x="${midX + 18}" y="${pad + 28}">先修正再放量</text>
-          <text class="quadrant-label" x="${pad + 18}" y="${height - pad - 18}">低优先观察</text>
-          <text class="quadrant-label" x="${midX + 18}" y="${height - pad - 18}">优先验证放量</text>
-          <text class="axis-label" x="${pad}" y="26">低市场机会</text>
-          <text class="axis-label" x="${width - 118}" y="26">高市场机会</text>
-          <text class="axis-label" x="${pad}" y="${height - 14}">低经营风险</text>
-          <text class="axis-label" x="${width - 122}" y="${height - 14}">高经营风险</text>
+          <text class="quadrant-label" x="${pad + 18}" y="${pad + 28}">${mapText.risk}</text>
+          <text class="quadrant-label" x="${midX + 18}" y="${pad + 28}">${mapText.fix}</text>
+          <text class="quadrant-label" x="${pad + 18}" y="${height - pad - 18}">${mapText.watch}</text>
+          <text class="quadrant-label" x="${midX + 18}" y="${height - pad - 18}">${mapText.scale}</text>
+          <text class="axis-label" x="${pad}" y="26">${mapText.lowOpp}</text>
+          <text class="axis-label" x="${width - 140}" y="26">${mapText.highOpp}</text>
+          <text class="axis-label" x="${pad}" y="${height - 14}">${mapText.lowRisk}</text>
+          <text class="axis-label" x="${width - 148}" y="${height - 14}">${mapText.highRisk}</text>
           <line x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.3)"></line>
           <line x1="${pad}" y1="${pad}" x2="${pad}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.3)"></line>
           ${rows.map((row, index) => {
@@ -3581,7 +3716,8 @@
             const labelRight = x < width - 230;
             const labelX = labelRight ? x + radius + 8 : x - radius - 8;
             const showLabel = index < 3 || row.category_group === state.selectedCategory;
-            return `<g class="opportunity-node ${row.category_group === state.selectedCategory ? "selected" : ""}" role="button" tabindex="0" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(`机会排名 #${index + 1}<br>机会分 ${opportunity.toFixed(1)}<br>风险指数 ${risk.toFixed(1)}<br>退货率 ${pct(company.returnRate)}<br>建议 ${decision.label}`)}')" onmouseleave="hideTooltip()">
+            const tooltip = `${mapText.rank} #${index + 1}<br>${mapText.opportunity} ${opportunity.toFixed(1)}<br>${mapText.riskIndex} ${risk.toFixed(1)}<br>${mapText.returnRate} ${pct(company.returnRate)}<br>${mapText.recommendation} ${tr(decision.label)}`;
+            return `<g class="opportunity-node ${row.category_group === state.selectedCategory ? "selected" : ""}" role="button" tabindex="0" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(tooltip)}')" onmouseleave="hideTooltip()">
               <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${radius.toFixed(1)}" fill="${color}" opacity=".2" stroke="${color}" stroke-width="1.3"></circle>
               <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.max(4.8, radius * .34).toFixed(1)}" fill="${color}" opacity=".95"></circle>
               <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.max(2.2, radius * .13).toFixed(1)}" fill="white" opacity=".92"></circle>
@@ -3656,45 +3792,13 @@
       }
 
       function renderNetworkGraph() {
-        const svg = document.getElementById("connected-graph");
+        const board = document.getElementById("signal-flow-board");
         const list = document.getElementById("network-node-list");
-        if (!svg || !list || !state.graph?.nodes?.length) return;
+        if (!board || !list || !state.graph?.nodes?.length) return;
         const selectedId = state.selectedNode?.id || state.selectedCategory;
-        const width = 760, height = 620;
-        const center = { x: 380, y: 306 };
-        const nodes = state.graph.nodes.map((node, index) => {
-          let x = center.x, y = center.y;
-          const ringIndex = Math.max(index - 1, 0);
-          if (node.kind === "pain") {
-            const pains = state.graph.nodes.filter((item) => item.kind === "pain");
-            const local = pains.findIndex((item) => item.id === node.id);
-            x = 188 + (local % 2) * 64;
-            y = 145 + local * 48;
-          } else if (node.kind === "kpi" || node.kind === "action") {
-            const kpis = state.graph.nodes.filter((item) => item.kind === "kpi" || item.kind === "action");
-            const local = kpis.findIndex((item) => item.id === node.id);
-            x = 592;
-            y = 214 + local * 78;
-          } else if (node.kind === "body") {
-            const bodies = state.graph.nodes.filter((item) => item.kind === "body");
-            const local = bodies.findIndex((item) => item.id === node.id);
-            x = 248 + local * 74;
-            y = 494 + Math.sin(local) * 22;
-          } else if (node.kind === "size") {
-            const sizes = state.graph.nodes.filter((item) => item.kind === "size");
-            const local = sizes.findIndex((item) => item.id === node.id);
-            x = 116 + local * 82;
-            y = 395 + Math.cos(local) * 20;
-          }
-          return { ...node, x, y, drawRadius: Math.max(13, Math.min(42, node.radius * 4.6 + Math.sqrt(num(node.value || 1)) * 0.04)), order: ringIndex };
-        });
+        const nodes = state.graph.nodes.slice();
         const nodeById = new Map(nodes.map((node) => [node.id, node]));
         const activeNode = nodeById.get(selectedId) || nodes[0];
-        const activeSet = new Set([activeNode?.id]);
-        state.graph.edges.forEach((edge) => {
-          if (edge.source === activeNode?.id) activeSet.add(edge.target);
-          if (edge.target === activeNode?.id) activeSet.add(edge.source);
-        });
         list.innerHTML = nodes
           .filter((node) => node.kind !== "category")
           .sort(signalSort)
@@ -3702,36 +3806,45 @@
             <strong>${escapeHtml(node.label)}</strong>
             <span><em>${escapeHtml(signalRoleLabel(node.kind))}</em><b>${fmt(node.value || 0)}</b></span>
           </button>`).join("");
-        const links = state.graph.edges.map((edge) => {
-          const a = nodeById.get(edge.source), b = nodeById.get(edge.target);
-          if (!a || !b) return "";
-          const active = edge.source === activeNode?.id || edge.target === activeNode?.id;
-          return `<path class="graph-link ${active ? "active" : ""}" d="M ${a.x.toFixed(1)} ${a.y.toFixed(1)} C ${((a.x + b.x) / 2).toFixed(1)} ${(a.y - 46).toFixed(1)}, ${((a.x + b.x) / 2).toFixed(1)} ${(b.y + 46).toFixed(1)}, ${b.x.toFixed(1)} ${b.y.toFixed(1)}" opacity="${active ? ".9" : ".36"}"></path>`;
-        }).join("");
-        const nodeMarkup = nodes.map((node) => {
+
+        const selected = selectedCategoryRow();
+        const company = selectedCompanyRow();
+        const categoryNode = nodes.find((node) => node.kind === "category") || {};
+        const painNodes = nodes.filter((node) => node.kind === "pain").sort(signalSort).slice(0, 5);
+        const rightNodes = nodes.filter((node) => ["kpi", "action"].includes(node.kind)).sort(signalSort);
+        const segmentNodes = nodes.filter((node) => ["size", "body"].includes(node.kind)).sort(signalSort).slice(0, 4);
+
+        const card = (node) => {
           const active = node.id === activeNode?.id;
-          const related = activeSet.has(node.id);
-          const color = graphKindColor(node.kind);
-          const labelAnchor = node.x < width / 2 ? "end" : "start";
-          const labelX = node.x + (node.x < width / 2 ? -node.drawRadius - 10 : node.drawRadius + 10);
-          const labelY = node.y + 4;
           const detail = graphNodeDetail(node);
-          return `<g class="graph-node ${active ? "active" : ""}" opacity="${related ? "1" : ".42"}" onclick="selectGraphNode('${escapeHtml(node.id)}')" onmousemove="showTooltip(event, '${escapeHtml(node.label)}', '${escapeHtml(detail.tooltip)}')" onmouseleave="hideTooltip()">
-            <circle cx="${node.x.toFixed(1)}" cy="${node.y.toFixed(1)}" r="${node.drawRadius.toFixed(1)}" fill="${color}" opacity="${node.kind === "category" ? ".46" : ".30"}" stroke="${active ? "#ffffff" : color}" stroke-width="${active ? "3" : "1.5"}"></circle>
-            <circle cx="${node.x.toFixed(1)}" cy="${node.y.toFixed(1)}" r="${Math.max(6, node.drawRadius * .38).toFixed(1)}" fill="${color}" opacity=".96"></circle>
-            <text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelAnchor}">${escapeHtml(node.label)}</text>
-          </g>`;
-        }).join("");
-        svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-        svg.innerHTML = `
-          <rect class="graph-bg" x="18" y="18" width="${width - 36}" height="${height - 36}" rx="18" fill="oklch(0.12 0.012 255 / 0.28)" stroke="oklch(0.72 0.02 255 / 0.12)"></rect>
-          <text class="signal-lane-label" x="126" y="62">${state.lang === "en" ? "Pain signals" : "痛点信号"}</text>
-          <text class="signal-lane-label" x="${center.x}" y="62" text-anchor="middle">${state.lang === "en" ? "Current category" : "当前品类"}</text>
-          <text class="signal-lane-label" x="592" y="62">${state.lang === "en" ? "KPI and actions" : "KPI 与动作"}</text>
-          <line x1="312" y1="82" x2="312" y2="${height - 62}" stroke="oklch(0.86 0.03 255 / 0.12)" stroke-dasharray="5 8"></line>
-          <line x1="506" y1="82" x2="506" y2="${height - 62}" stroke="oklch(0.86 0.03 255 / 0.12)" stroke-dasharray="5 8"></line>
-          ${links}
-          ${nodeMarkup}
+          return `<button class="signal-card ${escapeHtml(node.kind)} ${active ? "active" : ""}" type="button" onclick="selectGraphNode('${escapeHtml(node.id)}')" onmousemove="showTooltip(event, '${escapeHtml(node.label)}', '${escapeHtml(detail.tooltip)}')" onmouseleave="hideTooltip()">
+            <strong>${escapeHtml(node.label)}</strong>
+            <span><em>${escapeHtml(signalRoleLabel(node.kind))}</em><b>${fmt(node.value || 0)}</b></span>
+          </button>`;
+        };
+
+        board.innerHTML = `
+          <section class="signal-lane">
+            <h4>${state.lang === "en" ? "Top operating pain" : "高频运营痛点"}</h4>
+            <div class="signal-stack">${painNodes.map(card).join("") || `<div class="signal-card"><strong>${state.lang === "en" ? "No pain signal" : "暂无痛点信号"}</strong></div>`}</div>
+          </section>
+          <section class="flow-center">
+            <button class="signal-card flow-category-card ${categoryNode.id === activeNode?.id ? "active" : ""}" type="button" onclick="selectGraphNode('${escapeHtml(categoryNode.id || state.selectedCategory)}')">
+              <strong>${escapeHtml(categoryNode.label || nameOf(state.selectedCategory))}</strong>
+              <span><em>${state.lang === "en" ? "Selected category" : "当前品类"}</em><b>${fmt(categoryNode.value || selected.records || 0)}</b></span>
+            </button>
+            <div class="flow-mini-grid">
+              <div class="flow-mini"><span>${state.lang === "en" ? "Return rate" : "退货率"}</span><strong>${pct(company.returnRate)}</strong></div>
+              <div class="flow-mini"><span>${state.lang === "en" ? "Fit rate" : "合身率"}</span><strong>${pct(selected.fit_rate)}</strong></div>
+              <div class="flow-mini"><span>${state.lang === "en" ? "Risk score" : "风险分"}</span><strong>${num(selected.risk_score).toFixed(1)}</strong></div>
+              <div class="flow-mini"><span>${state.lang === "en" ? "Action" : "动作"}</span><strong>${escapeHtml(tr(decisionFor(selected).label))}</strong></div>
+            </div>
+            <div class="signal-stack">${segmentNodes.map(card).join("")}</div>
+          </section>
+          <section class="signal-lane">
+            <h4>${state.lang === "en" ? "KPI blockers and action path" : "KPI 阻塞与动作路径"}</h4>
+            <div class="signal-stack">${rightNodes.map(card).join("")}</div>
+          </section>
         `;
       }
 

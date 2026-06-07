@@ -1,0 +1,37 @@
+category,return_reason,count,share_in_category
+accessories,Color Mismatch,13,0.0323
+accessories,Size Issue,11,0.0274
+accessories,Wrong Item,9,0.0224
+accessories,Changed Mind,8,0.0199
+accessories,Damaged,8,0.0199
+accessories,Quality Issue,6,0.0149
+bottom,Changed Mind,16,0.0408
+bottom,Color Mismatch,13,0.0332
+bottom,Size Issue,12,0.0306
+bottom,Wrong Item,9,0.023
+bottom,Damaged,7,0.0179
+bottom,Quality Issue,5,0.0128
+dress,Quality Issue,12,0.0379
+dress,Wrong Item,9,0.0284
+dress,Changed Mind,9,0.0284
+dress,Size Issue,7,0.0221
+dress,Damaged,5,0.0158
+dress,Color Mismatch,5,0.0158
+outerwear,Changed Mind,13,0.0389
+outerwear,Quality Issue,12,0.0359
+outerwear,Size Issue,12,0.0359
+outerwear,Damaged,8,0.024
+outerwear,Wrong Item,6,0.018
+outerwear,Color Mismatch,3,0.009
+shoes,Changed Mind,14,0.0376
+shoes,Quality Issue,10,0.0269
+shoes,Damaged,9,0.0242
+shoes,Size Issue,8,0.0215
+shoes,Color Mismatch,8,0.0215
+shoes,Wrong Item,7,0.0188
+top,Quality Issue,10,0.0279
+top,Size Issue,10,0.0279
+top,Changed Mind,8,0.0223
+top,Damaged,7,0.0195
+top,Wrong Item,7,0.0195
+top,Color Mismatch,4,0.0111
