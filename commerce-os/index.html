@@ -25,7 +25,7 @@
         --violet: oklch(0.72 0.16 292);
         --shadow: 0 18px 42px rgb(0 0 0 / 0.28);
         --radius: 12px;
-        --sidebar: 276px;
+        --sidebar: 260px;
       }
 
       * { box-sizing: border-box; }
@@ -61,7 +61,7 @@
       .login-visual {
         position: relative;
         overflow: hidden;
-        padding: 42px;
+        padding: 56px;
         border-right: 1px solid var(--line);
         background:
           radial-gradient(circle at 40% 28%, oklch(0.54 0.14 230 / 0.22), transparent 26%),
@@ -84,13 +84,13 @@
       .brand-row {
         display: flex;
         align-items: center;
-        gap: 12px;
-        margin-bottom: 86px;
+        gap: 14px;
+        margin-bottom: 104px;
       }
 
       .brand-mark {
-        width: 42px;
-        height: 42px;
+        width: 50px;
+        height: 50px;
         display: grid;
         place-items: center;
         border: 1px solid oklch(0.74 0.13 230 / 0.48);
@@ -106,20 +106,20 @@
       }
 
       .brand-title strong {
-        font-size: 15px;
+        font-size: 17px;
       }
 
       .brand-title span {
         color: var(--muted);
-        font-size: 12px;
+        font-size: 13px;
       }
 
       h1 {
-        max-width: 780px;
+        max-width: 880px;
         margin: 0;
-        font-size: 48px;
+        font-size: 56px;
         line-height: 1.04;
-        letter-spacing: -0.03em;
+        letter-spacing: 0;
         text-wrap: balance;
       }
 
@@ -127,16 +127,16 @@
         max-width: 660px;
         margin: 18px 0 0;
         color: var(--muted);
-        font-size: 16px;
+        font-size: 18px;
         line-height: 1.7;
       }
 
       .login-proof {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
-        max-width: 720px;
-        margin-top: 34px;
+        gap: 16px;
+        max-width: 840px;
+        margin-top: 40px;
       }
 
       .proof-card,
@@ -150,69 +150,75 @@
       }
 
       .proof-card {
-        padding: 15px;
+        padding: 20px;
       }
 
       .proof-card strong {
         display: block;
-        font-size: 20px;
-        margin-bottom: 4px;
+        font-size: 26px;
+        margin-bottom: 8px;
       }
 
       .proof-card span {
         color: var(--muted);
-        font-size: 12px;
-        line-height: 1.45;
+        font-size: 14px;
+        line-height: 1.55;
       }
 
       .login-panel-wrap {
         display: grid;
         align-content: center;
-        padding: 42px;
+        padding: 56px;
       }
 
       .login-panel {
         width: 100%;
-        max-width: 440px;
+        max-width: 560px;
         margin: 0 auto;
-        padding: 24px;
+        padding: 38px;
         border: 1px solid var(--line-strong);
         border-radius: 16px;
         background: oklch(0.19 0.014 255 / 0.92);
         box-shadow: var(--shadow);
       }
 
+      .login-panel .language-toggle {
+        margin-bottom: 28px;
+      }
+
       .login-panel h2 {
-        margin: 0 0 8px;
-        font-size: 24px;
+        margin: 0 0 12px;
+        font-size: 34px;
       }
 
       .login-panel > p {
-        margin: 0 0 22px;
+        margin: 0 0 32px;
         color: var(--muted);
+        font-size: 16px;
         line-height: 1.55;
       }
 
       .field {
         display: grid;
-        gap: 8px;
-        margin-bottom: 14px;
+        gap: 12px;
+        margin-bottom: 20px;
       }
 
       .field span {
         color: var(--muted);
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 650;
       }
 
       input, select {
         width: 100%;
-        height: 42px;
+        height: 50px;
         border: 1px solid var(--line);
-        border-radius: 9px;
+        border-radius: 11px;
         background: var(--surface);
         color: var(--text);
-        padding: 0 12px;
+        padding: 0 14px;
+        font-size: 15px;
         outline: none;
       }
 
@@ -224,8 +230,8 @@
       .mode-toggle {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        margin-bottom: 18px;
+        gap: 10px;
+        margin: 6px 0 24px;
       }
 
       .mode-toggle button,
@@ -238,7 +244,11 @@
         border-radius: 9px;
         background: var(--surface);
         color: var(--muted);
-        min-height: 38px;
+        min-height: 40px;
+      }
+
+      .mode-toggle button {
+        min-height: 46px;
       }
 
       .mode-toggle button.active,
@@ -251,7 +261,7 @@
 
       .primary-button {
         width: 100%;
-        min-height: 44px;
+        min-height: 52px;
         border-color: oklch(0.72 0.16 230 / 0.55);
         background: linear-gradient(135deg, var(--blue-strong), var(--blue));
         color: white;
@@ -268,7 +278,9 @@
       }
 
       .login-note {
-        margin-top: 15px;
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
         color: var(--faint);
         font-size: 12px;
         line-height: 1.55;
@@ -290,7 +302,7 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
-        padding: 22px 16px;
+        padding: 20px 14px;
         border-right: 1px solid var(--line);
         background: oklch(0.13 0.012 255 / 0.96);
       }
@@ -380,7 +392,7 @@
 
       main {
         min-width: 0;
-        padding: 24px;
+        padding: 20px 22px;
       }
 
       .topbar {
@@ -409,11 +421,15 @@
         gap: 10px;
         align-items: center;
         flex-wrap: nowrap;
-        max-width: min(52vw, 720px);
+        max-width: min(68vw, 1120px);
       }
 
       .top-actions.hidden {
         display: none;
+      }
+
+      .top-actions > .hidden {
+        display: none !important;
       }
 
       .top-actions select {
@@ -430,6 +446,41 @@
       .control-context {
         min-width: max-content;
         justify-content: center;
+      }
+
+      .date-range-control {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-width: max-content;
+      }
+
+      .date-range-control.hidden,
+      .date-custom-fields.hidden {
+        display: none;
+      }
+
+      .date-range-control select {
+        min-width: 150px;
+      }
+
+      .date-custom-fields {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .date-custom-fields input {
+        width: 132px;
+        min-height: 38px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: var(--surface);
+        color: var(--text);
+        font: inherit;
+        font-size: 12px;
+        font-weight: 700;
       }
 
       .pill {
@@ -468,13 +519,13 @@
       .kpi-grid {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 12px;
-        margin-bottom: 18px;
+        gap: 14px;
+        margin-bottom: 16px;
       }
 
       .kpi-card {
-        min-height: 138px;
-        padding: 15px;
+        min-height: 128px;
+        padding: 16px;
         text-align: left;
         transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
       }
@@ -497,7 +548,7 @@
 
       .kpi-value {
         margin-top: 10px;
-        font-size: 30px;
+        font-size: 34px;
         font-weight: 820;
         letter-spacing: -0.03em;
       }
@@ -626,7 +677,7 @@
       }
 
       .panel {
-        padding: 16px;
+        padding: 18px;
       }
 
       .page.active .panel,
@@ -1184,7 +1235,9 @@
       .decision-tile strong {
         display: block;
         margin-top: 8px;
-        line-height: 1.45;
+        line-height: 1.42;
+        font-size: 15px;
+        overflow-wrap: anywhere;
       }
 
       .decision-tile button {
@@ -1239,9 +1292,134 @@
         border-radius: var(--radius);
       }
 
+      .table-tools,
+      .order-toolbar {
+        display: grid;
+        gap: 10px;
+        margin: 0 0 12px;
+      }
+
+      .order-toolbar {
+        grid-template-columns: minmax(260px, 1fr) repeat(3, minmax(170px, 0.45fr));
+      }
+
+      .order-table-wrap {
+        max-height: 520px;
+      }
+
+      .evidence-table-wrap {
+        max-height: 620px;
+      }
+
+      .order-table-wrap table {
+        min-width: 1280px;
+      }
+
+      .order-table-wrap th {
+        z-index: 2;
+      }
+
+      .compact-table table {
+        min-width: 1120px;
+      }
+
+      .compact-table th,
+      .compact-table td {
+        padding: 10px 11px;
+        vertical-align: middle;
+      }
+
+      .compact-table tr.selected-row td {
+        background: oklch(0.24 0.055 225 / 0.34);
+        box-shadow: inset 0 1px 0 oklch(0.78 0.14 225 / 0.18), inset 0 -1px 0 oklch(0.78 0.14 225 / 0.12);
+      }
+
+      .clickable-row {
+        cursor: pointer;
+      }
+
+      .clickable-row:hover td {
+        background: oklch(0.22 0.035 230 / 0.34);
+      }
+
+      .status-pill,
+      .coverage-pill,
+      .driver-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 0 8px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 780;
+        white-space: nowrap;
+      }
+
+      .status-pill.healthy { background: oklch(0.76 0.16 160 / 0.14); color: var(--green); }
+      .status-pill.watch { background: oklch(0.78 0.17 75 / 0.14); color: var(--amber); }
+      .status-pill.risk { background: oklch(0.68 0.2 25 / 0.16); color: var(--red); }
+      .status-pill.critical { background: oklch(0.68 0.2 25 / 0.24); color: oklch(0.82 0.18 25); }
+
+      .coverage-pill.real { background: oklch(0.76 0.16 160 / 0.13); color: var(--green); }
+      .coverage-pill.proxy { background: oklch(0.72 0.16 230 / 0.12); color: var(--blue); }
+
+      .driver-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .driver-chip {
+        border: 1px solid var(--line);
+        color: var(--muted);
+        background: oklch(0.15 0.014 255 / 0.68);
+      }
+
+      .operations-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(310px, 0.34fr);
+        gap: 14px;
+        align-items: start;
+      }
+
+      .operations-main {
+        min-width: 0;
+      }
+
+      .operations-side {
+        position: sticky;
+        top: 18px;
+      }
+
+      .detail-score {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .detail-score .impact-cell {
+        min-height: 76px;
+      }
+
+      .row-action {
+        min-height: 30px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 760;
+      }
+
+      .row-action:hover {
+        border-color: oklch(0.72 0.16 230 / 0.55);
+        background: oklch(0.22 0.04 230 / 0.42);
+      }
+
       .evidence-toolbar {
         display: grid;
-        grid-template-columns: minmax(160px, 1fr) minmax(150px, .7fr) minmax(150px, .7fr) minmax(150px, .7fr);
+        grid-template-columns: minmax(180px, 1fr) repeat(4, minmax(150px, .58fr));
         gap: 10px;
         margin: 0 0 12px;
       }
@@ -1284,6 +1462,7 @@
       .tag {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         min-height: 24px;
         padding: 0 8px;
         border-radius: 999px;
@@ -1291,6 +1470,9 @@
         color: var(--muted);
         font-size: 11px;
         font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+        min-width: max-content;
       }
 
       .two-col {
@@ -1493,9 +1675,153 @@
 
       .opportunity-map {
         width: 100%;
-        height: 300px;
-        min-height: 300px;
+        min-height: 0;
         display: block;
+      }
+
+      .priority-matrix {
+        display: grid;
+        gap: 8px;
+      }
+
+      .priority-row {
+        display: grid;
+        grid-template-columns: minmax(150px, 0.34fr) minmax(0, 1fr) minmax(0, 1fr) minmax(86px, auto);
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        min-height: 58px;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.15 0.012 255 / 0.78);
+        color: inherit;
+        text-align: left;
+      }
+
+      .priority-row:hover,
+      .priority-row.selected {
+        border-color: oklch(0.72 0.16 230 / 0.5);
+        background: oklch(0.22 0.034 230 / 0.48);
+      }
+
+      .priority-name {
+        display: grid;
+        gap: 2px;
+        min-width: 0;
+      }
+
+      .priority-name strong,
+      .priority-name span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .priority-name span {
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .score-bar {
+        display: grid;
+        gap: 5px;
+      }
+
+      .score-bar header {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 760;
+      }
+
+      .priority-row .status-pill {
+        justify-self: end;
+        white-space: nowrap;
+      }
+
+      .priority-meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      .driver-matrix {
+        display: grid;
+        gap: 11px;
+      }
+
+      .driver-row {
+        display: grid;
+        grid-template-columns: minmax(128px, 0.28fr) minmax(0, 1fr) 62px;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        padding: 0;
+        text-align: left;
+      }
+
+      .driver-name strong {
+        display: block;
+        color: var(--text);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .driver-name span {
+        color: var(--faint);
+        font-size: 11px;
+      }
+
+      .stacked-bar {
+        height: 11px;
+        border-radius: 999px;
+        background: oklch(0.42 0.025 255 / 0.48);
+        overflow: hidden;
+        display: flex;
+      }
+
+      .stacked-bar i {
+        display: block;
+        height: 100%;
+        min-width: 2px;
+      }
+
+      .blocker-grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .blocker-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+        align-items: center;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.15 0.012 255 / 0.7);
+        color: inherit;
+        text-align: left;
+      }
+
+      .blocker-row strong {
+        display: block;
+        overflow-wrap: anywhere;
+      }
+
+      .blocker-row span {
+        color: var(--muted);
+        font-size: 12px;
       }
 
       .opportunity-panel {
@@ -1514,6 +1840,14 @@
 
       .opportunity-rules .pill {
         min-height: 30px;
+        cursor: pointer;
+        color: var(--muted);
+      }
+
+      .opportunity-rules .pill.active {
+        border-color: oklch(0.72 0.16 230 / 0.62);
+        color: var(--blue);
+        background: oklch(0.24 0.06 230 / 0.42);
       }
 
       .opportunity-map text,
@@ -1675,6 +2009,10 @@
         min-height: 260px;
       }
 
+      .chart-box.compact-chart {
+        min-height: 0;
+      }
+
       .donut-layout {
         display: grid;
         grid-template-columns: 180px minmax(0, 1fr);
@@ -1690,13 +2028,18 @@
 
       .donut-segment {
         cursor: pointer;
-        transition: opacity 160ms ease, transform 160ms ease;
+        transition: opacity 160ms ease, transform 160ms ease, stroke-width 160ms ease;
         transform-origin: 90px 90px;
       }
 
       .donut-segment:hover {
         opacity: 0.82;
-        transform: scale(1.025);
+        transform: none;
+      }
+
+      .donut-segment.selected {
+        stroke: var(--text);
+        stroke-width: 4;
       }
 
       .donut-center {
@@ -1709,16 +2052,22 @@
 
       .contour-layout {
         display: grid;
-        grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1fr);
+        grid-template-columns: minmax(420px, 560px) minmax(300px, 380px);
+        justify-content: start;
         gap: 18px;
         align-items: center;
       }
 
       .contour-chart {
         width: 100%;
-        min-height: 310px;
+        max-width: 560px;
+        min-height: 320px;
         display: block;
-        overflow: visible;
+        overflow: hidden;
+      }
+
+      .contour-chart text {
+        font-size: 12px;
       }
 
       .contour-surface {
@@ -1746,22 +2095,50 @@
 
       .legend-list {
         display: grid;
-        gap: 9px;
+        gap: 8px;
       }
 
       .legend-row {
         display: grid;
-        grid-template-columns: 12px minmax(0, 1fr) auto;
+        grid-template-columns: 12px minmax(0, 1fr) minmax(46px, auto);
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         color: var(--muted);
         font-size: 12px;
+      }
+
+      .contour-layout .legend-row {
+        grid-template-columns: 22px minmax(0, 1fr) minmax(58px, auto);
+      }
+
+      .legend-row span:nth-child(2) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .legend-row strong {
+        justify-self: end;
+      }
+
+      .legend-row.active {
+        color: var(--text);
+      }
+
+      .legend-row.active .legend-swatch {
+        box-shadow: 0 0 0 3px oklch(0.72 0.16 230 / 0.18);
       }
 
       .legend-swatch {
         width: 9px;
         height: 9px;
         border-radius: 3px;
+      }
+
+      .contour-layout .legend-swatch {
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
       }
 
       .treemap {
@@ -1781,6 +2158,17 @@
         color: var(--text);
         overflow: hidden;
         text-align: left;
+        transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+      }
+
+      .treemap-tile:hover,
+      .treemap-tile.selected {
+        border-color: oklch(0.72 0.16 230 / 0.72);
+        background: color-mix(in oklch, var(--blue) calc(var(--tile-intensity, 18%) + 18%), var(--surface));
+      }
+
+      .treemap-tile.selected {
+        box-shadow: inset 0 0 0 1px oklch(0.72 0.16 230 / 0.35), 0 18px 38px rgb(0 0 0 / 0.18);
       }
 
       .treemap-tile strong {
@@ -1793,6 +2181,43 @@
         font-size: 11px;
       }
 
+      .product-detail-panel {
+        padding: 18px;
+      }
+
+      .product-detail-grid {
+        display: grid;
+        grid-template-columns: minmax(220px, 1.3fr) repeat(6, minmax(110px, 1fr));
+        gap: 10px;
+        align-items: stretch;
+      }
+
+      .product-detail-name,
+      .impact-cell {
+        min-width: 0;
+      }
+
+      .product-detail-name {
+        display: grid;
+        align-content: center;
+        gap: 6px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.16 0.014 255 / 0.72);
+      }
+
+      .product-detail-name span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .product-detail-name strong {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
       .span-3 { grid-column: span 3; }
       .span-2 { grid-column: span 2; }
       .row-2 { grid-row: span 2; }
@@ -1800,7 +2225,7 @@
       .line-chart,
       .scatter-chart {
         width: 100%;
-        height: 260px;
+        height: 320px;
         display: block;
       }
 
@@ -1834,6 +2259,124 @@
       .chart-tooltip strong {
         display: block;
         margin-bottom: 4px;
+      }
+
+      .drawer-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 44;
+        background: rgb(0 0 0 / 0.38);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease;
+      }
+
+      .drawer-backdrop.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .detail-drawer {
+        position: fixed;
+        inset: 0 0 0 auto;
+        z-index: 45;
+        width: min(540px, 92vw);
+        height: 100vh;
+        padding: 24px;
+        overflow: auto;
+        border-left: 1px solid var(--line-strong);
+        background:
+          radial-gradient(circle at 0% 12%, oklch(0.33 0.08 230 / 0.2), transparent 32%),
+          oklch(0.13 0.012 255 / 0.98);
+        box-shadow: -26px 0 58px rgb(0 0 0 / 0.34);
+        transform: translateX(104%);
+        transition: transform 220ms ease;
+      }
+
+      .detail-drawer.open {
+        transform: translateX(0);
+      }
+
+      .drawer-close {
+        position: sticky;
+        top: 0;
+        float: right;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text);
+        font-size: 26px;
+        line-height: 1;
+      }
+
+      .drawer-section {
+        display: grid;
+        gap: 14px;
+      }
+
+      .drawer-kicker {
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 820;
+      }
+
+      .drawer-title {
+        margin: 8px 48px 0 0;
+        font-size: 30px;
+        line-height: 1.12;
+        letter-spacing: -0.03em;
+      }
+
+      .drawer-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .drawer-cell {
+        min-height: 84px;
+        padding: 13px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: oklch(0.15 0.012 255 / 0.76);
+      }
+
+      .drawer-cell span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 740;
+      }
+
+      .drawer-cell strong {
+        display: block;
+        margin-top: 8px;
+        color: var(--text);
+        font-size: 22px;
+        line-height: 1.18;
+        overflow-wrap: anywhere;
+      }
+
+      .drawer-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .drawer-actions .primary-button,
+      .drawer-actions .ghost-button {
+        width: 100%;
+      }
+
+      .drawer-note {
+        padding: 13px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        color: var(--muted);
+        line-height: 1.55;
+        background: oklch(0.12 0.01 255 / 0.55);
       }
 
       .insight-strip {
@@ -1945,6 +2488,7 @@
 
         .layout-grid,
         .overview-map-grid,
+        .operations-layout,
         .workspace-hero,
         .command-grid,
         .opportunity-map-layout,
@@ -1957,6 +2501,11 @@
         .three-col,
         #priority-queue {
           grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .product-detail-grid,
+        .contour-layout {
+          grid-template-columns: 1fr;
         }
       }
 
@@ -2024,6 +2573,10 @@
           justify-items: start;
         }
 
+        .product-detail-grid {
+          grid-template-columns: 1fr;
+        }
+
         .treemap {
           grid-template-columns: repeat(2, minmax(0, 1fr));
           grid-auto-rows: 96px;
@@ -2045,6 +2598,10 @@
 
         .impact-grid {
           grid-template-columns: 1fr;
+        }
+
+        .operations-side {
+          position: static;
         }
 
         .stack-step,
@@ -2081,11 +2638,11 @@
             </div>
           </div>
           <h1 data-i18n="login.heroTitle">把市场机会、经营 KPI 和用户证据连接成一个决策网站。</h1>
-          <p data-i18n="login.heroCopy">它先判断外部市场是否值得进入，再判断内部经营能否承接，最后用关系图谱追踪品类、痛点、体型、尺码和行动建议之间的业务关系。</p>
+          <p data-i18n="login.heroCopy">它把市场、订单、退货、评分、合身和评论证据接到同一个数据看板中。</p>
           <div class="login-proof">
             <div class="proof-card"><strong>3</strong><span data-i18n="login.proofData">主要公开数据源，用于市场、评论和合身风险。</span></div>
             <div class="proof-card"><strong>2</strong><span data-i18n="login.proofModes">使用模式：管理层视角和执行者视角。</span></div>
-            <div class="proof-card"><strong>1</strong><span data-i18n="login.proofGraph">业务关系图，把节点关系变成可点击的产品体验。</span></div>
+            <div class="proof-card"><strong>1</strong><span data-i18n="login.proofGraph">经营健康表，把品类、SKU、尺码和证据变成可钻取指标。</span></div>
           </div>
         </div>
       </div>
@@ -2096,7 +2653,7 @@
             <button type="button" data-lang="en">EN</button>
           </div>
           <h2 data-i18n="login.formTitle">进入工作台</h2>
-          <p data-i18n="login.formCopy">当前为 MVP 演示登录，用于展示产品入口和使用模式。后续可接 Supabase、PostgreSQL 或企业 SSO。</p>
+          <p data-i18n="login.formCopy">选择使用视角后进入数据工作台。</p>
           <label class="field">
             <span data-i18n="login.email">邮箱</span>
             <input value="demo@fitscope.ai" aria-label="email" />
@@ -2110,7 +2667,7 @@
             <button type="button" data-login-mode="operator" data-i18n="login.operatorMode">执行视角</button>
           </div>
           <button class="primary-button" type="submit" data-i18n="login.submit">打开 Commerce OS</button>
-          <p class="login-note" data-i18n="login.note">说明：这是产品体验入口，不是真实鉴权。我们先做完整业务网站，再决定是否接数据库登录。</p>
+          <p class="login-note" data-i18n="login.note">内部数据工作台入口。</p>
         </form>
       </div>
     </section>
@@ -2125,11 +2682,11 @@
           </div>
         </div>
         <nav class="nav" aria-label="Main navigation">
-          <button class="nav-button active" data-page="overview"><span class="nav-number">01</span><span data-i18n="nav.overview">经营总览</span></button>
-          <button class="nav-button" data-page="market"><span class="nav-number">02</span><span data-i18n="nav.market">市场机会</span></button>
-          <button class="nav-button" data-page="network"><span class="nav-number">03</span><span data-i18n="nav.network">信号流</span></button>
-          <button class="nav-button" data-page="kpi"><span class="nav-number">04</span><span data-i18n="nav.kpi">KPI诊断</span></button>
-          <button class="nav-button" data-page="evidence"><span class="nav-number">05</span><span data-i18n="nav.evidence">证据与动作</span></button>
+          <button class="nav-button active" data-page="overview"><span class="nav-number">01</span><span data-i18n="nav.overview">总览</span></button>
+          <button class="nav-button" data-page="market"><span class="nav-number">02</span><span data-i18n="nav.market">市场</span></button>
+          <button class="nav-button" data-page="operations"><span class="nav-number">03</span><span data-i18n="nav.operations">经营</span></button>
+          <button class="nav-button" data-page="kpi"><span class="nav-number">04</span><span data-i18n="nav.kpi">诊断</span></button>
+          <button class="nav-button" data-page="evidence"><span class="nav-number">05</span><span data-i18n="nav.evidence">证据</span></button>
         </nav>
         <div class="language-panel">
           <strong data-i18n="language.title">Language</strong>
@@ -2148,6 +2705,20 @@
             <p id="page-subtitle">先看市场机会和公司经营承接能力，再进入品类级决策。</p>
           </div>
           <div class="top-actions hidden">
+            <div class="date-range-control hidden" id="date-range-control" aria-label="date range">
+              <span class="pill control-context" id="date-context" data-i18n="date.label">时间范围</span>
+              <select id="date-preset" aria-label="date range preset">
+                <option value="all" data-i18n="date.all">全部时间</option>
+                <option value="last7" data-i18n="date.last7">最近7天</option>
+                <option value="last30" data-i18n="date.last30">最近30天</option>
+                <option value="last90" data-i18n="date.last90">最近90天</option>
+                <option value="custom" data-i18n="date.custom">自定义</option>
+              </select>
+              <span class="date-custom-fields hidden" id="date-custom-fields">
+                <input id="date-start" type="date" aria-label="start date" />
+                <input id="date-end" type="date" aria-label="end date" />
+              </span>
+            </div>
             <span class="pill control-context" id="control-context">品类聚焦</span>
             <select id="category-select" aria-label="category selector"></select>
             <button class="ghost-button" id="reset-button" type="button">重置视图</button>
@@ -2176,19 +2747,19 @@
                   <p data-i18n="overview.map.copy">横向看机会，纵向看风险；气泡大小代表评论/合身样本量。点击任意品类会同步更新工作区和图谱。</p>
                 </div>
                 <div class="opportunity-rules">
-                  <span class="pill" data-i18n="overview.map.x">X：市场机会</span>
-                  <span class="pill" data-i18n="overview.map.y">Y：经营风险</span>
-                  <span class="pill" data-i18n="overview.map.bubble">气泡：证据量</span>
+                  <button class="pill" type="button" data-overview-sort="opportunity" data-i18n="overview.map.x">机会</button>
+                  <button class="pill" type="button" data-overview-sort="risk" data-i18n="overview.map.y">风险</button>
+                  <button class="pill" type="button" data-overview-sort="health" data-i18n="overview.map.bubble">健康</button>
                 </div>
               </div>
               <div class="opportunity-map-layout">
-                <svg id="overview-opportunity-map" class="opportunity-map" role="img" aria-label="opportunity and risk map"></svg>
+                <div id="overview-opportunity-map" class="opportunity-map priority-matrix" role="img" aria-label="opportunity and risk map"></div>
               </div>
             </div>
             <div class="panel">
               <div class="panel-header">
                 <div>
-                  <h3 data-i18n="overview.queue.title">当前优先队列</h3>
+                  <h3 data-i18n="overview.queue.title">品类状态</h3>
                   <p data-i18n="overview.queue.copy">数据刷新后按同一套规则重新排序，每条建议都连接到 KPI、风险和证据。</p>
                 </div>
               </div>
@@ -2197,8 +2768,8 @@
           </div>
           <div style="height:14px"></div>
           <div class="chart-grid three">
-            <div class="panel chart-box">
-              <div class="panel-header"><div><h3 data-i18n="overview.action.title">行动组合分布</h3><p data-i18n="overview.action.copy">每一种动作有多少品类进入队列。</p></div></div>
+            <div class="panel chart-box compact-chart">
+              <div class="panel-header"><div><h3 data-i18n="overview.action.title">风险阻塞</h3><p data-i18n="overview.action.copy">汇总拖累品类健康的主要因素。</p></div></div>
               <div id="overview-triage-donut"></div>
             </div>
             <div class="panel chart-box">
@@ -2206,8 +2777,8 @@
               <div id="overview-fit-donut"></div>
             </div>
             <div class="panel chart-box">
-              <div class="panel-header"><div><h3 data-i18n="overview.momentum.title">交易动量</h3><p data-i18n="overview.momentum.copy">H&M 公开交易日趋势，用于判断市场节奏。</p></div></div>
-              <svg id="overview-momentum-line" class="line-chart" role="img" aria-label="overview transaction momentum"></svg>
+              <div class="panel-header"><div><h3 data-i18n="overview.momentum.title">承接差距</h3><p data-i18n="overview.momentum.copy">按退货、转化和毛利压力显示需要优先处理的品类。</p></div></div>
+              <div id="overview-gap-bars" class="bars"></div>
             </div>
           </div>
         </section>
@@ -2229,7 +2800,7 @@
               <div class="panel-header">
                 <div>
                   <h3 data-i18n="market.company.title">经营承接层</h3>
-                  <p data-i18n="market.company.copy">优先使用已接入经营 KPI，未覆盖品类用模型补齐。</p>
+                  <p data-i18n="market.company.copy">显示经营样本中的转化、退货和毛利承接能力。</p>
                 </div>
               </div>
               <div class="bars" id="company-health-bars"></div>
@@ -2260,6 +2831,8 @@
             </div>
           </div>
           <div style="height:14px"></div>
+          <div class="panel product-detail-panel" id="product-group-detail"></div>
+          <div style="height:14px"></div>
           <div class="panel">
             <div class="panel-header">
               <div>
@@ -2271,43 +2844,91 @@
           </div>
         </section>
 
-        <section class="page" id="network">
-          <div class="network-workbench">
-            <div class="panel">
+        <section class="page" id="operations">
+          <div class="kpi-grid" id="operations-kpis"></div>
+          <div class="operations-layout">
+            <div class="panel operations-main">
               <div class="panel-header">
                 <div>
-                  <h3 data-i18n="network.list.title">运营信号</h3>
-                  <p data-i18n="network.list.copy">优先看高频痛点、KPI 阻塞和可执行动作。</p>
+                  <h3 data-i18n="operations.table.title">经营健康表</h3>
                 </div>
+                <div class="control-row" id="operations-sort"></div>
               </div>
-              <div class="network-category-strip" id="network-category-strip"></div>
-              <div class="network-list" id="network-node-list"></div>
+              <div class="table-wrap compact-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th data-i18n="table.status">状态</th>
+                      <th data-i18n="table.category">品类</th>
+                      <th data-i18n="table.health">健康分</th>
+                      <th data-i18n="table.revenue">经营收入</th>
+                      <th data-i18n="table.returnRate">退货率</th>
+                      <th data-i18n="table.rating">评分</th>
+                      <th data-i18n="table.fitRisk">合身风险</th>
+                      <th data-i18n="table.drivers">Top 3 驱动</th>
+                      <th data-i18n="table.coverage">数据</th>
+                      <th data-i18n="table.drill">钻取</th>
+                    </tr>
+                  </thead>
+                  <tbody id="operations-table"></tbody>
+                </table>
+              </div>
             </div>
-            <div class="panel network-panel">
+            <div class="panel operations-side">
               <div class="panel-header">
                 <div>
-                  <h3 data-i18n="network.graph.title">品类信号流</h3>
-                  <p data-i18n="network.graph.copy">从当前品类出发，连接评论痛点、尺码/体型信号、KPI 阻塞和下一步动作。</p>
-                </div>
-                <div class="control-row">
-                  <button class="chip active" data-network-filter="all" data-i18n="filter.all">全部</button>
-                  <button class="chip" data-network-filter="risk" data-i18n="filter.risk">风险</button>
-                  <button class="chip" data-network-filter="action" data-i18n="filter.action">行动</button>
-                  <button class="chip" data-network-filter="kpi">KPI</button>
+                  <h3 data-i18n="operations.detail.title">品类明细</h3>
                 </div>
               </div>
-              <div class="connected-graph-wrap">
-                <div id="signal-flow-board" class="signal-flow-board" role="img" aria-label="category signal flow"></div>
-              </div>
+              <div id="operations-detail" class="inspector"></div>
+            </div>
+          </div>
+          <div style="height:14px"></div>
+          <div class="chart-grid three">
+            <div class="panel chart-box">
+              <div class="panel-header"><div><h3 data-i18n="operations.daily.title">每日经营</h3></div></div>
+              <svg id="operations-daily-line" class="line-chart" role="img" aria-label="daily operating trend"></svg>
             </div>
             <div class="panel">
-              <div class="panel-header">
-                <div>
-                  <h3 data-i18n="network.inspector.title">信号解释</h3>
-                  <p data-i18n="network.inspector.copy">点击信号查看它影响的 KPI、证据和动作。</p>
-                </div>
+              <div class="panel-header"><div><h3 data-i18n="operations.sku.title">SKU 排名</h3></div></div>
+              <div class="bars" id="operations-sku-bars"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-header"><div><h3 data-i18n="operations.size.title">尺码分布</h3></div></div>
+              <div class="bars" id="operations-size-bars"></div>
+            </div>
+          </div>
+          <div style="height:14px"></div>
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3 data-i18n="operations.orders.title">订单行明细</h3>
               </div>
-              <div id="node-inspector" class="inspector"></div>
+              <span class="pill" id="order-count">0 lines</span>
+            </div>
+            <div class="order-toolbar">
+              <input id="order-search" data-i18n-placeholder="operations.orders.search" placeholder="搜索交易 / 客户 / 商品 / 渠道" />
+              <select id="order-channel-filter" aria-label="order channel filter"></select>
+              <select id="order-type-filter" aria-label="order product type filter"></select>
+              <select id="order-sort" aria-label="order sort"></select>
+            </div>
+            <div class="table-wrap compact-table order-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th data-i18n="table.transactionId">交易 ID</th>
+                    <th data-i18n="table.itemCode">商品编码</th>
+                    <th data-i18n="table.orderDate">交易日期</th>
+                    <th data-i18n="table.customerId">客户哈希</th>
+                    <th data-i18n="table.productName">商品名</th>
+                    <th data-i18n="table.productType">商品类型</th>
+                    <th data-i18n="table.channel">渠道</th>
+                    <th data-i18n="table.storeSite">站点/触点</th>
+                    <th data-i18n="table.paidPrice">成交价指数</th>
+                  </tr>
+                </thead>
+                <tbody id="operations-order-table"></tbody>
+              </table>
             </div>
           </div>
         </section>
@@ -2328,11 +2949,11 @@
             <div class="panel chart-box">
               <div class="panel-header">
                 <div>
-                  <h3 data-i18n="kpi.matrix.title">机会 / 退货矩阵</h3>
-                  <p data-i18n="kpi.matrix.copy">每个点代表一个品类，点击可进入该品类工作区。</p>
+                  <h3 data-i18n="kpi.matrix.title">风险驱动拆解</h3>
+                  <p data-i18n="kpi.matrix.copy">把每个品类的承接差距拆成退货、转化、毛利和语义证据。</p>
                 </div>
               </div>
-              <svg id="kpi-scatter" class="scatter-chart" role="img" aria-label="opportunity return matrix"></svg>
+              <div id="kpi-driver-matrix" class="bars"></div>
             </div>
           </div>
         </section>
@@ -2344,7 +2965,7 @@
               <div class="panel-header">
                 <div>
                   <h3 data-i18n="semantic.contour.title">评论痛点 3D 轮廓</h3>
-                  <p data-i18n="semantic.contour.copy">把痛点频次转成语义地形。山峰越高代表出现越多，点击标签进入证据页。</p>
+                  <p data-i18n="semantic.contour.copy">把痛点频次转成语义地形。山峰越高代表出现越多，点击编号或图例进入证据页。</p>
                 </div>
               </div>
               <div id="semantic-pain-contour"></div>
@@ -2424,11 +3045,12 @@
             <div style="height:14px"></div>
             <div class="evidence-toolbar">
               <input id="evidence-search" data-i18n-placeholder="evidence.search" placeholder="搜索评论 / 痛点 / 场景" />
+              <select id="evidence-category-filter" aria-label="category filter"></select>
               <select id="evidence-fit-filter" aria-label="fit filter"></select>
               <select id="evidence-body-filter" aria-label="body filter"></select>
               <select id="evidence-pain-filter" aria-label="pain filter"></select>
             </div>
-            <div class="table-wrap" id="evidence-table-panel">
+            <div class="table-wrap evidence-table-wrap" id="evidence-table-panel">
               <table>
                 <thead>
                   <tr>
@@ -2447,9 +3069,13 @@
           </div>
         </section>
 
-        <p class="footer-note" data-i18n="footer.note">MVP 说明：登录、公司 KPI 和数据库连接在此版本中用于展示完整产品形态。公开数据已经真实接入，内部经营数据可在下一阶段替换为数据库 API。</p>
       </main>
     </section>
+    <div id="drawer-backdrop" class="drawer-backdrop" aria-hidden="true"></div>
+    <aside id="detail-drawer" class="detail-drawer" aria-hidden="true" aria-label="Drill-down drawer">
+      <button class="drawer-close" type="button" onclick="closeDrawer()" aria-label="Close drawer">×</button>
+      <div id="drawer-content"></div>
+    </aside>
     <div id="chart-tooltip" class="chart-tooltip" aria-hidden="true"></div>
 
     <script>
@@ -2464,6 +3090,15 @@
         hmDaily: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transaction_daily_metrics.csv",
         reviews: "../data/kaggle_womens_reviews/processed/kaggle_womens_reviews_class_metrics.csv",
         companyKpis: "../data/kaggle_fashion_boutique/processed/kaggle_fashion_boutique_company_category_kpi.csv",
+        companyDaily: "../data/kaggle_fashion_boutique/processed/kaggle_fashion_boutique_daily_kpi.csv",
+        companyReturns: "../data/kaggle_fashion_boutique/processed/kaggle_fashion_boutique_return_reason_metrics.csv",
+        salesDaily: "../data/kaggle_womens_sales/processed/kaggle_womens_sales_daily_metrics.csv",
+        salesSku: "../data/kaggle_womens_sales/processed/kaggle_womens_sales_sku_metrics.csv",
+        salesSize: "../data/kaggle_womens_sales/processed/kaggle_womens_sales_size_metrics.csv",
+        salesOrders: "../data/kaggle_womens_sales/raw/kaggle_womens_sales_orders.csv",
+        hmOrderTransactions: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transactions_sample.csv",
+        hmOrderArticles: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_transaction_articles_sample.csv",
+        hmSalesChannels: "../data/kaggle_hm_personalized/processed/kaggle_hm_personalized_sales_channel_metrics.csv",
       };
 
       const state = {
@@ -2473,11 +3108,20 @@
         selectedCategory: "dress",
         selectedNode: null,
         networkFilter: "all",
-        evidenceFilters: { q: "", fit: "all", body: "all", pain: "all" },
+        evidenceFilters: { q: "", category: "all", fit: "all", body: "all", pain: "all" },
+        orderFilters: { q: "", channel: "all", productType: "all", sort: "dateDesc" },
+        dateRange: { preset: "all", start: "", end: "" },
+        drawer: { open: false, type: "", payload: null },
         kpiSort: "gapDesc",
+        operationsSort: "healthAsc",
+        operationsWindow: "all",
         marketSort: "demandDesc",
+        overviewSort: "opportunity",
+        selectedProductGroup: "",
         data: {},
         graph: { nodes: [], edges: [] },
+        currentEvidenceRows: [],
+        currentOrderRows: [],
         three: null,
         twoD: null,
       };
@@ -2525,47 +3169,55 @@
           "mode.management": "管理模式", "mode.operator": "运营模式", "language.title": "语言",
           "login.brandTagline": "KPI 优先的服装经营智能",
           "login.heroTitle": "把市场机会、经营 KPI 和用户证据连接成一个决策网站。",
-          "login.heroCopy": "它先判断外部市场是否值得进入，再判断内部经营能否承接，最后用信号流追踪品类、痛点、体型、尺码和行动建议之间的业务关系。",
+          "login.heroCopy": "它把市场、订单、退货、评分、合身和评论证据接到同一个数据看板中。",
           "login.proofData": "主要公开数据源，用于市场、评论和合身风险。",
           "login.proofModes": "使用模式：管理层视角和执行者视角。",
-          "login.proofGraph": "品类信号流，把痛点、KPI 和动作变成可点击的产品体验。",
-          "login.formTitle": "进入工作台", "login.formCopy": "当前为 MVP 演示登录，用于展示产品入口和使用模式。后续可接 Supabase、PostgreSQL 或企业 SSO。",
+          "login.proofGraph": "经营健康表，把品类、SKU、尺码和证据变成可钻取指标。",
+          "login.formTitle": "进入工作台", "login.formCopy": "选择使用视角后进入数据工作台。",
           "login.email": "邮箱", "login.password": "密码", "login.managementMode": "管理视角", "login.operatorMode": "执行视角", "login.submit": "打开 Commerce OS",
-          "login.note": "说明：这是产品体验入口，不是真实鉴权。我们先做完整业务网站，再决定是否接数据库登录。",
+          "login.note": "内部数据工作台入口。",
           "top.pill": "数据联动产品站点",
-          "nav.overview": "经营总览", "nav.market": "市场与商品", "nav.assortment": "商品组合", "nav.network": "信号流",
-          "nav.kpi": "KPI与语义", "nav.semantic": "语义洞察", "nav.workspace": "决策工作区", "nav.evidence": "行动证据",
-          "page.overview.title": "经营总览", "page.overview.copy": "先看市场机会和公司经营承接能力，再进入品类级决策。",
-          "page.market.title": "市场与商品", "page.market.copy": "公开市场数据与模拟公司 KPI 对齐，判断哪些品类值得进入。",
+          "date.label": "时间范围", "date.all": "全部时间", "date.last7": "最近7天", "date.last30": "最近30天", "date.last90": "最近90天", "date.custom": "自定义",
+          "drawer.productGroup": "商品组钻取", "drawer.category": "品类钻取", "drawer.order": "订单行明细", "drawer.evidence": "评论证据",
+          "drawer.openOperations": "查看经营", "drawer.openEvidence": "查看证据", "drawer.openMarket": "查看市场", "drawer.close": "关闭",
+          "nav.overview": "总览", "nav.market": "市场与商品", "nav.assortment": "商品", "nav.operations": "经营",
+          "nav.kpi": "KPI与语义", "nav.semantic": "语义", "nav.workspace": "工作区", "nav.evidence": "行动证据",
+          "page.overview.title": "总览", "page.overview.copy": "核心经营指标、机会风险和品类健康。",
+          "page.market.title": "市场与商品", "page.market.copy": "公开市场样本与经营指标对齐。",
           "page.assortment.title": "商品组合", "page.assortment.copy": "用商品结构、占比和交易动量判断组合是否健康。",
-          "page.network.title": "品类信号流", "page.network.copy": "把当前品类的评论痛点、KPI 阻塞和动作路径放在同一个诊断视图。",
-          "page.kpi.title": "KPI与语义", "page.kpi.copy": "把市场机会拆成转化、退货、毛利和合身承接问题。",
+          "page.operations.title": "经营", "page.operations.copy": "按品类查看健康分、收入、退货、评分和证据覆盖。",
+          "page.kpi.title": "KPI与语义", "page.kpi.copy": "把经营差距拆成转化、退货、毛利和语义问题。",
           "page.semantic.title": "语义洞察", "page.semantic.copy": "把评论文本和合身反馈转成可执行的商品与内容问题。",
-          "page.workspace.title": "决策工作区", "page.workspace.copy": "围绕当前品类集中展示 KPI、风险、证据和动作。",
-          "page.evidence.title": "行动证据", "page.evidence.copy": "把评论证据和语义痛点转成可执行优化动作。",
-          "control.graphFocus": "信号品类", "control.resetGraph": "重置", "control.kpiCategory": "诊断品类", "control.resetKpi": "重置KPI",
+          "page.workspace.title": "工作区", "page.workspace.copy": "当前品类的 KPI、风险、证据和动作。",
+          "page.evidence.title": "行动证据", "page.evidence.copy": "评论证据、筛选和动作记录。",
+          "control.operationsCategory": "品类", "control.resetOperations": "重置",
+          "control.graphFocus": "品类", "control.resetGraph": "重置", "control.kpiCategory": "诊断品类", "control.resetKpi": "重置",
           "control.semanticCategory": "语义品类", "control.resetSemantic": "重置语义", "control.workspaceCategory": "工作区品类", "control.resetCategory": "重置品类",
           "control.evidenceCategory": "证据品类", "control.resetEvidence": "重置证据",
           "overview.path.title": "经营工作台路径", "overview.path.copy": "首页给结论，后续页面提供市场、证据和执行动作。",
-          "overview.map.title": "机会与风险地图", "overview.map.copy": "横向看机会，纵向看风险；气泡大小代表评论/合身样本量。点击任意品类会同步更新工作区和图谱。",
-          "overview.map.x": "X：市场机会", "overview.map.y": "Y：经营风险", "overview.map.bubble": "气泡：证据量",
-          "overview.queue.title": "当前优先队列", "overview.queue.copy": "数据刷新后按同一套规则重新排序，每条建议都连接到 KPI、风险和证据。",
-          "overview.action.title": "行动组合分布", "overview.action.copy": "每一种动作有多少品类进入队列。",
+          "overview.map.title": "优先级矩阵", "overview.map.copy": "按机会、风险和健康度对品类排序。",
+          "overview.map.x": "机会", "overview.map.y": "风险", "overview.map.bubble": "健康",
+          "overview.queue.title": "品类状态", "overview.queue.copy": "按健康分、退货率和证据覆盖排序。",
+          "overview.action.title": "风险阻塞", "overview.action.copy": "汇总拖累品类健康的主要因素。",
           "overview.fit.title": "合身健康度", "overview.fit.copy": "用合身、偏小、偏大信号判断退货压力来源。",
-          "overview.momentum.title": "交易动量", "overview.momentum.copy": "H&M 公开交易日趋势，用于判断市场节奏。",
+          "overview.momentum.title": "承接差距", "overview.momentum.copy": "按退货、转化和毛利压力显示需要优先处理的品类。",
           "market.demand.title": "市场需求与商品配置", "market.demand.copy": "基于公开商品结构和交易占比生成需求 proxy；接入真实订单、搜索或广告数据后，同一视图会自动重算。",
-          "market.company.title": "经营承接层", "market.company.copy": "优先使用已接入经营 KPI，未覆盖品类用模型补齐。",
+          "market.company.title": "经营承接层", "market.company.copy": "显示经营样本中的转化、退货和毛利承接能力。",
           "assortment.tree.title": "商品组 Treemap", "assortment.tree.copy": "面积代表商品数量，颜色深浅代表交易需求，点击后切到市场机会页。",
           "assortment.share.title": "商品组占比", "assortment.share.copy": "用 donut 看组合集中度，避免只看条形排名。",
           "assortment.momentum.title": "交易动量", "assortment.momentum.copy": "鼠标悬浮可查看具体日期、交易量和均价。",
           "network.list.title": "运营信号", "network.list.copy": "优先看高频痛点、KPI 阻塞和可执行动作。",
-          "network.graph.title": "品类信号流", "network.graph.copy": "从当前品类出发，连接评论痛点、尺码/体型信号、KPI 阻塞和下一步动作。",
+          "network.graph.title": "经营视图", "network.graph.copy": "按品类查看经营指标和证据。",
           "network.inspector.title": "信号解释", "network.inspector.copy": "点击信号查看它影响的 KPI、证据和动作。",
+          "operations.table.title": "经营健康表", "operations.detail.title": "品类明细", "operations.daily.title": "每日经营",
+          "operations.orders.title": "订单行明细",
+          "operations.orders.search": "搜索交易 / 客户 / 商品 / 渠道",
+          "operations.sku.title": "SKU 排名", "operations.size.title": "尺码分布",
           "filter.all": "全部", "filter.risk": "风险", "filter.action": "行动",
           "legend.category": "品类", "legend.pain": "评论痛点", "legend.bodySize": "体型/尺码", "legend.kpiAction": "KPI/行动",
           "kpi.gap.title": "KPI 承接差距", "kpi.gap.copy": "市场需求越强，越需要看转化、退货和毛利是否能承接。",
-          "kpi.matrix.title": "机会 / 退货矩阵", "kpi.matrix.copy": "每个点代表一个品类，点击可进入该品类工作区。",
-          "semantic.contour.title": "评论痛点 3D 轮廓", "semantic.contour.copy": "把痛点频次转成语义地形。山峰越高代表出现越多，点击标签进入证据页。",
+          "kpi.matrix.title": "风险驱动拆解", "kpi.matrix.copy": "把每个品类的承接差距拆成退货、转化、毛利和语义证据。",
+          "semantic.contour.title": "评论痛点 3D 轮廓", "semantic.contour.copy": "把痛点频次转成语义地形。山峰越高代表出现越多，点击节点或图例进入证据页。",
           "semantic.body.title": "体型风险优先级", "semantic.body.copy": "用于决定尺码表、模特说明和 PDP 提示需要覆盖哪些人群。",
           "semantic.table.title": "评论语义样本", "semantic.table.copy": "默认展示当前品类，若样本不足则展示全局代理样本。",
           "workspace.empty.title": "选择一个品类", "workspace.empty.copy": "工作区会把该品类的市场机会、公司经营承接、合身风险、评论证据和行动建议集中展示。",
@@ -2573,56 +3225,71 @@
           "workspace.pain.title": "相关痛点", "workspace.pain.copy": "来自评论标签和合身反馈。",
           "evidence.title": "证据与行动", "evidence.copy": "点击 KPI、节点或品类后，这里会展示对应评论样本和可执行动作。",
           "evidence.search": "搜索评论 / 痛点 / 场景",
-          "filter.fitAll": "全部合身", "filter.bodyAll": "全部体型", "filter.painAll": "全部痛点",
+          "filter.categoryAll": "全部品类", "filter.fitAll": "全部合身", "filter.bodyAll": "全部体型", "filter.painAll": "全部痛点",
+          "filter.channelAll": "全部渠道", "filter.productTypeAll": "全部商品类型",
+          "sort.dateDesc": "最新交易", "sort.priceDesc": "成交价最高", "sort.productAsc": "商品名 A-Z", "sort.customerAsc": "客户哈希 A-Z",
           "table.category": "品类", "table.semanticTag": "语义标签", "table.body": "体型", "table.occasion": "场景", "table.userLanguage": "用户语言",
+          "table.status": "状态", "table.health": "健康分", "table.revenue": "经营收入", "table.returnRate": "退货率", "table.fitRisk": "合身风险",
+          "table.drivers": "Top 3 驱动", "table.coverage": "指标", "table.drill": "钻取",
           "table.fit": "合身", "table.rating": "评分", "table.pain": "痛点", "table.reviewEvidence": "评论证据",
-          "footer.note": "MVP 说明：登录、公司 KPI 和数据库连接在此版本中用于展示完整产品形态。公开数据已经真实接入，内部经营数据可在下一阶段替换为数据库 API。"
+          "table.lineId": "行 ID", "table.orderId": "订单 ID", "table.orderDate": "下单时间", "table.itemCode": "商品编码", "table.variant": "变体", "table.sku": "SKU", "table.color": "颜色", "table.size": "尺码",
+          "table.unitPrice": "单价", "table.quantity": "件数", "table.orderRevenue": "收入",
+          "table.transactionId": "交易 ID", "table.customerId": "客户哈希", "table.productName": "商品名", "table.productType": "商品类型", "table.channel": "渠道", "table.storeSite": "站点/触点", "table.paidPrice": "成交价指数",
+          "footer.note": ""
         },
         en: {
           "mode.management": "Management mode", "mode.operator": "Operator mode", "language.title": "Language",
           "login.brandTagline": "KPI-first apparel intelligence",
           "login.heroTitle": "Connect market opportunity, operating KPIs, and user evidence in one decision website.",
-          "login.heroCopy": "It first checks whether an external market is worth entering, then whether internal operations can support it, and finally maps relationships among categories, pain points, body types, sizes, KPIs, and actions.",
+          "login.heroCopy": "It connects market, orders, returns, ratings, fit, and review evidence into one data dashboard.",
           "login.proofData": "Main public datasets for market, review, and fit-risk signals.",
           "login.proofModes": "Two usage modes: management view and operator view.",
-          "login.proofGraph": "A category signal flow turns pain points, KPIs, and actions into clickable product context.",
-          "login.formTitle": "Enter Workspace", "login.formCopy": "This MVP login demonstrates the product entry and usage modes. Supabase, PostgreSQL, or enterprise SSO can be connected later.",
+          "login.proofGraph": "An operating health table turns category, SKU, size, and evidence into drillable metrics.",
+          "login.formTitle": "Enter Workspace", "login.formCopy": "Choose a usage view and enter the data workspace.",
           "login.email": "Email", "login.password": "Password", "login.managementMode": "Management view", "login.operatorMode": "Operator view", "login.submit": "Open Commerce OS",
-          "login.note": "Note: this is a product demo entry, not real authentication. The full website experience comes first; database login can follow.",
+          "login.note": "Internal data workspace entry.",
           "top.pill": "Data-linked product workspace",
-          "nav.overview": "Overview", "nav.market": "Market & Assortment", "nav.assortment": "Assortment", "nav.network": "Signal Flow",
-          "nav.kpi": "KPI & Semantics", "nav.semantic": "Semantic Insight", "nav.workspace": "Decision Workspace", "nav.evidence": "Actions & Evidence",
-          "page.overview.title": "Overview", "page.overview.copy": "Read market opportunity and company readiness first, then move into category-level decisions.",
-          "page.market.title": "Market & Assortment", "page.market.copy": "Align public market data with modeled company KPIs to decide which categories are worth entering.",
+          "date.label": "Date range", "date.all": "All data", "date.last7": "Last 7 days", "date.last30": "Last 30 days", "date.last90": "Last 90 days", "date.custom": "Custom",
+          "drawer.productGroup": "Product group drill-down", "drawer.category": "Category drill-down", "drawer.order": "Order line detail", "drawer.evidence": "Review evidence",
+          "drawer.openOperations": "Open operations", "drawer.openEvidence": "Open evidence", "drawer.openMarket": "Open market", "drawer.close": "Close",
+          "nav.overview": "Overview", "nav.market": "Market & Assortment", "nav.assortment": "Assortment", "nav.operations": "Operations",
+          "nav.kpi": "KPI & Semantics", "nav.semantic": "Semantics", "nav.workspace": "Workspace", "nav.evidence": "Actions & Evidence",
+          "page.overview.title": "Overview", "page.overview.copy": "Core operating metrics, opportunity, risk, and category health.",
+          "page.market.title": "Market & Assortment", "page.market.copy": "Align public market samples with operating metrics.",
           "page.assortment.title": "Assortment", "page.assortment.copy": "Use product structure, share, and transaction momentum to judge assortment health.",
-          "page.network.title": "Category Signal Flow", "page.network.copy": "Diagnose the current category through review pain points, KPI blockers, and action paths.",
-          "page.kpi.title": "KPI & Semantics", "page.kpi.copy": "Break market opportunity into conversion, return, margin, and fit-readiness gaps.",
+          "page.operations.title": "Operations", "page.operations.copy": "Category health, revenue, returns, rating, and evidence coverage.",
+          "page.kpi.title": "KPI & Semantics", "page.kpi.copy": "Break operating gaps into conversion, returns, margin, and semantic risk.",
           "page.semantic.title": "Semantic Insight", "page.semantic.copy": "Turn review text and fit feedback into actionable product and content issues.",
-          "page.workspace.title": "Decision Workspace", "page.workspace.copy": "Concentrate KPI, risk, evidence, and action for the current category.",
-          "page.evidence.title": "Actions & Evidence", "page.evidence.copy": "Translate review evidence and semantic pain points into executable improvements.",
-          "control.graphFocus": "Signal category", "control.resetGraph": "Reset", "control.kpiCategory": "KPI category", "control.resetKpi": "Reset KPI",
+          "page.workspace.title": "Workspace", "page.workspace.copy": "Current category KPI, risk, evidence, and action.",
+          "page.evidence.title": "Actions & Evidence", "page.evidence.copy": "Review evidence, filters, and action records.",
+          "control.operationsCategory": "Category", "control.resetOperations": "Reset",
+          "control.graphFocus": "Category", "control.resetGraph": "Reset", "control.kpiCategory": "KPI category", "control.resetKpi": "Reset",
           "control.semanticCategory": "Semantic category", "control.resetSemantic": "Reset semantic", "control.workspaceCategory": "Workspace category", "control.resetCategory": "Reset category",
           "control.evidenceCategory": "Evidence category", "control.resetEvidence": "Reset evidence",
           "overview.path.title": "Operating Path", "overview.path.copy": "The overview gives the decision; follow-up pages provide market, evidence, and execution detail.",
-          "overview.map.title": "Opportunity and Risk Map", "overview.map.copy": "X shows opportunity, Y shows risk, and bubble size shows review/fit evidence volume. Click any category to update the workspace and graph.",
-          "overview.map.x": "X: Market opportunity", "overview.map.y": "Y: Operating risk", "overview.map.bubble": "Bubble: Evidence volume",
-          "overview.queue.title": "Current Priority Queue", "overview.queue.copy": "When data refreshes, the same rule recalculates ranking. Every recommendation links to KPI, risk, and evidence.",
-          "overview.action.title": "Action Mix", "overview.action.copy": "How many categories are assigned to each action type.",
+          "overview.map.title": "Priority Matrix", "overview.map.copy": "Rank categories by opportunity, operating risk, and health.",
+          "overview.map.x": "Opportunity", "overview.map.y": "Risk", "overview.map.bubble": "Health",
+          "overview.queue.title": "Category Status", "overview.queue.copy": "Sorted by health score, return rate, and evidence coverage.",
+          "overview.action.title": "Risk Blockers", "overview.action.copy": "Main factors that lower category health.",
           "overview.fit.title": "Fit Health", "overview.fit.copy": "Use fit, too-small, and too-large signals to identify return-pressure sources.",
-          "overview.momentum.title": "Transaction Momentum", "overview.momentum.copy": "Daily public H&M transactions help read market rhythm.",
+          "overview.momentum.title": "Readiness Gaps", "overview.momentum.copy": "Categories ranked by return, conversion, and margin pressure.",
           "market.demand.title": "Market Demand vs Assortment", "market.demand.copy": "Public product structure and transaction share create a demand proxy. Real orders, search, or ads data can replace it later.",
-          "market.company.title": "Operating Readiness Layer", "market.company.copy": "Uses connected operating KPIs first, then model-fill categories without direct coverage.",
+          "market.company.title": "Operating Readiness Layer", "market.company.copy": "Shows conversion, return, and margin readiness from the operating sample.",
           "assortment.tree.title": "Product Group Treemap", "assortment.tree.copy": "Area shows article count, color intensity shows demand. Click to switch to Market Opportunity.",
           "assortment.share.title": "Product Group Share", "assortment.share.copy": "The donut shows concentration without relying only on ranked bars.",
           "assortment.momentum.title": "Transaction Momentum", "assortment.momentum.copy": "Hover to inspect date, transactions, and average price.",
           "network.list.title": "Operating Signals", "network.list.copy": "Prioritize top pain points, KPI blockers, and executable actions.",
-          "network.graph.title": "Category Signal Flow", "network.graph.copy": "Start from the current category, then trace review pain, size/body signals, KPI blockers, and next actions.",
+          "network.graph.title": "Operating View", "network.graph.copy": "Review operating metrics and evidence by category.",
           "network.inspector.title": "Signal Inspector", "network.inspector.copy": "Click a signal to inspect its KPI, evidence, and action impact.",
+          "operations.table.title": "Operating Health Table", "operations.detail.title": "Category Detail", "operations.daily.title": "Daily Operations",
+          "operations.orders.title": "Order Line Detail",
+          "operations.orders.search": "Search transaction, customer, item, or channel",
+          "operations.sku.title": "SKU Ranking", "operations.size.title": "Size Mix",
           "filter.all": "All", "filter.risk": "Risk", "filter.action": "Action",
           "legend.category": "Category", "legend.pain": "Review pain point", "legend.bodySize": "Body / Size", "legend.kpiAction": "KPI / Action",
           "kpi.gap.title": "KPI Readiness Gap", "kpi.gap.copy": "The stronger market demand is, the more conversion, return, and margin readiness matter.",
-          "kpi.matrix.title": "Opportunity / Return Matrix", "kpi.matrix.copy": "Each point is a category. Click to open the category workspace.",
-          "semantic.contour.title": "Review Pain 3D Contour", "semantic.contour.copy": "Pain-point frequency becomes a semantic terrain. Higher peaks mean more mentions. Click labels to open evidence.",
+          "kpi.matrix.title": "Risk Driver Breakdown", "kpi.matrix.copy": "Break each category gap into return, conversion, margin, and semantic evidence.",
+          "semantic.contour.title": "Review Pain 3D Contour", "semantic.contour.copy": "Pain-point frequency becomes a semantic terrain. Higher peaks mean more mentions. Click a point or legend row to open evidence.",
           "semantic.body.title": "Body-Type Risk Priority", "semantic.body.copy": "Use this to decide which user groups need size chart, model note, and PDP guidance coverage.",
           "semantic.table.title": "Review Semantic Samples", "semantic.table.copy": "Default shows the current category; when samples are limited it falls back to global proxy samples.",
           "workspace.empty.title": "Select a Category", "workspace.empty.copy": "The workspace concentrates market opportunity, company readiness, fit risk, review evidence, and actions for the selected category.",
@@ -2630,10 +3297,17 @@
           "workspace.pain.title": "Related Pain Points", "workspace.pain.copy": "From review tags and fit feedback.",
           "evidence.title": "Evidence & Actions", "evidence.copy": "After clicking a KPI, node, or category, this page shows matched review samples and executable actions.",
           "evidence.search": "Search review, pain point, or occasion",
-          "filter.fitAll": "All fit", "filter.bodyAll": "All body types", "filter.painAll": "All pain points",
+          "filter.categoryAll": "All categories", "filter.fitAll": "All fit", "filter.bodyAll": "All body types", "filter.painAll": "All pain points",
+          "filter.channelAll": "All channels", "filter.productTypeAll": "All product types",
+          "sort.dateDesc": "Newest first", "sort.priceDesc": "Highest price index", "sort.productAsc": "Product A-Z", "sort.customerAsc": "Customer hash A-Z",
           "table.category": "Category", "table.semanticTag": "Semantic tag", "table.body": "Body type", "table.occasion": "Occasion", "table.userLanguage": "User language",
+          "table.status": "Status", "table.health": "Health", "table.revenue": "Revenue", "table.returnRate": "Return", "table.fitRisk": "Fit risk",
+          "table.drivers": "Top 3 drivers", "table.coverage": "Metric", "table.drill": "Open",
           "table.fit": "Fit", "table.rating": "Rating", "table.pain": "Pain point", "table.reviewEvidence": "Review evidence",
-          "footer.note": "MVP note: login, company KPIs, and database connection signals are included to show the full product shape. Public datasets are loaded; internal operating data can be replaced by a database API later."
+          "table.lineId": "Line ID", "table.orderId": "Order ID", "table.orderDate": "Order time", "table.itemCode": "Item code", "table.variant": "Variant", "table.sku": "SKU", "table.color": "Color", "table.size": "Size",
+          "table.unitPrice": "Unit price", "table.quantity": "Qty", "table.orderRevenue": "Revenue",
+          "table.transactionId": "Transaction ID", "table.customerId": "Customer hash", "table.productName": "Product name", "table.productType": "Product type", "table.channel": "Channel", "table.storeSite": "Touchpoint", "table.paidPrice": "Price index",
+          "footer.note": ""
         }
       };
 
@@ -2651,15 +3325,15 @@
         "机会分": "Opportunity score", "机会指数": "Opportunity index", "风险暴露": "Risk exposure", "风险分": "Risk score", "退货率": "Return rate", "合身率": "Fit rate", "平均转化": "Average conversion", "平均退货": "Average returns",
         "平均毛利": "Average margin", "高风险品类": "High-risk categories", "当前品类": "Current category",
         "个品类": " categories", "占比": "Share", "评论标签出现": "Review tag mentions", "组合合身率": "Portfolio fit rate", "偏小信号": "Too-small signal", "偏大信号": "Too-large signal",
-        "合身": "Fit", "偏小": "Too small", "偏大": "Too large", "条": " rows", "表": "table", "分": "score", "指数": "index", "暴露": "exposure", "代理值": "proxy value", "个百分点": "pp", "百分点": "pp",
+        "合身": "Fit", "偏小": "Too small", "偏大": "Too large", "条": " rows", "表": "table", "分": "score", "指数": "index", "暴露": "exposure", "代理值": "proxy value", "个百分点": "% gap", "百分点": "% gap",
         "点击进入语义洞察复核合身原因。": "Click to open Semantic Insight and review fit drivers.", "健康": "Healthy", "需治理": "Needs action",
         "低": "Low", "当前": "Current", "高": "High", "低市场机会": "Low opportunity", "高市场机会": "High opportunity", "低经营风险": "Low operating risk", "高经营风险": "High operating risk",
         "先治理风险": "Treat risk first", "先修正再放量": "Fix before scaling", "低优先观察": "Low-priority watch", "优先验证放量": "Validate then scale",
         "机会排名": "Opportunity rank", "风险指数": "Risk index", "建议": "Recommendation", "商品数": "Articles", "商品占比": "Article share", "交易占比": "Transaction share",
         "交易": "Transactions", "均价": "Avg. price", "机会": "Opportunity", "风险": "Risk", "权重": "Weight", "选择一个节点": "Select a node",
         "规模代理": "Scale proxy", "转化承接": "Conversion readiness", "退货暴露": "Return exposure", "毛利质量": "Margin quality", "当前入口": "Current entry",
-        "模拟 KPI": "Modeled KPI", "增长侧": "Growth", "风险侧": "Risk", "利润侧": "Margin", "优先级": "Priority",
-        "模型化 GMV，用于演示经营承接层": "Modeled GMV for the readiness layer", "接真实订单后替换": "Replace with real orders",
+        "模拟 KPI": "KPI", "增长侧": "Growth", "风险侧": "Risk", "利润侧": "Margin", "优先级": "Priority",
+        "模型化 GMV，用于演示经营承接层": "Operating revenue", "接真实订单后替换": "Operating sample",
         "由品类需求、风险和评论信号估算": "Estimated from demand, risk, and reviews", "需用埋点校准": "Needs event-data calibration",
         "合身偏差和评论痛点推高退货压力": "Fit gaps and review pain points drive return pressure", "需要治理": "Needs action", "处于健康区": "Healthy range",
         "扣除退货压力后的经营承接能力": "Readiness after return-pressure adjustment", "可承接": "Ready", "需复核": "Review",
@@ -2678,10 +3352,10 @@
         "集中": "Concentrated", "分散": "Distributed", "评论样本": "Review samples", "平均评分": "Average rating", "带痛点评论": "Tagged reviews", "主痛点": "Main pain point",
         "H&M 交易表": "H&M transaction table", "H&M articles 表": "H&M articles table", "transactions 表": "transactions table", "下一阶段可接 API": "API-ready in the next stage",
         "需求占比减商品占比": "Demand share minus article share", "商品结构集中程度": "Assortment concentration", "决定是否需要品类扩展": "Determines whether category expansion is needed",
-        "模型化公司 KPI": "Modeled company KPI", "合身与评论风险驱动": "Driven by fit and review risk", "退货压力折损后": "After return-pressure discount",
+        "模型化公司 KPI": "Operating sample KPI", "合身与评论风险驱动": "Driven by fit and review risk", "退货压力折损后": "After return-pressure discount",
         "由右上选择器控制": "Controlled by the top-right selector", "退货压力": "Return pressure", "语义轮廓": "Semantic contour",
         "当前筛选可复核样本": "Reviewable samples under current filters", "用户满意度代理信号": "User satisfaction proxy", "语义覆盖率": "Semantic coverage", "用于生成行动建议": "Used to generate action recommendations",
-        "市场需求指数": "Market demand index", "GMV 代理值": "GMV proxy value", "转化率": "Conversion rate", "经营承接": "Operating readiness",
+        "市场需求指数": "Market demand index", "GMV 代理值": "Revenue", "转化率": "Conversion rate", "经营承接": "Operating readiness",
         "来自当前品类评论样本，可直接进入证据表复核。": "From current category review samples; open the evidence table to verify."
       };
 
@@ -2753,7 +3427,7 @@
           } else cell += char;
         }
         if (cell || row.length) { row.push(cell); rows.push(row); }
-        const headers = rows.shift() || [];
+        const headers = (rows.shift() || []).map((header) => String(header || "").replace(/^\uFEFF/, "").trim());
         return rows.map((values) => Object.fromEntries(headers.map((header, index) => [header, values[index] ?? ""])));
       }
 
@@ -2767,6 +3441,7 @@
         const entries = await Promise.all(Object.entries(paths).map(async ([key, path]) => [key, await loadCSV(path)]));
         state.data = Object.fromEntries(entries);
         state.data.company = buildCompanyModel();
+        state.selectedProductGroup = state.selectedProductGroup || "all";
         buildCategorySelect();
         buildGraph();
         renderAll();
@@ -2777,7 +3452,8 @@
         const realRows = state.data.companyKpis || [];
         const realByCategory = new Map(realRows.map((item) => [item.category, item]));
         return categoryRows().map((row, index) => {
-          const real = realByCategory.get(row.category_group);
+          const kpiKey = companyKpiKey(row.category_group);
+          const real = realByCategory.get(kpiKey);
           const risk = num(row.risk_score);
           const fit = num(row.fit_rate);
           const demand = marketDemandFor(row.category_group);
@@ -2786,15 +3462,18 @@
           const margin = Math.max(0.22, 0.58 - returnRate * 0.52 + fit * 0.08);
           const gmv = Math.round((320000 + demand * 1400000) * (1 - returnRate * 0.34) * (1 + index / 260));
           if (real) {
+            const demandWeight = 0.64 + Math.min(0.72, demand * 1.15);
             return {
               category: row.category_group,
-              gmv: num(real.gmv),
-              conversion: num(real.conversion),
+              kpiCategory: real.category,
+              gmv: num(real.gmv) * demandWeight,
+              conversion: num(real.conversion) * (0.92 + fit * 0.14),
               returnRate: num(real.returnRate),
               margin: num(real.margin),
               inventoryTurn: num(real.inventoryTurn),
               avgRating: num(real.avg_rating),
               returnReason: real.top_return_reason || "",
+              products: int(real.products),
               source: "kaggle_fashion_boutique",
             };
           }
@@ -2808,6 +3487,16 @@
             source: "model_fill",
           };
         });
+      }
+
+      function realCompanyRevenue() {
+        const salesRevenue = (state.data.salesDaily || []).reduce((sum, row) => sum + num(row.revenue), 0);
+        if (salesRevenue > 0) return salesRevenue;
+        return (state.data.companyKpis || []).reduce((sum, row) => sum + num(row.gmv), 0);
+      }
+
+      function realOrderCount() {
+        return (state.data.salesDaily || []).reduce((sum, row) => sum + int(row.orders), 0);
       }
 
       function categoryRows() {
@@ -2829,6 +3518,35 @@
         if (normalized.includes("pant") || normalized.includes("bottom") || normalized.includes("culotte")) return 0.22;
         if (normalized.includes("outer") || normalized.includes("vest")) return 0.12;
         return 0.08;
+      }
+
+      function companyKpiKey(category) {
+        const value = String(category || "").toLowerCase();
+        if (value.includes("dress") || value.includes("frock") || value.includes("shirtdress")) return "dress";
+        if (value.includes("top") || value.includes("shirt") || value.includes("cardigan") || value.includes("tunic") || value.includes("sweat") || value.includes("cami") || value.includes("tee")) return "top";
+        if (value.includes("pant") || value.includes("bottom") || value.includes("culotte") || value.includes("legging") || value.includes("trouser")) return "bottom";
+        if (value.includes("outer") || value.includes("vest") || value.includes("blazer") || value.includes("jacket") || value.includes("coat")) return "outerwear";
+        if (value.includes("shoe")) return "shoes";
+        if (value.includes("access")) return "accessories";
+        return value;
+      }
+
+      function cleanProductGroupRows(rows) {
+        return (rows || []).filter((row) => {
+          const name = String(row.product_group_name || "").trim().toLowerCase();
+          if (!name || name === "unknown" || name === "nan") return false;
+          return int(row.articles) > 0 || int(row.transactions) > 0 || num(row.share) > 0;
+        });
+      }
+
+      function sourceNote(key) {
+        const notes = {
+          market: state.lang === "en" ? "Public market sample" : "公开市场样本",
+          company: state.lang === "en" ? "Operating sample" : "经营样本",
+          evidence: state.lang === "en" ? "Review evidence" : "评论证据",
+          mapped: state.lang === "en" ? "Mapped metric" : "映射指标",
+        };
+        return notes[key] || "";
       }
 
       function buildCategorySelect() {
@@ -2860,8 +3578,23 @@
         return demand * 44 + num(company.conversion) * 150 - num(company.returnRate) * 34 + num(company.margin) * 12;
       }
 
+      function operatingRiskScore(row) {
+        const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
+        return num(row.risk_score) * 0.72 + num(company.returnRate) * 30;
+      }
+
+      function overviewPriorityRows() {
+        const rows = operationsRows().slice();
+        const sorters = {
+          opportunity: (a, b) => businessScore(b) - businessScore(a),
+          risk: (a, b) => operatingRiskScore(b) - operatingRiskScore(a),
+          health: (a, b) => a.health - b.health,
+        };
+        return rows.sort(sorters[state.overviewSort] || sorters.opportunity);
+      }
+
       function kpiSpark(values) {
-        const nums = values.map(num);
+        const nums = (values && values.length ? values : [0, 0]).map(num);
         const min = Math.min(...nums);
         const max = Math.max(...nums);
         const width = 116;
@@ -2919,18 +3652,370 @@
         return { label: "观察", tone: "info", action: "保持监控，等待市场需求或内部 KPI 出现更强信号。" };
       }
 
+      function operationsRows() {
+        const categories = categoryRows();
+        const companies = state.data.company || [];
+        const maxGmv = Math.max(...companies.map((row) => num(row.gmv)), 1);
+        const maxRecords = Math.max(...categories.map((row) => int(row.records)), 1);
+        return categories.map((row) => {
+          const company = companies.find((item) => item.category === row.category_group) || {};
+          const revenueHealth = Math.min(1, Math.sqrt(num(company.gmv) / maxGmv));
+          const conversionHealth = Math.min(1, num(company.conversion) / 0.075);
+          const marginHealth = Math.min(1, num(company.margin) / 0.48);
+          const ratingHealth = Math.min(1, (num(company.avgRating) || 3.6) / 5);
+          const fitHealth = Math.min(1, num(row.fit_rate) / 0.78);
+          const returnHealth = Math.max(0, 1 - Math.max(0, num(company.returnRate) - 0.12) / 0.26);
+          const evidenceHealth = Math.min(1, Math.sqrt(int(row.records) / maxRecords));
+          const health = 100 * (
+            revenueHealth * 0.18 +
+            conversionHealth * 0.16 +
+            marginHealth * 0.16 +
+            ratingHealth * 0.12 +
+            fitHealth * 0.18 +
+            returnHealth * 0.15 +
+            evidenceHealth * 0.05
+          );
+          const fitRisk = Math.max(0, 1 - num(row.fit_rate));
+          return {
+            ...row,
+            company,
+            health,
+            fitRisk,
+            status: healthStatus(health),
+            drivers: topDrivers(row, company, health),
+            coverage: company.source === "kaggle_fashion_boutique" ? "real" : "proxy",
+          };
+        });
+      }
+
+      function healthStatus(score) {
+        if (score >= 78) return { key: "healthy", zh: "健康", en: "Healthy" };
+        if (score >= 62) return { key: "watch", zh: "观察", en: "Watch" };
+        if (score >= 46) return { key: "risk", zh: "风险", en: "Risk" };
+        return { key: "critical", zh: "预警", en: "Critical" };
+      }
+
+      function topDrivers(row, company) {
+        const drivers = [];
+        const topPain = painForCategory(row.category_group)[0];
+        if (num(company.returnRate) >= 0.18) drivers.push({ id: "return", zh: "退货", en: "Returns", score: num(company.returnRate) });
+        if (num(row.fit_rate) < 0.74) drivers.push({ id: "fit", zh: "合身", en: "Fit", score: 1 - num(row.fit_rate) });
+        if (topPain?.id) drivers.push({ id: topPain.id, zh: labelMap[topPain.id] || topPain.pain, en: labelMapEn[topPain.id] || topPain.pain, score: topPain.count });
+        if (num(company.conversion) < 0.055) drivers.push({ id: "conversion", zh: "转化", en: "Conversion", score: 0.055 - num(company.conversion) });
+        if (num(company.margin) < 0.46) drivers.push({ id: "margin", zh: "毛利", en: "Margin", score: 0.46 - num(company.margin) });
+        if (num(company.avgRating) && num(company.avgRating) < 3.2) drivers.push({ id: "rating", zh: "评分", en: "Rating", score: 3.2 - num(company.avgRating) });
+        return drivers.sort((a, b) => b.score - a.score).slice(0, 3);
+      }
+
+      function sortedOperationsRows() {
+        const rows = operationsRows();
+        const sorters = {
+          healthAsc: (a, b) => a.health - b.health,
+          healthDesc: (a, b) => b.health - a.health,
+          revenueDesc: (a, b) => num(b.company.gmv) - num(a.company.gmv),
+          returnDesc: (a, b) => num(b.company.returnRate) - num(a.company.returnRate),
+          ratingAsc: (a, b) => (num(a.company.avgRating) || 9) - (num(b.company.avgRating) || 9),
+        };
+        return rows.sort(sorters[state.operationsSort] || sorters.healthAsc);
+      }
+
+      function renderOperations() {
+        const rows = sortedOperationsRows();
+        const selected = rows.find((row) => row.category_group === state.selectedCategory) || rows[0] || {};
+        const realCount = rows.filter((row) => row.coverage === "real").length;
+        const avgHealth = rows.reduce((sum, row) => sum + row.health, 0) / Math.max(rows.length, 1);
+        const avgReturn = rows.reduce((sum, row) => sum + num(row.company.returnRate), 0) / Math.max(rows.length, 1);
+        const totalRevenue = rows.reduce((sum, row) => sum + num(row.company.gmv), 0);
+        document.getElementById("operations-kpis").innerHTML = [
+          { label: state.lang === "en" ? "Health" : "健康分", value: avgHealth.toFixed(1), note: state.lang === "en" ? "Weighted operating score" : "综合经营评分" },
+          { label: state.lang === "en" ? "Revenue" : "经营收入", value: `$${fmt(totalRevenue)}`, note: sourceNote("company") },
+          { label: state.lang === "en" ? "Return" : "退货率", value: pct(avgReturn), note: state.lang === "en" ? "Category average" : "品类均值" },
+          { label: state.lang === "en" ? "Mapped categories" : "映射品类", value: `${realCount}/${rows.length}`, note: sourceNote("mapped") },
+          { label: state.lang === "en" ? "Selected" : "当前品类", value: nameOf(state.selectedCategory), note: state.lang === "en" ? "Current focus" : "当前聚焦" },
+        ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
+        renderOperationsSortControls();
+        document.getElementById("operations-table").innerHTML = rows.slice(0, 18).map((row) => {
+          const status = row.status;
+          const statusText = state.lang === "en" ? status.en : status.zh;
+          const coverageText = row.coverage === "real" ? (state.lang === "en" ? "Mapped" : "映射") : (state.lang === "en" ? "Proxy" : "代理");
+          return `<tr class="clickable-row ${row.category_group === state.selectedCategory ? "selected-row" : ""}" onclick="selectCategory('${escapeHtml(row.category_group)}', 'operations', {scroll:false});openDrawer('category', {id:'${escapeHtml(row.category_group)}'})">
+            <td><span class="status-pill ${escapeHtml(status.key)}">${escapeHtml(statusText)}</span></td>
+            <td><strong>${escapeHtml(nameOf(row.category_group))}</strong></td>
+            <td>${row.health.toFixed(1)}</td>
+            <td>$${fmt(row.company.gmv || 0)}</td>
+            <td>${pct(row.company.returnRate)}</td>
+            <td>${row.company.avgRating ? num(row.company.avgRating).toFixed(1) : "-"}</td>
+            <td>${pct(row.fitRisk)}</td>
+            <td><div class="driver-list">${row.drivers.map((driver) => `<span class="driver-chip">${escapeHtml(state.lang === "en" ? driver.en : driver.zh)}</span>`).join("") || "-"}</div></td>
+            <td><span class="coverage-pill ${row.coverage}">${escapeHtml(coverageText)}</span></td>
+            <td><button class="row-action" type="button" onclick="event.stopPropagation();selectCategory('${escapeHtml(row.category_group)}', 'operations', {scroll:false});openDrawer('category', {id:'${escapeHtml(row.category_group)}'})">${state.lang === "en" ? "Open" : "打开"}</button></td>
+          </tr>`;
+        }).join("");
+        renderOperationsDetail(selected);
+        renderLineChart("operations-daily-line", normalizeDailyRows(state.data.companyDaily || state.data.salesDaily || []), { compact: false, valueKey: "gmv", label: state.lang === "en" ? "Revenue" : "经营收入" });
+        const skuRows = (state.data.salesSku || []).slice().sort((a, b) => num(b.revenue) - num(a.revenue));
+        const sizeRows = (state.data.salesSize || []).slice().sort((a, b) => num(b.revenue) - num(a.revenue));
+        renderBars("operations-sku-bars", skuRows.slice(0, 8), "sku", (row) => num(row.revenue), { max: Math.max(...skuRows.map((row) => num(row.revenue)), 1), format: (v) => `$${fmt(v)}` });
+        renderBars("operations-size-bars", sizeRows.slice(0, 8), "size", (row) => num(row.revenue), { max: Math.max(...sizeRows.map((row) => num(row.revenue)), 1), format: (v) => `$${fmt(v)}` });
+        renderOrderTable();
+      }
+
+      function renderOperationsSortControls() {
+        const container = document.getElementById("operations-sort");
+        if (!container) return;
+        const options = state.lang === "en"
+          ? [["healthAsc", "Health ↑"], ["healthDesc", "Health ↓"], ["revenueDesc", "Revenue ↓"], ["returnDesc", "Return ↓"], ["ratingAsc", "Rating ↑"]]
+          : [["healthAsc", "健康↑"], ["healthDesc", "健康↓"], ["revenueDesc", "收入↓"], ["returnDesc", "退货↓"], ["ratingAsc", "评分↑"]];
+        container.innerHTML = options.map(([value, label]) => `<button class="chip ${state.operationsSort === value ? "active" : ""}" type="button" data-operations-sort="${escapeHtml(value)}">${escapeHtml(label)}</button>`).join("");
+        container.querySelectorAll("[data-operations-sort]").forEach((button) => {
+          button.addEventListener("click", () => {
+            state.operationsSort = button.dataset.operationsSort;
+            renderOperations();
+            localizeGenerated(document.getElementById("operations"));
+          });
+        });
+      }
+
+      function renderOperationsDetail(row) {
+        if (!row?.category_group) return;
+        const status = row.status || healthStatus(row.health || 0);
+        const topPain = painForCategory(row.category_group).slice(0, 4);
+        const returnRows = (state.data.companyReturns || [])
+          .filter((item) => item.category === companyKpiKey(row.category_group))
+          .slice(0, 4);
+        document.getElementById("operations-detail").innerHTML = `
+          <div>
+            <div class="inspector-type">${escapeHtml(row.coverage === "real" ? sourceNote("mapped") : (state.lang === "en" ? "Proxy metric" : "代理指标"))}</div>
+            <h4 class="inspector-title">${escapeHtml(nameOf(row.category_group))}</h4>
+          </div>
+          <div class="detail-score">
+            <div class="impact-cell"><span>${state.lang === "en" ? "Status" : "状态"}</span><strong>${escapeHtml(state.lang === "en" ? status.en : status.zh)}</strong></div>
+            <div class="impact-cell"><span>${state.lang === "en" ? "Health" : "健康分"}</span><strong>${(row.health || 0).toFixed(1)}</strong></div>
+            <div class="impact-cell"><span>${state.lang === "en" ? "Return" : "退货率"}</span><strong>${pct(row.company.returnRate)}</strong></div>
+            <div class="impact-cell"><span>${state.lang === "en" ? "Fit risk" : "合身风险"}</span><strong>${pct(row.fitRisk)}</strong></div>
+          </div>
+          <div class="metric-list">
+            ${topPain.map((item) => `<button class="metric-row" type="button" onclick="openEvidenceForPain('${escapeHtml(item.id)}')"><span>${escapeHtml(nameOf(item.id))}</span><strong>${fmt(item.count)}</strong></button>`).join("")}
+            ${returnRows.map((item) => `<div class="metric-row"><span>${escapeHtml(state.lang === "en" ? (item.return_reason || "-") : tr(item.return_reason || "-"))}</span><strong>${fmt(item.count)}</strong></div>`).join("")}
+          </div>
+          <button class="primary-button" type="button" onclick="selectCategory('${escapeHtml(row.category_group)}', 'evidence')">${state.lang === "en" ? "Open evidence" : "打开证据"}</button>
+        `;
+      }
+
+      function renderOrderTable() {
+        const holder = document.getElementById("operations-order-table");
+        if (!holder) return;
+        updateOrderControls();
+        const rows = filteredOrderRows();
+        state.currentOrderRows = rows;
+        const count = document.getElementById("order-count");
+        if (count) count.textContent = state.lang === "en" ? `${rows.length} lines` : `${rows.length} 行`;
+        holder.innerHTML = rows.map((row, index) => `
+          <tr class="clickable-row" onclick="openOrderDrawer(${index})">
+            <td><strong>${escapeHtml(transactionLineId(row, row._index ?? index))}</strong></td>
+            <td><strong>${escapeHtml(row.articleId)}</strong></td>
+            <td>${escapeHtml(formatOrderDate(row.t_dat))}</td>
+            <td>${escapeHtml(customerShort(row.customer_id))}</td>
+            <td>${escapeHtml(row.productName)}</td>
+            <td>${escapeHtml(nameOf(row.productType))}</td>
+            <td><span class="tag">${escapeHtml(row.channel)}</span></td>
+            <td>${escapeHtml(row.touchpoint)}</td>
+            <td>${priceIndex(row.price)}</td>
+          </tr>
+        `).join("");
+      }
+
+      function formatOrderDate(value) {
+        return String(value || "-").replace(/\//g, "-");
+      }
+
+      function normalizeArticleId(value) {
+        const raw = String(value || "").replace(/\D/g, "");
+        return raw ? raw.padStart(10, "0") : "-";
+      }
+
+      function articleLookup() {
+        const map = new Map();
+        (state.data.hmOrderArticles || []).forEach((row) => map.set(normalizeArticleId(row.article_id), row));
+        return map;
+      }
+
+      function channelLabel(value) {
+        const channel = String(value || "").trim();
+        if (!channel) return state.lang === "en" ? "Unknown channel" : "未知渠道";
+        return state.lang === "en" ? `H&M channel ${channel}` : `H&M 渠道 ${channel}`;
+      }
+
+      function touchpointLabel(value) {
+        const channel = String(value || "").trim();
+        if (!channel) return "-";
+        return state.lang === "en" ? `Public sales channel ${channel}` : `公开销售渠道 ${channel}`;
+      }
+
+      function customerShort(value) {
+        const raw = String(value || "").trim();
+        return raw ? `${raw.slice(0, 8)}...${raw.slice(-4)}` : "-";
+      }
+
+      function priceIndex(value) {
+        return Number(num(value)).toFixed(4);
+      }
+
+      function transactionLineId(row, index) {
+        const date = String(row.t_dat || "").replace(/\D/g, "") || "00000000";
+        return `TX-${date}-${String(row.sales_channel_id || "0").padStart(2, "0")}-${String(index + 1).padStart(5, "0")}`;
+      }
+
+      function orderRows() {
+        const articleMap = articleLookup();
+        return (state.data.hmOrderTransactions || []).map((row, index) => {
+          const articleId = normalizeArticleId(row.article_id);
+          const article = articleMap.get(articleId) || {};
+          return {
+            ...row,
+            _index: index,
+            articleId,
+            productName: article.prod_name || "-",
+            productType: article.product_type_name || "-",
+            productGroup: article.product_group_name || "-",
+            channel: channelLabel(row.sales_channel_id),
+            touchpoint: touchpointLabel(row.sales_channel_id),
+          };
+        });
+      }
+
+      function setChannelOptions(select, values, allLabel, selected) {
+        const normalized = selected && values.includes(selected) ? selected : "all";
+        select.innerHTML = ["all", ...values].map((value) => {
+          const label = value === "all" ? allLabel : channelLabel(value);
+          return `<option value="${escapeHtml(value)}"${value === normalized ? " selected" : ""}>${escapeHtml(label)}</option>`;
+        }).join("");
+        return normalized;
+      }
+
+      function updateOrderControls() {
+        const source = orderRows();
+        const q = document.getElementById("order-search");
+        const channel = document.getElementById("order-channel-filter");
+        const productType = document.getElementById("order-type-filter");
+        const sort = document.getElementById("order-sort");
+        if (!q || !channel || !productType || !sort) return;
+        q.value = state.orderFilters.q || "";
+        const channels = [...new Set(source.map((row) => String(row.sales_channel_id || "").trim()).filter(Boolean))].sort();
+        const productTypes = [...new Set(source.map((row) => row.productType).filter((value) => value && value !== "-"))].sort();
+        state.orderFilters.channel = setChannelOptions(channel, channels, t("filter.channelAll"), state.orderFilters.channel);
+        state.orderFilters.productType = setSelectOptions(productType, productTypes, t("filter.productTypeAll"), state.orderFilters.productType);
+        const sortOptions = ["dateDesc", "priceDesc", "productAsc", "customerAsc"];
+        const selected = sortOptions.includes(state.orderFilters.sort) ? state.orderFilters.sort : "dateDesc";
+        sort.innerHTML = sortOptions.map((value) => `<option value="${value}"${value === selected ? " selected" : ""}>${escapeHtml(t(`sort.${value}`))}</option>`).join("");
+        state.orderFilters.sort = selected;
+      }
+
+      function filteredOrderRows() {
+        const { q, channel, productType, sort } = state.orderFilters;
+        const query = String(q || "").trim().toLowerCase();
+        const rows = filterRowsByDate(orderRows(), "t_dat").filter((row) => {
+          if (channel !== "all" && String(row.sales_channel_id || "") !== channel) return false;
+          if (productType !== "all" && row.productType !== productType) return false;
+          if (!query) return true;
+          return [
+            transactionLineId(row, row._index),
+            row.t_dat,
+            row.customer_id,
+            customerShort(row.customer_id),
+            row.articleId,
+            row.productName,
+            row.productType,
+            row.productGroup,
+            row.channel,
+            row.touchpoint,
+            row.price,
+          ].some((value) => String(value || "").toLowerCase().includes(query));
+        });
+        return rows.sort((a, b) => {
+          if (sort === "priceDesc") return num(b.price) - num(a.price);
+          if (sort === "productAsc") return String(a.productName || "").localeCompare(String(b.productName || ""));
+          if (sort === "customerAsc") return String(a.customer_id || "").localeCompare(String(b.customer_id || ""));
+          const da = Date.parse(String(a.t_dat || "").replace(" ", "T").replace(/\//g, "-")) || 0;
+          const db = Date.parse(String(b.t_dat || "").replace(" ", "T").replace(/\//g, "-")) || 0;
+          return db - da;
+        });
+      }
+
+      function parseDateValue(value) {
+        const normalized = String(value || "").slice(0, 10).replace(/\//g, "-");
+        const parsed = Date.parse(normalized);
+        return Number.isFinite(parsed) ? parsed : null;
+      }
+
+      function isoDate(value) {
+        if (!Number.isFinite(value)) return "";
+        return new Date(value).toISOString().slice(0, 10);
+      }
+
+      function dateBoundsForRows(rows, key = "date") {
+        const values = rows
+          .map((row) => parseDateValue(row[key] || row.date || row.t_dat || row.order_date))
+          .filter((value) => value !== null)
+          .sort((a, b) => a - b);
+        if (!values.length) return { min: null, max: null };
+        return { min: values[0], max: values[values.length - 1] };
+      }
+
+      function resolveDateRangeForRows(rows, key = "date") {
+        const bounds = dateBoundsForRows(rows, key);
+        if (!bounds.min || !bounds.max || state.dateRange.preset === "all") return bounds;
+        if (state.dateRange.preset === "custom") {
+          const start = parseDateValue(state.dateRange.start) ?? bounds.min;
+          const end = parseDateValue(state.dateRange.end) ?? bounds.max;
+          return { min: Math.min(start, end), max: Math.max(start, end) };
+        }
+        const days = { last7: 7, last30: 30, last90: 90 }[state.dateRange.preset] || 0;
+        if (!days) return bounds;
+        return { min: Math.max(bounds.min, bounds.max - (days - 1) * 86400000), max: bounds.max };
+      }
+
+      function filterRowsByDate(rows, key = "date") {
+        if (!Array.isArray(rows) || !rows.length) return [];
+        const range = resolveDateRangeForRows(rows, key);
+        if (!range.min || !range.max) return rows;
+        return rows.filter((row) => {
+          const value = parseDateValue(row[key] || row.date || row.t_dat || row.order_date);
+          return value === null || (value >= range.min && value <= range.max);
+        });
+      }
+
+      function updateDateControls() {
+        const preset = document.getElementById("date-preset");
+        const fields = document.getElementById("date-custom-fields");
+        const start = document.getElementById("date-start");
+        const end = document.getElementById("date-end");
+        if (!preset || !fields || !start || !end) return;
+        preset.value = state.dateRange.preset || "all";
+        fields.classList.toggle("hidden", state.dateRange.preset !== "custom");
+        start.value = state.dateRange.start || "";
+        end.value = state.dateRange.end || "";
+      }
+
+      function normalizeDailyRows(rows) {
+        return rows.map((row) => ({
+          date: row.date,
+          transactions: row.transactions || row.gmv || row.revenue || row.orders || 0,
+          avg_price: row.avg_price || row.avg_rating || row.avg_order_line_revenue || 0,
+        }));
+      }
+
       function renderAll() {
         renderKpis();
         renderOverview();
         renderMarket();
         renderAssortment();
+        renderOperations();
         renderKpiDiagnostics();
         renderSemantic();
         renderWorkspace();
         renderEvidence();
-        renderNodeInspector();
         renderNetworkCategoryStrip();
-        renderNetworkGraph();
         localizeStatic();
         localizeGenerated(document.querySelector("main"));
       }
@@ -2938,92 +4023,99 @@
       function renderKpis() {
         const categories = categoryRows();
         const companies = state.data.company || [];
-        const topOpportunity = categories.slice().sort((a, b) => businessScore(b) - businessScore(a))[0] || {};
-        const totalGmv = companies.reduce((sum, row) => sum + row.gmv, 0);
+        const ops = operationsRows();
+        const weakest = ops.slice().sort((a, b) => a.health - b.health)[0] || {};
+        const totalGmv = realCompanyRevenue();
+        const totalOrders = realOrderCount();
         const avgConversion = companies.reduce((sum, row) => sum + row.conversion, 0) / Math.max(companies.length, 1);
         const avgReturn = companies.reduce((sum, row) => sum + row.returnRate, 0) / Math.max(companies.length, 1);
         const avgMargin = companies.reduce((sum, row) => sum + row.margin, 0) / Math.max(companies.length, 1);
+        const avgHealth = ops.reduce((sum, row) => sum + row.health, 0) / Math.max(ops.length, 1);
         const kpis = [
-          { key: "gmv", label: "规模代理", value: `$${fmt(totalGmv)}`, note: "模型化 GMV，用于演示经营承接层", delta: "接真实订单后替换", tone: "info", accent: "#25b7ff", chip: "模拟 KPI", spark: [48, 54, 51, 62, 58, 66, 71] },
-          { key: "conversion", label: "转化承接", value: pct(avgConversion), note: "由品类需求、风险和评论信号估算", delta: "需用埋点校准", tone: "info", accent: "#6bd5ff", chip: "增长侧", spark: [5.8, 6.1, 6.0, 6.4, 6.2, 6.6, avgConversion * 100] },
-          { key: "return", label: "退货暴露", value: pct(avgReturn), note: "合身偏差和评论痛点推高退货压力", delta: avgReturn > 0.24 ? "需要治理" : "处于健康区", tone: avgReturn > 0.24 ? "warning" : "positive", accent: "#ffb02e", chip: "风险侧", spark: [23.5, 24.2, 25.1, 24.8, 26.0, 25.7, avgReturn * 100] },
-          { key: "margin", label: "毛利质量", value: pct(avgMargin), note: "扣除退货压力后的经营承接能力", delta: avgMargin > 0.45 ? "可承接" : "需复核", tone: avgMargin > 0.45 ? "positive" : "warning", accent: "#35dcb3", chip: "利润侧", spark: [44, 45, 47, 46, 48, 49, avgMargin * 100] },
-          { key: "opportunity", label: "当前入口", value: nameOf(topOpportunity.category_group || "-"), note: "随当前数据窗口重新计算，不固定绑定某个品类", delta: decisionFor(topOpportunity).label, tone: decisionFor(topOpportunity).tone, accent: decisionColor(decisionFor(topOpportunity)), chip: "优先级", spark: [21, 24, 22, 29, 31, 28, businessScore(topOpportunity)] },
+          { key: "gmv", label: state.lang === "en" ? "Revenue" : "经营收入", value: `$${fmt(totalGmv)}`, note: state.lang === "en" ? `${fmt(totalOrders)} order records` : `${fmt(totalOrders)} 笔订单样本`, delta: state.lang === "en" ? "Orders" : "订单", tone: "info", accent: "#25b7ff", chip: state.lang === "en" ? "Sales" : "销售", spark: (state.data.salesDaily || []).slice(-7).map((row) => num(row.revenue)) },
+          { key: "conversion", label: state.lang === "en" ? "Conversion" : "转化率", value: pct(avgConversion), note: state.lang === "en" ? "Category average" : "品类均值", delta: avgConversion >= 0.055 ? (state.lang === "en" ? "Stable" : "稳定") : (state.lang === "en" ? "Low" : "偏低"), tone: avgConversion >= 0.055 ? "positive" : "warning", accent: "#6bd5ff", chip: state.lang === "en" ? "Growth" : "增长", spark: [5.8, 6.1, 6.0, 6.4, 6.2, 6.6, avgConversion * 100] },
+          { key: "return", label: state.lang === "en" ? "Return" : "退货率", value: pct(avgReturn), note: state.lang === "en" ? "Category average" : "品类均值", delta: avgReturn > 0.18 ? (state.lang === "en" ? "High" : "偏高") : (state.lang === "en" ? "Normal" : "正常"), tone: avgReturn > 0.18 ? "warning" : "positive", accent: "#ffb02e", chip: state.lang === "en" ? "Risk" : "风险", spark: [23.5, 24.2, 25.1, 24.8, 26.0, 25.7, avgReturn * 100] },
+          { key: "margin", label: state.lang === "en" ? "Margin" : "毛利率", value: pct(avgMargin), note: state.lang === "en" ? "After returns" : "扣除退货压力", delta: avgMargin > 0.45 ? (state.lang === "en" ? "Ready" : "可承接") : (state.lang === "en" ? "Review" : "复核"), tone: avgMargin > 0.45 ? "positive" : "warning", accent: "#35dcb3", chip: state.lang === "en" ? "Margin" : "利润", spark: [44, 45, 47, 46, 48, 49, avgMargin * 100] },
+          { key: "health", label: state.lang === "en" ? "Health" : "健康分", value: avgHealth.toFixed(1), note: state.lang === "en" ? "Weakest category shown below" : "最低健康品类见下方", delta: nameOf(weakest.category_group || "-"), tone: avgHealth >= 62 ? "positive" : "warning", accent: decisionColor(decisionFor(weakest)), chip: state.lang === "en" ? "Ops" : "经营", spark: [61, 63, 59, 66, 64, 67, avgHealth] },
         ];
         document.getElementById("executive-kpis").innerHTML = kpis.map((item) => `
-          <button class="kpi-card ${item.key === "opportunity" ? "selected" : ""}" type="button" data-kpi="${item.key}" style="--kpi-accent:${escapeHtml(item.accent)};--kpi-glow:${escapeHtml(item.accent)}33" onclick="${item.key === "opportunity" ? `selectCategory('${escapeHtml(topOpportunity.category_group)}', 'workspace')` : "setPage('kpi')"}">
+          <button class="kpi-card ${item.key === "health" ? "selected" : ""}" type="button" data-kpi="${item.key}" style="--kpi-accent:${escapeHtml(item.accent)};--kpi-glow:${escapeHtml(item.accent)}33" onclick="${item.key === "health" ? `selectCategory('${escapeHtml(weakest.category_group)}', 'operations')` : "setPage('kpi')"}">
             <div class="kpi-meta-row"><div class="kpi-label">${escapeHtml(item.label)}</div><span class="kpi-chip">${escapeHtml(item.chip)}</span></div>
             <div class="kpi-value">${escapeHtml(item.value)}</div>
             <div class="kpi-note">${escapeHtml(item.note)}</div>
             ${kpiSpark(item.spark)}
-            <div class="kpi-threshold"><span>低</span><span>当前</span><span>高</span></div>
+            <div class="kpi-threshold"><span>${state.lang === "en" ? "Low" : "低"}</span><span>${state.lang === "en" ? "Current" : "当前"}</span><span>${state.lang === "en" ? "High" : "高"}</span></div>
             <div class="delta ${item.tone}">${escapeHtml(item.delta)}</div>
           </button>
         `).join("");
       }
 
       function renderOverview() {
-        const rankedAll = categoryRows().slice().sort((a, b) => businessScore(b) - businessScore(a));
-        const ranked = rankedAll.slice(0, 8);
-        const leader = ranked[0] || {};
-        const leaderDecision = decisionFor(leader);
-        const company = (state.data.company || []).find((item) => item.category === leader.category_group) || {};
+        const rankedAll = overviewPriorityRows();
+        const opsRanked = sortedOperationsRows();
+        const leader = opsRanked[0] || {};
+        const company = leader.company || {};
         document.getElementById("overview-command").innerHTML = `
           <div>
-            <span class="brief-eyebrow">${state.lang === "en" ? "Current data-window decision" : "当前数据窗口判断"}</span>
-            <h3>${escapeHtml(headlineForDecision(leader, leaderDecision))}</h3>
-            <p class="brief-copy">${escapeHtml(tr(leaderDecision.action))}</p>
+            <span class="brief-eyebrow">${state.lang === "en" ? "Operating health" : "经营健康"}</span>
+            <h3>${escapeHtml((leader.health || 0).toFixed(1))}</h3>
           </div>
           <div class="mini-metrics">
-            <div class="mini-metric"><span>${state.lang === "en" ? "Opportunity" : "机会分"}</span><strong>${businessScore(leader).toFixed(1)}</strong></div>
+            <div class="mini-metric"><span>${state.lang === "en" ? "Category" : "品类"}</span><strong>${escapeHtml(nameOf(leader.category_group || "-"))}</strong></div>
             <div class="mini-metric"><span>${state.lang === "en" ? "Return rate" : "退货率"}</span><strong>${pct(company.returnRate)}</strong></div>
             <div class="mini-metric"><span>${state.lang === "en" ? "Fit rate" : "合身率"}</span><strong>${pct(leader.fit_rate)}</strong></div>
           </div>
         `;
         document.getElementById("overview-path").innerHTML = [
-          ["01", state.lang === "en" ? "Is demand strong enough?" : "市场是否值得进", state.lang === "en" ? "Check demand share, transaction rhythm, and assortment gap." : "验证需求、交易节奏和组合缺口。", "market", pct(marketDemandFor(leader.category_group))],
-          ["02", state.lang === "en" ? "Can operations absorb it?" : "公司是否能承接", state.lang === "en" ? "Review conversion, return pressure, and margin readiness." : "确认转化、退货、毛利是否拖累放量。", "kpi", pct(company.margin)],
-          ["03", state.lang === "en" ? "Does evidence support action?" : "证据是否支持动作", state.lang === "en" ? "Audit review pain points before moving to execution." : "复核评论痛点，再进入工作区。", "semantic", state.lang === "en" ? `${fmt(int(leader.records))} rows` : `${fmt(int(leader.records))}条`],
+          ["01", state.lang === "en" ? "Market" : "市场", state.lang === "en" ? "Demand and product mix." : "需求与商品结构", "market", pct(marketDemandFor(leader.category_group))],
+          ["02", state.lang === "en" ? "Operations" : "经营", state.lang === "en" ? "Revenue, returns, rating." : "收入、退货、评分", "operations", `$${fmt(company.gmv || 0)}`],
+          ["03", state.lang === "en" ? "Evidence" : "证据", state.lang === "en" ? "Fit and review samples." : "合身与评论样本", "evidence", state.lang === "en" ? `${fmt(int(leader.records))} rows` : `${fmt(int(leader.records))}条`],
         ].map(([index, title, body, page, metric]) => `<button class="stack-step" type="button" onclick="setPage('${page}')">
           <span class="step-index">${escapeHtml(index)}</span>
           <span><strong>${escapeHtml(title)}</strong><small>${escapeHtml(body)}</small></span>
           <span class="step-metric">${escapeHtml(metric)}</span>
         </button>`).join("");
-        renderOverviewOpportunityMap("overview-opportunity-map", rankedAll.slice(0, 18));
-        const decisionCounts = decisionSummary();
-        renderActionPortfolio("overview-triage-donut", decisionCounts);
+        renderOverviewOpportunityMap("overview-opportunity-map", rankedAll.slice(0, 12));
+        renderOverviewSortControls();
+        renderTopBlockers("overview-triage-donut", opsRanked);
         renderFitGauge("overview-fit-donut", fitSummary());
-        renderLineChart("overview-momentum-line", state.data.hmDaily || [], { compact: true });
-        document.getElementById("priority-queue").innerHTML = ranked.slice(0, 4).map((row, index) => {
-          const decision = decisionFor(row);
-          const rowCompany = (state.data.company || []).find((item) => item.category === row.category_group) || {};
-          return `<button class="action-card" type="button" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')">
-            <span class="priority">${state.lang === "en" ? `P${index + 1}` : `优${index + 1}`}</span>
-            <h4>${escapeHtml(tr(decision.label))} ${escapeHtml(nameOf(row.category_group))}</h4>
-            <p>${escapeHtml(state.lang === "en" ? `${tr(decision.action)} Risk score ${num(row.risk_score).toFixed(1)}, return rate ${pct(rowCompany.returnRate)}, fit rate ${pct(row.fit_rate)}.` : `${decision.action} 风险分 ${num(row.risk_score).toFixed(1)}，退货率 ${pct(rowCompany.returnRate)}，合身率 ${pct(row.fit_rate)}。`)}</p>
+        renderBars("overview-gap-bars", sortedKpiRows().slice(0, 6), "category_group", kpiGapValue, { max: Math.max(12, ...sortedKpiRows().map(kpiGapValue)), format: (v) => state.lang === "en" ? `${v.toFixed(1)}% gap` : `${v.toFixed(1)}%差距`, risk: true, click: true });
+        document.getElementById("priority-queue").innerHTML = opsRanked.slice(0, 4).map((row) => {
+          const status = row.status;
+          return `<button class="action-card ${row.category_group === state.selectedCategory ? "selected" : ""}" type="button" onclick="selectCategory('${escapeHtml(row.category_group)}', 'overview')">
+            <span class="status-pill ${escapeHtml(status.key)}">${escapeHtml(state.lang === "en" ? status.en : status.zh)}</span>
+            <h4>${escapeHtml(nameOf(row.category_group))}</h4>
+            <p>${escapeHtml(state.lang === "en" ? `Health ${row.health.toFixed(1)} · Return ${pct(row.company.returnRate)} · Fit ${pct(row.fit_rate)}` : `健康分 ${row.health.toFixed(1)} · 退货率 ${pct(row.company.returnRate)} · 合身率 ${pct(row.fit_rate)}`)}</p>
           </button>`;
         }).join("");
       }
 
-      function renderMarket() {
-        const productRows = state.data.hmProducts || [];
-        const txRows = state.data.hmTransactions || [];
-        const txMap = new Map(txRows.map((row) => [row.product_group_name, row]));
-        const merged = productRows.map((row) => {
-          const tx = txMap.get(row.product_group_name) || {};
-          return { ...row, demandShare: num(tx.share), gap: num(tx.share) - num(row.share), transactions: int(tx.transactions) };
+      function renderOverviewSortControls() {
+        const buttons = document.querySelectorAll("[data-overview-sort]");
+        buttons.forEach((button) => {
+          button.classList.toggle("active", button.dataset.overviewSort === state.overviewSort);
+          button.onclick = () => {
+            state.overviewSort = button.dataset.overviewSort || "opportunity";
+            renderOverview();
+            localizeGenerated(document.getElementById("overview"));
+          };
         });
+      }
+
+      function renderMarket() {
+        const merged = mergedProductGroupRows();
+        const txRows = state.data.hmTransactions || [];
         const demandRows = sortedMarketRows(merged);
         const totalTx = txRows.reduce((sum, row) => sum + int(row.transactions), 0);
         const daily = state.data.hmDaily || [];
         const latest = daily[daily.length - 1] || {};
         const top = merged.slice().sort((a, b) => b.demandShare - a.demandShare)[0] || {};
         document.getElementById("market-kpis").innerHTML = [
-          { label: "市场交易事件", value: fmt(totalTx), note: "H&M 交易表" },
-          { label: "最高需求组", value: top.product_group_name ? nameOf(top.product_group_name) : "-", note: `${pct(top.demandShare)} 交易占比` },
-          { label: "最新日交易", value: fmt(int(latest.transactions)), note: latest.date || "-" },
-          { label: "供需差最大", value: (merged.slice().sort((a, b) => b.gap - a.gap)[0]?.gap * 100 || 0).toFixed(1) + " 个百分点", note: "需求占比减商品占比" },
-          { label: "覆盖商品组", value: fmt(merged.length), note: "当前可比较范围" },
+          { label: state.lang === "en" ? "Market transactions" : "市场交易", value: fmt(totalTx), note: sourceNote("market") },
+          { label: state.lang === "en" ? "Top demand group" : "最高需求组", value: top.product_group_name ? nameOf(top.product_group_name) : "-", note: `${pct(top.demandShare)} ${state.lang === "en" ? "transaction share" : "交易占比"}` },
+          { label: state.lang === "en" ? "Latest day" : "最新日期", value: fmt(int(latest.transactions)), note: latest.date || "-" },
+          { label: state.lang === "en" ? "Largest gap" : "最大供需差", value: `${(merged.slice().sort((a, b) => b.gap - a.gap)[0]?.gap * 100 || 0).toFixed(1)}%`, note: state.lang === "en" ? "Demand minus assortment" : "需求占比减商品占比" },
+          { label: state.lang === "en" ? "Product groups" : "商品组", value: fmt(merged.length), note: state.lang === "en" ? "Comparable scope" : "可比较范围" },
         ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
         renderMarketDemandControls();
         renderBars("market-demand-bars", demandRows.slice(0, 9), "product_group_name", (row) => row.demandShare, { max: Math.max(...merged.map((r) => r.demandShare), 1), format: pct });
@@ -3037,6 +4129,18 @@
           nameAsc: (a, b) => nameOf(a.product_group_name).localeCompare(nameOf(b.product_group_name)),
         };
         return rows.slice().sort(sorters[state.marketSort] || sorters.demandDesc);
+      }
+
+      function mergedProductGroupRows() {
+        const productRows = cleanProductGroupRows(state.data.hmProducts || []);
+        const txRows = state.data.hmTransactions || [];
+        const txMap = new Map(txRows.map((row) => [row.product_group_name, row]));
+        const merged = productRows.map((row) => {
+          const tx = txMap.get(row.product_group_name) || {};
+          return { ...row, demandShare: num(tx.share), gap: num(tx.share) - num(row.share), transactions: int(tx.transactions) };
+        }).sort((a, b) => b.articles - a.articles);
+        if (!state.selectedProductGroup) state.selectedProductGroup = "all";
+        return merged;
       }
 
       function renderMarketDemandControls() {
@@ -3056,32 +4160,93 @@
       }
 
       function renderAssortment() {
-        const productRows = state.data.hmProducts || [];
+        const productRows = cleanProductGroupRows(state.data.hmProducts || []);
         const txRows = state.data.hmTransactions || [];
-        const txMap = new Map(txRows.map((row) => [row.product_group_name, row]));
-        const merged = productRows.map((row) => {
-          const tx = txMap.get(row.product_group_name) || {};
-          return { ...row, demandShare: num(tx.share), gap: num(tx.share) - num(row.share), transactions: int(tx.transactions) };
-        }).sort((a, b) => b.articles - a.articles);
+        const merged = mergedProductGroupRows();
         const totalArticles = productRows.reduce((sum, row) => sum + int(row.articles), 0);
         const totalTx = txRows.reduce((sum, row) => sum + int(row.transactions), 0);
         const concentration = merged.slice(0, 3).reduce((sum, row) => sum + num(row.share), 0);
         document.getElementById("assortment-kpis").innerHTML = [
-          { label: "商品目录", value: fmt(totalArticles), note: "H&M articles 表" },
-          { label: "市场交易", value: fmt(totalTx), note: "transactions 表" },
-          { label: "前三集中度", value: pct(concentration), note: "商品结构集中程度" },
-          { label: "最大需求差", value: `${(Math.max(...merged.map((r) => r.gap)) * 100).toFixed(1)} 个百分点`, note: "需求占比减商品占比" },
-          { label: "组合判断", value: concentration > 0.7 ? "集中" : "分散", note: "决定是否需要品类扩展" },
+          { label: state.lang === "en" ? "Product catalog" : "商品目录", value: fmt(totalArticles), note: sourceNote("market") },
+          { label: state.lang === "en" ? "Market transactions" : "市场交易", value: fmt(totalTx), note: sourceNote("market") },
+          { label: state.lang === "en" ? "Top-3 share" : "前三集中度", value: pct(concentration), note: state.lang === "en" ? "Assortment concentration" : "商品结构集中度" },
+          { label: state.lang === "en" ? "Largest gap" : "最大需求差", value: `${(Math.max(...merged.map((r) => r.gap)) * 100).toFixed(1)}%`, note: state.lang === "en" ? "Demand minus assortment" : "需求占比减商品占比" },
+          { label: state.lang === "en" ? "Assortment read" : "组合判断", value: concentration > 0.7 ? (state.lang === "en" ? "Concentrated" : "集中") : (state.lang === "en" ? "Distributed" : "分散"), note: state.lang === "en" ? "Category expansion signal" : "品类扩展信号" },
         ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
         renderTreemap("assortment-treemap", merged.slice(0, 12));
         renderDonut("assortment-share-donut", merged.slice(0, 6).map((row, index) => ({
+          key: row.product_group_name,
           label: nameOf(row.product_group_name),
           value: num(row.share),
           color: chartColors[index % chartColors.length],
-          tooltip: [`商品数 ${fmt(row.articles)}`, `交易占比 ${pct(row.demandShare)}`],
+          tooltip: [
+            state.lang === "en" ? `${fmt(row.articles)} articles` : `${fmt(row.articles)} 件商品`,
+            state.lang === "en" ? `${pct(row.demandShare)} transaction share` : `${pct(row.demandShare)} 交易占比`
+          ],
           page: "market",
-        })), { center: fmt(totalArticles), action: () => "setPage('market')" });
+        })), { center: fmt(totalArticles), selectedKey: state.selectedProductGroup, action: (row) => `selectProductGroup('${escapeHtml(row.key)}');openDrawer('productGroup',{id:'${escapeHtml(row.key)}'})` });
+        renderProductGroupDetail(merged);
         renderLineChart("assortment-line", state.data.hmDaily || [], { compact: false });
+      }
+
+      function renderProductGroupDetail(rows) {
+        const holder = document.getElementById("product-group-detail");
+        if (!holder) return;
+        const sorted = rows.slice().sort((a, b) => num(b.demandShare) - num(a.demandShare));
+        if (!rows.length) {
+          holder.innerHTML = "";
+          return;
+        }
+        if (state.selectedProductGroup === "all") {
+          const totalArticles = rows.reduce((sum, item) => sum + int(item.articles), 0);
+          const totalTx = rows.reduce((sum, item) => sum + int(item.transactions), 0);
+          holder.innerHTML = `
+            <div class="panel-header">
+              <div><h3>${escapeHtml(state.lang === "en" ? "Selected product group" : "当前商品组")}</h3></div>
+              <div class="control-row">
+                <button class="chip active" type="button" onclick="openDrawer('productGroup',{id:'all'})">${state.lang === "en" ? "All groups" : "全部商品组"}</button>
+                <button class="ghost-button" type="button" onclick="setPage('operations')">${state.lang === "en" ? "Open operations" : "查看经营"}</button>
+              </div>
+            </div>
+            <div class="product-detail-grid">
+              <div class="product-detail-name"><span>${escapeHtml(state.lang === "en" ? "Scope" : "范围")}</span><strong>${escapeHtml(state.lang === "en" ? "All product groups" : "全部商品组")}</strong></div>
+              <div class="impact-cell"><span>${state.lang === "en" ? "Groups" : "商品组"}</span><strong>${fmt(rows.length)}</strong></div>
+              <div class="impact-cell"><span>${state.lang === "en" ? "Articles" : "商品数"}</span><strong>${fmt(totalArticles)}</strong></div>
+              <div class="impact-cell"><span>${state.lang === "en" ? "Transactions" : "交易量"}</span><strong>${fmt(totalTx)}</strong></div>
+              <div class="impact-cell"><span>${state.lang === "en" ? "Top group" : "最高商品组"}</span><strong>${escapeHtml(nameOf(sorted[0]?.product_group_name || "-"))}</strong></div>
+              <div class="impact-cell"><span>${state.lang === "en" ? "Top-3 share" : "前三集中度"}</span><strong>${pct(rows.slice(0, 3).reduce((sum, item) => sum + num(item.share), 0))}</strong></div>
+              <div class="impact-cell"><span>${state.lang === "en" ? "View" : "视图"}</span><strong>${state.lang === "en" ? "Portfolio" : "组合"}</strong></div>
+            </div>
+          `;
+          return;
+        }
+        const row = rows.find((item) => item.product_group_name === state.selectedProductGroup) || sorted[0] || rows[0];
+        state.selectedProductGroup = row.product_group_name;
+        const demandRank = sorted.findIndex((item) => item.product_group_name === row.product_group_name) + 1;
+        const articleRank = rows.slice().sort((a, b) => int(b.articles) - int(a.articles)).findIndex((item) => item.product_group_name === row.product_group_name) + 1;
+        holder.innerHTML = `
+          <div class="panel-header">
+            <div>
+              <h3>${escapeHtml(state.lang === "en" ? "Selected product group" : "当前商品组")}</h3>
+            </div>
+            <div class="control-row">
+              <button class="chip" type="button" onclick="selectProductGroup('all')">${state.lang === "en" ? "All groups" : "全部商品组"}</button>
+              <button class="ghost-button" type="button" onclick="setPage('operations')">${state.lang === "en" ? "Open operations" : "查看经营"}</button>
+            </div>
+          </div>
+          <div class="product-detail-grid">
+            <div class="product-detail-name">
+              <span>${escapeHtml(state.lang === "en" ? "Group" : "商品组")}</span>
+              <strong>${escapeHtml(nameOf(row.product_group_name))}</strong>
+            </div>
+            <div class="impact-cell"><span>${state.lang === "en" ? "Articles" : "商品数"}</span><strong>${fmt(row.articles)}</strong></div>
+            <div class="impact-cell"><span>${state.lang === "en" ? "Article share" : "商品占比"}</span><strong>${pct(row.share)}</strong></div>
+            <div class="impact-cell"><span>${state.lang === "en" ? "Transaction share" : "交易占比"}</span><strong>${pct(row.demandShare)}</strong></div>
+            <div class="impact-cell"><span>${state.lang === "en" ? "Demand gap" : "供需差"}</span><strong>${(num(row.gap) * 100).toFixed(1)}%</strong></div>
+            <div class="impact-cell"><span>${state.lang === "en" ? "Demand rank" : "需求排名"}</span><strong>#${demandRank}</strong></div>
+            <div class="impact-cell"><span>${state.lang === "en" ? "Catalog rank" : "商品排名"}</span><strong>#${articleRank}</strong></div>
+          </div>
+        `;
       }
 
       function renderKpiDiagnostics() {
@@ -3092,15 +4257,15 @@
         const avgMargin = companies.reduce((sum, row) => sum + row.margin, 0) / Math.max(companies.length, 1);
         const highRisk = rows.filter((row) => num(row.risk_score) >= 34).length;
         document.getElementById("kpi-diagnostics").innerHTML = [
-          { label: "平均转化", value: pct(avgConversion), note: "模型化公司 KPI" },
-          { label: "平均退货", value: pct(avgReturn), note: "合身与评论风险驱动" },
-          { label: "平均毛利", value: pct(avgMargin), note: "退货压力折损后" },
-          { label: "高风险品类", value: highRisk, note: "风险分 >= 34" },
-          { label: "当前品类", value: nameOf(state.selectedCategory), note: "由右上选择器控制" },
+          { label: state.lang === "en" ? "Avg conversion" : "平均转化", value: pct(avgConversion), note: sourceNote("company") },
+          { label: state.lang === "en" ? "Avg return" : "平均退货", value: pct(avgReturn), note: state.lang === "en" ? "Category average" : "品类均值" },
+          { label: state.lang === "en" ? "Avg margin" : "平均毛利", value: pct(avgMargin), note: state.lang === "en" ? "After returns" : "扣除退货压力" },
+          { label: state.lang === "en" ? "High-risk categories" : "高风险品类", value: highRisk, note: state.lang === "en" ? "Risk score >= 34" : "风险分 >= 34" },
+          { label: state.lang === "en" ? "Current focus" : "当前品类", value: nameOf(state.selectedCategory), note: sourceNote("mapped") },
         ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
         renderKpiGapControls();
-        renderBars("kpi-gap-bars", rows, "category_group", kpiGapValue, { max: Math.max(18, ...rows.map(kpiGapValue)), format: (v) => state.lang === "en" ? `${v.toFixed(1)}pp` : `${v.toFixed(1)}个百分点`, risk: true, click: true });
-        renderScatter("kpi-scatter", rows);
+        renderBars("kpi-gap-bars", rows, "category_group", kpiGapValue, { max: Math.max(18, ...rows.map(kpiGapValue)), format: (v) => state.lang === "en" ? `${v.toFixed(1)}% gap` : `${v.toFixed(1)}%差距`, risk: true, click: true, page: "kpi" });
+        renderKpiDriverMatrix("kpi-driver-matrix", rows);
       }
 
       function kpiGapValue(row) {
@@ -3178,7 +4343,7 @@
         ].map(([label, value, note]) => `<div class="impact-cell"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><small>${escapeHtml(note)}</small></div>`).join("");
         document.getElementById("workspace-metrics").innerHTML = [
           [state.lang === "en" ? "Demand index" : "市场需求指数", (marketDemandFor(row.category_group) * 100).toFixed(1), "market"],
-          [state.lang === "en" ? "Revenue proxy" : "GMV 代理值", `$${fmt(company.gmv || 0)}`, "market"],
+          [state.lang === "en" ? "Revenue" : "经营收入", `$${fmt(company.gmv || 0)}`, "operations"],
           [state.lang === "en" ? "Conversion rate" : "转化率", pct(company.conversion), "kpi"],
           [state.lang === "en" ? "Return rate" : "退货率", pct(company.returnRate), "evidence"],
           [state.lang === "en" ? "Fit rate" : "合身率", pct(row.fit_rate), "evidence"],
@@ -3187,25 +4352,25 @@
         const topPain = painForCategory(row.category_group);
         const primaryPain = topPain[0] || { pain: state.lang === "en" ? "Review pain point" : "评论痛点", id: "none", count: 0 };
         const painScope = state.lang === "en"
-          ? (primaryPain.fallback ? "No dedicated review samples are available for this subcategory, so global apparel review pain points are used as a proxy." : "Matched review samples are available for this category and can be audited in the evidence table.")
-          : (primaryPain.fallback ? "该细分品类暂无专属评论样本，先使用全局服装评论高频痛点作为代理信号。" : "来自当前品类评论样本，可直接进入证据表复核。");
+          ? (primaryPain.fallback ? "Global apparel review sample" : "Matched category review sample")
+          : (primaryPain.fallback ? "全局服装评论样本" : "当前品类评论样本");
         const returnGap = Math.max(0, num(company.returnRate) - 0.18);
         const conversionGap = Math.max(0, 0.085 - num(company.conversion));
         document.getElementById("decision-logic").innerHTML = `
           <div class="decision-grid">
             <div class="decision-tile">
               <span>${state.lang === "en" ? "Business read" : "业务判断"}</span>
-              <strong>${escapeHtml(state.lang === "en" ? `${tr(decision.label)}: ${tr(decision.action)}` : `${decision.label}：${decision.action}`)}</strong>
-              <button type="button" onclick="setPage('network')">${state.lang === "en" ? "View signal flow" : "查看信号流"}</button>
+              <strong>${escapeHtml(state.lang === "en" ? tr(decision.label) : decision.label)}</strong>
+              <button type="button" onclick="setPage('operations')">${state.lang === "en" ? "View operations" : "查看经营"}</button>
             </div>
             <div class="decision-tile">
               <span>${state.lang === "en" ? "Main blocker" : "主要阻塞"}</span>
-              <strong>${escapeHtml(state.lang === "en" ? `${nameOf(primaryPain.pain)} appears ${fmt(primaryPain.count)} times. ${painScope}` : `${nameOf(primaryPain.pain)} 出现 ${fmt(primaryPain.count)} 次。${painScope}`)}</strong>
+              <strong>${escapeHtml(state.lang === "en" ? `${nameOf(primaryPain.id)} · ${fmt(primaryPain.count)} rows` : `${nameOf(primaryPain.id)} · ${fmt(primaryPain.count)}条`)}</strong>
               <button type="button" onclick="openEvidenceForPain('${escapeHtml(primaryPain.id)}')">${state.lang === "en" ? "Open evidence" : "打开证据"}</button>
             </div>
             <div class="decision-tile">
               <span>${state.lang === "en" ? "Operating impact" : "经营影响"}</span>
-              <strong>${state.lang === "en" ? `Return rate is ${(returnGap * 100).toFixed(1)}pp above the health line; conversion gap is ${(conversionGap * 100).toFixed(1)}pp.` : `退货率比健康线高 ${(returnGap * 100).toFixed(1)} 个百分点，转化率缺口 ${(conversionGap * 100).toFixed(1)} 个百分点。`}</strong>
+              <strong>${state.lang === "en" ? `Return gap ${(returnGap * 100).toFixed(1)}%; conversion gap ${(conversionGap * 100).toFixed(1)}%.` : `退货差距 ${(returnGap * 100).toFixed(1)}%；转化差距 ${(conversionGap * 100).toFixed(1)}%。`}</strong>
               <button type="button" onclick="setPage('kpi')">${state.lang === "en" ? "View KPI" : "查看 KPI"}</button>
             </div>
             <div class="decision-tile">
@@ -3222,7 +4387,8 @@
         const sourceRows = evidenceForSelection();
         updateEvidenceFilters(sourceRows);
         const filteredRows = filterEvidenceRows(sourceRows);
-        const rows = filteredRows.slice(0, 36);
+        const rows = filteredRows.slice(0, 220);
+        state.currentEvidenceRows = rows;
         document.getElementById("evidence-count").textContent = state.lang === "en" ? `${filteredRows.length} rows` : `${filteredRows.length} 条`;
         document.getElementById("action-cards").innerHTML = actionCards().map((item, index) => `
           <div class="action-card">
@@ -3231,8 +4397,8 @@
             <p>${escapeHtml(item.body)}</p>
           </div>
         `).join("");
-        document.getElementById("evidence-table").innerHTML = rows.map((row) => `
-          <tr>
+        document.getElementById("evidence-table").innerHTML = rows.map((row, index) => `
+          <tr class="clickable-row" onclick="openEvidenceDrawer(${index})">
             <td>${escapeHtml(nameOf(row.category_group))}</td>
             <td><span class="tag">${escapeHtml(row.fit || "-")}</span></td>
             <td>${escapeHtml(row.rating || "-")}</td>
@@ -3256,23 +4422,28 @@
 
       function updateEvidenceFilters(rows) {
         const q = document.getElementById("evidence-search");
+        const category = document.getElementById("evidence-category-filter");
         const fit = document.getElementById("evidence-fit-filter");
         const body = document.getElementById("evidence-body-filter");
         const pain = document.getElementById("evidence-pain-filter");
-        if (!q || !fit || !body || !pain) return;
+        if (!q || !category || !fit || !body || !pain) return;
         q.value = state.evidenceFilters.q || "";
+        const categorySource = state.data.evidence || rows;
+        const categories = [...new Set(categorySource.map((row) => row.category_group).filter(Boolean))].sort();
         const fits = [...new Set(rows.map((row) => row.fit).filter(Boolean))].sort();
         const bodies = [...new Set(rows.map((row) => row.body_type).filter(Boolean))].sort();
         const pains = [...new Set(rows.flatMap((row) => cleanPainList(row.pain_points)))].sort();
+        state.evidenceFilters.category = setSelectOptions(category, categories, t("filter.categoryAll"), state.evidenceFilters.category);
         state.evidenceFilters.fit = setSelectOptions(fit, fits, t("filter.fitAll"), state.evidenceFilters.fit);
         state.evidenceFilters.body = setSelectOptions(body, bodies, t("filter.bodyAll"), state.evidenceFilters.body);
         state.evidenceFilters.pain = setSelectOptions(pain, pains, t("filter.painAll"), state.evidenceFilters.pain);
       }
 
       function filterEvidenceRows(rows) {
-        const { q, fit, body, pain } = state.evidenceFilters;
+        const { q, category, fit, body, pain } = state.evidenceFilters;
         const query = String(q || "").trim().toLowerCase();
         return rows.filter((row) => {
+          if (category !== "all" && row.category_group !== category) return false;
           if (fit !== "all" && row.fit !== fit) return false;
           if (body !== "all" && row.body_type !== body) return false;
           if (pain !== "all" && !cleanPainList(row.pain_points).includes(pain)) return false;
@@ -3280,6 +4451,137 @@
           return [row.category_group, row.fit, row.body_type, row.occasion, row.pain_points, row.review_text, row.review_summary].some((value) => String(value || "").toLowerCase().includes(query));
         });
       }
+
+      function drawerCell(label, value) {
+        return `<div class="drawer-cell"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`;
+      }
+
+      function openDrawer(type, payload = {}) {
+        state.drawer = { open: true, type, payload };
+        renderDrawer();
+      }
+      window.openDrawer = openDrawer;
+
+      function closeDrawer() {
+        state.drawer = { open: false, type: "", payload: null };
+        renderDrawer();
+      }
+      window.closeDrawer = closeDrawer;
+
+      function renderDrawer() {
+        const drawer = document.getElementById("detail-drawer");
+        const backdrop = document.getElementById("drawer-backdrop");
+        const content = document.getElementById("drawer-content");
+        if (!drawer || !backdrop || !content) return;
+        drawer.classList.toggle("open", state.drawer.open);
+        backdrop.classList.toggle("open", state.drawer.open);
+        drawer.setAttribute("aria-hidden", state.drawer.open ? "false" : "true");
+        if (!state.drawer.open) {
+          content.innerHTML = "";
+          return;
+        }
+        const { type, payload } = state.drawer;
+        if (type === "productGroup") content.innerHTML = drawerProductGroup(payload?.id);
+        else if (type === "category") content.innerHTML = drawerCategory(payload?.id);
+        else if (type === "order") content.innerHTML = drawerOrder(payload?.row);
+        else if (type === "evidence") content.innerHTML = drawerEvidence(payload?.row);
+      }
+
+      function drawerProductGroup(id) {
+        const rows = mergedProductGroupRows();
+        const totalArticles = rows.reduce((sum, row) => sum + int(row.articles), 0);
+        if (id === "all") {
+          return `<div class="drawer-section">
+            <div><div class="drawer-kicker">${t("drawer.productGroup")}</div><h3 class="drawer-title">${state.lang === "en" ? "All product groups" : "全部商品组"}</h3></div>
+            <div class="drawer-grid">
+              ${drawerCell(state.lang === "en" ? "Groups" : "商品组", fmt(rows.length))}
+              ${drawerCell(state.lang === "en" ? "Articles" : "商品数", fmt(totalArticles))}
+              ${drawerCell(state.lang === "en" ? "Top group" : "最高商品组", nameOf(rows[0]?.product_group_name || "-"))}
+              ${drawerCell(state.lang === "en" ? "Top-3 share" : "前三集中度", pct(rows.slice(0, 3).reduce((sum, row) => sum + num(row.share), 0)))}
+            </div>
+            <div class="drawer-actions"><button class="primary-button" type="button" onclick="closeDrawer();setPage('market')">${t("drawer.openMarket")}</button><button class="ghost-button" type="button" onclick="closeDrawer()">${t("drawer.close")}</button></div>
+          </div>`;
+        }
+        const row = rows.find((item) => item.product_group_name === id) || rows[0] || {};
+        const demandRank = rows.slice().sort((a, b) => b.demandShare - a.demandShare).findIndex((item) => item.product_group_name === row.product_group_name) + 1;
+        const catalogRank = rows.slice().sort((a, b) => b.articles - a.articles).findIndex((item) => item.product_group_name === row.product_group_name) + 1;
+        return `<div class="drawer-section">
+          <div><div class="drawer-kicker">${t("drawer.productGroup")}</div><h3 class="drawer-title">${escapeHtml(nameOf(row.product_group_name || "-"))}</h3></div>
+          <div class="drawer-grid">
+            ${drawerCell(state.lang === "en" ? "Articles" : "商品数", fmt(row.articles))}
+            ${drawerCell(state.lang === "en" ? "Article share" : "商品占比", pct(row.share))}
+            ${drawerCell(state.lang === "en" ? "Transaction share" : "交易占比", pct(row.demandShare))}
+            ${drawerCell(state.lang === "en" ? "Demand gap" : "供需差", `${(num(row.gap) * 100).toFixed(1)}%`)}
+            ${drawerCell(state.lang === "en" ? "Demand rank" : "需求排名", `#${demandRank}`)}
+            ${drawerCell(state.lang === "en" ? "Catalog rank" : "商品排名", `#${catalogRank}`)}
+          </div>
+          <div class="drawer-actions">
+            <button class="primary-button" type="button" onclick="closeDrawer();setPage('operations')">${t("drawer.openOperations")}</button>
+            <button class="ghost-button" type="button" onclick="closeDrawer();setPage('market')">${t("drawer.openMarket")}</button>
+          </div>
+        </div>`;
+      }
+
+      function drawerCategory(id) {
+        const row = operationsRows().find((item) => item.category_group === id) || selectedCategoryRow();
+        const company = row.company || selectedCompanyRow();
+        const pain = painForCategory(row.category_group).slice(0, 4);
+        return `<div class="drawer-section">
+          <div><div class="drawer-kicker">${t("drawer.category")}</div><h3 class="drawer-title">${escapeHtml(nameOf(row.category_group || "-"))}</h3></div>
+          <div class="drawer-grid">
+            ${drawerCell(state.lang === "en" ? "Health" : "健康分", (row.health || 0).toFixed(1))}
+            ${drawerCell(state.lang === "en" ? "Revenue" : "经营收入", `$${fmt(company.gmv || 0)}`)}
+            ${drawerCell(state.lang === "en" ? "Return" : "退货率", pct(company.returnRate))}
+            ${drawerCell(state.lang === "en" ? "Fit risk" : "合身风险", pct(row.fitRisk))}
+          </div>
+          <div class="drawer-note">${pain.map((item) => `${nameOf(item.id)} ${fmt(item.count)}`).join(" · ") || (state.lang === "en" ? "No review pain signal under current filter." : "当前筛选下暂无评论痛点信号。")}</div>
+          <div class="drawer-actions">
+            <button class="primary-button" type="button" onclick="closeDrawer();selectCategory('${escapeHtml(row.category_group)}','evidence')">${t("drawer.openEvidence")}</button>
+            <button class="ghost-button" type="button" onclick="closeDrawer();selectCategory('${escapeHtml(row.category_group)}','operations')">${t("drawer.openOperations")}</button>
+          </div>
+        </div>`;
+      }
+
+      function drawerOrder(row) {
+        if (!row) return "";
+        return `<div class="drawer-section">
+          <div><div class="drawer-kicker">${t("drawer.order")}</div><h3 class="drawer-title">${escapeHtml(transactionLineId(row, row._index || 0))}</h3></div>
+          <div class="drawer-grid">
+            ${drawerCell(state.lang === "en" ? "Transaction date" : "交易日期", formatOrderDate(row.t_dat))}
+            ${drawerCell(state.lang === "en" ? "Customer hash" : "客户哈希", customerShort(row.customer_id))}
+            ${drawerCell(state.lang === "en" ? "Article ID" : "商品编码", row.articleId)}
+            ${drawerCell(state.lang === "en" ? "Product type" : "商品类型", nameOf(row.productType))}
+            ${drawerCell(state.lang === "en" ? "Channel" : "渠道", row.channel)}
+            ${drawerCell(state.lang === "en" ? "Price index" : "成交价指数", priceIndex(row.price))}
+          </div>
+          <div class="drawer-note">${escapeHtml(row.productName || "-")}</div>
+        </div>`;
+      }
+
+      function drawerEvidence(row) {
+        if (!row) return "";
+        const pains = cleanPainList(row.pain_points).map(nameOf).join(state.lang === "en" ? "; " : "；") || (state.lang === "en" ? "No clear pain point" : "无明确痛点");
+        return `<div class="drawer-section">
+          <div><div class="drawer-kicker">${t("drawer.evidence")}</div><h3 class="drawer-title">${escapeHtml(nameOf(row.category_group || "-"))}</h3></div>
+          <div class="drawer-grid">
+            ${drawerCell(state.lang === "en" ? "Fit" : "合身", row.fit || "-")}
+            ${drawerCell(state.lang === "en" ? "Rating" : "评分", row.rating || "-")}
+            ${drawerCell(state.lang === "en" ? "Body type" : "体型", nameOf(row.body_type))}
+            ${drawerCell(state.lang === "en" ? "Occasion" : "场景", nameOf(row.occasion))}
+          </div>
+          <div class="drawer-note"><strong>${escapeHtml(pains)}</strong><br>${escapeHtml(String(row.review_text || row.review_summary || ""))}</div>
+        </div>`;
+      }
+
+      function openOrderDrawer(index) {
+        openDrawer("order", { row: state.currentOrderRows[index] });
+      }
+      window.openOrderDrawer = openOrderDrawer;
+
+      function openEvidenceDrawer(index) {
+        openDrawer("evidence", { row: state.currentEvidenceRows[index] });
+      }
+      window.openEvidenceDrawer = openEvidenceDrawer;
 
       function actionCards() {
         const row = selectedCategoryRow();
@@ -3300,12 +4602,16 @@
 
       function evidenceForSelection() {
         const rows = state.data.evidence || [];
-        const selected = state.selectedCategory;
         const selectedNode = state.selectedNode;
-        let filtered = rows.filter((row) => row.category_group === selected);
-        if (selectedNode && selectedNode.kind === "pain") filtered = rows.filter((row) => String(row.pain_points || "").includes(selectedNode.id));
-        if (selectedNode && selectedNode.kind === "body") filtered = rows.filter((row) => row.body_type === selectedNode.id);
-        return filtered.length ? filtered : rows.slice(0, 80);
+        if (selectedNode && selectedNode.kind === "pain") {
+          const filtered = rows.filter((row) => String(row.pain_points || "").includes(selectedNode.id));
+          return filtered.length ? filtered : rows;
+        }
+        if (selectedNode && selectedNode.kind === "body") {
+          const filtered = rows.filter((row) => row.body_type === selectedNode.id);
+          return filtered.length ? filtered : rows;
+        }
+        return rows;
       }
 
       function cleanPainList(value) {
@@ -3335,7 +4641,7 @@
           const onclick = options.nodeClick && row.id
             ? `onclick="selectGraphNode('${escapeHtml(row.id)}', 'evidence')"`
             : options.click
-              ? `onclick="selectCategory('${escapeHtml(row.category_group || row.category || "dress")}', 'workspace')"`
+              ? `onclick="selectCategory('${escapeHtml(row.category_group || row.category || "dress")}', '${escapeHtml(options.page || "operations")}')"`
               : "";
           return `<button class="bar-row" type="button" ${onclick} style="background:transparent;border:0;text-align:left;width:100%;padding:0">
             <span class="bar-label">${escapeHtml(label)}</span>
@@ -3343,6 +4649,37 @@
             <strong class="bar-value">${escapeHtml(options.format ? options.format(value) : value.toFixed(1))}</strong>
           </button>`;
         }).join("");
+      }
+
+      function renderKpiDriverMatrix(containerId, rows) {
+        const holder = document.getElementById(containerId);
+        if (!holder) return;
+        const partsFor = (row) => {
+          const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
+          return [
+            { key: "return", label: state.lang === "en" ? "Return" : "退货", value: Math.max(0, num(company.returnRate) - 0.18) * 100, color: "#ff6b6b" },
+            { key: "conversion", label: state.lang === "en" ? "Conversion" : "转化", value: Math.max(0, 0.085 - num(company.conversion)) * 100, color: "#ffb02e" },
+            { key: "margin", label: state.lang === "en" ? "Margin" : "毛利", value: Math.max(0, 0.46 - num(company.margin)) * 100, color: "#a77cff" },
+            { key: "semantic", label: state.lang === "en" ? "Evidence" : "语义", value: Math.max(0, num(row.risk_score) - 25) / 3, color: "#25b7ff" },
+          ];
+        };
+        const enriched = rows.map((row) => {
+          const parts = partsFor(row);
+          const total = parts.reduce((sum, item) => sum + item.value, 0);
+          return { row, parts, total };
+        }).filter((item) => item.total > 0).slice(0, 8);
+        holder.innerHTML = `<div class="driver-matrix">
+          ${enriched.map(({ row, parts, total }) => {
+            const main = parts.slice().sort((a, b) => b.value - a.value)[0];
+            return `<button class="driver-row" type="button" onclick="selectCategory('${escapeHtml(row.category_group)}', 'kpi')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(parts.map((part) => `${part.label} ${part.value.toFixed(1)}%`).join("<br>"))}')" onmouseleave="hideTooltip()">
+              <span class="driver-name"><strong>${escapeHtml(nameOf(row.category_group))}</strong><span>${escapeHtml(main.label)}</span></span>
+              <span class="stacked-bar">
+                ${parts.map((part) => `<i style="width:${Math.max(2, part.value / Math.max(total, 1) * 100).toFixed(1)}%;background:${escapeHtml(part.color)}"></i>`).join("")}
+              </span>
+              <strong class="bar-value">${total.toFixed(1)}%</strong>
+            </button>`;
+          }).join("")}
+        </div>`;
       }
 
       function scaleRadius(value, max, min = 4.4, maxRadius = 7.2) {
@@ -3394,6 +4731,25 @@
         }));
       }
 
+      function statusSummary() {
+        const rows = operationsRows();
+        const counts = new Map();
+        rows.forEach((row) => counts.set(row.status.key, (counts.get(row.status.key) || 0) + 1));
+        const meta = {
+          healthy: { zh: "健康", en: "Healthy", color: "#35dcb3" },
+          watch: { zh: "观察", en: "Watch", color: "#ffb02e" },
+          risk: { zh: "风险", en: "Risk", color: "#ff6b6b" },
+          critical: { zh: "预警", en: "Critical", color: "#d94b4b" },
+        };
+        return ["healthy", "watch", "risk", "critical"].map((key) => ({
+          label: state.lang === "en" ? meta[key].en : meta[key].zh,
+          value: counts.get(key) || 0,
+          color: meta[key].color,
+          page: "operations",
+          tooltip: [state.lang === "en" ? `${counts.get(key) || 0} categories` : `${counts.get(key) || 0} 个品类`],
+        })).filter((row) => row.value > 0);
+      }
+
       function fitSummary() {
         const rows = categoryRows();
         const total = rows.reduce((sum, row) => sum + int(row.records), 0) || 1;
@@ -3424,6 +4780,34 @@
                 <span class="portfolio-track"><i class="portfolio-fill" style="--w:${Math.max(5, share * 100).toFixed(1)}%;--c:${escapeHtml(row.color)}"></i></span>
                 <span>${pct(share)}</span>
               </button>`;
+            }).join("")}
+          </div>
+        `;
+      }
+
+      function renderTopBlockers(containerId, rows) {
+        const holder = document.getElementById(containerId);
+        if (!holder) return;
+        const counts = new Map();
+        rows.forEach((row) => {
+          row.drivers.forEach((driver) => {
+            const label = state.lang === "en" ? driver.en : driver.zh;
+            const item = counts.get(driver.id) || { id: driver.id, label, value: 0 };
+            item.value += 1;
+            counts.set(driver.id, item);
+          });
+        });
+        const blockers = [...counts.values()].sort((a, b) => b.value - a.value).slice(0, 6);
+        const total = rows.length || 1;
+        const painIds = new Set((state.data.pain || []).map((row) => row.pain_point));
+        holder.innerHTML = `
+          <div class="blocker-grid">
+            ${blockers.map((item) => {
+              const action = painIds.has(item.id) ? `openEvidenceForPain('${escapeHtml(item.id)}')` : "setPage('kpi')";
+              return `<button class="blocker-row" type="button" onclick="${action}" onmousemove="showTooltip(event, '${escapeHtml(item.label)}', '${escapeHtml(state.lang === "en" ? `${fmt(item.value)} categories affected` : `影响 ${fmt(item.value)} 个品类`)}')" onmouseleave="hideTooltip()">
+              <span><strong>${escapeHtml(item.label)}</strong><span>${escapeHtml(state.lang === "en" ? "Primary blocker" : "主要阻塞")}</span></span>
+              <strong>${pct(item.value / total)}</strong>
+            </button>`;
             }).join("")}
           </div>
         `;
@@ -3493,8 +4877,9 @@
           const end = cursor + num(row.value) / total * 359.99;
           cursor = end;
           const action = options.action ? options.action(row) : "";
+          const selected = options.selectedKey && row.key === options.selectedKey;
           const tooltip = [row.label, ...(row.tooltip || [`占比 ${pct(num(row.value) / total)}`])];
-          return `<path class="donut-segment" d="${donutPath(90, 90, 76, 44, start, end)}" fill="${escapeHtml(row.color || chartColors[index % chartColors.length])}" onmousemove="showTooltip(event, '${escapeHtml(row.label)}', '${escapeHtml(tooltip.slice(1).join("<br>"))}')" onmouseleave="hideTooltip()" ${action ? `onclick="${action}" role="button" tabindex="0"` : ""}></path>`;
+          return `<path class="donut-segment ${selected ? "selected" : ""}" d="${donutPath(90, 90, 76, 44, start, end)}" fill="${escapeHtml(row.color || chartColors[index % chartColors.length])}" onmousemove="showTooltip(event, '${escapeHtml(row.label)}', '${escapeHtml(tooltip.slice(1).join("<br>"))}')" onmouseleave="hideTooltip()" ${action ? `onclick="${action}" role="button" tabindex="0"` : ""}></path>`;
         }).join("");
         holder.innerHTML = `
           <div class="donut-layout">
@@ -3504,7 +4889,7 @@
               <text class="donut-center" x="90" y="91">${escapeHtml(options.center || fmt(total))}</text>
             </svg>
             <div class="legend-list">
-              ${rows.slice(0, 7).map((row, index) => `<div class="legend-row"><span class="legend-swatch" style="background:${escapeHtml(row.color || chartColors[index % chartColors.length])}"></span><span>${escapeHtml(row.label)}</span><strong>${pct(num(row.value) / total)}</strong></div>`).join("")}
+              ${rows.slice(0, 7).map((row, index) => `<button class="legend-row ${options.selectedKey && row.key === options.selectedKey ? "active" : ""}" type="button" ${options.action ? `onclick="${options.action(row)}"` : ""} style="background:transparent;border:0;color:inherit;text-align:left;padding:0"><span class="legend-swatch" style="background:${escapeHtml(row.color || chartColors[index % chartColors.length])}"></span><span>${escapeHtml(row.label)}</span><strong>${pct(num(row.value) / total)}</strong></button>`).join("")}
             </div>
           </div>
         `;
@@ -3518,7 +4903,7 @@
           holder.innerHTML = `<p class="chart-caption">当前筛选没有足够样本，暂不显示痛点轮廓。</p>`;
           return;
         }
-        const width = 420, height = 310, cx = 210, cy = 156;
+        const width = 520, height = 320, cx = 250, cy = 160;
         const max = Math.max(...rows.map((row) => num(row.value)), 1);
         const pointsFor = (scale = 1, lift = 0) => rows.map((row, index) => {
           const angle = -Math.PI / 2 + index / rows.length * Math.PI * 2;
@@ -3535,10 +4920,13 @@
         const base = pointsFor(0.72, -18);
         const surfacePath = surface.map((point, index) => `${index ? "L" : "M"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ") + " Z";
         const basePath = base.map((point, index) => `${index ? "L" : "M"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`).join(" ") + " Z";
+        const painTooltip = (value) => state.lang === "en"
+          ? `Review mentions ${fmt(value)}<br>Share ${pct(value / total)}`
+          : `评论标签出现 ${fmt(value)} 次<br>占比 ${pct(value / total)}`;
         holder.innerHTML = `
           <div class="contour-layout">
             <svg class="contour-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="pain point semantic contour">
-              <ellipse cx="${cx}" cy="${cy + 52}" rx="150" ry="54" fill="oklch(0.08 0.012 255 / 0.42)"></ellipse>
+              <ellipse cx="${cx}" cy="${cy + 48}" rx="140" ry="50" fill="oklch(0.08 0.012 255 / 0.42)"></ellipse>
               <path class="contour-surface" d="${basePath}" fill="oklch(0.72 0.16 230 / 0.12)" stroke="oklch(0.72 0.16 230 / 0.22)"></path>
               <path class="contour-surface" d="${surfacePath}" fill="url(#contourGradient)" stroke="oklch(0.72 0.16 230 / 0.64)" stroke-width="2"></path>
               <defs>
@@ -3551,18 +4939,14 @@
               ${surface.map((point, index) => {
                 const value = num(point.row.value);
                 const r = 5 + Math.sqrt(value / max) * 10;
-                const labelX = Math.max(70, Math.min(width - 70, cx + Math.cos(point.angle) * 154));
-                const labelY = cy + Math.sin(point.angle) * 112;
-                return `<g class="contour-point" onclick="selectGraphNode('${escapeHtml(point.row.id)}', 'evidence')" onmousemove="showTooltip(event, '${escapeHtml(point.row.label)}', '${escapeHtml(`评论标签出现 ${fmt(value)} 次<br>占比 ${pct(value / total)}`)}')" onmouseleave="hideTooltip()">
-                  <line x1="${point.x.toFixed(1)}" y1="${point.y.toFixed(1)}" x2="${labelX.toFixed(1)}" y2="${labelY.toFixed(1)}" stroke="oklch(0.72 0.02 255 / 0.18)"></line>
+                return `<g class="contour-point" onclick="selectGraphNode('${escapeHtml(point.row.id)}', 'evidence')" onmousemove="showTooltip(event, '${escapeHtml(point.row.label)}', '${escapeHtml(painTooltip(value))}')" onmouseleave="hideTooltip()">
                   <circle cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${r.toFixed(1)}" fill="${escapeHtml(point.row.color || chartColors[index % chartColors.length])}" opacity=".92"></circle>
-                  <text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${labelX < cx ? "end" : "start"}">${escapeHtml(point.row.label.split(" · ")[0])}</text>
                 </g>`;
               }).join("")}
-              <text x="${cx}" y="${cy + 7}" text-anchor="middle" fill="var(--text)" style="font-size:20px;font-weight:820">语义轮廓</text>
+              <text x="${cx}" y="${cy + 7}" text-anchor="middle" fill="var(--text)" style="font-size:18px;font-weight:820">${escapeHtml(state.lang === "en" ? "Semantic contour" : "语义轮廓")}</text>
             </svg>
             <div class="legend-list">
-              ${rows.map((row, index) => `<button class="legend-row" type="button" onclick="selectGraphNode('${escapeHtml(row.id)}', 'evidence')" onmousemove="showTooltip(event, '${escapeHtml(row.label)}', '${escapeHtml(`评论标签出现 ${fmt(row.value)} 次<br>占比 ${pct(num(row.value) / total)}`)}')" onmouseleave="hideTooltip()" style="background:transparent;border:0;color:inherit;text-align:left;padding:0">
+              ${rows.map((row, index) => `<button class="legend-row" type="button" onclick="selectGraphNode('${escapeHtml(row.id)}', 'evidence')" onmousemove="showTooltip(event, '${escapeHtml(row.label)}', '${escapeHtml(painTooltip(num(row.value)))}')" onmouseleave="hideTooltip()" style="background:transparent;border:0;color:inherit;text-align:left;padding:0">
                 <span class="legend-swatch" style="background:${escapeHtml(row.color || chartColors[index % chartColors.length])}"></span>
                 <span>${escapeHtml(row.label)}</span>
                 <strong>${pct(num(row.value) / total)}</strong>
@@ -3580,9 +4964,13 @@
           const share = int(row.articles) / maxArticles;
           const span = index === 0 ? "span-3 row-2" : index < 3 ? "span-3" : index < 7 ? "span-2" : "";
           const intensity = Math.max(14, Math.min(44, (num(row.demandShare) || num(row.share)) * 100));
-          return `<button class="treemap-tile ${span}" type="button" style="--tile-intensity:${intensity}%" onclick="setPage('market')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.product_group_name))}', '${escapeHtml(`商品数 ${fmt(row.articles)}<br>商品占比 ${pct(row.share)}<br>交易占比 ${pct(row.demandShare)}`)}')" onmouseleave="hideTooltip()">
+          const selected = row.product_group_name === state.selectedProductGroup;
+          const tooltip = state.lang === "en"
+            ? `${fmt(row.articles)} articles<br>Article share ${pct(row.share)}<br>Transaction share ${pct(row.demandShare)}`
+            : `商品数 ${fmt(row.articles)}<br>商品占比 ${pct(row.share)}<br>交易占比 ${pct(row.demandShare)}`;
+          return `<button class="treemap-tile ${span} ${selected ? "selected" : ""}" type="button" style="--tile-intensity:${intensity}%" onclick="selectProductGroup('${escapeHtml(row.product_group_name)}');openDrawer('productGroup',{id:'${escapeHtml(row.product_group_name)}'})" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.product_group_name))}', '${escapeHtml(tooltip)}')" onmouseleave="hideTooltip()">
             <strong>${escapeHtml(nameOf(row.product_group_name))}</strong>
-            <span>${fmt(row.articles)} articles · ${(share * 100).toFixed(0)}% scale</span>
+            <span>${escapeHtml(state.lang === "en" ? `${fmt(row.articles)} articles · ${(share * 100).toFixed(0)}% scale` : `${fmt(row.articles)} 件商品 · ${(share * 100).toFixed(0)}% 尺度`)}</span>
           </button>`;
         }).join("");
       }
@@ -3590,28 +4978,33 @@
       function renderLineChart(containerId, rows, options = {}) {
         const svg = document.getElementById(containerId);
         if (!svg) return;
-        const data = rows.filter((row) => int(row.transactions) > 0);
+        const valueKey = options.valueKey || "transactions";
+        const valueOf = (row) => num(row[valueKey] ?? row.transactions);
+        const data = filterRowsByDate(rows).filter((row) => valueOf(row) > 0);
         if (!data.length) {
           svg.innerHTML = "";
           return;
         }
         const sample = data;
-        const width = 720, height = 260, pad = 28;
-        const values = sample.map((row) => int(row.transactions));
+        const width = 1600, height = 320, padX = 42, padY = 34;
+        const values = sample.map(valueOf);
         const min = Math.min(...values), max = Math.max(...values);
-        const x = (index) => pad + index / Math.max(sample.length - 1, 1) * (width - pad * 2);
-        const y = (value) => height - pad - (value - min) / Math.max(max - min, 1) * (height - pad * 2);
-        const path = sample.map((row, index) => `${index ? "L" : "M"} ${x(index).toFixed(1)} ${y(int(row.transactions)).toFixed(1)}`).join(" ");
-        const area = `${path} L ${x(sample.length - 1)} ${height - pad} L ${pad} ${height - pad} Z`;
+        const x = (index) => padX + index / Math.max(sample.length - 1, 1) * (width - padX * 2);
+        const y = (value) => height - padY - (value - min) / Math.max(max - min, 1) * (height - padY * 2);
+        const path = sample.map((row, index) => `${index ? "L" : "M"} ${x(index).toFixed(1)} ${y(valueOf(row)).toFixed(1)}`).join(" ");
+        const area = `${path} L ${x(sample.length - 1)} ${height - padY} L ${padX} ${height - padY} Z`;
         svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
         svg.innerHTML = `
           <path d="${area}" fill="url(#lineFill-${containerId})" opacity="0.42"></path>
-          <path d="${path}" fill="none" stroke="#25b7ff" stroke-width="3"></path>
+          <path d="${path}" fill="none" stroke="#25b7ff" stroke-width="4"></path>
           <defs><linearGradient id="lineFill-${containerId}" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#25b7ff" stop-opacity=".42"/><stop offset="1" stop-color="#25b7ff" stop-opacity="0"/></linearGradient></defs>
-          <line x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" stroke="oklch(0.72 0.02 255 / 0.22)"></line>
-          <text x="${pad}" y="22">${escapeHtml(sample[0].date || "")}</text>
-          <text x="${width - pad - 74}" y="22">${escapeHtml(sample[sample.length - 1].date || "")}</text>
-          ${sample.map((row, index) => `<circle cx="${x(index).toFixed(1)}" cy="${y(int(row.transactions)).toFixed(1)}" r="${options.compact ? "1.6" : "2.2"}" fill="#25b7ff" opacity=".22"></circle><circle cx="${x(index).toFixed(1)}" cy="${y(int(row.transactions)).toFixed(1)}" r="${options.compact ? "5.8" : "7.4"}" fill="transparent" stroke="transparent" stroke-width="8" onmousemove="showTooltip(event, '${escapeHtml(row.date)}', '${escapeHtml(`交易 ${fmt(row.transactions)}<br>均价 ${Number(row.avg_price || 0).toFixed(4)}`)}')" onmouseleave="hideTooltip()"></circle>`).join("")}
+          <line x1="${padX}" y1="${height - padY}" x2="${width - padX}" y2="${height - padY}" stroke="oklch(0.72 0.02 255 / 0.22)"></line>
+          <text x="${padX}" y="24">${escapeHtml(sample[0].date || "")}</text>
+          <text x="${width - padX - 116}" y="24">${escapeHtml(sample[sample.length - 1].date || "")}</text>
+          ${sample.map((row, index) => {
+            const label = options.label || (state.lang === "en" ? "Transactions" : "交易");
+            return `<circle cx="${x(index).toFixed(1)}" cy="${y(valueOf(row)).toFixed(1)}" r="${options.compact ? "1.6" : "2.2"}" fill="#25b7ff" opacity=".22"></circle><circle cx="${x(index).toFixed(1)}" cy="${y(valueOf(row)).toFixed(1)}" r="${options.compact ? "5.8" : "7.4"}" fill="transparent" stroke="transparent" stroke-width="8" onmousemove="showTooltip(event, '${escapeHtml(row.date)}', '${escapeHtml(`${label} ${fmt(valueOf(row))}<br>${state.lang === "en" ? "Avg" : "均值"} ${Number(row.avg_price || 0).toFixed(2)}`)}')" onmouseleave="hideTooltip()"></circle>`;
+          }).join("")}
         `;
       }
 
@@ -3638,93 +5031,37 @@
       }
 
       function renderOverviewOpportunityMap(containerId, rows) {
-        const svg = document.getElementById(containerId);
-        if (!svg) return;
-        const width = 820, height = 340, pad = 46;
-        const mapText = state.lang === "en"
-          ? {
-            risk: "Treat risk first",
-            fix: "Fix before scaling",
-            watch: "Low-priority watch",
-            scale: "Validate then scale",
-            lowOpp: "Low opportunity",
-            highOpp: "High opportunity",
-            lowRisk: "Low operating risk",
-            highRisk: "High operating risk",
-            rank: "Opportunity rank",
-            opportunity: "Opportunity",
-            riskIndex: "Risk index",
-            returnRate: "Return rate",
-            recommendation: "Recommendation",
-          }
-          : {
-            risk: "先治理风险",
-            fix: "先修正再放量",
-            watch: "低优先观察",
-            scale: "优先验证放量",
-            lowOpp: "低市场机会",
-            highOpp: "高市场机会",
-            lowRisk: "低经营风险",
-            highRisk: "高经营风险",
-            rank: "机会排名",
-            opportunity: "机会分",
-            riskIndex: "风险指数",
-            returnRate: "退货率",
-            recommendation: "建议",
-          };
-        const maxRecords = Math.max(...rows.map((row) => int(row.records)), 1);
+        const holder = document.getElementById(containerId);
+        if (!holder) return;
         const maxOpportunity = Math.max(...rows.map((row) => businessScore(row)), 42);
-        const riskOf = (row) => {
+        const maxRisk = Math.max(...rows.map(operatingRiskScore), 38);
+        holder.innerHTML = rows.slice(0, 8).map((row, index) => {
           const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
-          return num(row.risk_score) * 0.72 + num(company.returnRate) * 30;
-        };
-        const maxRisk = Math.max(...rows.map(riskOf), 38);
-        const xScale = (value) => pad + value / maxOpportunity * (width - pad * 2);
-        const yScale = (value) => height - pad - value / maxRisk * (height - pad * 2);
-        const midX = pad + (width - pad * 2) * 0.54;
-        const midY = pad + (height - pad * 2) * 0.48;
-        svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-        svg.innerHTML = `
-          <defs>
-            <linearGradient id="mapOpportunity" x1="0" x2="1"><stop stop-color="#25b7ff" stop-opacity=".12"></stop><stop offset="1" stop-color="#35dcb3" stop-opacity=".22"></stop></linearGradient>
-            <linearGradient id="mapRisk" x1="0" x2="0" y1="1" y2="0"><stop stop-color="#25b7ff" stop-opacity=".08"></stop><stop offset="1" stop-color="#ff6b6b" stop-opacity=".18"></stop></linearGradient>
-          </defs>
-          <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="18" fill="oklch(0.155 0.012 255 / 0.96)" stroke="oklch(0.86 0.03 255 / 0.22)"></rect>
-          <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="18" fill="url(#mapOpportunity)"></rect>
-          <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="18" fill="url(#mapRisk)"></rect>
-          <line x1="${pad}" y1="${midY}" x2="${width - pad}" y2="${midY}" stroke="oklch(0.86 0.03 255 / 0.24)" stroke-dasharray="5 6"></line>
-          <line x1="${midX}" y1="${pad}" x2="${midX}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.24)" stroke-dasharray="5 6"></line>
-          <text class="quadrant-label" x="${pad + 18}" y="${pad + 28}">${mapText.risk}</text>
-          <text class="quadrant-label" x="${midX + 18}" y="${pad + 28}">${mapText.fix}</text>
-          <text class="quadrant-label" x="${pad + 18}" y="${height - pad - 18}">${mapText.watch}</text>
-          <text class="quadrant-label" x="${midX + 18}" y="${height - pad - 18}">${mapText.scale}</text>
-          <text class="axis-label" x="${pad}" y="26">${mapText.lowOpp}</text>
-          <text class="axis-label" x="${width - 140}" y="26">${mapText.highOpp}</text>
-          <text class="axis-label" x="${pad}" y="${height - 14}">${mapText.lowRisk}</text>
-          <text class="axis-label" x="${width - 148}" y="${height - 14}">${mapText.highRisk}</text>
-          <line x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.3)"></line>
-          <line x1="${pad}" y1="${pad}" x2="${pad}" y2="${height - pad}" stroke="oklch(0.86 0.03 255 / 0.3)"></line>
-          ${rows.map((row, index) => {
-            const company = (state.data.company || []).find((item) => item.category === row.category_group) || {};
-            const opportunity = businessScore(row);
-            const risk = riskOf(row);
-            const radius = 7 + Math.sqrt(int(row.records) / maxRecords) * 15;
-            const decision = decisionFor(row);
-            const color = decisionColor(decision);
-            const x = Math.max(pad + radius + 4, Math.min(width - pad - radius - 4, xScale(opportunity)));
-            const y = Math.max(pad + radius + 4, Math.min(height - pad - radius - 4, yScale(risk)));
-            const labelRight = x < width - 230;
-            const labelX = labelRight ? x + radius + 8 : x - radius - 8;
-            const showLabel = index < 3 || row.category_group === state.selectedCategory;
-            const tooltip = `${mapText.rank} #${index + 1}<br>${mapText.opportunity} ${opportunity.toFixed(1)}<br>${mapText.riskIndex} ${risk.toFixed(1)}<br>${mapText.returnRate} ${pct(company.returnRate)}<br>${mapText.recommendation} ${tr(decision.label)}`;
-            return `<g class="opportunity-node ${row.category_group === state.selectedCategory ? "selected" : ""}" role="button" tabindex="0" onclick="selectCategory('${escapeHtml(row.category_group)}', 'workspace')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(tooltip)}')" onmouseleave="hideTooltip()">
-              <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${radius.toFixed(1)}" fill="${color}" opacity=".2" stroke="${color}" stroke-width="1.3"></circle>
-              <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.max(4.8, radius * .34).toFixed(1)}" fill="${color}" opacity=".95"></circle>
-              <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${Math.max(2.2, radius * .13).toFixed(1)}" fill="white" opacity=".92"></circle>
-              ${showLabel ? `<text x="${labelX.toFixed(1)}" y="${(y + 4).toFixed(1)}" text-anchor="${labelRight ? "start" : "end"}">#${index + 1} ${escapeHtml(nameOf(row.category_group).split(" · ")[0])}</text>` : ""}
-            </g>`;
-          }).join("")}
-        `;
+          const opportunity = businessScore(row);
+          const risk = operatingRiskScore(row);
+          const status = row.status || healthStatus(row.health || 0);
+          const decision = decisionFor(row);
+          const opportunityWidth = Math.max(4, opportunity / maxOpportunity * 100);
+          const riskWidth = Math.max(4, risk / maxRisk * 100);
+          const tooltip = state.lang === "en"
+            ? `Opportunity ${opportunity.toFixed(1)}<br>Operating risk ${risk.toFixed(1)}<br>Return ${pct(company.returnRate)}<br>Health ${(row.health || 0).toFixed(1)}`
+            : `机会 ${opportunity.toFixed(1)}<br>经营风险 ${risk.toFixed(1)}<br>退货率 ${pct(company.returnRate)}<br>健康分 ${(row.health || 0).toFixed(1)}`;
+          return `<button class="priority-row ${row.category_group === state.selectedCategory ? "selected" : ""}" type="button" onclick="selectCategory('${escapeHtml(row.category_group)}', 'operations')" onmousemove="showTooltip(event, '${escapeHtml(nameOf(row.category_group))}', '${escapeHtml(tooltip)}')" onmouseleave="hideTooltip()">
+            <span class="priority-name">
+              <strong>#${index + 1} ${escapeHtml(nameOf(row.category_group))}</strong>
+              <span>${escapeHtml(tr(decision.label))}</span>
+            </span>
+            <span class="score-bar">
+              <header><span>${state.lang === "en" ? "Opportunity" : "机会"}</span><strong>${opportunity.toFixed(1)}</strong></header>
+              <span class="bar-track"><span class="bar-fill" style="width:${opportunityWidth.toFixed(1)}%"></span></span>
+            </span>
+            <span class="score-bar">
+              <header><span>${state.lang === "en" ? "Risk" : "风险"}</span><strong>${risk.toFixed(1)}</strong></header>
+              <span class="bar-track"><span class="bar-fill risk-fill" style="width:${riskWidth.toFixed(1)}%"></span></span>
+            </span>
+            <span class="status-pill ${escapeHtml(status.key)}">${escapeHtml(state.lang === "en" ? status.en : status.zh)}</span>
+          </button>`;
+        }).join("");
       }
 
       function showTooltip(event, title, body) {
@@ -4318,16 +5655,18 @@
       };
 
       function renderNodeInspector() {
+        const inspector = document.getElementById("node-inspector");
+        if (!inspector) return;
         const node = state.selectedNode || state.graph.nodes[0] || {};
         const detail = graphNodeDetail(node);
-        document.getElementById("node-inspector").innerHTML = `
+        inspector.innerHTML = `
           <div>
             <div class="inspector-type">${escapeHtml(kindLabel(node.kind))}</div>
             <h4 class="inspector-title">${escapeHtml(node.label || "选择一个节点")}</h4>
             <p class="graph-detail-copy">${escapeHtml(detail.summary)}</p>
           </div>
           <div class="metric-list">
-            <button class="metric-row" type="button" onclick="setPage('network')"><span>${state.lang === "en" ? "Relationship weight" : "关系权重"}</span><strong>${fmt(node.value || 0)}</strong></button>
+            <button class="metric-row" type="button" onclick="setPage('operations')"><span>${state.lang === "en" ? "Weight" : "权重"}</span><strong>${fmt(node.value || 0)}</strong></button>
             <button class="metric-row" type="button" onclick="setPage('${node.kind === "pain" ? "evidence" : "workspace"}')"><span>${state.lang === "en" ? "Impact scope" : "影响范围"}</span><strong>${escapeHtml(detail.impact)}</strong></button>
             <button class="metric-row" type="button" onclick="setPage('${node.kind === "kpi" ? "kpi" : node.kind === "pain" ? "evidence" : "workspace"}')"><span>${state.lang === "en" ? "Next step" : "下一步"}</span><strong>${escapeHtml(detail.next)}</strong></button>
           </div>
@@ -4362,7 +5701,7 @@
         const node = state.graph.nodes.find((item) => item.id === id);
         if (!node) {
           state.selectedNode = { id, label: nameOf(id), kind: "pain", value: 0 };
-          renderNodeInspector();
+          if (document.getElementById("node-inspector")) renderNodeInspector();
           renderWorkspace();
           renderEvidence();
           if (page) setPage(page);
@@ -4370,7 +5709,7 @@
         }
         state.selectedNode = node;
         if (node.kind === "category") state.selectedCategory = node.id;
-        renderNodeInspector();
+        if (document.getElementById("node-inspector")) renderNodeInspector();
         renderWorkspace();
         renderEvidence();
         buildCategorySelect();
@@ -4397,7 +5736,7 @@
 
       function openEvidenceForPain(painId) {
         const normalizedPain = painId && painId !== "none" ? painId : "all";
-        state.evidenceFilters = { q: "", fit: "all", body: "all", pain: normalizedPain };
+        state.evidenceFilters = { q: "", category: "all", fit: "all", body: "all", pain: normalizedPain };
         if (normalizedPain !== "all") selectGraphNode(normalizedPain, null);
         else renderEvidence();
         setPage("evidence", { scroll: false });
@@ -4413,22 +5752,35 @@
       }
       window.openActions = openActions;
 
-      function selectCategory(category, page = state.page) {
+      function selectCategory(category, page = state.page, options = {}) {
         const targetPage = page === "assortment" ? "market" : page === "semantic" ? "kpi" : page === "workspace" ? "evidence" : page;
         state.selectedCategory = category;
+        if (targetPage === "evidence") {
+          state.evidenceFilters = { ...state.evidenceFilters, category, q: "", fit: "all", body: "all", pain: "all" };
+        }
         buildGraph();
         state.selectedNode = state.graph.nodes.find((node) => node.id === category) || { id: category, label: nameOf(category), kind: "category", value: num(selectedCategoryRow().records) };
         buildCategorySelect();
         renderAll();
-        setPage(targetPage);
+        setPage(targetPage, options);
       }
       window.selectCategory = selectCategory;
+
+      function selectProductGroup(productGroup, options = {}) {
+        state.selectedProductGroup = productGroup;
+        renderMarket();
+        renderAssortment();
+        localizeGenerated(document.getElementById("market"));
+        localizeGenerated(document.getElementById("assortment"));
+        if (options.scroll !== false) scrollToDashboardBlock("product-group-detail");
+      }
+      window.selectProductGroup = selectProductGroup;
 
       function pageGroup(page) {
         return {
           overview: ["overview"],
           market: ["market", "assortment"],
-          network: ["network"],
+          operations: ["operations"],
           kpi: ["kpi", "semantic"],
           evidence: ["workspace", "evidence"],
         }[page] || [page];
@@ -4448,21 +5800,28 @@
           overview: null,
           market: null,
           assortment: null,
-          network: ["control.graphFocus", "control.resetGraph"],
+          operations: ["control.operationsCategory", "control.resetOperations"],
           kpi: ["control.kpiCategory", "control.resetKpi"],
           semantic: ["control.semanticCategory", "control.resetSemantic"],
           workspace: ["control.workspaceCategory", "control.resetCategory"],
           evidence: ["control.evidenceCategory", "control.resetEvidence"],
         };
         const currentControls = controlConfig[page];
-        document.querySelector(".top-actions").classList.toggle("hidden", !currentControls);
+        const datePages = ["market", "operations"];
+        const showDateControl = datePages.includes(page);
+        document.querySelector(".top-actions").classList.toggle("hidden", !currentControls && !showDateControl);
+        document.getElementById("date-range-control").classList.toggle("hidden", !showDateControl);
+        document.getElementById("control-context").classList.toggle("hidden", !currentControls);
+        document.getElementById("category-select").classList.toggle("hidden", !currentControls);
+        document.getElementById("reset-button").classList.toggle("hidden", !currentControls);
+        updateDateControls();
         if (currentControls) {
           document.getElementById("control-context").textContent = t(currentControls[0]);
           document.getElementById("reset-button").textContent = t(currentControls[1]);
         }
         localizeStatic();
         visiblePages.forEach((id) => localizeGenerated(document.getElementById(id)));
-        if (page === "network") renderNetworkGraph();
+        if (page === "operations") renderOperations();
         if (options.scroll !== false) scrollPageTop();
       }
       window.setPage = setPage;
@@ -4547,8 +5906,28 @@
         });
       });
       document.getElementById("category-select").addEventListener("change", (event) => selectCategory(event.target.value, state.page));
+      document.getElementById("date-preset").addEventListener("change", (event) => {
+        state.dateRange.preset = event.target.value;
+        updateDateControls();
+        renderAll();
+        setPage(state.page, { scroll: false });
+      });
+      document.getElementById("date-start").addEventListener("change", (event) => {
+        state.dateRange.start = event.target.value;
+        renderAll();
+        setPage(state.page, { scroll: false });
+      });
+      document.getElementById("date-end").addEventListener("change", (event) => {
+        state.dateRange.end = event.target.value;
+        renderAll();
+        setPage(state.page, { scroll: false });
+      });
       document.getElementById("evidence-search").addEventListener("input", (event) => {
         state.evidenceFilters.q = event.target.value;
+        renderEvidence();
+      });
+      document.getElementById("evidence-category-filter").addEventListener("change", (event) => {
+        state.evidenceFilters.category = event.target.value;
         renderEvidence();
       });
       document.getElementById("evidence-fit-filter").addEventListener("change", (event) => {
@@ -4563,10 +5942,33 @@
         state.evidenceFilters.pain = event.target.value;
         renderEvidence();
       });
+      document.getElementById("order-search").addEventListener("input", (event) => {
+        state.orderFilters.q = event.target.value;
+        renderOrderTable();
+      });
+      document.getElementById("order-channel-filter").addEventListener("change", (event) => {
+        state.orderFilters.channel = event.target.value;
+        renderOrderTable();
+      });
+      document.getElementById("order-type-filter").addEventListener("change", (event) => {
+        state.orderFilters.productType = event.target.value;
+        renderOrderTable();
+      });
+      document.getElementById("order-sort").addEventListener("change", (event) => {
+        state.orderFilters.sort = event.target.value;
+        renderOrderTable();
+      });
+      document.getElementById("drawer-backdrop").addEventListener("click", closeDrawer);
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && state.drawer.open) closeDrawer();
+      });
       document.getElementById("reset-button").addEventListener("click", () => {
         state.selectedCategory = "dress";
         state.selectedNode = null;
-        state.evidenceFilters = { q: "", fit: "all", body: "all", pain: "all" };
+        state.selectedProductGroup = "all";
+        state.evidenceFilters = { q: "", category: "all", fit: "all", body: "all", pain: "all" };
+        state.orderFilters = { q: "", channel: "all", productType: "all", sort: "dateDesc" };
+        state.dateRange = { preset: "all", start: "", end: "" };
         buildGraph();
         buildCategorySelect();
         renderAll();
