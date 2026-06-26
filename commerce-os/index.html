@@ -23,9 +23,9 @@
         --amber: oklch(0.78 0.17 75);
         --red: oklch(0.68 0.2 25);
         --violet: oklch(0.72 0.16 292);
-        --shadow: 0 18px 42px rgb(0 0 0 / 0.28);
-        --radius: 12px;
-        --sidebar: 260px;
+        --shadow: 0 16px 36px rgb(0 0 0 / 0.27);
+        --radius: 13px;
+        --sidebar: 266px;
       }
 
       * { box-sizing: border-box; }
@@ -41,6 +41,7 @@
           linear-gradient(145deg, var(--bg), var(--bg-deep));
         color: var(--text);
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 15.25px;
         letter-spacing: 0;
       }
 
@@ -53,15 +54,17 @@
       }
 
       .login-screen {
-        min-height: 100vh;
+        height: 100vh;
+        min-height: 700px;
         display: grid;
         grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+        overflow: hidden;
       }
 
       .login-visual {
         position: relative;
         overflow: hidden;
-        padding: 56px;
+        padding: 50px 60px;
         border-right: 1px solid var(--line);
         background:
           radial-gradient(circle at 40% 28%, oklch(0.54 0.14 230 / 0.22), transparent 26%),
@@ -85,12 +88,12 @@
         display: flex;
         align-items: center;
         gap: 14px;
-        margin-bottom: 104px;
+        margin-bottom: 78px;
       }
 
       .brand-mark {
-        width: 50px;
-        height: 50px;
+        width: 52px;
+        height: 52px;
         display: grid;
         place-items: center;
         border: 1px solid oklch(0.74 0.13 230 / 0.48);
@@ -106,37 +109,42 @@
       }
 
       .brand-title strong {
-        font-size: 17px;
+        font-size: 18px;
+        line-height: 1.1;
+        text-wrap: balance;
+        overflow-wrap: break-word;
       }
 
       .brand-title span {
         color: var(--muted);
         font-size: 13px;
+        line-height: 1.25;
+        white-space: nowrap;
       }
 
       h1 {
         max-width: 880px;
         margin: 0;
-        font-size: 56px;
-        line-height: 1.04;
+        font-size: 54px;
+        line-height: 1.03;
         letter-spacing: 0;
         text-wrap: balance;
       }
 
       .login-copy p {
         max-width: 660px;
-        margin: 18px 0 0;
+        margin: 16px 0 0;
         color: var(--muted);
         font-size: 18px;
-        line-height: 1.7;
+        line-height: 1.55;
       }
 
       .login-proof {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
+        gap: 14px;
         max-width: 840px;
-        margin-top: 40px;
+        margin-top: 34px;
       }
 
       .proof-card,
@@ -150,32 +158,33 @@
       }
 
       .proof-card {
-        padding: 20px;
+        padding: 19px;
       }
 
       .proof-card strong {
         display: block;
         font-size: 26px;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
       }
 
       .proof-card span {
         color: var(--muted);
-        font-size: 14px;
-        line-height: 1.55;
+        font-size: 13.5px;
+        line-height: 1.45;
       }
 
       .login-panel-wrap {
         display: grid;
         align-content: center;
-        padding: 56px;
+        padding: 42px 58px;
+        min-height: 100vh;
       }
 
       .login-panel {
         width: 100%;
-        max-width: 560px;
+        max-width: 552px;
         margin: 0 auto;
-        padding: 38px;
+        padding: 36px;
         border: 1px solid var(--line-strong);
         border-radius: 16px;
         background: oklch(0.19 0.014 255 / 0.92);
@@ -183,42 +192,43 @@
       }
 
       .login-panel .language-toggle {
-        margin-bottom: 28px;
+        margin-bottom: 25px;
       }
 
       .login-panel h2 {
-        margin: 0 0 12px;
-        font-size: 34px;
+        margin: 0 0 8px;
+        font-size: 33px;
+        line-height: 1.08;
       }
 
       .login-panel > p {
-        margin: 0 0 32px;
+        margin: 0 0 26px;
         color: var(--muted);
-        font-size: 16px;
-        line-height: 1.55;
+        font-size: 15.5px;
+        line-height: 1.45;
       }
 
       .field {
         display: grid;
-        gap: 12px;
-        margin-bottom: 20px;
+        gap: 9px;
+        margin-bottom: 18px;
       }
 
       .field span {
         color: var(--muted);
-        font-size: 13px;
+        font-size: 13.5px;
         font-weight: 650;
       }
 
       input, select {
         width: 100%;
-        height: 50px;
+        height: 48px;
         border: 1px solid var(--line);
         border-radius: 11px;
         background: var(--surface);
         color: var(--text);
         padding: 0 14px;
-        font-size: 15px;
+        font-size: 15.5px;
         outline: none;
       }
 
@@ -231,7 +241,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 10px;
-        margin: 6px 0 24px;
+        margin: 5px 0 22px;
       }
 
       .mode-toggle button,
@@ -278,12 +288,34 @@
       }
 
       .login-note {
-        margin-top: 18px;
-        padding-top: 14px;
+        margin-top: 12px;
+        padding-top: 10px;
         border-top: 1px solid var(--line);
         color: var(--faint);
         font-size: 12px;
         line-height: 1.55;
+      }
+
+      html[data-lang="zh"] .login-panel {
+        max-width: 570px;
+        padding: 38px;
+      }
+
+      html[data-lang="zh"] .login-panel h2 {
+        font-size: 37px;
+      }
+
+      html[data-lang="zh"] .login-panel > p {
+        font-size: 16.5px;
+      }
+
+      html[data-lang="zh"] .login-copy h1 {
+        font-size: 58px;
+        line-height: 1.04;
+      }
+
+      html[data-lang="zh"] .login-copy p {
+        font-size: 19px;
       }
 
       .app-shell {
@@ -302,14 +334,45 @@
         height: 100vh;
         display: flex;
         flex-direction: column;
-        padding: 20px 14px;
+        padding: 21px 15px;
         border-right: 1px solid var(--line);
         background: oklch(0.13 0.012 255 / 0.96);
       }
 
+      aside .brand-row {
+        gap: 10px;
+        min-width: 0;
+      }
+
+      aside .brand-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 8px;
+        font-size: 16px;
+        flex: 0 0 auto;
+      }
+
+      aside .brand-title {
+        min-width: 0;
+      }
+
+      aside .brand-title strong {
+        max-width: 194px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 15.75px;
+      }
+
+      aside .brand-title span {
+        max-width: 194px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 11.5px;
+      }
+
       .nav {
         display: grid;
-        gap: 8px;
+        gap: 9px;
         margin-top: 30px;
       }
 
@@ -318,19 +381,19 @@
         align-items: center;
         gap: 10px;
         width: 100%;
-        padding: 10px;
+        padding: 11px;
         text-align: left;
       }
 
       .nav-number {
-        width: 28px;
-        height: 28px;
+        width: 30px;
+        height: 30px;
         display: grid;
         place-items: center;
         border-radius: 7px;
         background: oklch(0.26 0.035 240);
         color: var(--blue);
-        font-size: 12px;
+        font-size: 12.5px;
         font-weight: 820;
       }
 
@@ -366,7 +429,7 @@
       .language-panel strong {
         display: block;
         margin-bottom: 10px;
-        font-size: 13px;
+        font-size: 13.5px;
       }
 
       .language-toggle {
@@ -376,7 +439,7 @@
       }
 
       .language-toggle button {
-        min-height: 38px;
+        min-height: 40px;
         border: 1px solid var(--line);
         border-radius: 9px;
         background: transparent;
@@ -392,7 +455,7 @@
 
       main {
         min-width: 0;
-        padding: 20px 22px;
+        padding: 22px 24px;
       }
 
       .topbar {
@@ -405,7 +468,7 @@
 
       .topbar h2 {
         margin: 0;
-        font-size: 30px;
+        font-size: 32px;
         line-height: 1.12;
         letter-spacing: -0.02em;
       }
@@ -487,8 +550,8 @@
         display: inline-flex;
         align-items: center;
         gap: 7px;
-        min-height: 30px;
-        padding: 0 10px;
+        min-height: 28px;
+        padding: 0 9px;
         border: 1px solid var(--line);
         border-radius: 999px;
         background: var(--surface);
@@ -524,8 +587,9 @@
       }
 
       .kpi-card {
-        min-height: 128px;
-        padding: 16px;
+        container-type: inline-size;
+        min-height: 132px;
+        padding: 17px;
         text-align: left;
         transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
       }
@@ -542,21 +606,26 @@
 
       .kpi-label {
         color: var(--muted);
-        font-size: 12px;
+        font-size: 12.75px;
         font-weight: 700;
       }
 
       .kpi-value {
-        margin-top: 10px;
-        font-size: 34px;
+        margin-top: 8px;
+        font-size: min(35px, 15cqw);
         font-weight: 820;
         letter-spacing: -0.03em;
+        line-height: 1.04;
+        max-width: 100%;
+        white-space: normal;
+        text-wrap: balance;
+        overflow-wrap: anywhere;
       }
 
       .kpi-note {
         margin-top: 8px;
         color: var(--muted);
-        font-size: 12px;
+        font-size: 12.75px;
         line-height: 1.45;
       }
 
@@ -565,10 +634,14 @@
         gap: 14px;
       }
 
+      #market-kpis {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+
       .executive-kpi-grid .kpi-card {
         position: relative;
         overflow: hidden;
-        min-height: 154px;
+        min-height: 152px;
         border-color: oklch(0.86 0.03 255 / 0.18);
         background:
           linear-gradient(180deg, oklch(0.235 0.014 255 / 0.82), oklch(0.16 0.012 255 / 0.86)),
@@ -653,7 +726,7 @@
       .layout-grid {
         display: grid;
         grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.65fr);
-        gap: 14px;
+        gap: 13px;
       }
 
       .overview-map-grid {
@@ -677,7 +750,7 @@
       }
 
       .panel {
-        padding: 18px;
+        padding: 19px;
       }
 
       .page.active .panel,
@@ -2173,12 +2246,18 @@
 
       .treemap-tile strong {
         font-size: 13px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .treemap-tile span {
         margin-top: 3px;
         color: var(--muted);
         font-size: 11px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .product-detail-panel {
@@ -2664,7 +2743,7 @@
           </label>
           <div class="mode-toggle" aria-label="mode selector">
             <button class="active" type="button" data-login-mode="management" data-i18n="login.managementMode">管理视角</button>
-            <button type="button" data-login-mode="operator" data-i18n="login.operatorMode">执行视角</button>
+            <button type="button" data-login-mode="operator" data-i18n="login.operatorMode">运营视角</button>
           </div>
           <button class="primary-button" type="submit" data-i18n="login.submit">打开 Commerce OS</button>
           <p class="login-note" data-i18n="login.note">内部数据工作台入口。</p>
@@ -2681,7 +2760,7 @@
             <span id="current-mode-label" data-i18n="mode.management">管理模式</span>
           </div>
         </div>
-        <nav class="nav" aria-label="Main navigation">
+        <nav class="nav" id="main-nav" aria-label="Main navigation">
           <button class="nav-button active" data-page="overview"><span class="nav-number">01</span><span data-i18n="nav.overview">总览</span></button>
           <button class="nav-button" data-page="market"><span class="nav-number">02</span><span data-i18n="nav.market">市场</span></button>
           <button class="nav-button" data-page="operations"><span class="nav-number">03</span><span data-i18n="nav.operations">经营</span></button>
@@ -2700,7 +2779,7 @@
       <main>
         <div class="topbar">
           <div>
-            <div class="pill"><span class="dot"></span><span data-i18n="top.pill">数据联动产品站点</span></div>
+            <div class="pill"><span class="dot"></span><span id="role-workspace-label" data-i18n="top.pill">数据联动产品站点</span></div>
             <h2 id="page-title">经营总览</h2>
             <p id="page-subtitle">先看市场机会和公司经营承接能力，再进入品类级决策。</p>
           </div>
@@ -2732,8 +2811,8 @@
             <div class="panel decision-flow-card">
               <div class="panel-header">
                 <div>
-                  <h3 data-i18n="overview.path.title">经营工作台路径</h3>
-                  <p data-i18n="overview.path.copy">首页给结论，后续页面提供市场、证据和执行动作。</p>
+                  <h3 id="overview-path-title" data-i18n="overview.path.title">经营工作台路径</h3>
+                  <p id="overview-path-copy" data-i18n="overview.path.copy">首页给结论，后续页面提供市场、证据和执行动作。</p>
                 </div>
               </div>
               <div class="metric-list" id="overview-path"></div>
@@ -3126,6 +3205,17 @@
         twoD: null,
       };
 
+      const ROLE_CONFIG = {
+        management: {
+          defaultPage: "overview",
+          nav: ["overview", "market", "kpi", "evidence", "operations"],
+        },
+        operator: {
+          defaultPage: "operations",
+          nav: ["operations", "evidence", "kpi", "market", "overview"],
+        },
+      };
+
       const labelMap = {
         dress: "连衣裙", dresses: "连衣裙", suit: "套装", top: "上衣", outerwear: "外套", bottom: "下装", pant: "裤装", pants: "裤装", vest: "马甲", sale: "促销款",
         culotte: "阔腿裤", culottes: "阔腿裤", tunic: "长上衣", frock: "连衣裙", cardigan: "开衫", shirtdress: "衬衫裙", sweatshirt: "卫衣",
@@ -3171,12 +3261,16 @@
           "login.heroTitle": "把市场机会、经营 KPI 和用户证据连接成一个决策网站。",
           "login.heroCopy": "它把市场、订单、退货、评分、合身和评论证据接到同一个数据看板中。",
           "login.proofData": "主要公开数据源，用于市场、评论和合身风险。",
-          "login.proofModes": "使用模式：管理层视角和执行者视角。",
+          "login.proofModes": "使用模式：管理视角和运营视角。",
           "login.proofGraph": "经营健康表，把品类、SKU、尺码和证据变成可钻取指标。",
           "login.formTitle": "进入工作台", "login.formCopy": "选择使用视角后进入数据工作台。",
-          "login.email": "邮箱", "login.password": "密码", "login.managementMode": "管理视角", "login.operatorMode": "执行视角", "login.submit": "打开 Commerce OS",
+          "login.email": "邮箱", "login.password": "密码", "login.managementMode": "管理视角", "login.operatorMode": "运营视角", "login.submit": "打开 Commerce OS",
           "login.note": "内部数据工作台入口。",
           "top.pill": "数据联动产品站点",
+          "role.managementWorkspace": "管理者工作台", "role.operatorWorkspace": "运营工作台",
+          "role.managementPathTitle": "管理者路径", "role.operatorPathTitle": "运营路径",
+          "role.managementPathCopy": "先看经营结果，再判断市场、KPI 和证据。",
+          "role.operatorPathCopy": "先处理经营异常，再进入证据、KPI 和市场背景。",
           "date.label": "时间范围", "date.all": "全部时间", "date.last7": "最近7天", "date.last30": "最近30天", "date.last90": "最近90天", "date.custom": "自定义",
           "drawer.productGroup": "商品组钻取", "drawer.category": "品类钻取", "drawer.order": "订单行明细", "drawer.evidence": "评论证据",
           "drawer.openOperations": "查看经营", "drawer.openEvidence": "查看证据", "drawer.openMarket": "查看市场", "drawer.close": "关闭",
@@ -3249,6 +3343,10 @@
           "login.email": "Email", "login.password": "Password", "login.managementMode": "Management view", "login.operatorMode": "Operator view", "login.submit": "Open Commerce OS",
           "login.note": "Internal data workspace entry.",
           "top.pill": "Data-linked product workspace",
+          "role.managementWorkspace": "Management workspace", "role.operatorWorkspace": "Operator workspace",
+          "role.managementPathTitle": "Management path", "role.operatorPathTitle": "Operator path",
+          "role.managementPathCopy": "Read business results first, then check market, KPI, and evidence.",
+          "role.operatorPathCopy": "Handle operating exceptions first, then inspect evidence, KPI, and market context.",
           "date.label": "Date range", "date.all": "All data", "date.last7": "Last 7 days", "date.last30": "Last 30 days", "date.last90": "Last 90 days", "date.custom": "Custom",
           "drawer.productGroup": "Product group drill-down", "drawer.category": "Category drill-down", "drawer.order": "Order line detail", "drawer.evidence": "Review evidence",
           "drawer.openOperations": "Open operations", "drawer.openEvidence": "Open evidence", "drawer.openMarket": "Open market", "drawer.close": "Close",
@@ -3381,7 +3479,24 @@
       };
       const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
 
+      function roleConfig() {
+        return ROLE_CONFIG[state.mode] || ROLE_CONFIG.management;
+      }
+
+      function renderRoleNav() {
+        const nav = document.getElementById("main-nav");
+        if (!nav) return;
+        nav.innerHTML = roleConfig().nav.map((page, index) => `
+          <button class="nav-button ${state.page === page ? "active" : ""}" data-page="${page}" type="button" onclick="setPage('${page}')">
+            <span class="nav-number">${String(index + 1).padStart(2, "0")}</span>
+            <span>${escapeHtml(t(`nav.${page}`))}</span>
+          </button>
+        `).join("");
+      }
+
       function localizeStatic() {
+        document.documentElement.dataset.lang = state.lang;
+        document.documentElement.dataset.role = state.mode;
         document.querySelectorAll("[data-i18n]").forEach((el) => {
           el.textContent = t(el.dataset.i18n);
         });
@@ -3393,6 +3508,13 @@
         });
         const modeLabel = document.getElementById("current-mode-label");
         if (modeLabel) modeLabel.textContent = state.mode === "management" ? t("mode.management") : t("mode.operator");
+        const roleLabel = document.getElementById("role-workspace-label");
+        if (roleLabel) roleLabel.textContent = t(state.mode === "management" ? "role.managementWorkspace" : "role.operatorWorkspace");
+        const pathTitle = document.getElementById("overview-path-title");
+        if (pathTitle) pathTitle.textContent = t(state.mode === "management" ? "role.managementPathTitle" : "role.operatorPathTitle");
+        const pathCopy = document.getElementById("overview-path-copy");
+        if (pathCopy) pathCopy.textContent = t(state.mode === "management" ? "role.managementPathCopy" : "role.operatorPathCopy");
+        renderRoleNav();
       }
 
       function localizeGenerated(root = document) {
@@ -3726,13 +3848,25 @@
         const avgHealth = rows.reduce((sum, row) => sum + row.health, 0) / Math.max(rows.length, 1);
         const avgReturn = rows.reduce((sum, row) => sum + num(row.company.returnRate), 0) / Math.max(rows.length, 1);
         const totalRevenue = rows.reduce((sum, row) => sum + num(row.company.gmv), 0);
-        document.getElementById("operations-kpis").innerHTML = [
-          { label: state.lang === "en" ? "Health" : "健康分", value: avgHealth.toFixed(1), note: state.lang === "en" ? "Weighted operating score" : "综合经营评分" },
-          { label: state.lang === "en" ? "Revenue" : "经营收入", value: `$${fmt(totalRevenue)}`, note: sourceNote("company") },
-          { label: state.lang === "en" ? "Return" : "退货率", value: pct(avgReturn), note: state.lang === "en" ? "Category average" : "品类均值" },
-          { label: state.lang === "en" ? "Mapped categories" : "映射品类", value: `${realCount}/${rows.length}`, note: sourceNote("mapped") },
-          { label: state.lang === "en" ? "Selected" : "当前品类", value: nameOf(state.selectedCategory), note: state.lang === "en" ? "Current focus" : "当前聚焦" },
-        ].map((item) => `<button class="kpi-card" type="button"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
+        const actionRows = rows.filter((row) => row.status?.key !== "healthy");
+        const highestReturn = rows.slice().sort((a, b) => num(b.company.returnRate) - num(a.company.returnRate))[0] || selected;
+        const orderLineCount = orderRows().length;
+        const operationsKpis = state.mode === "operator"
+          ? [
+              { label: state.lang === "en" ? "Action queue" : "待处理品类", value: fmt(actionRows.length), note: state.lang === "en" ? "Non-healthy categories" : "非健康状态品类", page: "operations" },
+              { label: state.lang === "en" ? "Highest return" : "最高退货", value: pct(highestReturn.company?.returnRate), note: nameOf(highestReturn.category_group), page: "kpi" },
+              { label: state.lang === "en" ? "Order lines" : "订单行", value: fmt(orderLineCount), note: state.lang === "en" ? "Filterable detail" : "可筛选明细", page: "operations" },
+              { label: state.lang === "en" ? "Selected" : "当前品类", value: nameOf(selected.category_group), note: state.lang === "en" ? "Current focus" : "当前聚焦", page: "operations" },
+              { label: state.lang === "en" ? "Evidence" : "证据覆盖", value: state.lang === "en" ? `${fmt(int(selected.records))} rows` : `${fmt(int(selected.records))}条`, note: state.lang === "en" ? "Review and fit samples" : "评论与合身样本", page: "evidence" },
+            ]
+          : [
+              { label: state.lang === "en" ? "Health" : "健康分", value: avgHealth.toFixed(1), note: state.lang === "en" ? "Weighted operating score" : "综合经营评分", page: "operations" },
+              { label: state.lang === "en" ? "Revenue" : "经营收入", value: `$${fmt(totalRevenue)}`, note: sourceNote("company"), page: "operations" },
+              { label: state.lang === "en" ? "Return" : "退货率", value: pct(avgReturn), note: state.lang === "en" ? "Category average" : "品类均值", page: "kpi" },
+              { label: state.lang === "en" ? "Mapped categories" : "映射品类", value: `${realCount}/${rows.length}`, note: sourceNote("mapped"), page: "market" },
+              { label: state.lang === "en" ? "Selected" : "当前品类", value: nameOf(state.selectedCategory), note: state.lang === "en" ? "Current focus" : "当前聚焦", page: "operations" },
+            ];
+        document.getElementById("operations-kpis").innerHTML = operationsKpis.map((item) => `<button class="kpi-card" type="button" onclick="setPage('${item.page}')"><div class="kpi-label">${escapeHtml(item.label)}</div><div class="kpi-value">${escapeHtml(item.value)}</div><div class="kpi-note">${escapeHtml(item.note)}</div></button>`).join("");
         renderOperationsSortControls();
         document.getElementById("operations-table").innerHTML = rows.slice(0, 18).map((row) => {
           const status = row.status;
@@ -4066,11 +4200,19 @@
             <div class="mini-metric"><span>${state.lang === "en" ? "Fit rate" : "合身率"}</span><strong>${pct(leader.fit_rate)}</strong></div>
           </div>
         `;
-        document.getElementById("overview-path").innerHTML = [
-          ["01", state.lang === "en" ? "Market" : "市场", state.lang === "en" ? "Demand and product mix." : "需求与商品结构", "market", pct(marketDemandFor(leader.category_group))],
-          ["02", state.lang === "en" ? "Operations" : "经营", state.lang === "en" ? "Revenue, returns, rating." : "收入、退货、评分", "operations", `$${fmt(company.gmv || 0)}`],
-          ["03", state.lang === "en" ? "Evidence" : "证据", state.lang === "en" ? "Fit and review samples." : "合身与评论样本", "evidence", state.lang === "en" ? `${fmt(int(leader.records))} rows` : `${fmt(int(leader.records))}条`],
-        ].map(([index, title, body, page, metric]) => `<button class="stack-step" type="button" onclick="setPage('${page}')">
+        const evidenceMetric = state.lang === "en" ? `${fmt(int(leader.records))} rows` : `${fmt(int(leader.records))}条`;
+        const pathRows = state.mode === "operator"
+          ? [
+              ["01", state.lang === "en" ? "Operations" : "经营", state.lang === "en" ? "Category and order queue." : "品类与订单队列", "operations", `$${fmt(company.gmv || 0)}`],
+              ["02", state.lang === "en" ? "Evidence" : "证据", state.lang === "en" ? "Review pain and fit samples." : "评论痛点与合身样本", "evidence", evidenceMetric],
+              ["03", state.lang === "en" ? "KPI" : "KPI", state.lang === "en" ? "Return and conversion blockers." : "退货与转化阻塞", "kpi", pct(company.returnRate)],
+            ]
+          : [
+              ["01", state.lang === "en" ? "Market" : "市场", state.lang === "en" ? "Demand and product mix." : "需求与商品结构", "market", pct(marketDemandFor(leader.category_group))],
+              ["02", state.lang === "en" ? "KPI" : "KPI", state.lang === "en" ? "Readiness and risk blockers." : "承接能力与风险阻塞", "kpi", (leader.health || 0).toFixed(1)],
+              ["03", state.lang === "en" ? "Evidence" : "证据", state.lang === "en" ? "Fit and review samples." : "合身与评论样本", "evidence", evidenceMetric],
+            ];
+        document.getElementById("overview-path").innerHTML = pathRows.map(([index, title, body, page, metric]) => `<button class="stack-step" type="button" onclick="setPage('${page}')">
           <span class="step-index">${escapeHtml(index)}</span>
           <span><strong>${escapeHtml(title)}</strong><small>${escapeHtml(body)}</small></span>
           <span class="step-metric">${escapeHtml(metric)}</span>
@@ -5865,8 +6007,12 @@
 
       document.getElementById("login-form").addEventListener("submit", (event) => {
         event.preventDefault();
+        const targetPage = roleConfig().defaultPage;
+        state.page = targetPage;
         document.getElementById("login-screen").style.display = "none";
         document.getElementById("app-shell").classList.add("active");
+        renderAll();
+        setPage(targetPage, { scroll: false });
         renderNetworkGraph();
       });
 
@@ -5875,7 +6021,7 @@
           document.querySelectorAll("[data-login-mode]").forEach((item) => item.classList.remove("active"));
           button.classList.add("active");
           state.mode = button.dataset.loginMode;
-          document.getElementById("current-mode-label").textContent = state.mode === "management" ? t("mode.management") : t("mode.operator");
+          localizeStatic();
         });
       });
 
