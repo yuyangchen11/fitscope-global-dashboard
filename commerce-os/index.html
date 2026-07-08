@@ -4519,6 +4519,46 @@
       };
       const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
       const starSvg = (filled = false) => `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2.8l2.78 5.63 6.22.9-4.5 4.38 1.06 6.19L12 16.98 6.44 19.9l1.06-6.19L3 9.33l6.22-.9L12 2.8z" fill="${filled ? "currentColor" : "none"}" stroke="currentColor" stroke-linejoin="round"/></svg>`;
+      const STATIC_AUTH_KEY = "fitscope-static-auth-user";
+
+      function isStaticHosting() {
+        return location.protocol === "file:" || location.hostname.endsWith("github.io");
+      }
+
+      function selectedDemoRole() {
+        const active = document.querySelector("[data-demo-account].active");
+        return active?.dataset.demoAccount === "operator" ? "operator" : "manager";
+      }
+
+      function staticDemoUser(role = selectedDemoRole()) {
+        const operator = role === "operator";
+        return {
+          id: operator ? 2 : 1,
+          email: operator ? "operator@fitscope.local" : "manager@fitscope.local",
+          displayName: operator ? "Demo Operator" : "Yuyang Chen",
+          role: operator ? "operator" : "manager",
+        };
+      }
+
+      function persistStaticAuth(user) {
+        if (!isStaticHosting()) return;
+        try {
+          localStorage.setItem(STATIC_AUTH_KEY, JSON.stringify(user));
+        } catch (error) {
+          console.warn("Static auth could not be persisted", error);
+        }
+      }
+
+      function readStaticAuth() {
+        if (!isStaticHosting()) return null;
+        try {
+          const raw = localStorage.getItem(STATIC_AUTH_KEY);
+          return raw ? JSON.parse(raw) : null;
+        } catch (error) {
+          localStorage.removeItem(STATIC_AUTH_KEY);
+          return null;
+        }
+      }
 
       async function apiRequest(path, options = {}) {
         const response = await fetch(path, {
@@ -4554,6 +4594,17 @@
       }
 
       async function restoreAccountData() {
+        if (isStaticHosting()) {
+          try {
+            const following = JSON.parse(localStorage.getItem("fitscope-following") || "[]");
+            state.followedItems = new Set(Array.isArray(following) ? following : []);
+          } catch (error) {
+            state.followedItems = new Set();
+          }
+          const preferences = loadPreferences();
+          state.preferences = { ...state.preferences, ...preferences, lang: state.lang };
+          return;
+        }
         try {
           const [followingPayload, preferencesPayload] = await Promise.all([
             apiRequest("/api/me/following"),
@@ -4603,6 +4654,12 @@
 
       async function restoreServerSession() {
         if (state.loginInteractionStarted) return;
+        const staticUser = readStaticAuth();
+        if (staticUser) {
+          await enterAuthenticatedApp(staticUser);
+          return;
+        }
+        if (isStaticHosting()) return;
         try {
           const payload = await apiRequest("/api/auth/session");
           if (state.loginInteractionStarted) return;
@@ -4722,6 +4779,7 @@
 
       function syncFollowing(key, following) {
         if (!state.authUser) return;
+        if (isStaticHosting()) return;
         const item = followingItem(key);
         const [entityType, ...parts] = key.split(":");
         const entityId = parts.join(":");
@@ -4836,7 +4894,7 @@
           evidenceAlert: document.getElementById("setting-evidence-alert").checked,
         };
         localStorage.setItem("fitscope-preferences", JSON.stringify(state.preferences));
-        if (state.authUser) {
+        if (state.authUser && !isStaticHosting()) {
           apiRequest("/api/me/preferences", {
             method: "PUT",
             body: JSON.stringify({
@@ -7737,14 +7795,20 @@
         submit.textContent = t("login.loading");
         errorBox.classList.add("hidden");
         try {
-          const payload = await apiRequest("/api/auth/login", {
-            method: "POST",
-            body: JSON.stringify({
-              email: document.getElementById("login-email").value.trim(),
-              password: document.getElementById("login-password").value,
-            }),
-          });
-          await enterAuthenticatedApp(payload.user);
+          if (isStaticHosting()) {
+            const user = staticDemoUser();
+            persistStaticAuth(user);
+            await enterAuthenticatedApp(user);
+          } else {
+            const payload = await apiRequest("/api/auth/login", {
+              method: "POST",
+              body: JSON.stringify({
+                email: document.getElementById("login-email").value.trim(),
+                password: document.getElementById("login-password").value,
+              }),
+            });
+            await enterAuthenticatedApp(payload.user);
+          }
         } catch (error) {
           errorBox.textContent = error.status === 429 ? t("login.tooMany") : error.status === 401 ? t("login.invalid") : t("login.unavailable");
           errorBox.classList.remove("hidden");
@@ -7773,7 +7837,7 @@
         document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
         document.documentElement.dataset.lang = lang;
         localStorage.setItem("fitscope-preferences", JSON.stringify(state.preferences));
-        if (state.authUser) {
+        if (state.authUser && !isStaticHosting()) {
           apiRequest("/api/me/preferences", {
             method: "PUT",
             body: JSON.stringify({
@@ -7825,7 +7889,8 @@
         if (action === "profile") openUtilityPanel("settings-panel");
         if (action === "following") openUtilityPanel("following-panel");
         if (action === "logout") {
-          apiRequest("/api/auth/logout", { method: "POST", body: "{}" }).catch(() => {});
+          localStorage.removeItem(STATIC_AUTH_KEY);
+          if (!isStaticHosting()) apiRequest("/api/auth/logout", { method: "POST", body: "{}" }).catch(() => {});
           state.authUser = null;
           document.body.classList.remove("logged-in");
           document.getElementById("app-shell").classList.remove("active");
