@@ -54,7 +54,7 @@ The redesigned Page 03 should sit between market discovery and evidence/action e
 | 02 Market & Assortment | Market demand, assortment structure, transaction momentum |
 | **03 Operations Triage** | **Rank category work, explain blockers, route to evidence/actions** |
 | 04 KPI & Semantics | Deeper KPI and semantic diagnosis |
-| 05 Actions & Evidence | Review samples and execution checklist |
+| 05 Tasks & Feedback | Review samples and product-task checklist |
 
 ## Real Data Status
 
@@ -147,7 +147,7 @@ Recommended columns:
 | Rating / review pressure | Kaggle Women Reviews or Fashion Boutique rating | sortable |
 | Evidence volume | UCSD evidence count + review count | sortable |
 | Data coverage | connected KPI / proxy / model-filled | filterable |
-| Next step | generated action | button: Open evidence, Open actions, Open KPI |
+| Next step | generated action | button: View reviews, Open tasks, Open KPI |
 
 Default sort:
 
@@ -181,7 +181,7 @@ When the user clicks a table row, open a right-side drawer with:
 | Top return reasons | mini table from `kaggle_fashion_boutique_return_reason_metrics.csv` |
 | Top fit/semantic pain | mini table from UCSD pain metrics |
 | Action checklist | 3 to 5 operational tasks |
-| Navigation | Open evidence, Open actions, Open KPI details |
+| Navigation | View reviews, Open tasks, Open KPI details |
 
 This drawer replaces the current "Signal Inspector".
 

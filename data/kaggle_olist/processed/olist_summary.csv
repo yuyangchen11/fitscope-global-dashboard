@@ -1,0 +1,2 @@
+orders,valid_orders,delivered_orders,cancelled_orders,cancellation_rate,revenue,average_order_value,on_time_delivery_rate,average_review_score,review_count,fashion_order_lines,fashion_products,start_date,end_date
+99441,98207,96478,1234,0.012409,13494400.74,137.41,0.9188,4.086,99224,2642,1221,2016-09-04 21:15:19,2018-10-17 17:30:18

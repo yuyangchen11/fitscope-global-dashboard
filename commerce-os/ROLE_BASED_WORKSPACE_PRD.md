@@ -1,6 +1,6 @@
 ---
 artifact: prd
-version: "0.1"
+version: "0.2"
 created: 2026-06-26
 status: draft
 ---
@@ -131,8 +131,8 @@ What operators should not see first:
 
 ### FR-3: Role-Based Navigation Priority
 
-- Management nav order: Overview, Market & Assortment, KPI & Semantics, Operations, Actions & Evidence.
-- Operator nav order: Operations, Actions & Evidence, KPI & Semantics, Market & Assortment, Overview.
+- Management nav order: Overview, Market & Assortment, KPI & Semantics, Operations, Tasks & Feedback.
+- Operator nav order: Operations, Tasks & Feedback, KPI & Semantics, Market & Assortment, Overview.
 - V1 can keep all pages visible, but order and default page should differ.
 
 ### FR-4: Role-Based Module Emphasis
@@ -151,6 +151,29 @@ What operators should not see first:
 
 - All role labels, navigation names, button text, and module titles must support Chinese and English.
 - Avoid literal translation when business wording should differ by role.
+
+### FR-7: Follow and Alert Center
+
+- Both roles can follow the current category, product group, or SKU from the global toolbar.
+- Management alerts prioritize category health, return rate, and weekly followed-category changes.
+- Operator alerts prioritize return exceptions, recent order activity, followed-SKU changes, and evidence review queues.
+- Alert clicks must open the relevant dashboard page rather than a dead notification panel.
+- Opening an alert marks it as read and immediately updates the unread counter.
+
+### FR-9: Product Group to SKU Drill-Down
+
+- SKU analysis is a secondary workspace inside Operations, not a sixth top-level dashboard.
+- The flow is `product group/category -> SKU -> orders/evidence`.
+- SKU rows use transaction and article master data to show buyers, transactions, average price index, primary channel, and latest transaction.
+- Operators can search, sort, filter by product group, follow a SKU, and open its matching order lines.
+
+### FR-8: Context-Aware Operations Assistant
+
+- A global assistant entry is available after login, not on the login screen.
+- Responses use the current role, selected category, and loaded dashboard data.
+- Management responses summarize business health and delegation priorities.
+- Operator responses emphasize order checks, evidence review, and the next executable action.
+- The current front-end implementation is deterministic and data-linked; a production release can replace the response function with an API-backed assistant.
 
 ## 5. Data Requirements
 
@@ -188,6 +211,9 @@ Future database direction:
 - Management and Operator copy localization.
 - Role-specific first-viewport module emphasis.
 - Category click continuity from management to operator detail.
+- Role-aware category/product-group/SKU following and operating alerts with read state.
+- Product-group-to-SKU drill-down using real H&M transaction and article records.
+- A data-linked assistant panel with role-specific quick questions.
 
 ### Out of Scope
 
@@ -201,7 +227,7 @@ Future database direction:
 
 - Action ownership, due dates, and status history.
 - Saved views per role.
-- AI assistant that explains selected category or drafts PDP action notes.
+- API-backed AI assistant with conversation history, citations, and action drafting.
 - Backend database/API replacement for static CSV ingestion.
 - Exportable weekly business review report.
 

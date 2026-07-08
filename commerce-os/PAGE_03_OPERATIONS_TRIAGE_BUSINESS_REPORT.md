@@ -91,7 +91,7 @@ Top three reasons are necessary, but not enough. The operator also needs:
 | Ownership signal | Real operation requires follow-up ownership | compact owner/status column |
 | Time window | Today's issue and 30-day issue are different | Date range selector |
 | Change versus previous period | Operators need trend, not just current value | Delta column |
-| Evidence link | Decisions must be auditable | Open evidence button |
+| Review link | Decisions must be traceable to customer feedback | View reviews button |
 
 ## 4. Real Data Already Introduced
 
