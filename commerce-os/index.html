@@ -4174,11 +4174,20 @@
 
       let dataLoadingPromise = null;
 
+      function loadPreferences() {
+        try {
+          const preferences = JSON.parse(localStorage.getItem("fitscope-preferences") || "{}");
+          return preferences && typeof preferences === "object" ? preferences : {};
+        } catch (error) {
+          return {};
+        }
+      }
+
       function restoreLocalState() {
         try {
           const followed = JSON.parse(localStorage.getItem("fitscope-following") || "[]");
           state.followedItems = new Set(Array.isArray(followed) ? followed : []);
-          const preferences = JSON.parse(localStorage.getItem("fitscope-preferences") || "{}");
+          const preferences = loadPreferences();
           state.preferences = { ...state.preferences, ...preferences };
           const preferredLang = preferences.lang || preferences.language;
           if (preferredLang === "en" || preferredLang === "zh") {
