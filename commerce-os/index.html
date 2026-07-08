@@ -4540,6 +4540,10 @@
         };
       }
 
+      function authApiUnavailable(error) {
+        return !error?.status || [404, 405, 501].includes(error.status);
+      }
+
       function persistStaticAuth(user) {
         if (!isStaticHosting()) return;
         try {
@@ -7810,8 +7814,14 @@
             await enterAuthenticatedApp(payload.user);
           }
         } catch (error) {
-          errorBox.textContent = error.status === 429 ? t("login.tooMany") : error.status === 401 ? t("login.invalid") : t("login.unavailable");
-          errorBox.classList.remove("hidden");
+          if (authApiUnavailable(error)) {
+            const user = staticDemoUser();
+            persistStaticAuth(user);
+            await enterAuthenticatedApp(user);
+          } else {
+            errorBox.textContent = error.status === 429 ? t("login.tooMany") : error.status === 401 ? t("login.invalid") : t("login.unavailable");
+            errorBox.classList.remove("hidden");
+          }
         } finally {
           submit.disabled = false;
           submit.textContent = t("login.submit");
