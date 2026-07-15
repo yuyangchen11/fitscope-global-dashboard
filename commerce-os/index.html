@@ -2027,6 +2027,10 @@
         box-shadow: 0 18px 50px rgba(0, 0, 0, 0.42);
       }
 
+      .product-picker-popover[hidden] {
+        display: none;
+      }
+
       .product-picker-search {
         width: 100%;
         min-height: 40px;
@@ -4262,7 +4266,7 @@
                   <span id="sales-product-label" class="product-picker-label">全部商品</span>
                   <span class="product-picker-chevron" aria-hidden="true"></span>
                 </button>
-                <div id="sales-product-popover" class="product-picker-popover hidden">
+                <div id="sales-product-popover" class="product-picker-popover" hidden>
                   <input id="sales-product-search" class="product-picker-search" type="search" autocomplete="off" data-i18n-placeholder="olist.productSearch" placeholder="搜索商品 ID 或销售额">
                   <div id="sales-product-options" class="product-picker-options" role="listbox"></div>
                 </div>
@@ -6021,8 +6025,8 @@
         const popover = document.getElementById("sales-product-popover");
         const trigger = document.getElementById("sales-product-trigger");
         const search = document.getElementById("sales-product-search");
-        if (!popover || popover.classList.contains("hidden")) return;
-        popover.classList.add("hidden");
+        if (!popover) return;
+        popover.hidden = true;
         trigger?.setAttribute("aria-expanded", "false");
         if (search) search.value = "";
         if (restoreFocus) trigger?.focus();
@@ -6036,6 +6040,9 @@
         const search = document.getElementById("sales-product-search");
         const options = document.getElementById("sales-product-options");
         if (!picker || !trigger || !label || !popover || !search || !options) return;
+
+        popover.hidden = true;
+        trigger.setAttribute("aria-expanded", "false");
 
         const selected = productOptions.find((item) => item.id === state.salesFilters.product);
         label.textContent = selected ? `${selected.id} · ${money(selected.revenue)}` : allLabel;
@@ -6070,9 +6077,9 @@
         renderOptions(search.value);
         trigger.onclick = (event) => {
           event.stopPropagation();
-          const opening = popover.classList.contains("hidden");
+          const opening = popover.hidden;
           if (!opening) return closeSalesProductPicker();
-          popover.classList.remove("hidden");
+          popover.hidden = false;
           trigger.setAttribute("aria-expanded", "true");
           search.value = "";
           renderOptions();
