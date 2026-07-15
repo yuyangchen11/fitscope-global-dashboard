@@ -1868,6 +1868,368 @@
         line-height: 1.55;
       }
 
+      .action-grid.evidence-insights {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: stretch;
+      }
+
+      .evidence-insight-card {
+        min-height: 126px;
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.18 0.016 250 / 0.74);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .evidence-insight-card span,
+      .evidence-insight-card p {
+        color: var(--muted);
+        margin: 0;
+        line-height: 1.42;
+      }
+
+      .evidence-insight-card strong {
+        font-size: 22px;
+        line-height: 1.08;
+        color: var(--text);
+        overflow-wrap: anywhere;
+      }
+
+      .evidence-insight-card button {
+        margin-top: auto;
+        width: fit-content;
+        min-height: 30px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--blue);
+        font-weight: 800;
+      }
+
+      .evidence-insight-wide {
+        grid-column: span 2;
+        min-height: 0;
+      }
+
+      .evidence-mini-bars {
+        display: grid;
+        gap: 8px;
+        width: 100%;
+        margin-top: 0;
+        align-content: start;
+      }
+
+      .evidence-insight-card .evidence-mini-row {
+        display: grid;
+        grid-template-columns: minmax(150px, 0.8fr) minmax(180px, 2.1fr) minmax(54px, auto);
+        gap: 12px;
+        align-items: center;
+        width: 100%;
+        min-height: 42px;
+        margin-top: 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: oklch(0.16 0.014 250 / 0.68);
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+        padding: 0 12px;
+      }
+
+      .evidence-mini-row span {
+        color: var(--muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .evidence-mini-row:hover span {
+        color: var(--text);
+      }
+
+      .evidence-insight-card .evidence-mini-row:hover {
+        border-color: oklch(0.66 0.16 228 / 0.7);
+        background: oklch(0.2 0.025 240 / 0.78);
+      }
+
+      .evidence-mini-track {
+        height: 8px;
+        border-radius: 999px;
+        background: oklch(0.26 0.02 255 / 0.75);
+        overflow: hidden;
+      }
+
+      .evidence-mini-fill {
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #25b7ff, #9b7cff);
+      }
+
+      .evidence-mini-row strong {
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .product-picker {
+        position: relative;
+        min-width: 0;
+      }
+
+      .product-picker-trigger {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 18px;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        min-height: 44px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--text);
+        text-align: left;
+      }
+
+      .product-picker-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .product-picker-chevron {
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid var(--muted);
+        border-bottom: 2px solid var(--muted);
+        transform: rotate(45deg) translateY(-2px);
+      }
+
+      .product-picker-popover {
+        position: absolute;
+        z-index: 80;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        min-width: 320px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: oklch(0.15 0.015 255 / 0.98);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.42);
+      }
+
+      .product-picker-search {
+        width: 100%;
+        min-height: 40px;
+        margin-bottom: 8px;
+        padding: 0 12px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .product-picker-options {
+        display: grid;
+        gap: 4px;
+        max-height: 252px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+
+      .product-picker-option {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+        width: 100%;
+        min-height: 38px;
+        padding: 0 10px;
+        border: 1px solid transparent;
+        border-radius: 7px;
+        background: transparent;
+        color: var(--text);
+        text-align: left;
+      }
+
+      .product-picker-option span:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .product-picker-option small { color: var(--muted); }
+      .product-picker-option:hover,
+      .product-picker-option.active {
+        border-color: oklch(0.62 0.16 228 / 0.65);
+        background: oklch(0.22 0.035 235 / 0.72);
+      }
+
+      .operations-analytics-grid {
+        grid-template-columns: minmax(500px, 1.25fr) repeat(2, minmax(280px, 0.75fr));
+        align-items: start;
+      }
+
+      .operations-breakdown-panel .bars {
+        align-content: start;
+        min-height: 0;
+        overflow: auto;
+      }
+
+      .operations-breakdown-panel .bar-row {
+        grid-template-columns: minmax(110px, 0.8fr) minmax(90px, 1fr) auto;
+      }
+
+      #operations-daily-line {
+        flex: 1;
+        width: 100%;
+        min-height: 190px;
+        height: 100%;
+      }
+
+      .operations-analysis-toolbar {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 14px;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: oklch(0.145 0.014 255 / 0.92);
+      }
+
+      .operations-analysis-heading {
+        min-width: 210px;
+      }
+
+      .operations-analysis-heading h3,
+      .operations-analysis-heading p {
+        margin: 0;
+      }
+
+      .operations-analysis-heading h3 {
+        font-size: 16px;
+        white-space: nowrap;
+      }
+
+      .operations-analysis-heading p {
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .operations-analysis-filters {
+        display: grid;
+        grid-template-columns: minmax(150px, 0.65fr) minmax(140px, 0.55fr) minmax(250px, 1fr) auto;
+        align-items: end;
+        gap: 10px;
+        width: min(100%, 900px);
+      }
+
+      .analysis-filter {
+        display: grid;
+        gap: 6px;
+        min-width: 0;
+      }
+
+      .analysis-filter span {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 760;
+      }
+
+      .analysis-filter select {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .analysis-reset-button {
+        height: 44px;
+        white-space: nowrap;
+      }
+
+      .order-toolbar {
+        grid-template-columns: minmax(260px, 1fr) repeat(4, minmax(150px, 0.42fr));
+      }
+
+      @media (max-width: 1440px) {
+        .operations-analysis-toolbar {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .operations-analysis-filters {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .operations-analysis-filters {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .analysis-reset-button {
+        height: 44px;
+        white-space: nowrap;
+      }
+
+      .operations-sales-panel,
+      .operations-breakdown-panel {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        min-height: 0;
+        height: clamp(340px, 27vw, 390px);
+        overflow: hidden;
+      }
+
+      .sales-panel-header {
+        align-items: center;
+        gap: 12px;
+      }
+
+      .sales-panel-header h3,
+      .sales-period-pill {
+        white-space: nowrap;
+      }
+
+      .sales-summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin: 4px 0 10px;
+      }
+
+      .sales-summary .mini-metric {
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: oklch(0.13 0.014 255 / 0.64);
+      }
+
+      .sales-summary .mini-metric span {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .sales-summary .mini-metric strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
       .priority {
         display: inline-grid;
         place-items: center;
@@ -1894,7 +2256,7 @@
       }
 
       .order-toolbar {
-        grid-template-columns: minmax(260px, 1fr) repeat(3, minmax(170px, 0.45fr));
+        grid-template-columns: minmax(260px, 1fr) repeat(4, minmax(150px, 0.42fr));
       }
 
       .order-table-wrap {
@@ -3384,6 +3746,15 @@
         .evidence-toolbar {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+
+        .sales-toolbar {
+          min-width: 0;
+          grid-template-columns: 1fr;
+        }
+
+        .action-grid.evidence-insights {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
       }
 
       @media (max-width: 1440px) {
@@ -3435,12 +3806,21 @@
 
         .login-proof,
         .action-grid,
+        .action-grid.evidence-insights,
         .two-col,
         .three-col,
         .insight-strip,
         #priority-queue,
         .mini-metrics {
           grid-template-columns: 1fr;
+        }
+
+        .evidence-insight-wide {
+          grid-column: auto;
+        }
+
+        .sales-summary {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
         .app-shell.active {
@@ -3863,14 +4243,40 @@
             </div>
           </div>
           <div style="height:14px"></div>
-          <div class="chart-grid three">
-            <div class="panel chart-box">
-              <div class="panel-header"><div><h3 data-i18n="olist.dailyRevenue">每日销售额</h3></div></div>
+          <div class="operations-analysis-toolbar">
+            <div class="operations-analysis-heading">
+              <h3 data-i18n="olist.analysisTitle">订单经营分析</h3>
+              <p data-i18n="olist.analysisNote">统一筛选销售趋势、订单状态与支付结构</p>
+            </div>
+            <div class="operations-analysis-filters">
+              <label class="analysis-filter"><span data-i18n="olist.analysisDate">时间范围</span><select id="sales-date-filter" aria-label="sales date range"></select></label>
+              <label class="analysis-filter"><span data-i18n="olist.analysisGrain">统计粒度</span><select id="sales-grain-filter" aria-label="sales time grain"></select></label>
+              <div class="analysis-filter product-picker">
+                <span data-i18n="olist.analysisProduct">商品范围</span>
+                <button type="button" id="sales-product-trigger" class="product-picker-trigger" aria-haspopup="listbox" aria-expanded="false">
+                  <span id="sales-product-label" class="product-picker-label">全部商品</span>
+                  <span class="product-picker-chevron" aria-hidden="true"></span>
+                </button>
+                <div id="sales-product-popover" class="product-picker-popover hidden">
+                  <input id="sales-product-search" class="product-picker-search" type="search" autocomplete="off" data-i18n-placeholder="olist.productSearch" placeholder="搜索商品 ID 或销售额">
+                  <div id="sales-product-options" class="product-picker-options" role="listbox"></div>
+                </div>
+              </div>
+              <button type="button" id="sales-reset-filter" class="ghost analysis-reset-button" data-i18n="olist.resetAnalysis">重置</button>
+            </div>
+          </div>
+          <div class="chart-grid three operations-analytics-grid">
+            <div class="panel chart-box operations-sales-panel">
+              <div class="panel-header sales-panel-header">
+                <div><h3 data-i18n="olist.dailyRevenue">销售趋势</h3></div>
+                <span class="pill sales-period-pill" id="sales-period-label"></span>
+              </div>
+              <div class="sales-summary" id="sales-chart-summary"></div>
               <svg id="operations-daily-line" class="line-chart" role="img" aria-label="daily operating trend"></svg>
             </div>
-            <div class="panel"><div class="panel-header"><div><h3 data-i18n="olist.orderStatus">订单状态</h3></div></div><div class="bars" id="operations-sku-bars"></div></div>
-            <div class="panel">
-              <div class="panel-header"><div><h3 data-i18n="olist.paymentMethod">支付方式</h3></div></div>
+            <div class="panel operations-breakdown-panel"><div class="panel-header"><div><h3 data-i18n="olist.orderStatus">订单状态</h3></div><span class="pill" id="operations-status-total"></span></div><div class="bars" id="operations-sku-bars"></div></div>
+            <div class="panel operations-breakdown-panel">
+              <div class="panel-header"><div><h3 data-i18n="olist.paymentMethod">支付方式</h3></div><span class="pill" id="operations-payment-total"></span></div>
               <div class="bars" id="operations-size-bars"></div>
             </div>
           </div>
@@ -3886,6 +4292,7 @@
               <input id="order-search" data-i18n-placeholder="olist.searchOrders" placeholder="搜索订单、商品、卖家或地区" />
               <select id="order-channel-filter" aria-label="order channel filter"></select>
               <select id="order-type-filter" aria-label="order product type filter"></select>
+              <select id="order-date-filter" aria-label="order date filter"></select>
               <select id="order-sort" aria-label="order sort"></select>
             </div>
             <div class="table-wrap compact-table order-table-wrap">
@@ -4145,7 +4552,8 @@
         selectedNode: null,
         networkFilter: "all",
         evidenceFilters: { q: "", category: "all", fit: "all", body: "all", pain: "all" },
-        orderFilters: { q: "", channel: "all", productType: "all", sort: "dateDesc" },
+        orderFilters: { q: "", channel: "all", productType: "all", date: "all", sort: "dateDesc" },
+        salesFilters: { product: "all", grain: "day", date: "all" },
         dateRange: { preset: "all", start: "", end: "" },
         drawer: { open: false, type: "", payload: null },
         kpiSort: "gapDesc",
@@ -4365,6 +4773,7 @@
           "table.unitPrice": "单价", "table.quantity": "件数", "table.orderRevenue": "收入",
           "table.transactionId": "交易 ID", "table.customerId": "客户哈希", "table.productName": "商品名", "table.productType": "商品类型", "table.channel": "渠道", "table.storeSite": "站点/触点", "table.paidPrice": "成交价指数",
           "olist.status": "状态", "olist.operatingScore": "综合指数", "olist.orders": "订单", "olist.units": "件数", "olist.itemRevenue": "销售额", "olist.avgItemPrice": "平均成交价", "olist.onTime": "准时履约", "olist.freightRatio": "运费占比", "olist.products": "商品数",
+          "olist.analysisTitle": "订单经营分析", "olist.analysisNote": "销售趋势、订单状态与支付结构使用同一筛选范围", "olist.analysisDate": "时间范围", "olist.analysisGrain": "统计粒度", "olist.analysisProduct": "商品范围", "olist.productSearch": "搜索商品 ID 或销售额", "olist.noProducts": "没有匹配商品", "olist.resetAnalysis": "重置",
           "olist.dailyRevenue": "每日销售额", "olist.orderStatus": "订单状态", "olist.paymentMethod": "支付方式", "olist.searchOrders": "搜索订单、商品、卖家或地区",
           "olist.orderId": "订单号", "olist.orderTime": "订单时间", "olist.productId": "商品 ID", "olist.productCategory": "商品品类", "olist.sellerId": "卖家 ID", "olist.region": "地区", "olist.itemPrice": "商品价格", "olist.freight": "运费", "olist.fulfillment": "履约",
           "footer.note": ""
@@ -4450,6 +4859,7 @@
           "table.unitPrice": "Unit price", "table.quantity": "Qty", "table.orderRevenue": "Revenue",
           "table.transactionId": "Transaction ID", "table.customerId": "Customer hash", "table.productName": "Product name", "table.productType": "Product type", "table.channel": "Channel", "table.storeSite": "Touchpoint", "table.paidPrice": "Price index",
           "olist.status": "Status", "olist.operatingScore": "Composite index", "olist.orders": "Orders", "olist.units": "Units", "olist.itemRevenue": "Sales amount", "olist.avgItemPrice": "Avg selling price", "olist.onTime": "On-time", "olist.freightRatio": "Freight ratio", "olist.products": "Products",
+          "olist.analysisTitle": "Order operating analysis", "olist.analysisNote": "Sales trend, order status, and payment mix share one filter scope.", "olist.analysisDate": "Date range", "olist.analysisGrain": "Time grain", "olist.analysisProduct": "Product scope", "olist.productSearch": "Search product ID or sales amount", "olist.noProducts": "No matching products", "olist.resetAnalysis": "Reset",
           "olist.dailyRevenue": "Daily sales amount", "olist.orderStatus": "Order status", "olist.paymentMethod": "Payment method", "olist.searchOrders": "Search order, product, seller, or region",
           "olist.orderId": "Order ID", "olist.orderTime": "Order time", "olist.productId": "Product ID", "olist.productCategory": "Product category", "olist.sellerId": "Seller ID", "olist.region": "Region", "olist.itemPrice": "Item price", "olist.freight": "Freight", "olist.fulfillment": "Fulfillment",
           "footer.note": ""
@@ -4665,18 +5075,31 @@
         localizeGenerated(document.querySelector(".app-shell") || document);
       }
 
+      function prepareLoginForUser(user) {
+        const role = user?.role === "operator" ? "operator" : "manager";
+        document.querySelectorAll("[data-demo-account]").forEach((button) => {
+          button.classList.toggle("active", button.dataset.demoAccount === role);
+        });
+        const email = document.getElementById("login-email");
+        const password = document.getElementById("login-password");
+        const errorBox = document.getElementById("login-error");
+        if (email) email.value = user?.email || `${role}@fitscope.local`;
+        if (password) password.value = "FitScope2026!";
+        if (errorBox) errorBox.classList.add("hidden");
+      }
+
       async function restoreServerSession() {
         if (state.loginInteractionStarted) return;
         const staticUser = readStaticAuth();
         if (staticUser) {
-          await enterAuthenticatedApp(staticUser);
+          prepareLoginForUser(staticUser);
           return;
         }
         if (isStaticHosting()) return;
         try {
           const payload = await apiRequest("/api/auth/session");
           if (state.loginInteractionStarted) return;
-          await enterAuthenticatedApp(payload.user);
+          prepareLoginForUser(payload.user);
         } catch (error) {
           if (error.status && error.status !== 401) console.warn("Session restore failed", error);
         }
@@ -5335,6 +5758,7 @@
         state.skuFilters.group = category;
         state.selectedSku = "";
         state.orderFilters.productType = category;
+        state.salesFilters.product = "all";
         renderOperations();
         buildCategorySelect();
         renderUserChrome();
@@ -5517,6 +5941,224 @@
         return rows.sort(sorters[state.operationsSort] || sorters.healthAsc);
       }
 
+      function operationsCategoryLines() {
+        const scoped = filterRowsByDate(state.data.olistOrderLines || [], "order_time");
+        if (!state.selectedOperationsCategory || state.selectedOperationsCategory === "all") return scoped;
+        const rows = scoped.filter((row) => row.category === state.selectedOperationsCategory);
+        return rows.length ? rows : scoped;
+      }
+
+      function orderLineRevenue(row) {
+        const direct = row.item_revenue ?? row.revenue;
+        if (direct !== undefined && direct !== null && direct !== "") return num(direct);
+        return num(row.unit_price) * Math.max(int(row.quantity || 1), 1);
+      }
+
+      function relativeDateOptions() {
+        return state.lang === "en"
+          ? [["all", "All data"], ["last7", "Last 7 days"], ["last30", "Last 30 days"], ["last90", "Last 90 days"]]
+          : [["all", "全部数据"], ["last7", "最近 7 天"], ["last30", "最近 30 天"], ["last90", "最近 90 天"]];
+      }
+
+      function filterRowsByRelativeDate(rows, key, preset) {
+        if (!preset || preset === "all") return rows;
+        const days = { last7: 7, last30: 30, last90: 90 }[preset];
+        if (!days) return rows;
+        const values = rows.map((row) => parseDateValue(row[key])).filter((value) => value !== null);
+        if (!values.length) return rows;
+        const max = Math.max(...values);
+        const cutoff = max - (days - 1) * 86400000;
+        return rows.filter((row) => {
+          const value = parseDateValue(row[key]);
+          return value !== null && value >= cutoff && value <= max;
+        });
+      }
+
+      function salesProductOptions(lines) {
+        const grouped = new Map();
+        lines.forEach((row) => {
+          const id = row.product_id || row.item_code || row.sku || "";
+          if (!id) return;
+          if (!grouped.has(id)) grouped.set(id, { id, revenue: 0, orders: new Set(), units: 0 });
+          const item = grouped.get(id);
+          item.revenue += orderLineRevenue(row);
+          item.orders.add(row.order_id);
+          item.units += int(row.quantity || 1);
+        });
+        return [...grouped.values()].sort((a, b) => b.revenue - a.revenue).slice(0, 80);
+      }
+
+      function groupSalesSeries(rows, grain) {
+        const grouped = new Map();
+        rows.forEach((row) => {
+          const raw = String(row.order_time || row.date || "").slice(0, 10);
+          if (!raw) return;
+          const key = grain === "month" ? raw.slice(0, 7) : raw;
+          if (!grouped.has(key)) grouped.set(key, { date: key, revenue: 0, transactions: 0, orders: new Set(), units: 0 });
+          const item = grouped.get(key);
+          const qty = int(row.quantity || 1);
+          item.revenue += orderLineRevenue(row);
+          item.transactions += 1;
+          item.units += qty;
+          item.orders.add(row.order_id);
+        });
+        return [...grouped.values()].sort((a, b) => a.date.localeCompare(b.date)).map((item) => ({
+          date: item.date,
+          revenue: item.revenue,
+          transactions: item.transactions,
+          orders: item.orders.size,
+          units: item.units,
+          avg_price: item.revenue / Math.max(item.units, 1),
+        }));
+      }
+
+      function renderSalesProductPicker(productOptions, allLabel) {
+        const picker = document.querySelector(".product-picker");
+        const trigger = document.getElementById("sales-product-trigger");
+        const label = document.getElementById("sales-product-label");
+        const popover = document.getElementById("sales-product-popover");
+        const search = document.getElementById("sales-product-search");
+        const options = document.getElementById("sales-product-options");
+        if (!picker || !trigger || !label || !popover || !search || !options) return;
+
+        const selected = productOptions.find((item) => item.id === state.salesFilters.product);
+        label.textContent = selected ? `${selected.id} · ${money(selected.revenue)}` : allLabel;
+        label.title = label.textContent;
+
+        const renderOptions = (query = "") => {
+          const needle = query.trim().toLowerCase();
+          const matches = productOptions
+            .filter((item) => !needle || item.id.toLowerCase().includes(needle) || money(item.revenue).toLowerCase().includes(needle))
+            .slice(0, 40);
+          const rows = [{ id: "all", revenue: null }, ...matches];
+          options.innerHTML = rows.map((item) => {
+            const active = state.salesFilters.product === item.id;
+            const primary = item.id === "all" ? allLabel : item.id;
+            const secondary = item.id === "all"
+              ? `${productOptions.length} ${state.lang === "en" ? "products" : "个商品"}`
+              : money(item.revenue);
+            return `<button type="button" class="product-picker-option${active ? " active" : ""}" data-product-id="${escapeHtml(item.id)}" role="option" aria-selected="${active}"><span>${escapeHtml(primary)}</span><small>${escapeHtml(secondary)}</small></button>`;
+          }).join("");
+          if (needle && !matches.length) {
+            options.insertAdjacentHTML("beforeend", `<div class="empty-state">${escapeHtml(t("olist.noProducts"))}</div>`);
+          }
+          options.querySelectorAll("[data-product-id]").forEach((button) => {
+            button.onclick = () => {
+              state.salesFilters.product = button.dataset.productId;
+              popover.classList.add("hidden");
+              trigger.setAttribute("aria-expanded", "false");
+              search.value = "";
+              renderOperationsSalesChart();
+            };
+          });
+        };
+
+        renderOptions(search.value);
+        trigger.onclick = (event) => {
+          event.stopPropagation();
+          const opening = popover.classList.contains("hidden");
+          popover.classList.toggle("hidden", !opening);
+          trigger.setAttribute("aria-expanded", String(opening));
+          if (opening) {
+            search.value = "";
+            renderOptions();
+            requestAnimationFrame(() => search.focus());
+          }
+        };
+        search.oninput = () => renderOptions(search.value);
+        search.onclick = (event) => event.stopPropagation();
+        if (!document.body.dataset.productPickerBound) {
+          document.addEventListener("click", (event) => {
+            const currentPicker = document.querySelector(".product-picker");
+            if (currentPicker && !currentPicker.contains(event.target)) {
+              document.getElementById("sales-product-popover")?.classList.add("hidden");
+              document.getElementById("sales-product-trigger")?.setAttribute("aria-expanded", "false");
+            }
+          });
+          document.body.dataset.productPickerBound = "true";
+        }
+      }
+
+      function renderOperationsSalesChart() {
+        state.salesFilters = state.salesFilters || { product: "all", grain: "day", date: "all" };
+        const baseLines = operationsCategoryLines();
+        const dateSelect = document.getElementById("sales-date-filter");
+        const grainSelect = document.getElementById("sales-grain-filter");
+        const productTrigger = document.getElementById("sales-product-trigger");
+        const resetButton = document.getElementById("sales-reset-filter");
+        if (!dateSelect || !grainSelect || !productTrigger || !resetButton) return;
+        const dateOptions = relativeDateOptions();
+        if (!dateOptions.some(([value]) => value === state.salesFilters.date)) state.salesFilters.date = "all";
+        dateSelect.innerHTML = dateOptions.map(([value, label]) => `<option value="${value}"${state.salesFilters.date === value ? " selected" : ""}>${escapeHtml(label)}</option>`).join("");
+        const grainOptions = state.lang === "en" ? [["day", "Daily"], ["month", "Monthly"]] : [["day", "按日"], ["month", "按月"]];
+        grainSelect.innerHTML = grainOptions.map(([value, label]) => `<option value="${value}"${state.salesFilters.grain === value ? " selected" : ""}>${label}</option>`).join("");
+        const datedLines = filterRowsByRelativeDate(baseLines, "order_time", state.salesFilters.date);
+        const productOptions = salesProductOptions(datedLines);
+        if (state.salesFilters.product !== "all" && !productOptions.some((item) => item.id === state.salesFilters.product)) state.salesFilters.product = "all";
+        const allLabel = state.lang === "en" ? "All products" : "全部商品";
+        renderSalesProductPicker(productOptions, allLabel);
+        dateSelect.onchange = () => {
+          state.salesFilters.date = dateSelect.value;
+          state.salesFilters.product = "all";
+          renderOperationsSalesChart();
+        };
+        grainSelect.onchange = () => {
+          state.salesFilters.grain = grainSelect.value;
+          renderOperationsSalesChart();
+        };
+        resetButton.onclick = () => {
+          state.salesFilters = { product: "all", grain: "day", date: "all" };
+          renderOperationsSalesChart();
+        };
+        const filtered = state.salesFilters.product === "all"
+          ? datedLines
+          : datedLines.filter((row) => (row.product_id || row.item_code || row.sku) === state.salesFilters.product);
+        const series = groupSalesSeries(filtered, state.salesFilters.grain || "day");
+        renderLineChart("operations-daily-line", series, { compact: false, valueKey: "revenue", label: state.lang === "en" ? "Sales amount" : "销售额" });
+        const totalRevenue = filtered.reduce((sum, row) => sum + orderLineRevenue(row), 0);
+        const orderCount = new Set(filtered.map((row) => row.order_id)).size;
+        const units = filtered.reduce((sum, row) => sum + int(row.quantity || 1), 0);
+        const summary = document.getElementById("sales-chart-summary");
+        if (summary) {
+          const cards = [
+            [state.lang === "en" ? "Sales amount" : "销售额", money(totalRevenue)],
+            [state.lang === "en" ? "Orders" : "订单", fmt(orderCount)],
+            [state.lang === "en" ? "Units" : "件数", fmt(units)],
+          ];
+          summary.innerHTML = cards.map(([label, value]) => `<div class="mini-metric"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></div>`).join("");
+        }
+        const dateLabel = dateOptions.find(([value]) => value === state.salesFilters.date)?.[1] || "";
+        const periodLabel = document.getElementById("sales-period-label");
+        if (periodLabel) periodLabel.textContent = state.lang === "en" ? `${dateLabel} · ${series.length} periods` : `${dateLabel} · ${series.length} 个周期`;
+
+        const statusGroups = new Map();
+        filtered.forEach((row) => {
+          const status = row.order_status || (state.lang === "en" ? "Unknown" : "未知");
+          if (!statusGroups.has(status)) statusGroups.set(status, new Set());
+          statusGroups.get(status).add(row.order_id);
+        });
+        const statuses = [...statusGroups].map(([label, orders]) => ({ label: localizeOrderStatus(label), value: orders.size })).sort((a, b) => b.value - a.value);
+        renderBars("operations-sku-bars", statuses, "label", (row) => num(row.value), {
+          max: Math.max(...statuses.map((row) => num(row.value)), 1),
+          format: (value) => fmt(value)
+        });
+        const statusTotal = document.getElementById("operations-status-total");
+        if (statusTotal) statusTotal.textContent = state.lang === "en" ? `${fmt(orderCount)} orders` : `${fmt(orderCount)} 笔订单`;
+
+        const paymentGroups = new Map();
+        filtered.forEach((row) => {
+          const method = row.payment_type || (state.lang === "en" ? "Unknown" : "未知");
+          paymentGroups.set(method, (paymentGroups.get(method) || 0) + orderLineRevenue(row));
+        });
+        const payments = [...paymentGroups].map(([label, value]) => ({ label: localizePayment(label), value })).sort((a, b) => b.value - a.value);
+        renderBars("operations-size-bars", payments, "label", (row) => num(row.value), {
+          max: Math.max(...payments.map((row) => num(row.value)), 1),
+          format: (value) => money(value)
+        });
+        const paymentTotal = document.getElementById("operations-payment-total");
+        if (paymentTotal) paymentTotal.textContent = money(totalRevenue);
+      }
+
       function renderOperations() {
         const rows = sortedOlistCategoryRows();
         const selected = rows.find((row) => row.category === state.selectedOperationsCategory) || rows[0] || {};
@@ -5560,17 +6202,7 @@
           ? "Composite score: review 35%, on-time fulfillment 35%, freight efficiency 20%, cancellation control 10%. Status is relative to category quartiles in the current scope."
           : "综合指数：评价35%、准时履约35%、运费效率20%、取消控制10%。状态按当前范围内品类四分位相对划分。";
         renderOperationsDetail(selected);
-        renderLineChart("operations-daily-line", normalizeDailyRows(state.data.olistDaily || []), { compact: false, valueKey: "revenue", label: state.lang === "en" ? "Sales amount" : "销售额" });
-        const statusMap = new Map();
-        const paymentMap = new Map();
-        scopedLines.forEach((row) => {
-          statusMap.set(row.order_status, (statusMap.get(row.order_status) || 0) + 1);
-          paymentMap.set(row.payment_type, (paymentMap.get(row.payment_type) || 0) + num(row.unit_price));
-        });
-        const statusRows = [...statusMap.entries()].map(([order_status, orders]) => ({ order_status: localizeOrderStatus(order_status), orders })).sort((a, b) => b.orders - a.orders);
-        const paymentRows = [...paymentMap.entries()].map(([payment_type, payment_value]) => ({ payment_type: localizePayment(payment_type), payment_value })).sort((a, b) => b.payment_value - a.payment_value);
-        renderBars("operations-sku-bars", statusRows, "order_status", (row) => num(row.orders), { max: Math.max(...statusRows.map((row) => num(row.orders)), 1), format: (v) => fmt(v) });
-        renderBars("operations-size-bars", paymentRows, "payment_type", (row) => num(row.payment_value), { max: Math.max(...paymentRows.map((row) => num(row.payment_value)), 1), format: money });
+        renderOperationsSalesChart();
         renderSkuWorkbench();
         renderOrderTable();
       }
@@ -5834,14 +6466,18 @@
         const q = document.getElementById("order-search");
         const channel = document.getElementById("order-channel-filter");
         const productType = document.getElementById("order-type-filter");
+        const date = document.getElementById("order-date-filter");
         const sort = document.getElementById("order-sort");
-        if (!q || !channel || !productType || !sort) return;
+        if (!q || !channel || !productType || !date || !sort) return;
         q.value = state.orderFilters.q || "";
         const statuses = [...new Set(source.map((row) => row.order_status).filter(Boolean))].sort();
         const categories = [...new Set(source.map((row) => row.category).filter(Boolean))].sort();
         state.orderFilters.channel = setSelectOptions(channel, statuses, state.lang === "en" ? "All statuses" : "全部状态", state.orderFilters.channel);
         state.orderFilters.productType = setSelectOptions(productType, categories, state.lang === "en" ? "All fashion categories" : "全部服饰品类", state.orderFilters.productType);
         [...productType.options].forEach((option) => { if (option.value !== "all") option.textContent = nameOf(option.value); });
+        const dateOptions = relativeDateOptions();
+        if (!dateOptions.some(([value]) => value === state.orderFilters.date)) state.orderFilters.date = "all";
+        date.innerHTML = dateOptions.map(([value, label]) => `<option value="${escapeHtml(value)}"${value === state.orderFilters.date ? " selected" : ""}>${escapeHtml(label)}</option>`).join("");
         const sortOptions = ["dateDesc", "priceDesc", "productAsc", "customerAsc"];
         const selected = sortOptions.includes(state.orderFilters.sort) ? state.orderFilters.sort : "dateDesc";
         const sortLabels = state.lang === "en" ? { dateDesc: "Newest first", priceDesc: "Highest item price", productAsc: "Product ID A-Z", customerAsc: "Region A-Z" } : { dateDesc: "最新订单", priceDesc: "商品价格最高", productAsc: "商品 ID A-Z", customerAsc: "地区 A-Z" };
@@ -5850,9 +6486,10 @@
       }
 
       function filteredOrderRows() {
-        const { q, channel, productType, sort } = state.orderFilters;
+        const { q, channel, productType, date, sort } = state.orderFilters;
         const query = String(q || "").trim().toLowerCase();
-        const rows = filterRowsByDate(orderRows(), "order_time").filter((row) => {
+        const scopedRows = filterRowsByRelativeDate(filterRowsByDate(orderRows(), "order_time"), "order_time", date);
+        const rows = scopedRows.filter((row) => {
           if (channel !== "all" && row.order_status !== channel) return false;
           if (productType !== "all" && row.category !== productType) return false;
           if (!query) return true;
@@ -6335,6 +6972,119 @@
         renderBars("workspace-pain-bars", topPain, "pain", (item) => item.count, { max: Math.max(...topPain.map((r) => r.count), 1), format: (v) => fmt(v), risk: true, nodeClick: true });
       }
 
+      function aggregateBy(rows, getter) {
+        const grouped = new Map();
+        rows.forEach((row) => {
+          const key = getter(row);
+          if (!key) return;
+          grouped.set(key, (grouped.get(key) || 0) + 1);
+        });
+        return [...grouped.entries()]
+          .map(([key, count]) => ({ key, count }))
+          .sort((a, b) => b.count - a.count);
+      }
+
+      function evidencePainStats(rows) {
+        const grouped = new Map();
+        rows.forEach((row) => {
+          cleanPainList(row.pain_points).forEach((pain) => {
+            grouped.set(pain, (grouped.get(pain) || 0) + 1);
+          });
+        });
+        return [...grouped.entries()]
+          .map(([key, count]) => ({ key, count }))
+          .sort((a, b) => b.count - a.count);
+      }
+
+      function jsString(value) {
+        return String(value ?? "").replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+      }
+
+      function setEvidencePainFilter(pain) {
+        state.evidenceFilters.pain = pain || "all";
+        renderEvidence();
+        localizeGenerated(document.getElementById("evidence"));
+      }
+
+      function setEvidenceCategoryFilter(category) {
+        state.evidenceFilters.category = category || "all";
+        renderEvidence();
+        localizeGenerated(document.getElementById("evidence"));
+      }
+
+      function renderEvidenceMiniBars(items, total, type) {
+        const visible = items.slice(0, 5);
+        if (!visible.length) {
+          return `<p>${state.lang === "en" ? "No model tag under the current filters." : "当前筛选下暂无模型标签。"}</p>`;
+        }
+        return `
+          <div class="evidence-mini-bars">
+            ${visible.map((item) => {
+              const share = item.count / Math.max(total, 1);
+              const action = type === "pain"
+                ? `setEvidencePainFilter('${jsString(item.key)}')`
+                : `setEvidenceCategoryFilter('${jsString(item.key)}')`;
+              return `
+                <button class="evidence-mini-row" type="button" onclick="${action}">
+                  <span>${escapeHtml(nameOf(item.key))}</span>
+                  <div class="evidence-mini-track"><div class="evidence-mini-fill" style="width:${Math.max(4, share * 100).toFixed(1)}%"></div></div>
+                  <strong>${pct(share)}</strong>
+                </button>
+              `;
+            }).join("")}
+          </div>
+        `;
+      }
+
+      function renderEvidenceInsights(filteredRows) {
+        const container = document.getElementById("action-cards");
+        if (!container) return;
+        container.className = "action-grid evidence-insights";
+        const total = filteredRows.length;
+        const painStats = evidencePainStats(filteredRows);
+        const topPain = painStats[0];
+        const categoryStats = aggregateBy(filteredRows, (row) => row.category_group);
+        const nonFitCount = filteredRows.filter((row) => row.fit && row.fit !== "fit").length;
+        const ratingRows = filteredRows.filter((row) => !Number.isNaN(num(row.rating)) && num(row.rating) > 0);
+        const avgRating = ratingRows.reduce((sum, row) => sum + num(row.rating), 0) / Math.max(ratingRows.length, 1);
+        const taggedRows = filteredRows.filter((row) => cleanPainList(row.pain_points).length).length;
+        const topPainLabel = topPain ? nameOf(topPain.key) : (state.lang === "en" ? "No tagged issue" : "暂无痛点");
+        container.innerHTML = `
+          <div class="evidence-insight-card">
+            <span>${state.lang === "en" ? "Review sample" : "评论样本"}</span>
+            <strong>${fmt(total)}</strong>
+            <p>${state.lang === "en" ? "Rows after product and category filters" : "当前商品/品类筛选后的评论"}</p>
+          </div>
+          <div class="evidence-insight-card">
+            <span>${state.lang === "en" ? "Top modeled issue" : "模型识别首要问题"}</span>
+            <strong>${escapeHtml(topPainLabel)}</strong>
+            <p>${topPain ? `${fmt(topPain.count)} · ${pct(topPain.count / Math.max(total, 1))}` : "-"}</p>
+            <button type="button" onclick="setEvidencePainFilter('${jsString(topPain?.key || "all")}')">${state.lang === "en" ? "Filter issue" : "筛选问题"}</button>
+          </div>
+          <div class="evidence-insight-card">
+            <span>${state.lang === "en" ? "Non-fit share" : "非Fit占比"}</span>
+            <strong>${pct(nonFitCount / Math.max(total, 1))}</strong>
+            <p>${state.lang === "en" ? "Small and large feedback combined" : "偏小与偏大反馈合计"}</p>
+          </div>
+          <div class="evidence-insight-card">
+            <span>${state.lang === "en" ? "Avg rating" : "平均评分"}</span>
+            <strong>${ratingRows.length ? avgRating.toFixed(1) : "-"}</strong>
+            <p>${state.lang === "en" ? `${fmt(taggedRows)} tagged rows` : `${fmt(taggedRows)} 条带模型标签评论`}</p>
+          </div>
+          <div class="evidence-insight-card evidence-insight-wide">
+            <span>${state.lang === "en" ? "Issue mix" : "问题结构"}</span>
+            ${renderEvidenceMiniBars(painStats, Math.max(taggedRows, 1), "pain")}
+          </div>
+          <div class="evidence-insight-card evidence-insight-wide">
+            <span>${state.lang === "en" ? "Category mix" : "品类分布"}</span>
+            ${renderEvidenceMiniBars(categoryStats, Math.max(total, 1), "category")}
+          </div>
+        `;
+      }
+
+      window.setEvidencePainFilter = setEvidencePainFilter;
+      window.setEvidenceCategoryFilter = setEvidenceCategoryFilter;
+
       function renderEvidence() {
         const sourceRows = evidenceForSelection();
         updateEvidenceFilters(sourceRows);
@@ -6342,7 +7092,7 @@
         const rows = filteredRows.slice(0, 220);
         state.currentEvidenceRows = rows;
         document.getElementById("evidence-count").textContent = state.lang === "en" ? `${filteredRows.length} rows` : `${filteredRows.length} 条`;
-        document.getElementById("action-cards").innerHTML = "";
+        renderEvidenceInsights(filteredRows);
         document.getElementById("evidence-table").innerHTML = rows.map((row, index) => `
           <tr class="clickable-row" onclick="openEvidenceDrawer(${index})">
             <td>${escapeHtml(nameOf(row.category_group))}</td>
@@ -7766,33 +8516,40 @@
         const canvas = document.getElementById("login-canvas");
         const ctx = canvas.getContext("2d");
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let pixelRatio = 1;
+        let lastFrame = 0;
         function resize() {
-          canvas.width = canvas.clientWidth * window.devicePixelRatio;
-          canvas.height = canvas.clientHeight * window.devicePixelRatio;
-          ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+          pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+          canvas.width = Math.round(canvas.clientWidth * pixelRatio);
+          canvas.height = Math.round(canvas.clientHeight * pixelRatio);
+          ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
         }
         resize();
-        const points = Array.from({ length: 80 }, (_, i) => ({ x: Math.random(), y: Math.random(), r: 1 + Math.random() * 2, p: Math.random() * Math.PI * 2, i }));
+        const points = Array.from({ length: 52 }, (_, i) => ({ x: Math.random(), y: Math.random(), r: 1 + Math.random() * 2, p: Math.random() * Math.PI * 2, i }));
         function draw(t = 0) {
-          const w = canvas.clientWidth, h = canvas.clientHeight;
-          ctx.clearRect(0, 0, w, h);
-          ctx.fillStyle = "rgba(120, 180, 255, .78)";
-          points.forEach((point) => {
-            const x = point.x * w + Math.cos(point.p + t / 2200) * 14;
-            const y = point.y * h + Math.sin(point.p + t / 2600) * 10;
-            ctx.beginPath();
-            ctx.arc(x, y, point.r, 0, Math.PI * 2);
-            ctx.fill();
-          });
-          ctx.strokeStyle = "rgba(120, 180, 255, .12)";
-          points.slice(0, 36).forEach((a, index) => {
-            points.slice(index + 1, index + 5).forEach((b) => {
+          const shouldPaint = !document.body.classList.contains("logged-in") && (reduced || t - lastFrame >= 32);
+          if (shouldPaint) {
+            lastFrame = t;
+            const w = canvas.clientWidth, h = canvas.clientHeight;
+            ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = "rgba(120, 180, 255, .78)";
+            points.forEach((point) => {
+              const x = point.x * w + Math.cos(point.p + t / 2200) * 12;
+              const y = point.y * h + Math.sin(point.p + t / 2600) * 8;
               ctx.beginPath();
-              ctx.moveTo(a.x * w, a.y * h);
-              ctx.lineTo(b.x * w, b.y * h);
-              ctx.stroke();
+              ctx.arc(x, y, point.r, 0, Math.PI * 2);
+              ctx.fill();
             });
-          });
+            ctx.strokeStyle = "rgba(120, 180, 255, .12)";
+            points.slice(0, 24).forEach((a, index) => {
+              points.slice(index + 1, index + 4).forEach((b) => {
+                ctx.beginPath();
+                ctx.moveTo(a.x * w, a.y * h);
+                ctx.lineTo(b.x * w, b.y * h);
+                ctx.stroke();
+              });
+            });
+          }
           if (!reduced) requestAnimationFrame(draw);
         }
         window.addEventListener("resize", resize);
@@ -7801,7 +8558,7 @@
 
       document.getElementById("login-form").addEventListener("submit", async (event) => {
         event.preventDefault();
-        state.loginInteractionStarted = false;
+        state.loginInteractionStarted = true;
         const submit = document.getElementById("login-submit");
         const errorBox = document.getElementById("login-error");
         submit.disabled = true;
@@ -8005,6 +8762,10 @@
         state.orderFilters.productType = event.target.value;
         renderOrderTable();
       });
+      document.getElementById("order-date-filter").addEventListener("change", (event) => {
+        state.orderFilters.date = event.target.value;
+        renderOrderTable();
+      });
       document.getElementById("order-sort").addEventListener("change", (event) => {
         state.orderFilters.sort = event.target.value;
         renderOrderTable();
@@ -8019,7 +8780,7 @@
         state.selectedNode = null;
         state.selectedProductGroup = "all";
         state.evidenceFilters = { q: "", category: "all", fit: "all", body: "all", pain: "all" };
-        state.orderFilters = { q: "", channel: "all", productType: "all", sort: "dateDesc" };
+        state.orderFilters = { q: "", channel: "all", productType: "all", date: "all", sort: "dateDesc" };
         state.skuFilters = { q: "", group: "all", sort: "transactionsDesc" };
         state.dateRange = { preset: "all", start: "", end: "" };
         buildGraph();

@@ -26,6 +26,7 @@ The data is intentionally committed as CSV instead of zip files so collaborators
 
 Key documentation:
 
+- [`docs/PRODUCT_PRD.md`](docs/PRODUCT_PRD.md): formal product definition, target users, dashboard responsibilities, requirements, data boundaries, and release acceptance criteria.
 - [`data/README.md`](data/README.md): data-source inventory, file list, row counts, and usage notes.
 - [`data/COLUMN_DICTIONARY.md`](data/COLUMN_DICTIONARY.md): every CSV column explained in plain language.
 - [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md): how the repo is organized.
