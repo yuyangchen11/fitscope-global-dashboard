@@ -2006,6 +2006,11 @@
         border-right: 2px solid var(--muted);
         border-bottom: 2px solid var(--muted);
         transform: rotate(45deg) translateY(-2px);
+        transition: transform 160ms ease;
+      }
+
+      .product-picker-trigger[aria-expanded="true"] .product-picker-chevron {
+        transform: rotate(225deg) translate(-2px, -1px);
       }
 
       .product-picker-popover {
@@ -4253,7 +4258,7 @@
               <label class="analysis-filter"><span data-i18n="olist.analysisGrain">统计粒度</span><select id="sales-grain-filter" aria-label="sales time grain"></select></label>
               <div class="analysis-filter product-picker">
                 <span data-i18n="olist.analysisProduct">商品范围</span>
-                <button type="button" id="sales-product-trigger" class="product-picker-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <button type="button" id="sales-product-trigger" class="product-picker-trigger" aria-haspopup="listbox" aria-controls="sales-product-popover" aria-expanded="false">
                   <span id="sales-product-label" class="product-picker-label">全部商品</span>
                   <span class="product-picker-chevron" aria-hidden="true"></span>
                 </button>
@@ -6012,6 +6017,17 @@
         }));
       }
 
+      function closeSalesProductPicker({ restoreFocus = false } = {}) {
+        const popover = document.getElementById("sales-product-popover");
+        const trigger = document.getElementById("sales-product-trigger");
+        const search = document.getElementById("sales-product-search");
+        if (!popover || popover.classList.contains("hidden")) return;
+        popover.classList.add("hidden");
+        trigger?.setAttribute("aria-expanded", "false");
+        if (search) search.value = "";
+        if (restoreFocus) trigger?.focus();
+      }
+
       function renderSalesProductPicker(productOptions, allLabel) {
         const picker = document.querySelector(".product-picker");
         const trigger = document.getElementById("sales-product-trigger");
@@ -6045,9 +6061,7 @@
           options.querySelectorAll("[data-product-id]").forEach((button) => {
             button.onclick = () => {
               state.salesFilters.product = button.dataset.productId;
-              popover.classList.add("hidden");
-              trigger.setAttribute("aria-expanded", "false");
-              search.value = "";
+              closeSalesProductPicker();
               renderOperationsSalesChart();
             };
           });
@@ -6057,24 +6071,33 @@
         trigger.onclick = (event) => {
           event.stopPropagation();
           const opening = popover.classList.contains("hidden");
-          popover.classList.toggle("hidden", !opening);
-          trigger.setAttribute("aria-expanded", String(opening));
-          if (opening) {
-            search.value = "";
-            renderOptions();
-            requestAnimationFrame(() => search.focus());
-          }
+          if (!opening) return closeSalesProductPicker();
+          popover.classList.remove("hidden");
+          trigger.setAttribute("aria-expanded", "true");
+          search.value = "";
+          renderOptions();
+          requestAnimationFrame(() => search.focus());
         };
         search.oninput = () => renderOptions(search.value);
         search.onclick = (event) => event.stopPropagation();
         if (!document.body.dataset.productPickerBound) {
-          document.addEventListener("click", (event) => {
+          document.addEventListener("pointerdown", (event) => {
             const currentPicker = document.querySelector(".product-picker");
             if (currentPicker && !currentPicker.contains(event.target)) {
-              document.getElementById("sales-product-popover")?.classList.add("hidden");
-              document.getElementById("sales-product-trigger")?.setAttribute("aria-expanded", "false");
+              closeSalesProductPicker();
             }
+          }, true);
+          document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") closeSalesProductPicker({ restoreFocus: true });
           });
+          window.addEventListener("scroll", (event) => {
+            const currentPicker = document.querySelector(".product-picker");
+            const target = event.target;
+            if (!currentPicker || !(target instanceof Node) || !currentPicker.contains(target)) {
+              closeSalesProductPicker();
+            }
+          }, true);
+          window.addEventListener("resize", () => closeSalesProductPicker());
           document.body.dataset.productPickerBound = "true";
         }
       }
